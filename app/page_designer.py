@@ -97,6 +97,14 @@ def _load_examples(kind: str) -> str:
         return ""
 
 
+def _load_knowledge(scope: str) -> str:
+    try:
+        import knowledge_base
+        return knowledge_base.render(scope)
+    except Exception:
+        return ""
+
+
 def design_page(page_spec: str, datasources: list[str], shell: dict | None = None,
                 tables: list[str] | None = None, dry: bool = False, examples=None) -> dict:
     """Design + gate one page. shell = {pageDefinitionId, title, versionName?}. The pageDefinitionId is
@@ -114,6 +122,9 @@ def design_page(page_spec: str, datasources: list[str], shell: dict | None = Non
             f"Page title: {shell['title']}. Emit the control list.")
     if examples:
         user = f"{examples}\n\n{user}"
+    knowledge = _load_knowledge("page")
+    if knowledge:
+        user = f"{knowledge}\n\n{user}"
     if dry:
         return {"dry": True, "user_message": user, "shell": shell}
 

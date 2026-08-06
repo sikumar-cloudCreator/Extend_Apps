@@ -58,7 +58,7 @@ def det_bundle_shape():
                     pages=[{"pageDefinitionId": "pid-1", "title": "P1", "page": {"pageDefinitionId": "pid-1"}}],
                     views=[{"name": "v1", "schema": "demo", "xsql": "SELECT 1 AS a"}],
                     tables=["xc_credit"], workflows=[])
-    need = ["ADLC.json", "app/Application.json", "app/pid-1.json", "queries/demo/v1.json",
+    need = ["ADLC.json", "app/Application.json", "app/pid-1.json", "queries/demo/v1.sql",
             "tables/schemas/xactly/xc_credit.json"]
     missing = [p for p in need if not os.path.exists(os.path.join(d, p))]
     check("bundle: real export layout", not missing, f"missing {missing}")

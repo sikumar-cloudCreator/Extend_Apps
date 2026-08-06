@@ -64,8 +64,8 @@ def application_json(app_name: str, icon: str, nav_pages: list[dict]) -> dict:
 def adlc_json(view_names: list[tuple], page_ids: list[str], tables: list[str], workflows: list[str]) -> dict:
     """ADLC.json manifest. view_names = [(schema, name)]; page_ids = [pageDefinitionId]."""
     return {"application": "app/Application.json",
-            "queries": sorted(f"queries/{s}/{n}.json" for s, n in view_names),
-            "workflows": sorted(f"workflows/{w}.json" for w in workflows),
+            "queries": sorted(f"queries/{s}/{n}.sql" for s, n in view_names),
+            "workflows": sorted(f"workflows/{w}.sql" for w in workflows),
             "pageDefinitions": sorted(f"app/{pid}.json" for pid in page_ids),
             "policySets": None,
             "tables": {"schemas": sorted(f"tables/schemas/xactly/{t if t.startswith('xc_') else 'xc_'+t}.json"
@@ -81,13 +81,16 @@ def write_bundle(out_dir: str, app_name: str, icon: str, pages: list[dict],
     for p in pages:
         with open(os.path.join(out_dir, "app", f"{p['pageDefinitionId']}.json"), "w") as f:
             json.dump(p["page"], f, indent=2)
-    # views
+    # views — emit xSQL (.sql), not the JSON envelope (design page = JSON; queries = xSQL)
     view_names = []
     for v in views:
         schema = v.get("schema", DEFAULT_SCHEMA)
         d = os.path.join(out_dir, "queries", schema); os.makedirs(d, exist_ok=True)
-        with open(os.path.join(d, f"{v['name']}.json"), "w") as f:
-            json.dump(query_file(v), f, indent=2)
+        sql = (v.get("xsql", "") or "").strip()
+        if not re.match(r"(?is)\s*create\s+view", sql):
+            sql = f"CREATE VIEW {schema}.{v['name']} AS\n{sql}"
+        with open(os.path.join(d, f"{v['name']}.sql"), "w") as f:
+            f.write(sql + "\n")
         view_names.append((schema, v["name"]))
     # base tables
     if tables:
@@ -96,12 +99,13 @@ def write_bundle(out_dir: str, app_name: str, icon: str, pages: list[dict],
             tn = t if t.startswith("xc_") else f"xc_{t}"
             with open(os.path.join(d, f"{tn}.json"), "w") as f:
                 json.dump(table_schema_file(t), f, indent=2)
-    # workflows (bodies are pass-through if provided)
+    # workflows — emit as xSQL (.sql), like queries
     if workflows:
         d = os.path.join(out_dir, "workflows"); os.makedirs(d, exist_ok=True)
         for w in workflows:
-            with open(os.path.join(d, f"{w['name']}.json"), "w") as f:
-                json.dump(w.get("body", {"name": w["name"]}), f, indent=2)
+            sql = (w.get("xsql") or w.get("body") or f"-- workflow {w['name']}: xSQL to be authored").strip()
+            with open(os.path.join(d, f"{w['name']}.sql"), "w") as f:
+                f.write(sql + "\n")
     # application + manifest
     with open(os.path.join(out_dir, "app", "Application.json"), "w") as f:
         json.dump(application_json(app_name, icon, pages), f, indent=2)
@@ -142,8 +146,14 @@ def architect(frd_markdown: str) -> dict:
     system = open(ARCH_PROMPT).read()
     grounding = "REUSABLE VIEW CATALOG:\n" + "\n".join(
         f"  {v['name']}  params={v['params']}  columns={v['columns']}" for v in st.list_views())
+    try:
+        import knowledge_base
+        knowledge = knowledge_base.render("architect")
+    except Exception:
+        knowledge = ""
+    user = (f"{knowledge}\n\n" if knowledge else "") + f"FRD:\n{frd_markdown}\n\n{grounding}"
     r = anthropic.Anthropic().messages.create(model=MODEL, max_tokens=6000, system=system,
-        messages=[{"role": "user", "content": f"FRD:\n{frd_markdown}\n\n{grounding}"}])
+        messages=[{"role": "user", "content": user}])
     text = "".join(b.text for b in r.content if getattr(b, "type", None) == "text")
     m = re.search(r"```json\s*(.*?)```", text, re.S)
     return json.loads((m.group(1) if m else text).strip())

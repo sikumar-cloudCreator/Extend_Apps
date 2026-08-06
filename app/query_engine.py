@@ -97,6 +97,14 @@ def _load_examples(kind: str) -> str:
         return ""
 
 
+def _load_knowledge(scope: str) -> str:
+    try:
+        import knowledge_base
+        return knowledge_base.render(scope)
+    except Exception:
+        return ""
+
+
 def generate_query(request: str, tables=None, needed_columns=None, params=None,
                    schema=None, view_name=None, dry=False, examples=None) -> dict:
     """Author (or reuse) a lint-passing xSQL view for the request. Few-shot examples from the feedback
@@ -108,6 +116,9 @@ def generate_query(request: str, tables=None, needed_columns=None, params=None,
     user = build_user_message(request, tables, needed_columns, params, schema, view_name)
     if examples:
         user = f"{examples}\n\n{user}"
+    knowledge = _load_knowledge("query")
+    if knowledge:
+        user = f"{knowledge}\n\n{user}"
     if dry:
         return {"dry": True, "system_prompt_path": PROMPT_PATH, "user_message": user}
 
