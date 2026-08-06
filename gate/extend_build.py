@@ -15,8 +15,10 @@ Control spec (input to build_page) — one dict per control:
     "columns": [{"field","headerName"},...],         # table (optional)
     "schema": "demo" }
 """
-import uuid
+import os, uuid
 
+# Tenant schema is not universal — default is configurable; "demo" only as a last resort.
+DEFAULT_SCHEMA = os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
 VALID_KINDS = {"label","pageloader","dropdown","vc","tile","card","table","chart"}
 S3 = {"useComponentShadow": False, "useGreyBackground": False, "useInnerGreyBackground": False}
 S3s = {"useComponentShadow": True, "useGreyBackground": False, "useInnerGreyBackground": False}
@@ -71,7 +73,7 @@ def build_page(controls: list, shell: dict) -> dict:
         n += 1
         key = f"control_{n}"
         cid = spec.get("id") or str(uuid.uuid4())
-        schema = spec.get("schema", "demo")
+        schema = spec.get("schema") or DEFAULT_SCHEMA
         ds = spec.get("ds")
         title = spec.get("title", "")
         ls = spec.get("layoutSize")

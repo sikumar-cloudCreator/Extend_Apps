@@ -67,9 +67,21 @@ export SLACK_BOT_TOKEN=xoxb-...  SLACK_APP_TOKEN=xapp-...
 python app/slack_app.py
 ```
 
+## Configuration (tenant-agnostic)
+The builder is a general-purpose tool — nothing is hardcoded to one tenant. Point it at any tenant via env:
+
+| Env var | Default | Purpose |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | — | Opus 4.8 calls (authoring steps) |
+| `EXTEND_DEFAULT_SCHEMA` | `demo` | datasource schema when a view's own schema isn't known (e.g. `paypal`, `$framework`) |
+| `EXTEND_CATALOG_PATH` | `gate/datasources.json` | the tenant's reusable-view catalog (name/params/columns/xsql) |
+| `XC_TABLES_DIR` | `~/Documents/xc_tables` | the Xactly `xc_*` data dictionary (one CSV per table) |
+
 ## External data (not vendored)
-- **Xactly `xc_*` data dictionary** — read from `~/Documents/xc_tables/` (override with `XC_TABLES_DIR`).
-  One CSV per table (columns/types/PK/FK); used by `schema_tools.schema_lookup` for grounding.
+- **Xactly `xc_*` data dictionary** — one CSV per table (columns/types/PK/FK); used by
+  `schema_tools.schema_lookup` for grounding. Set `XC_TABLES_DIR` to your tenant's dictionary.
+- **View catalog** (`gate/datasources.json`) ships one tenant's 82 views as a starting reuse set; replace via
+  `EXTEND_CATALOG_PATH` for a different tenant.
 
 ## Notes
 - Secrets live only in `.env` (gitignored). Never commit an API key.
