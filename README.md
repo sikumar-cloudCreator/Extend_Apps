@@ -76,6 +76,23 @@ The builder is a general-purpose tool — nothing is hardcoded to one tenant. Po
 | `EXTEND_DEFAULT_SCHEMA` | `demo` | datasource schema when a view's own schema isn't known (e.g. `paypal`, `$framework`) |
 | `EXTEND_CATALOG_PATH` | `gate/datasources.json` | the tenant's reusable-view catalog (name/params/columns/xsql) |
 | `XC_TABLES_DIR` | `~/Documents/xc_tables` | the Xactly `xc_*` data dictionary (one CSV per table) |
+| `EXTEND_DB_PATH` | `knowledge/extend.db` | SQLite DB for shared learning (lessons + feedback). Put on a shared volume for the team so knowledge compounds across users |
+| `SLACK_BOT_TOKEN` / `SLACK_APP_TOKEN` | — | Slack Socket-Mode bot (team surface) |
+
+## Run as a team agent (Slack, from Cursor)
+The Slack bot is the team surface (Socket Mode → no public URL needed). To run it for your team from Cursor:
+1. Create the Slack app from `app/slack_manifest.yaml`; enable Socket Mode → App-Level token (`connections:write`).
+2. In a Cursor terminal:
+   ```bash
+   python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+   export ANTHROPIC_API_KEY=sk-ant-...  SLACK_BOT_TOKEN=xoxb-...  SLACK_APP_TOKEN=xapp-...
+   export EXTEND_DB_PATH=~/extend-shared/extend.db   # a path your team's learning persists to
+   python app/slack_app.py
+   ```
+3. Invite the bot to a team channel; teammates use `/extend`. The bot stays up while the process runs in Cursor.
+Shared learning (lessons + feedback) lives in the SQLite DB at `EXTEND_DB_PATH`; point it at a shared/synced
+location so every teammate's 👍/✍️ feedback improves future builds. Swap SQLite for Postgres later (same schema
+in `app/db.py`) when you outgrow one instance.
 
 ## External data (not vendored)
 - **Xactly `xc_*` data dictionary** — one CSV per table (columns/types/PK/FK); used by
