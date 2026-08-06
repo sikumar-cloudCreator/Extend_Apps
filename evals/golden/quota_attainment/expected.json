@@ -1,0 +1,5 @@
+{
+  "min_pages": 1,
+  "expected_reuse_views": ["q_sd_quota_attainment_by_measure"],
+  "note": "Single-page manager attainment dashboard; must reuse the by-measure attainment view."
+}
