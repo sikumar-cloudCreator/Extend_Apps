@@ -1,0 +1,3 @@
+anthropic>=0.40        # Opus 4.8 authoring calls (query engine + sub-agents)
+python-docx>=1.1       # Generate-FRD -> Word doc (later)
+slack-bolt>=1.20       # Slack surface (later)

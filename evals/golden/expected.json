@@ -1,0 +1,2 @@
+{ "expected_page_names": ["sales_dashboard", "payouts"],
+  "note": "architect names are slugs; the check uses subset match, so minor naming variance is tolerated only if it includes these. Adjust to the architect's actual slugs after first run." }

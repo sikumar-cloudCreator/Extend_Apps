@@ -1,0 +1,22 @@
+# secrets — NEVER commit
+.env
+.env.*
+*.key
+
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# runtime state / learning store (machine-local)
+feedback/
+
+# build artifacts / generated bundles
+out_app/
+*.zip
+*.docx
+*.bak
+
+# os
+.DS_Store
+SellerPerformance_app/

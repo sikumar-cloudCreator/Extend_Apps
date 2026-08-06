@@ -1,0 +1,1453 @@
+[
+  {
+    "name": "Master_Position_id",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_period"
+    ],
+    "columns": [
+      "master_position_id",
+      "position_name"
+    ],
+    "xsql": "SELECT pos.master_position_id,\n         MIN(pos.name) AS position_name\n  FROM xactly.xc_participant master_part\n  JOIN xactly.xc_period curr ON 1 = 1\n  LEFT JOIN xactly.xc_pos_part_assignment ppa\n    ON ppa.participant_id = master_part.participant_id\n  JOIN xactly.xc_position pos\n    ON pos.position_id            = ppa.position_id\n    AND pos.effective_start_date  < curr.end_date\n    AND pos.effective_end_date    > curr.start_date\n    AND pos.incent_st_date        < curr.end_date\n    AND pos.incent_end_date       > curr.start_date\n  WHERE master_part.participant_id = :v_master_participant_id\n    AND master_part.is_master      = 1\n    AND curr.name                  = :v_period\n  GROUP BY pos.master_position_id"
+  },
+  {
+    "name": "Master_participant_id",
+    "schema": "demo",
+    "params": [
+      "v_participant",
+      "v_period"
+    ],
+    "columns": [
+      "name",
+      "master_participant_id"
+    ],
+    "xsql": "select pa.name, master_pa.participant_id as master_participant_id from xactly.xc_participant pa \ninner join \nxactly.xc_period p \non pa.effective_start_date < p.end_date \nand pa.effective_end_date > p.start_date\njoin xactly.xc_participant master_pa on pa.employee_id=master_pa.employee_id and master_pa.is_master=1\nwhere p.name = :v_period and pa.name=:v_participant\norder by pa.name asc"
+  },
+  {
+    "name": "incnt_stmt_active_participant_list_admin_view",
+    "schema": "demo",
+    "params": [
+      "v_period"
+    ],
+    "columns": [
+      "participant_name_display",
+      "name",
+      "participant_id"
+    ],
+    "xsql": "SELECT pa.name as participant_name_display, pa.name, pa.participant_id FROM xactly.xc_participant pa INNER JOIN xactly.xc_period p ON pa.effective_start_date < p.end_date AND pa.effective_end_date > p.start_date WHERE p.name = :v_period AND pa.is_master = 1 ORDER BY pa.name ASC"
+  },
+  {
+    "name": "incnt_stmt_monthly_period_list_till_curr_month",
+    "schema": "demo",
+    "params": [],
+    "columns": [
+      "name_ft",
+      "name"
+    ],
+    "xsql": "select case when is_open = 1 then p.name || ' (open)' else p.name || ' (closed)' end as name_ft, p.name from xactly.xc_period p where LookupPeriodTypeById(p.period_type_id_fk) = 'MONTHLY' and p.name not in ('SOT','EOT') order by p.period_id desc"
+  },
+  {
+    "name": "q_sd_annual_credits_by_measure",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_master_position_id",
+      "v_period",
+      "v_year_number"
+    ],
+    "columns": [
+      "measure_name",
+      "annual_ytd_credits",
+      "annual_quota",
+      "annual_attainment_pct"
+    ],
+    "xsql": "SELECT\n    q.name AS measure_name,\n    Nvl(FormatNumber(SUM(cr.amount), '#,##0.00'), '0.00') AS annual_ytd_credits,\n    Nvl(FormatNumber(tg.annual_quota, '#,##0.00'), '0.00') AS annual_quota,\n    CASE WHEN Nvl(tg.annual_quota, 0) > 0\n         THEN Nvl(FormatNumber(SUM(cr.amount) / tg.annual_quota * 100, '#,##0.00'), '0.00') || '%'\n         ELSE '\u2014' END AS annual_attainment_pct\nFROM xactly.xc_participant master_part\nJOIN xactly.xc_period curr ON 1=1\nJOIN xactly.xc_commission cm\n    ON cm.participant_id = master_part.participant_id\n    AND cm.position_id = :v_master_position_id\nJOIN xactly.xc_credit cr ON cr.credit_id = cm.credit_id\nJOIN xactly.xc_period per\n    ON per.period_id = cm.period_id\n    AND per.name LIKE Concat('%-', :v_year_number)\n    AND per.end_date <= curr.end_date\nJOIN xactly.xc_quota q ON q.quota_id = cm.quota_id\nLEFT JOIN (\n    SELECT qa.quota_id, SUM(qa.amount) AS annual_quota\n    FROM xactly.xc_quota_assignment qa\n    JOIN xactly.xc_period yp ON yp.period_id = qa.period_id\n    WHERE qa.assignment_id = :v_master_position_id\n      AND yp.name LIKE Concat('%-', :v_year_number)\n    GROUP BY qa.quota_id\n) tg ON tg.quota_id = q.quota_id\nWHERE master_part.participant_id = :v_master_participant_id\n  AND master_part.is_master = 1\n  AND curr.name = :v_period\nGROUP BY q.name, tg.annual_quota\nORDER BY q.name"
+  },
+  {
+    "name": "q_sd_payouts_by_measure",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_master_position_id",
+      "v_period",
+      "v_year_number"
+    ],
+    "columns": [
+      "measure_name",
+      "calculated_payout",
+      "released_payout",
+      "pending_payout"
+    ],
+    "xsql": "SELECT\n    q.name AS measure_name,\n    Nvl(FormatNumber(SUM(cm.amount), '#,##0.00'), '0.00') AS calculated_payout,\n    Nvl(FormatNumber(SUM(CASE WHEN pay.is_released = '1' THEN pay.amount ELSE 0 END), '#,##0.00'), '0.00') AS released_payout,\n    Nvl(FormatNumber(SUM(CASE WHEN Nvl(pay.is_released,'0') != '1' THEN pay.amount ELSE 0 END), '#,##0.00'), '0.00') AS pending_payout\nFROM xactly.xc_participant master_part\nJOIN xactly.xc_period curr ON 1=1\nJOIN xactly.xc_commission cm\n    ON cm.participant_id = master_part.participant_id\n    AND cm.position_id = :v_master_position_id\nJOIN xactly.xc_period per\n    ON per.period_id = cm.period_id\n    AND per.name LIKE Concat('%-', :v_year_number)\n    AND per.end_date <= curr.end_date\nJOIN xactly.xc_quota q ON q.quota_id = cm.quota_id\nLEFT JOIN xactly.xc_payment pay\n    ON pay.eff_participant_id = master_part.participant_id\n    AND pay.period_id = cm.period_id\nWHERE master_part.participant_id = :v_master_participant_id\n  AND master_part.is_master = 1\n  AND curr.name = :v_period\nGROUP BY q.name\nORDER BY q.name"
+  },
+  {
+    "name": "q_sd_qtr_credits_by_measure",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_master_position_id",
+      "v_period"
+    ],
+    "columns": [
+      "measure_name",
+      "qtr_ytd_credits",
+      "qtr_quota",
+      "attainment_pct"
+    ],
+    "xsql": "SELECT\n    q.name AS measure_name,\n    Nvl(FormatNumber(SUM(cr.amount), '#,##0.00'), '0.00') AS qtr_ytd_credits,\n    Nvl(FormatNumber(tg.tgt, '#,##0.00'), '0.00') AS qtr_quota,\n    CASE WHEN Nvl(tg.tgt, 0) > 0\n         THEN Nvl(FormatNumber(SUM(cr.amount) / tg.tgt * 100, '#,##0.00'), '0.00') || '%'\n         ELSE '\u2014' END AS attainment_pct\nFROM xactly.xc_participant master_part\nJOIN xactly.xc_period curr ON 1=1\nJOIN xactly.xc_commission cm\n    ON cm.participant_id = master_part.participant_id\n    AND cm.position_id = :v_master_position_id\nJOIN xactly.xc_credit cr ON cr.credit_id = cm.credit_id\nJOIN xactly.xc_period per ON per.period_id = cm.period_id AND per.name = :v_period\nJOIN xactly.xc_quota q ON q.quota_id = cm.quota_id\nLEFT JOIN (\n    SELECT qa.quota_id, SUM(qa.amount) AS tgt\n    FROM xactly.xc_quota_assignment qa\n    JOIN xactly.xc_period yp ON yp.period_id = qa.period_id\n    WHERE qa.assignment_id = :v_master_position_id\n      AND yp.name = :v_period\n    GROUP BY qa.quota_id\n) tg ON tg.quota_id = q.quota_id\nWHERE master_part.participant_id = :v_master_participant_id\n  AND master_part.is_master = 1\n  AND curr.name = :v_period\nGROUP BY q.name, tg.tgt\nORDER BY q.name"
+  },
+  {
+    "name": "q_sd_quota_attainment_by_measure",
+    "schema": "demo",
+    "params": [
+      "v_master_position_id",
+      "v_period",
+      "v_year_number"
+    ],
+    "columns": [
+      "quota_name",
+      "attainment_pct",
+      "total_credit",
+      "quota_amount"
+    ],
+    "xsql": "SELECT\n    quota_name,\n    Nvl(FormatNumber(Round(att, 2), '#,##0.00'), '0.00') || '%' AS attainment_pct,\n    Nvl(FormatNumber(cred, '#,##0.00'), '0.00') AS total_credit,\n    Nvl(FormatNumber(tgt, '#,##0.00'), '0.00') AS quota_amount\nFROM (\n    SELECT\n        q.name AS quota_name,\n        Nvl(b.cred, 0) AS cred,\n        tg.tgt AS tgt,\n        CASE WHEN tg.tgt > 0 THEN Nvl(b.cred, 0) / tg.tgt * 100 ELSE 0 END AS att\n    FROM (\n        SELECT qa.quota_id, Max(qa.amount) AS tgt\n        FROM xactly.xc_quota_assignment qa\n        JOIN xactly.xc_period yp ON yp.period_id = qa.period_id\n        WHERE qa.assignment_id = :v_master_position_id\n          AND yp.name LIKE Concat('%-', :v_year_number)\n        GROUP BY qa.quota_id\n    ) tg\n    JOIN xactly.xc_quota q ON q.quota_id = tg.quota_id\n    LEFT JOIN (\n        SELECT cq.quota_id, SUM(cr.amount) AS cred\n        FROM (\n            SELECT DISTINCT cm.quota_id, cm.credit_id\n            FROM xactly.xc_commission cm\n            WHERE cm.position_id = :v_master_position_id\n        ) cq\n        JOIN xactly.xc_credit cr ON cr.credit_id = cq.credit_id\n        JOIN (\n            SELECT period_id FROM xactly.xc_period\n            WHERE name LIKE Concat('%-', :v_year_number)\n              AND end_date <= (SELECT end_date FROM xactly.xc_period WHERE name = :v_period)\n        ) ps ON ps.period_id = cr.period_id\n        GROUP BY cq.quota_id\n    ) b ON b.quota_id = tg.quota_id\n)"
+  },
+  {
+    "name": "q_sd_summary_kpis",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_period",
+      "v_year_number"
+    ],
+    "columns": [
+      "total_ytd_credits",
+      "total_commissions",
+      "total_released",
+      "total_pending"
+    ],
+    "xsql": "SELECT\n    Nvl(FormatNumber(SUM(cr.amount), '$#,##0.00'), '$0.00') AS total_ytd_credits,\n    Nvl(FormatNumber(SUM(cm.amount), '$#,##0.00'), '$0.00') AS total_commissions,\n    Nvl(FormatNumber(SUM(CASE WHEN pay.is_released = '1' THEN pay.amount ELSE 0 END), '$#,##0.00'), '$0.00') AS total_released,\n    Nvl(FormatNumber(SUM(CASE WHEN Nvl(pay.is_released,'0') != '1' THEN pay.amount ELSE 0 END), '$#,##0.00'), '$0.00') AS total_pending\nFROM xactly.xc_participant master_part\nJOIN xactly.xc_period curr ON 1=1\nJOIN xactly.xc_credit cr ON cr.eff_participant_id = master_part.participant_id\nJOIN xactly.xc_period per ON per.period_id = cr.period_id\n    AND per.name LIKE Concat('%-', :v_year_number)\n    AND per.end_date <= (SELECT end_date FROM xactly.xc_period WHERE name = :v_period)\nLEFT JOIN xactly.xc_commission cm ON cm.credit_id = cr.credit_id\nLEFT JOIN xactly.xc_payment pay ON pay.eff_participant_id = master_part.participant_id\n    AND pay.period_id = cr.period_id\nWHERE master_part.participant_id = :v_master_participant_id\n  AND master_part.is_master = 1\n  AND curr.name = :v_period"
+  },
+  {
+    "name": "q_sd_year_number",
+    "schema": "demo",
+    "params": [
+      "v_period"
+    ],
+    "columns": [
+      "period_year"
+    ],
+    "xsql": "SELECT SubString(p.name, 3, 7) AS period_year\nFROM xactly.xc_period p\nINNER JOIN xactly.xc_period_type pt ON p.period_type_id_fk = pt.period_type_id\nINNER JOIN xactly.xc_period per ON per.start_date BETWEEN p.start_date AND p.end_date\nWHERE pt.name = 'YEARLY'\n  AND per.name = :v_period"
+  },
+  {
+    "name": "ntr_db_es_top_perf",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "top_1_name",
+      "top_1_div",
+      "top_1_val",
+      "top_2_name",
+      "top_2_div",
+      "top_2_val",
+      "top_3_name",
+      "top_3_div",
+      "top_3_val",
+      "top_4_name",
+      "top_4_div",
+      "top_4_val",
+      "top_5_name",
+      "top_5_div",
+      "top_5_val"
+    ],
+    "xsql": "SELECT \n    -- Top 1 Performer\n    Coalesce(MAX(CASE WHEN rn_top = 1 THEN name END), '') AS top_1_name,\n    Coalesce(MAX(CASE WHEN rn_top = 1 THEN division END), '') AS top_1_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_top = 1 THEN payout END), 0), '#,###'), '0') AS top_1_val,\n    \n    -- Top 2 Performer\n    Coalesce(MAX(CASE WHEN rn_top = 2 THEN name END), '') AS top_2_name,\n    Coalesce(MAX(CASE WHEN rn_top = 2 THEN division END), '') AS top_2_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_top = 2 THEN payout END), 0), '#,###'), '0') AS top_2_val,\n    \n    -- Top 3 Performer\n    Coalesce(MAX(CASE WHEN rn_top = 3 THEN name END), '') AS top_3_name,\n    Coalesce(MAX(CASE WHEN rn_top = 3 THEN division END), '') AS top_3_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_top = 3 THEN payout END), 0), '#,###'), '0') AS top_3_val,\n    \n    -- Top 4 Performer\n    Coalesce(MAX(CASE WHEN rn_top = 4 THEN name END), '') AS top_4_name,\n    Coalesce(MAX(CASE WHEN rn_top = 4 THEN division END), '') AS top_4_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_top = 4 THEN payout END), 0), '#,###'), '0') AS top_4_val,\n    \n    -- Top 5 Performer\n    Coalesce(MAX(CASE WHEN rn_top = 5 THEN name END), '') AS top_5_name,\n    Coalesce(MAX(CASE WHEN rn_top = 5 THEN division END), '') AS top_5_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_top = 5 THEN payout END), 0), '#,###'), '0') AS top_5_val\n\nFROM (\n    SELECT \n        name,\n        division,\n        payout,\n        Row_Number() OVER (ORDER BY payout DESC) AS rn_top\n    FROM (\n        SELECT \n            SubString(p.participant_name, 0, IndexOf(p.participant_name, '(')) AS name,\n            m.category AS division, \n            SUM(p.amount) AS payout\n        FROM xactly.xc_payment p\n        \n        -- Embedded Title Mapping\n        INNER JOIN (\n            SELECT DISTINCT\n                ppa.participant_id AS master_participant_id,\n                pta.title_name AS title_name\n            FROM xactly.xc_period per \n            INNER JOIN xactly.xc_pos_part_assignment ppa \n                ON ppa.participant_id IN :v_child_master_participant_id\n            INNER JOIN xactly.xc_position pos \n                ON ppa.position_id = pos.position_id\n                AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n            INNER JOIN xactly.xc_pos_title_assignment pta \n                ON pos.position_id = pta.position_id\n            WHERE per.period_id IN :v_month_period_ids\n        ) pta ON p.participant_id = pta.master_participant_id\n        \n        INNER JOIN NATERA_MASTER_MAPPING m \n            ON p.earning_group_name = m.earning_group\n            AND pta.title_name = m.title\n            \n        WHERE p.participant_id IN :v_child_master_participant_id\n          AND p.period_id IN :v_month_period_ids\n        GROUP BY \n            p.participant_name, \n            m.category\n    ) AggData\n) RankedData;"
+  },
+  {
+    "name": "ntr_wh_top_mix",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "mix_1_name",
+      "mix_1_payout",
+      "mix_1_pct",
+      "mix_1_vol_pct",
+      "mix_1_pts_pct",
+      "mix_1_others_pct",
+      "mix_2_name",
+      "mix_2_payout",
+      "mix_2_pct",
+      "mix_2_vol_pct",
+      "mix_2_pts_pct",
+      "mix_2_others_pct",
+      "mix_3_name",
+      "mix_3_payout",
+      "mix_3_pct",
+      "mix_3_vol_pct",
+      "mix_3_pts_pct",
+      "mix_3_others_pct",
+      "mix_4_name",
+      "mix_4_payout",
+      "mix_4_pct",
+      "mix_4_vol_pct",
+      "mix_4_pts_pct",
+      "mix_4_others_pct",
+      "mix_5_name",
+      "mix_5_payout",
+      "mix_5_pct",
+      "mix_5_vol_pct",
+      "mix_5_pts_pct",
+      "mix_5_others_pct",
+      "mix_6_name",
+      "mix_6_payout",
+      "mix_6_pct",
+      "mix_6_vol_pct",
+      "mix_6_pts_pct",
+      "mix_6_others_pct",
+      "mix_7_name",
+      "mix_7_payout",
+      "mix_7_pct",
+      "mix_7_vol_pct",
+      "mix_7_pts_pct",
+      "mix_7_others_pct",
+      "mix_8_name",
+      "mix_8_payout",
+      "mix_8_pct",
+      "mix_8_vol_pct",
+      "mix_8_pts_pct",
+      "mix_8_others_pct",
+      "mix_9_name",
+      "mix_9_payout",
+      "mix_9_pct",
+      "mix_9_vol_pct",
+      "mix_9_pts_pct",
+      "mix_9_others_pct",
+      "mix_10_name",
+      "mix_10_payout",
+      "mix_10_pct",
+      "mix_10_vol_pct",
+      "mix_10_pts_pct",
+      "mix_10_others_pct"
+    ],
+    "xsql": "Select \n    -- ROW 1\n    Max(Case When rn = 1 Then ASR_Name End) as mix_1_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 1 Then Total_Payout End), 0), '#,###'), '0') as mix_1_payout,\n    Cast(Max(Case When rn = 1 Then Bar_Pct End) as decimal(10,1)) as mix_1_pct,\n    Cast(Max(Case When rn = 1 Then Vol_Pct End) as decimal(10,1)) as mix_1_vol_pct,\n    Cast(Max(Case When rn = 1 Then Pts_Pct End) as decimal(10,1)) as mix_1_pts_pct,\n    Cast(Max(Case When rn = 1 Then Others_Pct End) as decimal(10,1)) as mix_1_others_pct,\n    \n    -- ROW 2\n    Max(Case When rn = 2 Then ASR_Name End) as mix_2_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 2 Then Total_Payout End), 0), '#,###'), '0') as mix_2_payout,\n    Cast(Max(Case When rn = 2 Then Bar_Pct End) as decimal(10,1)) as mix_2_pct,\n    Cast(Max(Case When rn = 2 Then Vol_Pct End) as decimal(10,1)) as mix_2_vol_pct,\n    Cast(Max(Case When rn = 2 Then Pts_Pct End) as decimal(10,1)) as mix_2_pts_pct,\n    Cast(Max(Case When rn = 2 Then Others_Pct End) as decimal(10,1)) as mix_2_others_pct,\n    \n    -- ROW 3\n    Max(Case When rn = 3 Then ASR_Name End) as mix_3_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 3 Then Total_Payout End), 0), '#,###'), '0') as mix_3_payout,\n    Cast(Max(Case When rn = 3 Then Bar_Pct End) as decimal(10,1)) as mix_3_pct,\n    Cast(Max(Case When rn = 3 Then Vol_Pct End) as decimal(10,1)) as mix_3_vol_pct,\n    Cast(Max(Case When rn = 3 Then Pts_Pct End) as decimal(10,1)) as mix_3_pts_pct,\n    Cast(Max(Case When rn = 3 Then Others_Pct End) as decimal(10,1)) as mix_3_others_pct,\n    \n    -- ROW 4\n    Max(Case When rn = 4 Then ASR_Name End) as mix_4_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 4 Then Total_Payout End), 0), '#,###'), '0') as mix_4_payout,\n    Cast(Max(Case When rn = 4 Then Bar_Pct End) as decimal(10,1)) as mix_4_pct,\n    Cast(Max(Case When rn = 4 Then Vol_Pct End) as decimal(10,1)) as mix_4_vol_pct,\n    Cast(Max(Case When rn = 4 Then Pts_Pct End) as decimal(10,1)) as mix_4_pts_pct,\n    Cast(Max(Case When rn = 4 Then Others_Pct End) as decimal(10,1)) as mix_4_others_pct,\n    \n    -- ROW 5\n    Max(Case When rn = 5 Then ASR_Name End) as mix_5_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 5 Then Total_Payout End), 0), '#,###'), '0') as mix_5_payout,\n    Cast(Max(Case When rn = 5 Then Bar_Pct End) as decimal(10,1)) as mix_5_pct,\n    Cast(Max(Case When rn = 5 Then Vol_Pct End) as decimal(10,1)) as mix_5_vol_pct,\n    Cast(Max(Case When rn = 5 Then Pts_Pct End) as decimal(10,1)) as mix_5_pts_pct,\n    Cast(Max(Case When rn = 5 Then Others_Pct End) as decimal(10,1)) as mix_5_others_pct,\n\n    -- ROW 6\n    Max(Case When rn = 6 Then ASR_Name End) as mix_6_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 6 Then Total_Payout End), 0), '#,###'), '0') as mix_6_payout,\n    Cast(Max(Case When rn = 6 Then Bar_Pct End) as decimal(10,1)) as mix_6_pct,\n    Cast(Max(Case When rn = 6 Then Vol_Pct End) as decimal(10,1)) as mix_6_vol_pct,\n    Cast(Max(Case When rn = 6 Then Pts_Pct End) as decimal(10,1)) as mix_6_pts_pct,\n    Cast(Max(Case When rn = 6 Then Others_Pct End) as decimal(10,1)) as mix_6_others_pct,\n\n    -- ROW 7\n    Max(Case When rn = 7 Then ASR_Name End) as mix_7_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 7 Then Total_Payout End), 0), '#,###'), '0') as mix_7_payout,\n    Cast(Max(Case When rn = 7 Then Bar_Pct End) as decimal(10,1)) as mix_7_pct,\n    Cast(Max(Case When rn = 7 Then Vol_Pct End) as decimal(10,1)) as mix_7_vol_pct,\n    Cast(Max(Case When rn = 7 Then Pts_Pct End) as decimal(10,1)) as mix_7_pts_pct,\n    Cast(Max(Case When rn = 7 Then Others_Pct End) as decimal(10,1)) as mix_7_others_pct,\n\n    -- ROW 8\n    Max(Case When rn = 8 Then ASR_Name End) as mix_8_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 8 Then Total_Payout End), 0), '#,###'), '0') as mix_8_payout,\n    Cast(Max(Case When rn = 8 Then Bar_Pct End) as decimal(10,1)) as mix_8_pct,\n    Cast(Max(Case When rn = 8 Then Vol_Pct End) as decimal(10,1)) as mix_8_vol_pct,\n    Cast(Max(Case When rn = 8 Then Pts_Pct End) as decimal(10,1)) as mix_8_pts_pct,\n    Cast(Max(Case When rn = 8 Then Others_Pct End) as decimal(10,1)) as mix_8_others_pct,\n\n    -- ROW 9\n    Max(Case When rn = 9 Then ASR_Name End) as mix_9_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 9 Then Total_Payout End), 0), '#,###'), '0') as mix_9_payout,\n    Cast(Max(Case When rn = 9 Then Bar_Pct End) as decimal(10,1)) as mix_9_pct,\n    Cast(Max(Case When rn = 9 Then Vol_Pct End) as decimal(10,1)) as mix_9_vol_pct,\n    Cast(Max(Case When rn = 9 Then Pts_Pct End) as decimal(10,1)) as mix_9_pts_pct,\n    Cast(Max(Case When rn = 9 Then Others_Pct End) as decimal(10,1)) as mix_9_others_pct,\n\n    -- ROW 10\n    Max(Case When rn = 10 Then ASR_Name End) as mix_10_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 10 Then Total_Payout End), 0), '#,###'), '0') as mix_10_payout,\n    Cast(Max(Case When rn = 10 Then Bar_Pct End) as decimal(10,1)) as mix_10_pct,\n    Cast(Max(Case When rn = 10 Then Vol_Pct End) as decimal(10,1)) as mix_10_vol_pct,\n    Cast(Max(Case When rn = 10 Then Pts_Pct End) as decimal(10,1)) as mix_10_pts_pct,\n    Cast(Max(Case When rn = 10 Then Others_Pct End) as decimal(10,1)) as mix_10_others_pct\n\nFrom (\n    Select \n        ASR_Name,\n        Total_Payout,\n        (Total_Payout * 100.0 / Case When Max_Total = 0 Then 1 Else Max_Total End) as Bar_Pct,\n        (Vol_Payout * 100.0 / Case When Total_Payout = 0 Then 1 Else Total_Payout End) as Vol_Pct,\n        (Pts_Payout * 100.0 / Case When Total_Payout = 0 Then 1 Else Total_Payout End) as Pts_Pct,\n        (Others_Payout * 100.0 / Case When Total_Payout = 0 Then 1 Else Total_Payout End) as Others_Pct,\n        rn\n    From (\n        Select \n            ASR_Name,\n            Total_Payout,\n            Vol_Payout,\n            Pts_Payout,\n            Others_Payout,\n            Max(Total_Payout) Over () as Max_Total,\n            ROW_NUMBER() Over (Order By Total_Payout DESC) as rn\n        From (\n            Select \n                ASR_Name,\n                Sum(amount) As Total_Payout,\n                Sum(Case When sub_category = 'Volume Retention' Then amount Else 0 End) As Vol_Payout,\n                Sum(Case When sub_category = 'Points Goal' Then amount Else 0 End) As Pts_Payout,\n                Sum(Case When sub_category = 'Others' Then amount Else 0 End) As Others_Payout\n            From (\n                Select \n                    CASE \n                        WHEN IndexOf(pa_active.participant_name, '(') > 0 THEN SubString(pa_active.participant_name, 0, IndexOf(pa_active.participant_name, '(')) \n                        ELSE pa_active.participant_name \n                    END As ASR_Name,\n                    p.amount,\n                    Case \n                        When m.sub_category IS NULL Then tm.sub_category\n                        Else m.sub_category\n                    End As sub_category\n                From xactly.xc_payment p\n                \n                /* Inlined Title Mapping */\n                Inner Join (\n                    SELECT DISTINCT\n                        ppa.participant_id AS master_participant_id,\n                        pta.title_name AS title\n                    FROM xactly.xc_period per \n                    INNER JOIN xactly.xc_pos_part_assignment ppa \n                        ON ppa.participant_id IN :v_child_master_participant_id\n                    INNER JOIN xactly.xc_position pos \n                        ON ppa.position_id = pos.position_id\n                        AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                        AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                    INNER JOIN xactly.xc_pos_title_assignment pta \n                        ON pos.position_id = pta.position_id\n                    WHERE per.period_id IN :v_month_period_ids\n                ) title On p.participant_id = title.master_participant_id\n                \n                /* Inlined Territory Mapping & Region Filtering */\n                Inner Join (\n                    SELECT DISTINCT\n                        pa_input.participant_id AS master_participant_id,\n                        pa_active.territory AS territory,\n                        pa_active.region AS region,\n                        pa_active.name AS participant_name\n                    FROM xactly.xc_period per \n                    INNER JOIN xactly.xc_participant pa_input \n                        ON pa_input.participant_id IN :v_child_master_participant_id\n                    INNER JOIN xactly.xc_participant pa_active \n                        ON pa_input.employee_id = pa_active.employee_id\n                        AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                        AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n                    WHERE per.period_id IN :v_month_period_ids\n                ) pa_active On p.participant_id = pa_active.master_participant_id\n                \n                Inner Join NATERA_MASTER_MAPPING m \n                    On p.earning_group_name = m.earning_group\n                    And title.title = m.title\n                    And m.category = 'WH'\n                Left Join NATERA_TERRITORY_MAPPING tm \n                    On pa_active.territory = tm.territory \n                    \n                Where p.participant_id IN :v_child_master_participant_id\n                  And p.period_id IN :v_month_period_ids\n                  \n                  -- Region Dashboard Filter\n                  And ('ALL' IN (:p_region) OR pa_active.region IN (:p_region))\n                  \n                  And p.earning_group_name IN (\n                      Select earning_group \n                      From NATERA_MASTER_MAPPING \n                      Where category = 'WH'\n                  )\n\n            ) raw_data\n            Group By ASR_Name\n        ) agg_data\n    ) windowed_data\n) final_data;"
+  },
+  {
+    "name": "ntr_db_wh_approved_budger",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "total_qtr_personal_target"
+    ],
+    "xsql": "select Coalesce (total_qtr_personal_target,'0.00 ') total_qtr_personal_target from \n(select 1) dummy left join (\nSelect FormatNumber(sum(total_qtr_personal_target),'#,##0.00 ') total_qtr_personal_target\nfrom (\n  SELECT \n    SUM(pa_active.personal_target / 4.0) AS total_qtr_personal_target\nFROM xactly.xc_period per\nINNER JOIN xactly.xc_participant pa_input \n    ON pa_input.participant_id IN :v_child_master_participant_id\n  INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n  ON pa_input.participant_id = pta.master_participant_id\nINNER JOIN $framework.NATERA_TITLE_CATEGORY_MAPPING m \n    ON pta.title_name = m.title\n  and m.category = 'WH'\n /* INNER JOIN xactly.xc_pos_part_assignment ppa \n      on pa_input.participant_id = ppa.participant_id\n      INNER JOIN xactly.xc_position pos \n\t\t\ton ppa.position_id = pos.position_id\n      \t\tAND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON pos.position_id = pos_reg.master_position_id*/\nINNER JOIN xactly.xc_participant pa_active \n    ON pa_input.employee_id = pa_active.employee_id\n    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\nWHERE per.period_id IN :v_month_period_ids\n       -- AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n)\n)\non 1=1"
+  },
+  {
+    "name": "ntr_onc_region_deep",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "Region",
+      "Initial_Payout",
+      "Follow_On_Payout"
+    ],
+    "xsql": "SELECT \n    part_info.region AS Region,\n    SUM(CASE WHEN m.sub_category = 'Initial Patients' THEN p.amount ELSE 0 END) AS Initial_Payout,\n    SUM(CASE WHEN m.sub_category = 'Follow On Patients' THEN p.amount ELSE 0 END) AS Follow_On_Payout\nFROM xactly.xc_payment p\n\n-- 1. Inline Title Mapping Subquery\nINNER JOIN (\n    SELECT DISTINCT\n        ppa.participant_id AS master_participant_id,\n        pta.title_name AS title_name\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_pos_part_assignment ppa \n        ON ppa.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_position pos \n        ON ppa.position_id = pos.position_id\n        AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n    INNER JOIN xactly.xc_pos_title_assignment pta \n        ON pos.position_id = pta.position_id\n    WHERE per.period_id IN :v_month_period_ids\n) pta ON p.participant_id = pta.master_participant_id\n\n-- 2. Inline Region Mapping Subquery (Pulled directly from xc_participant)\nINNER JOIN (\n    SELECT DISTINCT\n        pa_input.participant_id AS master_participant_id,\n        pa_active.region AS region\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_participant pa_input \n        ON pa_input.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_participant pa_active \n        ON pa_input.employee_id = pa_active.employee_id\n        AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n    WHERE per.period_id IN :v_month_period_ids\n) part_info ON p.participant_id = part_info.master_participant_id\n\n-- 3. Master Mapping (for Sub-Category and Category)\nINNER JOIN NATERA_MASTER_MAPPING m \n    ON p.earning_group_name = m.earning_group\n   AND pta.title_name = m.title\n\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND p.period_id IN :v_month_period_ids\n  AND m.category = 'ONC'\n  -- Apply the Region Dashboard Filter here directly against the participant data\n  AND ('ALL' IN (:p_region) OR part_info.region IN (:p_region))\n  AND part_info.region IS NOT NULL\n\nGROUP BY \n    part_info.region\nORDER BY \n    part_info.region ASC;"
+  },
+  {
+    "name": "ntr_oh_renasight_baseline_act",
+    "schema": "$framework",
+    "params": [
+      "v_prev_month_period_ids",
+      "v_month_period_ids",
+      "v_child_master_participant_id",
+      "p_region"
+    ],
+    "columns": [
+      "Region",
+      "Renasight_Baseline",
+      "Renasight_Actual"
+    ],
+    "xsql": "SELECT \n    pos_reg.region AS Region,\n    SUM(CASE WHEN p.period_id IN :v_prev_month_period_ids THEN p.amount ELSE 0 END) AS Renasight_Baseline,\n    SUM(CASE WHEN p.period_id IN :v_month_period_ids THEN p.amount ELSE 0 END) AS Renasight_Actual\nFROM xactly.xc_credit p\nINNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg \n    ON p.position_id = pos_reg.master_position_id\nINNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta \n    ON p.participant_id = pta.master_participant_id\nINNER JOIN $framework.NATERA_TITLE_CATEGORY_MAPPING m \n    ON pta.title_name = m.title\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND (p.period_id IN :v_month_period_ids OR p.period_id IN :v_prev_month_period_ids)\n  AND m.category = 'OH' \n  AND p.credit_type_name = 'Renasight'\n  AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\nGROUP BY pos_reg.region\nORDER BY Renasight_Actual DESC \nLIMIT 5;"
+  },
+  {
+    "name": "ntr_db_total_payout",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "total_payment",
+      "percent_approve"
+    ],
+    "xsql": "SELECT \n    Coalesce(FormatNumber(payout.total_amt, '#,##0.00'), '0.00') AS total_payment,\n   \n    Coalesce(Round((payout.total_amt * 100.0) / \n        CASE WHEN budget.total_tgt = 0 OR budget.total_tgt IS NULL THEN 1 \n             ELSE budget.total_tgt END, 1) || '%', '0.0%') AS percent_approve\n\nFROM (SELECT 1 AS dummy) dummy_table \n\n\nLEFT JOIN (\n    SELECT SUM(p.amount) AS total_amt\n    FROM xactly.xc_payment p\n    INNER JOIN (\n        SELECT DISTINCT\n            ppa.participant_id AS master_participant_id,\n            pta.title_name AS title_name\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_pos_part_assignment ppa \n            ON ppa.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_position pos \n            ON ppa.position_id = pos.position_id\n            AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n        INNER JOIN xactly.xc_pos_title_assignment pta \n            ON pos.position_id = pta.position_id\n        WHERE per.period_id IN :v_month_period_ids\n    ) pta ON p.participant_id = pta.master_participant_id\n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n        AND pta.title_name = m.title\n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n) payout ON 1=1\n\n\nLEFT JOIN (\n    SELECT SUM(pa_active.personal_target / 4.0) AS total_tgt\n    FROM xactly.xc_period per\n    INNER JOIN xactly.xc_participant pa_input \n        ON pa_input.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_participant pa_active \n        ON pa_input.employee_id = pa_active.employee_id\n        AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n    WHERE per.period_id IN :v_month_period_ids\n) budget ON 1=1;"
+  },
+  {
+    "name": "ntr_db_onc_followon_payout",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "initial_patients_payout",
+      "initial_patients_percentage_of_onc"
+    ],
+    "xsql": "SELECT \n    Coalesce(initial_patients_payout, '0.00') AS initial_patients_payout,\n    Coalesce(initial_patients_percentage || '%', '0.00%') AS initial_patients_percentage_of_onc\nFROM (SELECT 1 AS dummy) d\nLEFT JOIN (\n    SELECT \n        -- 1. Format the total payout for Initial Patients\n        FormatNumber(\n            SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Follow On Patients' THEN p.amount ELSE 0 END), \n            '#,##0.00'\n        ) AS initial_patients_payout,\n        \n        -- 2. Calculate the raw percentage relative to the total ONC category payout\n        Round(\n            (SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Follow On Patients' THEN p.amount ELSE 0 END) * 100.0) / \n            CASE WHEN SUM(p.amount) = 0 THEN 1 ELSE SUM(p.amount) END, \n            2\n        ) AS initial_patients_percentage\n    FROM xactly.xc_payment p\n    \n    -- Embedded Title Mapping\n    INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n        ON p.participant_id = pta.master_participant_id\n    \n    -- Embedded Territory Mapping\n    INNER JOIN $framework.ntr_db_get_paticipant_territory_mapping ter\n        ON p.participant_id = ter.master_participant_id\n    \n    -- Configuration Mappings scoped directly to the ONC category\n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n       AND pta.title_name = m.title\n       AND m.category = 'ONC'\n          INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON p.position_id = pos_reg.master_position_id\n  \n    LEFT JOIN NATERA_TERRITORY_MAPPING tm \n        ON ter.territory = tm.territory \n        \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n            AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n) AggData ON 1=1"
+  },
+  {
+    "name": "ntr_db_get_all_child_master_position_id",
+    "schema": "$framework",
+    "params": [
+      "v_qtr_start_date"
+    ],
+    "columns": [
+      "position_master_position_id"
+    ],
+    "xsql": "--select '' position_master_position_id \nselect hier.position_master_position_id from ShowIncentHierarchy(EffectiveAsOf= :v_qtr_start_date, ParentId = '79167020263211') hier \ninner join xactly.xc_pos_title_assignment pta \non pta.position_id = hier.position_id\ninner join $framework.NATERA_TITLE_CATEGORY_MAPPING t\non t.title = pta.title_name"
+  },
+  {
+    "name": "ntr_db_set_default_period_id",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "value_field"
+    ],
+    "xsql": "select LookupPeriodIdByName(value_field) as value_field from NATERA_DEFAULT_VALUE where column_type = 'Period_name';"
+  },
+  {
+    "name": "ntr_db_es_Efficiency",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "Oh_avg_val",
+      "Oh_p1_val",
+      "Oh_p2_val",
+      "Oh_p3_val",
+      "Onc_avg_val",
+      "Onc_p1_val",
+      "Onc_p2_val",
+      "Onc_p3_val",
+      "Wh_avg_val",
+      "Wh_p1_val",
+      "Wh_p2_val",
+      "Wh_p3_val",
+      "Oh_h_pct",
+      "Onc_h_pct",
+      "Wh_h_pct",
+      "Oh_s1_pct",
+      "Oh_s2_pct",
+      "Oh_s3_pct",
+      "Onc_s1_pct",
+      "Onc_s2_pct",
+      "Onc_s3_pct",
+      "Wh_s1_pct",
+      "Wh_s2_pct",
+      "Wh_s3_pct"
+    ],
+    "xsql": "SELECT \n    Coalesce(Oh_avg_val, 0) AS Oh_avg_val,\n    Coalesce(Oh_p1_val, 0) AS Oh_p1_val,\n    Coalesce(Oh_p2_val, 0) AS Oh_p2_val,\n    Coalesce(Oh_others_val, 0) AS Oh_p3_val,\n    \n    Coalesce(Onc_avg_val, 0) AS Onc_avg_val,\n    Coalesce(Onc_p1_val, 0) AS Onc_p1_val,\n    Coalesce(Onc_p2_val, 0) AS Onc_p2_val,\n    Coalesce(Onc_others_val, 0) AS Onc_p3_val,\n    \n    Coalesce(Wh_avg_val, 0) AS Wh_avg_val,\n    Coalesce(Wh_p1_val, 0) AS Wh_p1_val,\n    Coalesce(Wh_p2_val, 0) AS Wh_p2_val,\n    Coalesce(Wh_others_val, 0) AS Wh_p3_val,\n    \n    -- Height calculation (column average relative to the tallest average column)\n    Coalesce(Round((Oh_avg_val * 100.0) / CASE WHEN max_avg = 0 THEN 1 ELSE max_avg END, 0), 0) AS Oh_h_pct,\n    Coalesce(Round((Onc_avg_val * 100.0) / CASE WHEN max_avg = 0 THEN 1 ELSE max_avg END, 0), 0) AS Onc_h_pct,\n    Coalesce(Round((Wh_avg_val * 100.0) / CASE WHEN max_avg = 0 THEN 1 ELSE max_avg END, 0), 0) AS Wh_h_pct,\n    \n    -- Sub-category mix percentages (P1, P2, and Others inside the column)\n    Coalesce(Round((Oh_p1_val * 100.0) / CASE WHEN Oh_avg_val = 0 THEN 1 ELSE Oh_avg_val END, 0), 0) AS Oh_s1_pct,\n    Coalesce(Round((Oh_p2_val * 100.0) / CASE WHEN Oh_avg_val = 0 THEN 1 ELSE Oh_avg_val END, 0), 0) AS Oh_s2_pct,\n    Coalesce(Round((Oh_others_val * 100.0) / CASE WHEN Oh_avg_val = 0 THEN 1 ELSE Oh_avg_val END, 0), 0) AS Oh_s3_pct,\n\n    Coalesce(Round((Onc_p1_val * 100.0) / CASE WHEN Onc_avg_val = 0 THEN 1 ELSE Onc_avg_val END, 0), 0) AS Onc_s1_pct,\n    Coalesce(Round((Onc_p2_val * 100.0) / CASE WHEN Onc_avg_val = 0 THEN 1 ELSE Onc_avg_val END, 0), 0) AS Onc_s2_pct,\n    Coalesce(Round((Onc_others_val * 100.0) / CASE WHEN Onc_avg_val = 0 THEN 1 ELSE Onc_avg_val END, 0), 0) AS Onc_s3_pct,\n\n    Coalesce(Round((Wh_p1_val * 100.0) / CASE WHEN Wh_avg_val = 0 THEN 1 ELSE Wh_avg_val END, 0), 0) AS Wh_s1_pct,\n    Coalesce(Round((Wh_p2_val * 100.0) / CASE WHEN Wh_avg_val = 0 THEN 1 ELSE Wh_avg_val END, 0), 0) AS Wh_s2_pct,\n    Coalesce(Round((Wh_others_val * 100.0) / CASE WHEN Wh_avg_val = 0 THEN 1 ELSE Wh_avg_val END, 0), 0) AS Wh_s3_pct\n\nFROM (\n    SELECT\n        Oh_avg_val, Oh_p1_val, Oh_p2_val, Oh_others_val,\n        Onc_avg_val, Onc_p1_val, Onc_p2_val, Onc_others_val,\n        Wh_avg_val, Wh_p1_val, Wh_p2_val, Wh_others_val,\n        \n        CASE \n            WHEN Oh_avg_val >= Onc_avg_val AND Oh_avg_val >= Wh_avg_val THEN Oh_avg_val\n            WHEN Onc_avg_val >= Wh_avg_val THEN Onc_avg_val\n            ELSE Wh_avg_val \n        END AS max_avg\n    FROM (\n        SELECT \n            -- Calculate Averages (Total Division Amount / Number of Distinct Reps)\n            Round(oh_tot / CASE WHEN oh_reps = 0 THEN 1 ELSE oh_reps END, 0) AS Oh_avg_val,\n            Round(oh_p1_tot / CASE WHEN oh_reps = 0 THEN 1 ELSE oh_reps END, 0) AS Oh_p1_val,\n            Round(oh_p2_tot / CASE WHEN oh_reps = 0 THEN 1 ELSE oh_reps END, 0) AS Oh_p2_val,\n            Round(oh_others_tot / CASE WHEN oh_reps = 0 THEN 1 ELSE oh_reps END, 0) AS Oh_others_val,\n\n            Round(onc_tot / CASE WHEN onc_reps = 0 THEN 1 ELSE onc_reps END, 0) AS Onc_avg_val,\n            Round(onc_p1_tot / CASE WHEN onc_reps = 0 THEN 1 ELSE onc_reps END, 0) AS Onc_p1_val,\n            Round(onc_p2_tot / CASE WHEN onc_reps = 0 THEN 1 ELSE onc_reps END, 0) AS Onc_p2_val,\n            Round(onc_others_tot / CASE WHEN onc_reps = 0 THEN 1 ELSE onc_reps END, 0) AS Onc_others_val,\n\n            Round(wh_tot / CASE WHEN wh_reps = 0 THEN 1 ELSE wh_reps END, 0) AS Wh_avg_val,\n            Round(wh_p1_tot / CASE WHEN wh_reps = 0 THEN 1 ELSE wh_reps END, 0) AS Wh_p1_val,\n            Round(wh_p2_tot / CASE WHEN wh_reps = 0 THEN 1 ELSE wh_reps END, 0) AS Wh_p2_val,\n            Round(wh_others_tot / CASE WHEN wh_reps = 0 THEN 1 ELSE wh_reps END, 0) AS Wh_others_val\n        FROM (\n            SELECT \n                -- Organ Health Totals & Rep Count\n                SUM(CASE WHEN m.category = 'OH' THEN p.amount ELSE 0 END) AS oh_tot,\n                COUNT(DISTINCT CASE WHEN m.category = 'OH' AND p.amount != 0 THEN p.participant_id END) AS oh_reps,\n                SUM(CASE WHEN m.category = 'OH' AND Coalesce(m.sub_category, tm.sub_category) = 'Prospera' THEN p.amount ELSE 0 END) AS oh_p1_tot,\n                SUM(CASE WHEN m.category = 'OH' AND Coalesce(m.sub_category, tm.sub_category) = 'Renasight' THEN p.amount ELSE 0 END) AS oh_p2_tot,\n                SUM(CASE WHEN m.category = 'OH' AND Coalesce(m.sub_category, tm.sub_category) = 'Others' THEN p.amount ELSE 0 END) AS oh_others_tot,\n\n                -- Oncology Totals & Rep Count\n                SUM(CASE WHEN m.category = 'ONC' THEN p.amount ELSE 0 END) AS onc_tot,\n                COUNT(DISTINCT CASE WHEN m.category = 'ONC' AND p.amount != 0 THEN p.participant_id END) AS onc_reps,\n                SUM(CASE WHEN m.category = 'ONC' AND Coalesce(m.sub_category, tm.sub_category) = 'Initial Patients' THEN p.amount ELSE 0 END) AS onc_p1_tot,\n                SUM(CASE WHEN m.category = 'ONC' AND Coalesce(m.sub_category, tm.sub_category) = 'Follow On Patients' THEN p.amount ELSE 0 END) AS onc_p2_tot,\n                SUM(CASE WHEN m.category = 'ONC' AND Coalesce(m.sub_category, tm.sub_category) = 'Others' THEN p.amount ELSE 0 END) AS onc_others_tot,\n\n                -- Women's Health Totals & Rep Count\n                SUM(CASE WHEN m.category = 'WH' THEN p.amount ELSE 0 END) AS wh_tot,\n                COUNT(DISTINCT CASE WHEN m.category = 'WH' AND p.amount != 0 THEN p.participant_id END) AS wh_reps,\n                SUM(CASE WHEN m.category = 'WH' AND Coalesce(m.sub_category, tm.sub_category) = 'Volume Retention' THEN p.amount ELSE 0 END) AS wh_p1_tot,\n                SUM(CASE WHEN m.category = 'WH' AND Coalesce(m.sub_category, tm.sub_category) = 'Points Goal' THEN p.amount ELSE 0 END) AS wh_p2_tot,\n                SUM(CASE WHEN m.category = 'WH' AND Coalesce(m.sub_category, tm.sub_category) = 'Others' THEN p.amount ELSE 0 END) AS wh_others_tot\n\n            FROM xactly.xc_payment p\n            \n            -- Embedded Title Mapping\n            INNER JOIN (\n                SELECT DISTINCT\n                    ppa.participant_id AS master_participant_id,\n                    pta.title_name AS title_name\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_pos_part_assignment ppa \n                    ON ppa.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_position pos \n                    ON ppa.position_id = pos.position_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                INNER JOIN xactly.xc_pos_title_assignment pta \n                    ON pos.position_id = pta.position_id\n                WHERE per.period_id IN :v_month_period_ids\n            ) pta ON p.participant_id = pta.master_participant_id\n            \n            -- Embedded Territory Mapping (LEFT JOIN)\n            LEFT JOIN (\n                SELECT DISTINCT\n                    pa_input.participant_id AS master_participant_id,\n                    pa_active.territory AS territory\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_participant pa_input \n                    ON pa_input.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_participant pa_active \n                    ON pa_input.employee_id = pa_active.employee_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n                WHERE per.period_id IN :v_month_period_ids\n            ) ter ON p.participant_id = ter.master_participant_id\n            \n            INNER JOIN NATERA_MASTER_MAPPING m \n                ON p.earning_group_name = m.earning_group\n                AND pta.title_name = m.title\n                \n            LEFT JOIN NATERA_TERRITORY_MAPPING tm \n                ON ter.territory = tm.territory \n                \n            WHERE p.participant_id IN :v_child_master_participant_id\n              AND p.period_id IN :v_month_period_ids\n        ) RawSums\n    ) AvgData\n) FinalData;"
+  },
+  {
+    "name": "ntr_top_performer",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "top_performer_1_rank",
+      "top_performer_1_name",
+      "top_performer_1_payout",
+      "top_performer_1_pct",
+      "top_performer_2_rank",
+      "top_performer_2_name",
+      "top_performer_2_payout",
+      "top_performer_2_pct",
+      "top_performer_3_rank",
+      "top_performer_3_name",
+      "top_performer_3_payout",
+      "top_performer_3_pct",
+      "top_performer_4_rank",
+      "top_performer_4_name",
+      "top_performer_4_payout",
+      "top_performer_4_pct",
+      "top_performer_5_rank",
+      "top_performer_5_name",
+      "top_performer_5_payout",
+      "top_performer_5_pct",
+      "top_performer_6_rank",
+      "top_performer_6_name",
+      "top_performer_6_payout",
+      "top_performer_6_pct",
+      "top_performer_7_rank",
+      "top_performer_7_name",
+      "top_performer_7_payout",
+      "top_performer_7_pct",
+      "top_performer_8_rank",
+      "top_performer_8_name",
+      "top_performer_8_payout",
+      "top_performer_8_pct",
+      "top_performer_9_rank",
+      "top_performer_9_name",
+      "top_performer_9_payout",
+      "top_performer_9_pct",
+      "top_performer_10_rank",
+      "top_performer_10_name",
+      "top_performer_10_payout",
+      "top_performer_10_pct"
+    ],
+    "xsql": "SELECT \n    Max(Case When rn = 1 Then rn End) as top_performer_1_rank,\n    Coalesce(Max(Case When rn = 1 Then name End), '') as top_performer_1_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 1 Then payout End), 0), '#,###'), '0') as top_performer_1_payout,\n    Coalesce(Max(Case When rn = 1 Then pct End), 0.0) as top_performer_1_pct,\n    \n    Max(Case When rn = 2 Then rn End) as top_performer_2_rank,\n    Coalesce(Max(Case When rn = 2 Then name End), '') as top_performer_2_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 2 Then payout End), 0), '#,###'), '0') as top_performer_2_payout,\n    Coalesce(Max(Case When rn = 2 Then pct End), 0.0) as top_performer_2_pct,\n    \n    Max(Case When rn = 3 Then rn End) as top_performer_3_rank,\n    Coalesce(Max(Case When rn = 3 Then name End), '') as top_performer_3_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 3 Then payout End), 0), '#,###'), '0') as top_performer_3_payout,\n    Coalesce(Max(Case When rn = 3 Then pct End), 0.0) as top_performer_3_pct,\n    \n    Max(Case When rn = 4 Then rn End) as top_performer_4_rank,\n    Coalesce(Max(Case When rn = 4 Then name End), '') as top_performer_4_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 4 Then payout End), 0), '#,###'), '0') as top_performer_4_payout,\n    Coalesce(Max(Case When rn = 4 Then pct End), 0.0) as top_performer_4_pct,\n    \n    Max(Case When rn = 5 Then rn End) as top_performer_5_rank,\n    Coalesce(Max(Case When rn = 5 Then name End), '') as top_performer_5_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 5 Then payout End), 0), '#,###'), '0') as top_performer_5_payout,\n    Coalesce(Max(Case When rn = 5 Then pct End), 0.0) as top_performer_5_pct,\n    \n    Max(Case When rn = 6 Then rn End) as top_performer_6_rank,\n    Coalesce(Max(Case When rn = 6 Then name End), '') as top_performer_6_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 6 Then payout End), 0), '#,###'), '0') as top_performer_6_payout,\n    Coalesce(Max(Case When rn = 6 Then pct End), 0.0) as top_performer_6_pct,\n    \n    Max(Case When rn = 7 Then rn End) as top_performer_7_rank,\n    Coalesce(Max(Case When rn = 7 Then name End), '') as top_performer_7_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 7 Then payout End), 0), '#,###'), '0') as top_performer_7_payout,\n    Coalesce(Max(Case When rn = 7 Then pct End), 0.0) as top_performer_7_pct,\n    \n    Max(Case When rn = 8 Then rn End) as top_performer_8_rank,\n    Coalesce(Max(Case When rn = 8 Then name End), '') as top_performer_8_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 8 Then payout End), 0), '#,###'), '0') as top_performer_8_payout,\n    Coalesce(Max(Case When rn = 8 Then pct End), 0.0) as top_performer_8_pct,\n    \n    Max(Case When rn = 9 Then rn End) as top_performer_9_rank,\n    Coalesce(Max(Case When rn = 9 Then name End), '') as top_performer_9_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 9 Then payout End), 0), '#,###'), '0') as top_performer_9_payout,\n    Coalesce(Max(Case When rn = 9 Then pct End), 0.0) as top_performer_9_pct,\n    \n    Max(Case When rn = 10 Then rn End) as top_performer_10_rank,\n    Coalesce(Max(Case When rn = 10 Then name End), '') as top_performer_10_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 10 Then payout End), 0), '#,###'), '0') as top_performer_10_payout,\n    Coalesce(Max(Case When rn = 10 Then pct End), 0.0) as top_performer_10_pct\n\nFROM (\n    SELECT \n        name,\n        payout,\n        CAST(CASE WHEN max_payout = 0 THEN 0.0 ELSE (payout * 100.0 / max_payout) END AS DECIMAL(10,1)) AS pct,\n        Row_Number() OVER (ORDER BY payout DESC) as rn\n    FROM (\n        SELECT \n            name,\n            payout,\n            Max(payout) OVER () as max_payout -- Safe window execution on static fields\n        FROM (\n            SELECT \n                SubString(part.name, 0, IndexOf(part.name, '(')) AS name, \n                SUM(p.amount) AS payout\n            FROM xactly.xc_payment p\n            INNER JOIN xactly.xc_participant part\n                ON p.participant_id = part.participant_id\n                \n            -- FIXED: Tie the active participant lookup perfectly to the payment period to prevent tripling\n            INNER JOIN xactly.xc_period active_per\n                ON p.period_id = active_per.period_id\n            INNER JOIN xactly.xc_participant pa_active \n                ON part.employee_id = pa_active.employee_id\n                AND CAST(active_per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                AND CAST(active_per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n                \n            INNER JOIN (\n                SELECT DISTINCT\n                    ppa.participant_id AS master_participant_id,\n                    pta.title_name AS title_name\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_pos_part_assignment ppa \n                    ON ppa.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_position pos \n                    ON ppa.position_id = pos.position_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                INNER JOIN xactly.xc_pos_title_assignment pta \n                    ON pos.position_id = pta.position_id\n                WHERE per.period_id IN :v_month_period_ids\n            ) pta ON p.participant_id = pta.master_participant_id\n            \n            INNER JOIN NATERA_MASTER_MAPPING m \n                ON p.earning_group_name = m.earning_group\n               AND pta.title_name = m.title\n               \n            WHERE p.participant_id IN :v_child_master_participant_id\n              AND p.period_id IN :v_month_period_ids\n              AND m.category = 'ONC'\n              \n              -- Apply the region filter logic to the correctly joined active participant\n              AND ('ALL' IN (:p_region) OR pa_active.region IN (:p_region))\n              \n            GROUP BY \n                SubString(part.name, 0, IndexOf(part.name, '(')) \n        ) BaseSums\n    ) WindowSums\n) RankedData\nWHERE rn <= 10"
+  },
+  {
+    "name": "ntr_onc_chart_2",
+    "schema": "$framework",
+    "params": [
+      "p_region"
+    ],
+    "columns": [
+      "COS_Name",
+      "Projected_Initial_Payout",
+      "Projected_FollowOn_Payout",
+      "Projected_Total_Payout"
+    ],
+    "xsql": "SELECT \n    COS_Name,\n    Projected_Initial_Payout,\n    Projected_FollowOn_Payout,\n    Projected_Total_Payout\nFROM EXT_NATERA_ONC_PERF\nWHERE 'ALL' IN (:p_region) OR Region IN (:p_region)\nORDER BY Projected_Total_Payout DESC\nLIMIT 10"
+  },
+  {
+    "name": "ntr_db_get_prev_monthly_period_ids",
+    "schema": "$framework",
+    "params": [
+      "v_period_id"
+    ],
+    "columns": [
+      "period_id"
+    ],
+    "xsql": "SELECT child.period_id\nFROM xactly.xc_period child\nINNER JOIN xactly.xc_period parent \n    ON child.parent_period_id = parent.period_id\nWHERE parent.period_id in (select max(period_id) from xactly.xc_period where LookupPeriodTypeById(period_type_id_fk) = 'QUARTERLY' and period_id < :v_period_id)\n  AND LookupPeriodTypeById(child.period_type_id_fk) = 'MONTHLY'\nORDER BY child.period_id ASC"
+  },
+  {
+    "name": "ntr_db_onc_inpatient_payout",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "initial_patients_payout",
+      "initial_patients_percentage_of_onc"
+    ],
+    "xsql": "SELECT \n    Coalesce(initial_patients_payout, '0.00') AS initial_patients_payout,\n    Coalesce(initial_patients_percentage || '%', '0.00%') AS initial_patients_percentage_of_onc\nFROM (SELECT 1 AS dummy) d\nLEFT JOIN (\n    SELECT \n        -- 1. Format the total payout for Initial Patients\n        FormatNumber(\n            SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Initial Patients' THEN p.amount ELSE 0 END), \n            '#,##0.00'\n        ) AS initial_patients_payout,\n        \n        -- 2. Calculate the raw percentage relative to the total ONC category payout\n        Round(\n            (SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Initial Patients' THEN p.amount ELSE 0 END) * 100.0) / \n            CASE WHEN SUM(p.amount) = 0 THEN 1 ELSE SUM(p.amount) END, \n            2\n        ) AS initial_patients_percentage\n    FROM xactly.xc_payment p\n    \n    -- Embedded Title Mapping\n    INNER JOIN (\n        SELECT DISTINCT\n            ppa.participant_id AS master_participant_id,\n            pta.title_name AS title_name\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_pos_part_assignment ppa \n            ON ppa.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_position pos \n            ON ppa.position_id = pos.position_id\n            AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n        INNER JOIN xactly.xc_pos_title_assignment pta \n            ON pos.position_id = pta.position_id\n        WHERE per.period_id IN :v_month_period_ids\n    ) pta ON p.participant_id = pta.master_participant_id\n    \n    -- Embedded Territory Mapping\n    LEFT JOIN (\n        SELECT DISTINCT\n            pa_input.participant_id AS master_participant_id,\n            pa_active.territory AS territory\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_participant pa_input \n            ON pa_input.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_participant pa_active \n            ON pa_input.employee_id = pa_active.employee_id\n            AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n        WHERE per.period_id IN :v_month_period_ids\n    ) ter ON p.participant_id = ter.master_participant_id\n    \n    -- Configuration Mappings scoped directly to the ONC category\n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n       AND pta.title_name = m.title\n       AND m.category = 'ONC'\n          INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON p.position_id = pos_reg.master_position_id\n    LEFT JOIN NATERA_TERRITORY_MAPPING tm \n        ON ter.territory = tm.territory \n        \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n            AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n) AggData ON 1=1"
+  },
+  {
+    "name": "ntr_db_dd_sub_category",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "sub_category"
+    ],
+    "xsql": "SELECT DISTINCT sub_category \nFROM NATERA_MAPPING_MAIN \nORDER BY sub_category;"
+  },
+  {
+    "name": "ntr_db_approved_budger",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "total_qtr_personal_target"
+    ],
+    "xsql": "select Coalesce (total_qtr_personal_target,'0.00 ') total_qtr_personal_target from \n(select 1) dummy left join (\nSelect FormatNumber(sum(total_qtr_personal_target),'#,##0.00 ') total_qtr_personal_target\nfrom (\n  SELECT \n    SUM(pa_active.personal_target / 4.0) AS total_qtr_personal_target\nFROM xactly.xc_period per\nINNER JOIN xactly.xc_participant pa_input \n    ON pa_input.participant_id IN :v_child_master_participant_id\nINNER JOIN xactly.xc_participant pa_active \n    ON pa_input.employee_id = pa_active.employee_id\n    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\nWHERE per.period_id IN :v_month_period_ids\n)\n)\non 1=1"
+  },
+  {
+    "name": "ntr_db_get_master_position_id",
+    "schema": "$framework",
+    "params": [
+      "v_qtr_start_date"
+    ],
+    "columns": [
+      "master_position_id"
+    ],
+    "xsql": "select  pos.master_position_id from xactly.xc_pos_part_assignment ppa inner join xactly.xc_position pos \non ppa.position_id = pos.position_id\nwhere ppa.participant_id in (select participant_id from xactly.xc_participant where employee_id in (select pa.employee_id as employee_id from xactly.xc_user usr\ninner join xactly.xc_part_user_assignment pua \non usr.user_id = pua.user_id \nand :v_qtr_start_date between pua.effective_start_date and pua.effective_end_date\ninner join xactly.xc_participant pa \non pa.participant_id = pua.participant_id\nwhere usr.email = 'pgrinnell@natera.com'\nand :v_qtr_start_date between pa.effective_start_date and pa.effective_end_date)\nand is_master = 1)\nand :v_qtr_start_date between pos.effective_start_date and pos.effective_end_date"
+  },
+  {
+    "name": "ntr_db_get_paticipant_territory_mapping",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "master_participant_id",
+      "territory"
+    ],
+    "xsql": "SELECT DISTINCT\n    pa_input.participant_id AS master_participant_id,\n    pa_active.territory AS territory\nFROM xactly.xc_period per \nINNER JOIN xactly.xc_participant pa_input \n    ON pa_input.participant_id IN :v_child_master_participant_id\nINNER JOIN xactly.xc_participant pa_active \n    ON pa_input.employee_id = pa_active.employee_id\n    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\nWHERE per.period_id IN :v_month_period_ids"
+  },
+  {
+    "name": "ntr_oh_donut_default",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "prospera_val",
+      "renasight_val",
+      "others_val",
+      "total_val",
+      "prospera_pct",
+      "renasight_pct",
+      "others_pct"
+    ],
+    "xsql": "SELECT \n    Coalesce(prospera_val, 0) AS prospera_val,\n    Coalesce(renasight_val, 0) AS renasight_val,\n    Coalesce(others_val, 0) AS others_val,\n    (Coalesce(prospera_val, 0) + Coalesce(renasight_val, 0) + Coalesce(others_val, 0)) AS total_val,\n    \n    -- Safe percentage calculation for Prospera\n    CASE \n        WHEN (Coalesce(prospera_val, 0) + Coalesce(renasight_val, 0) + Coalesce(others_val, 0)) = 0 THEN 0.0\n        ELSE CAST((prospera_val * 100.0 / (prospera_val + renasight_val + others_val)) AS DECIMAL(10,1)) \n    END AS prospera_pct,\n    \n    -- Safe percentage calculation for Renasight\n    CASE \n        WHEN (Coalesce(prospera_val, 0) + Coalesce(renasight_val, 0) + Coalesce(others_val, 0)) = 0 THEN 0.0\n        ELSE CAST((renasight_val * 100.0 / (prospera_val + renasight_val + others_val)) AS DECIMAL(10,1)) \n    END AS renasight_pct,\n\n    -- Safe percentage calculation for Others\n    CASE \n        WHEN (Coalesce(prospera_val, 0) + Coalesce(renasight_val, 0) + Coalesce(others_val, 0)) = 0 THEN 0.0\n        ELSE CAST((others_val * 100.0 / (prospera_val + renasight_val + others_val)) AS DECIMAL(10,1)) \n    END AS others_pct\n\nFROM (\n    SELECT \n        SUM(CASE WHEN sub_category = 'Prospera' THEN amount ELSE 0 END) AS prospera_val,\n        SUM(CASE WHEN sub_category = 'Renasight' THEN amount ELSE 0 END) AS renasight_val,\n        SUM(CASE WHEN sub_category = 'Others' THEN amount ELSE 0 END) AS others_val\n    FROM (\n        -- BASE LAYER Extracting only the OH mapping lines\n        SELECT \n            p.amount,\n            CASE \n                WHEN m.sub_category IS NULL THEN tm.sub_category\n                ELSE m.sub_category\n            END AS sub_category\n        FROM xactly.xc_payment p\n        INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n            ON p.participant_id = pta.master_participant_id\n        INNER JOIN $framework.ntr_db_get_paticipant_territory_mapping ter\n            ON p.participant_id = ter.master_participant_id\n        INNER JOIN $framework.NATERA_MASTER_MAPPING m \n            ON p.earning_group_name = m.earning_group\n            AND pta.title_name = m.title\n        LEFT JOIN $framework.NATERA_TERRITORY_MAPPING tm \n            ON ter.territory = tm.territory \n        WHERE p.participant_id IN :v_child_master_participant_id\n          AND p.period_id IN :v_month_period_ids\n          AND m.category = 'OH' \n          \n        /* -- MAGIC PRE-FILTER Instantly drop non-OH payments before doing heavy math\n          AND p.earning_group_name IN (\n              SELECT earning_group \n              FROM $framework.NATERA_MASTER_MAPPING\n              WHERE category = 'OH'\n          )*/\n    ) raw_data\n) sum_data"
+  },
+  {
+    "name": "ntr_db_get_monthly_period_ids",
+    "schema": "$framework",
+    "params": [
+      "v_period_id"
+    ],
+    "columns": [
+      "period_id"
+    ],
+    "xsql": "SELECT child.period_id\nFROM xactly.xc_period child\nINNER JOIN xactly.xc_period parent \n    ON child.parent_period_id = parent.period_id\nWHERE parent.period_id = :v_period_id\n  AND LookupPeriodTypeById(child.period_type_id_fk) = 'MONTHLY'\nORDER BY child.period_id ASC"
+  },
+  {
+    "name": "ntr_db_admin_mapping_main",
+    "schema": "$framework",
+    "params": [
+      "v_search_main"
+    ],
+    "columns": [],
+    "xsql": "SELECT * FROM $framework.NATERA_MAPPING_MAIN \nWHERE :v_search_main IS NULL \n   OR :v_search_main = ''\n   OR lower(category) LIKE lower('%' || :v_search_main || '%')\n   OR lower(sub_category) LIKE lower('%' || :v_search_main || '%')\n   OR lower(identifier) LIKE lower('%' || :v_search_main || '%');"
+  },
+  {
+    "name": "ntr_region_dd",
+    "schema": "$framework",
+    "params": [
+      "p_ta"
+    ],
+    "columns": [
+      "Region_Name",
+      "Region_Value"
+    ],
+    "xsql": "SELECT Region_Name, Region_Value \nFROM (\n    SELECT 'ALL' AS Region_Name, 'ALL' AS Region_Value FROM DUAL\n    UNION ALL\n    SELECT DISTINCT Region AS Region_Name, Region AS Region_Value \n    FROM EXT_NATERA_TERRITORY_MAP\n    WHERE ('ALL' IN (:p_ta) OR Division IN (:p_ta))\n) \nORDER BY CASE WHEN Region_Name = 'ALL' THEN 1 ELSE 2 END, Region_Name"
+  },
+  {
+    "name": "ntr_db_dd",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "category"
+    ],
+    "xsql": "SELECT DISTINCT category \nFROM NATERA_MAPPING_MAIN \nORDER BY category;"
+  },
+  {
+    "name": "ntr_wh_top_performer",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "top_performer_1_rank",
+      "top_performer_1_name",
+      "top_performer_1_payout",
+      "top_performer_1_pct",
+      "top_performer_2_rank",
+      "top_performer_2_name",
+      "top_performer_2_payout",
+      "top_performer_2_pct",
+      "top_performer_3_rank",
+      "top_performer_3_name",
+      "top_performer_3_payout",
+      "top_performer_3_pct",
+      "top_performer_4_rank",
+      "top_performer_4_name",
+      "top_performer_4_payout",
+      "top_performer_4_pct",
+      "top_performer_5_rank",
+      "top_performer_5_name",
+      "top_performer_5_payout",
+      "top_performer_5_pct",
+      "top_performer_6_rank",
+      "top_performer_6_name",
+      "top_performer_6_payout",
+      "top_performer_6_pct",
+      "top_performer_7_rank",
+      "top_performer_7_name",
+      "top_performer_7_payout",
+      "top_performer_7_pct",
+      "top_performer_8_rank",
+      "top_performer_8_name",
+      "top_performer_8_payout",
+      "top_performer_8_pct",
+      "top_performer_9_rank",
+      "top_performer_9_name",
+      "top_performer_9_payout",
+      "top_performer_9_pct",
+      "top_performer_10_rank",
+      "top_performer_10_name",
+      "top_performer_10_payout",
+      "top_performer_10_pct"
+    ],
+    "xsql": "SELECT \n    Max(Case When rn = 1 Then rn End) as top_performer_1_rank,\n    Coalesce(Max(Case When rn = 1 Then name End), '') as top_performer_1_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 1 Then payout End), 0), '#,###'), '0') as top_performer_1_payout,\n    Coalesce(Max(Case When rn = 1 Then pct End), 0.0) as top_performer_1_pct,\n    \n    Max(Case When rn = 2 Then rn End) as top_performer_2_rank,\n    Coalesce(Max(Case When rn = 2 Then name End), '') as top_performer_2_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 2 Then payout End), 0), '#,###'), '0') as top_performer_2_payout,\n    Coalesce(Max(Case When rn = 2 Then pct End), 0.0) as top_performer_2_pct,\n    \n    Max(Case When rn = 3 Then rn End) as top_performer_3_rank,\n    Coalesce(Max(Case When rn = 3 Then name End), '') as top_performer_3_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 3 Then payout End), 0), '#,###'), '0') as top_performer_3_payout,\n    Coalesce(Max(Case When rn = 3 Then pct End), 0.0) as top_performer_3_pct,\n    \n    Max(Case When rn = 4 Then rn End) as top_performer_4_rank,\n    Coalesce(Max(Case When rn = 4 Then name End), '') as top_performer_4_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 4 Then payout End), 0), '#,###'), '0') as top_performer_4_payout,\n    Coalesce(Max(Case When rn = 4 Then pct End), 0.0) as top_performer_4_pct,\n    \n    Max(Case When rn = 5 Then rn End) as top_performer_5_rank,\n    Coalesce(Max(Case When rn = 5 Then name End), '') as top_performer_5_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 5 Then payout End), 0), '#,###'), '0') as top_performer_5_payout,\n    Coalesce(Max(Case When rn = 5 Then pct End), 0.0) as top_performer_5_pct,\n    \n    Max(Case When rn = 6 Then rn End) as top_performer_6_rank,\n    Coalesce(Max(Case When rn = 6 Then name End), '') as top_performer_6_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 6 Then payout End), 0), '#,###'), '0') as top_performer_6_payout,\n    Coalesce(Max(Case When rn = 6 Then pct End), 0.0) as top_performer_6_pct,\n    \n    Max(Case When rn = 7 Then rn End) as top_performer_7_rank,\n    Coalesce(Max(Case When rn = 7 Then name End), '') as top_performer_7_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 7 Then payout End), 0), '#,###'), '0') as top_performer_7_payout,\n    Coalesce(Max(Case When rn = 7 Then pct End), 0.0) as top_performer_7_pct,\n    \n    Max(Case When rn = 8 Then rn End) as top_performer_8_rank,\n    Coalesce(Max(Case When rn = 8 Then name End), '') as top_performer_8_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 8 Then payout End), 0), '#,###'), '0') as top_performer_8_payout,\n    Coalesce(Max(Case When rn = 8 Then pct End), 0.0) as top_performer_8_pct,\n    \n    Max(Case When rn = 9 Then rn End) as top_performer_9_rank,\n    Coalesce(Max(Case When rn = 9 Then name End), '') as top_performer_9_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 9 Then payout End), 0), '#,###'), '0') as top_performer_9_payout,\n    Coalesce(Max(Case When rn = 9 Then pct End), 0.0) as top_performer_9_pct,\n    \n    Max(Case When rn = 10 Then rn End) as top_performer_10_rank,\n    Coalesce(Max(Case When rn = 10 Then name End), '') as top_performer_10_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 10 Then payout End), 0), '#,###'), '0') as top_performer_10_payout,\n    Coalesce(Max(Case When rn = 10 Then pct End), 0.0) as top_performer_10_pct\n\nFROM (\n    SELECT \n        name,\n        payout,\n        CAST(CASE WHEN max_payout = 0 THEN 0.0 ELSE (payout * 100.0 / max_payout) END AS DECIMAL(10,1)) AS pct,\n        Row_Number() OVER (ORDER BY payout DESC) as rn\n    FROM (\n        SELECT \n            name,\n            payout,\n            Max(payout) OVER () as max_payout -- Safe window execution on static fields\n        FROM (\n            SELECT \n                SubString(part.name, 0, IndexOf(part.name, '(')) AS name, \n                SUM(p.amount) AS payout\n            FROM xactly.xc_payment p\n            INNER JOIN xactly.xc_participant part\n                ON p.participant_id = part.participant_id\n                \n            -- FIXED: Tie the active participant lookup perfectly to the payment period to prevent tripling\n            INNER JOIN xactly.xc_period active_per\n                ON p.period_id = active_per.period_id\n            INNER JOIN xactly.xc_participant pa_active \n                ON part.employee_id = pa_active.employee_id\n                AND CAST(active_per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                AND CAST(active_per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n                \n            INNER JOIN (\n                SELECT DISTINCT\n                    ppa.participant_id AS master_participant_id,\n                    pta.title_name AS title_name\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_pos_part_assignment ppa \n                    ON ppa.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_position pos \n                    ON ppa.position_id = pos.position_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                INNER JOIN xactly.xc_pos_title_assignment pta \n                    ON pos.position_id = pta.position_id\n                WHERE per.period_id IN :v_month_period_ids\n            ) pta ON p.participant_id = pta.master_participant_id\n            \n            INNER JOIN NATERA_MASTER_MAPPING m \n                ON p.earning_group_name = m.earning_group\n               AND pta.title_name = m.title\n               \n            WHERE p.participant_id IN :v_child_master_participant_id\n              AND p.period_id IN :v_month_period_ids\n              AND m.category = 'WH'\n              \n              -- Apply the region filter logic to the correctly joined active participant\n              AND ('ALL' IN (:p_region) OR pa_active.region IN (:p_region))\n              \n            GROUP BY \n                SubString(part.name, 0, IndexOf(part.name, '(')) \n        ) BaseSums\n    ) WindowSums\n) RankedData\nWHERE rn <= 10"
+  },
+  {
+    "name": "ntr_oh_attainment",
+    "schema": "$framework",
+    "params": [
+      "v_period_id",
+      "v_child_master_position_id",
+      "p_region",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "Bucket",
+      "Prospera_Reps",
+      "Renasight_Reps",
+      "Sort_Order"
+    ],
+    "xsql": "SELECT \n    Bucket,\n    SUM(CASE WHEN product_name = 'Prospera' THEN 1 ELSE 0 END) AS Prospera_Reps,\n    SUM(CASE WHEN product_name = 'Renasight' THEN 1 ELSE 0 END) AS Renasight_Reps,\n    Sort_Order\nFROM (\n    SELECT \n        product_name,\n        CASE \n            WHEN individual_attainment < 80 THEN '< 80%'\n            WHEN individual_attainment >= 80 AND individual_attainment < 100 THEN '80-99%'\n            WHEN individual_attainment >= 100 AND individual_attainment < 120 THEN '100-119%'\n            ELSE '120%+' \n        END AS Bucket,\n        CASE \n            WHEN individual_attainment < 80 THEN 1\n            WHEN individual_attainment >= 80 AND individual_attainment < 100 THEN 2\n            WHEN individual_attainment >= 100 AND individual_attainment < 120 THEN 3\n            ELSE 4 \n        END AS Sort_Order\n    FROM (\n        -- PROSPERA ATTAINMENT CALCULATION\n        SELECT \n            'Prospera' AS product_name,\n            q.position_id,\n            CASE \n                WHEN Coalesce(q.quota_amount, 0.00) = 0 THEN 0.00\n                ELSE ((Coalesce(c.credit_amount, 0.00) / q.quota_amount) * 100)\n            END AS individual_attainment\n        FROM (\n            SELECT qa.assignment_id AS position_id, SUM(qa.amount) AS quota_amount\n            FROM xactly.xc_quota_assignment qa\n            INNER JOIN xactly.xc_quota q_tbl ON qa.quota_id = q_tbl.quota_id\n            INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON qa.assignment_id = pos_reg.master_position_id\n            WHERE qa.assignment_type = 2\n              AND q_tbl.name = 'Prospera Goal'\n              AND qa.period_id = :v_period_id\n              AND qa.assignment_id IN :v_child_master_position_id\n              AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\n            GROUP BY qa.assignment_id\n        ) q\n        LEFT JOIN (\n            SELECT cs.position_id, SUM(cs.Total_amount) AS credit_amount\n            FROM xactly.xc_credit_summary cs\n            INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON cs.position_id = pos_reg.master_position_id\n            WHERE cs.credit_type_name = 'Prospera'\n              AND cs.period_id IN :v_month_period_ids\n              AND cs.position_id IN :v_child_master_position_id\n              AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\n            GROUP BY cs.position_id\n        ) c ON q.position_id = c.position_id\n\n        UNION ALL\n\n        -- RENASIGHT ATTAINMENT CALCULATION\n        SELECT \n            'Renasight' AS product_name,\n            q.position_id,\n            CASE \n                WHEN Coalesce(q.quota_amount, 0.00) = 0 THEN 0.00\n                ELSE ((Coalesce(c.credit_amount, 0.00) / q.quota_amount) * 100)\n            END AS individual_attainment\n        FROM (\n            SELECT qa.assignment_id AS position_id, SUM(qa.amount) AS quota_amount\n            FROM xactly.xc_quota_assignment qa\n            INNER JOIN xactly.xc_quota q_tbl ON qa.quota_id = q_tbl.quota_id\n            INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON qa.assignment_id = pos_reg.master_position_id\n            WHERE qa.assignment_type = 2\n              AND q_tbl.name = 'Renasight Goal'\n              AND qa.period_id = :v_period_id\n              AND qa.assignment_id IN :v_child_master_position_id\n              AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\n            GROUP BY qa.assignment_id\n        ) q\n        LEFT JOIN (\n            SELECT cs.position_id, SUM(cs.Total_amount) AS credit_amount\n            FROM xactly.xc_credit_summary cs\n            INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON cs.position_id = pos_reg.master_position_id\n            WHERE cs.credit_type_name = 'Renasight'\n              AND cs.period_id IN :v_month_period_ids\n              AND cs.position_id IN :v_child_master_position_id\n              AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\n            GROUP BY cs.position_id\n        ) c ON q.position_id = c.position_id\n    ) InlineAttainmentData\n) BUCKETED_DATA\nGROUP BY Bucket, Sort_Order\nORDER BY Sort_Order;"
+  },
+  {
+    "name": "ntr_oh_p1_baseline_act",
+    "schema": "$framework",
+    "params": [
+      "v_prev_month_period_ids",
+      "v_month_period_ids",
+      "v_child_master_participant_id",
+      "p_region"
+    ],
+    "columns": [
+      "Region",
+      "Prospera_Baseline",
+      "Prospera_Actual"
+    ],
+    "xsql": "SELECT \n    pos_reg.region AS Region,\n    SUM(CASE WHEN p.period_id IN :v_prev_month_period_ids THEN p.amount ELSE 0 END) AS Prospera_Baseline,\n    SUM(CASE WHEN p.period_id IN :v_month_period_ids THEN p.amount ELSE 0 END) AS Prospera_Actual\nFROM xactly.xc_credit p\nINNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg \n    ON p.position_id = pos_reg.master_position_id\nINNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta \n    ON p.participant_id = pta.master_participant_id\nINNER JOIN $framework.NATERA_TITLE_CATEGORY_MAPPING m \n    ON pta.title_name = m.title\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND (p.period_id IN :v_month_period_ids OR p.period_id IN :v_prev_month_period_ids)\n  AND m.category = 'OH' \n  AND p.credit_type_name IN ('Prospera', 'Prospera HEART', 'Prospera LUNG')\n  AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\nGROUP BY pos_reg.region\nORDER BY Prospera_Actual DESC \nLIMIT 5;\n\n/*SELECT \n    Region,\n    SUM(Prospera_Baseline) AS Prospera_Baseline,\n    SUM(Actual_Prospera_Units) AS Prospera_Actual,\n    SUM(Renasight_Baseline) AS Renasight_Baseline,\n    SUM(Actual_Renasight_Units) AS Renasight_Actual\nFROM EXT_NATERA_OH_PERF\nWHERE ('ALL' IN (:p_region) OR Region IN (:p_region))\nGROUP BY Region\nORDER BY prospera_actual DESC LIMIT 5;*/"
+  },
+  {
+    "name": "ntr_test_case",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "OHS_Name",
+      "Prospera_Gap",
+      "Renasight_Gap",
+      "Total_Gap"
+    ],
+    "xsql": "SELECT \n    name AS OHS_Name,\n    \n    -- Metric 1 If Prospera is weaker (Rank number is higher), output the gap, else NULL\n    CASE \n        WHEN rank_primary > rank_secondary \n        THEN rank_primary - rank_secondary\n        ELSE NULL \n    END AS Prospera_Gap,\n    \n    -- Metric 2 If Renasight is weaker (Rank number is higher), output the gap, else NULL\n    CASE \n        WHEN rank_secondary > rank_primary \n        THEN rank_secondary - rank_primary\n        ELSE NULL \n    END AS Renasight_Gap,\n    \n    -- Hidden Sorter Absolute gap between the two ranks\n    CASE \n        WHEN rank_primary > rank_secondary THEN rank_primary - rank_secondary\n        WHEN rank_secondary > rank_primary THEN rank_secondary - rank_primary\n        ELSE 0 \n    END AS Total_Gap\n\nFROM (\n    SELECT \n        name, \n        RANK() OVER (ORDER BY sub1_payout DESC) AS rank_primary,\n        RANK() OVER (ORDER BY sub2_payout DESC) AS rank_secondary\n    FROM (\n        SELECT \n            SubString(part.name, 0, IndexOf(part.name, '(')) AS name, \n            \n            -- Capture Prospera Payouts\n            SUM(CASE \n                WHEN Coalesce(m.sub_category, tm.sub_category) = 'Prospera' THEN p.amount \n                ELSE 0 \n            END) AS sub1_payout,\n            \n            -- Capture Renasight Payouts\n            SUM(CASE \n                WHEN Coalesce(m.sub_category, tm.sub_category) = 'Renasight' THEN p.amount \n                ELSE 0 \n            END) AS sub2_payout\n            \n        FROM xactly.xc_payment p\n        INNER JOIN xactly.xc_participant part\n            ON p.participant_id = part.participant_id\n        \n        -- 1. Embedded Title Mapping\n        INNER JOIN (\n            SELECT DISTINCT\n                ppa.participant_id AS master_participant_id,\n                pta.title_name AS title_name\n            FROM xactly.xc_period per \n            INNER JOIN xactly.xc_pos_part_assignment ppa \n                ON ppa.participant_id IN :v_child_master_participant_id\n            INNER JOIN xactly.xc_position pos \n                ON ppa.position_id = pos.position_id\n                AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n            INNER JOIN xactly.xc_pos_title_assignment pta \n                ON pos.position_id = pta.position_id\n            WHERE per.period_id IN :v_month_period_ids\n        ) pta ON p.participant_id = pta.master_participant_id\n        \n        -- 2. Embedded Territory Mapping (LEFT JOIN)\n        LEFT JOIN (\n            SELECT DISTINCT\n                pa_input.participant_id AS master_participant_id,\n                pa_active.territory AS territory\n            FROM xactly.xc_period per \n            INNER JOIN xactly.xc_participant pa_input \n                ON pa_input.participant_id IN :v_child_master_participant_id\n            INNER JOIN xactly.xc_participant pa_active \n                ON pa_input.employee_id = pa_active.employee_id\n                AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n            WHERE per.period_id IN :v_month_period_ids\n        ) ter ON p.participant_id = ter.master_participant_id\n\n        INNER JOIN NATERA_MASTER_MAPPING m \n            ON p.earning_group_name = m.earning_group\n           AND pta.title_name = m.title\n           \n        LEFT JOIN NATERA_TERRITORY_MAPPING tm \n            ON ter.territory = tm.territory \n        \n        WHERE p.participant_id IN :v_child_master_participant_id\n          AND p.period_id IN :v_month_period_ids\n          AND m.category = 'OH'\n        GROUP BY \n            part.name\n    ) BaseData\n) RankedData\nORDER BY Total_Gap DESC\nLIMIT 8;"
+  },
+  {
+    "name": "ntr_db_wh_volume_retention",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "initial_patients_payout",
+      "initial_patients_percentage_of_onc"
+    ],
+    "xsql": "SELECT \n    Coalesce(initial_patients_payout, '0.00') AS initial_patients_payout,\n    Coalesce(initial_patients_percentage || '%', '0.00%') AS initial_patients_percentage_of_onc\nFROM (SELECT 1 AS dummy) d\nLEFT JOIN (\n    SELECT \n        -- 1. Format the total payout for Initial Patients\n        FormatNumber(\n            SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Volume Retention' THEN p.amount ELSE 0 END), \n            '#,##0.00'\n        ) AS initial_patients_payout,\n        \n        -- 2. Calculate the raw percentage relative to the total ONC category payout\n        Round(\n            (SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Volume Retention' THEN p.amount ELSE 0 END) * 100.0) / \n            CASE WHEN SUM(p.amount) = 0 THEN 1 ELSE SUM(p.amount) END, \n            2\n        ) AS initial_patients_percentage\n    FROM xactly.xc_payment p\n    \n    -- Embedded Title Mapping\n    INNER JOIN (\n        SELECT DISTINCT\n            ppa.participant_id AS master_participant_id,\n            pta.title_name AS title_name\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_pos_part_assignment ppa \n            ON ppa.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_position pos \n            ON ppa.position_id = pos.position_id\n            AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n        INNER JOIN xactly.xc_pos_title_assignment pta \n            ON pos.position_id = pta.position_id\n        WHERE per.period_id IN :v_month_period_ids\n    ) pta ON p.participant_id = pta.master_participant_id\n    \n    -- Embedded Territory Mapping\n    LEFT JOIN (\n        SELECT DISTINCT\n            pa_input.participant_id AS master_participant_id,\n            pa_active.territory AS territory\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_participant pa_input \n            ON pa_input.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_participant pa_active \n            ON pa_input.employee_id = pa_active.employee_id\n            AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n        WHERE per.period_id IN :v_month_period_ids\n    ) ter ON p.participant_id = ter.master_participant_id\n    \n    -- Configuration Mappings scoped directly to the ONC category\n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n       AND pta.title_name = m.title\n       AND m.category = 'WH'\n          INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON p.position_id = pos_reg.master_position_id\n    LEFT JOIN NATERA_TERRITORY_MAPPING tm \n        ON ter.territory = tm.territory \n        \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n            AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n) AggData ON 1=1"
+  },
+  {
+    "name": "ntr_db_get_paticipant_title_mapping",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "master_participant_id",
+      "title_name"
+    ],
+    "xsql": "SELECT DISTINCT\n    ppa.participant_id AS master_participant_id,\n    pta.title_name AS title_name\nFROM xactly.xc_period per \nINNER JOIN xactly.xc_pos_part_assignment ppa \n    ON ppa.participant_id IN :v_child_master_participant_id\nINNER JOIN xactly.xc_position pos \n    ON ppa.position_id = pos.position_id\n    AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\nINNER JOIN xactly.xc_pos_title_assignment pta \n    ON pos.position_id = pta.position_id\nWHERE per.period_id IN :v_month_period_ids"
+  },
+  {
+    "name": "ntr_db_active_rep_headcount",
+    "schema": "$framework",
+    "params": [
+      "v_qtr_start_date",
+      "v_master_position_id"
+    ],
+    "columns": [
+      "count"
+    ],
+    "xsql": "select count(*) as count from ShowIncentHierarchy(EffectiveAsOf= :v_qtr_start_date, ParentId = :v_master_position_id) hier \ninner join xactly.xc_pos_title_assignment pta \non pta.position_id = hier.position_id\ninner join $framework.NATERA_TITLE_CATEGORY_MAPPING t\non t.title = pta.title_name\nwhere hier.position_is_active = 'true'\n\n---select 1 as count"
+  },
+  {
+    "name": "ntr_division_dd",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "TA_Name",
+      "TA_Value"
+    ],
+    "xsql": "SELECT TA_Name, TA_Value \nFROM (\n    SELECT 'ALL' AS TA_Name, 'ALL' AS TA_Value FROM DUAL\n    UNION ALL\n    SELECT DISTINCT Division AS TA_Name, Division AS TA_Value \n    FROM EXT_NATERA_TERRITORY_MAP\n) \nORDER BY CASE WHEN TA_Name = 'ALL' THEN 1 ELSE 2 END, TA_Name"
+  },
+  {
+    "name": "ntr_db_get_position_region_mapping",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_position_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "master_position_id",
+      "region"
+    ],
+    "xsql": "SELECT DISTINCT\n    pos_input.master_position_id AS master_position_id,\n    pa_active.region AS region\nFROM xactly.xc_period per \nINNER JOIN xactly.xc_position pos_input\n    ON pos_input.master_position_id IN :v_child_master_position_id\n    /* Date check ensures we are looking at the active position version record */\n    AND CAST(per.end_date AS DATE) >= CAST(pos_input.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pos_input.effective_end_date AS DATE)\nINNER JOIN xactly.xc_pos_part_assignment ppa\n    ON pos_input.position_id = ppa.position_id\nINNER JOIN xactly.xc_participant pa_base\n    ON ppa.participant_id = pa_base.participant_id\nINNER JOIN xactly.xc_participant pa_active \n    ON pa_base.employee_id = pa_active.employee_id\n    /* Date check isolates the active participant version record */\n    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\nWHERE per.period_id IN :v_month_period_ids"
+  },
+  {
+    "name": "ntr_db_wh_total_payout",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_qtr_start_date",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "total_qtr_personal_target",
+      "onc_total_payout",
+      "onc_payout_percentage_of_budget"
+    ],
+    "xsql": "SELECT \n    Coalesce(v_total_qtr_personal_target, '0.00') AS total_qtr_personal_target,\n    Coalesce(v_onc_payout_val, '0.00') AS onc_total_payout,\n    Coalesce(v_onc_payout_pct, '0.00') AS onc_payout_percentage_of_budget\nFROM (SELECT 1 AS dummy) d\nLEFT JOIN (\n    SELECT\n        -- 1. Format the Approved Budget for ONC\n        FormatNumber(budget.total_qtr_personal_target, '#,##0.00') AS v_total_qtr_personal_target,\n        \n        -- 2. Format the Total Payout for ONC\n        FormatNumber(payout.onc_payout, '#,##0.00') AS v_onc_payout_val,\n        \n        -- 3. Calculate Payout Percentage relative to the Budget\n        Round(\n            (payout.onc_payout * 100.0) / \n            CASE WHEN budget.total_qtr_personal_target = 0 THEN 1 ELSE budget.total_qtr_personal_target END, \n            2\n        ) AS v_onc_payout_pct\n    FROM (\n        -- SUBQUERY A Calculates Budget Metrics\n        SELECT SUM(pa_active.personal_target / 4.0) AS total_qtr_personal_target\n        FROM xactly.xc_period per\n        INNER JOIN xactly.xc_participant pa_input \n            ON pa_input.participant_id IN :v_child_master_participant_id\n        INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n            ON pa_input.participant_id = pta.master_participant_id\n        INNER JOIN $framework.NATERA_TITLE_CATEGORY_MAPPING m \n            ON pta.title_name = m.title\n            AND m.category = 'WH'\n   /*   INNER JOIN xactly.xc_pos_part_assignment ppa \n      on pa_input.participant_id = ppa.participant_id\n      INNER JOIN xactly.xc_position pos \n\t\t\ton ppa.position_id = pos.position_id\n      \t\tand :v_qtr_start_date between pos.effective_start_date and pos.effective_end_date\n              INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON pos.position_id = pos_reg.master_position_id*/\n        INNER JOIN xactly.xc_participant pa_active \n            ON pa_input.employee_id = pa_active.employee_id\n            AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n        WHERE per.period_id IN :v_month_period_ids\n      --AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n    ) budget\n    INNER JOIN (\n        -- SUBQUERY B Calculates Payout Metrics\n        SELECT SUM(p.amount) AS onc_payout\n        FROM xactly.xc_payment p\n        INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n        ON p.participant_id = pta.master_participant_id\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON p.position_id = pos_reg.master_position_id\n        INNER JOIN NATERA_MASTER_MAPPING m \n            ON p.earning_group_name = m.earning_group\n            AND pta.title_name = m.title\n            AND m.category = 'WH'\n        WHERE p.participant_id IN :v_child_master_participant_id\n          AND p.period_id IN :v_month_period_ids\n          AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n    ) payout ON 1=1  -- Safe, universal alternative to CROSS JOIN\n) AggData ON 1=1"
+  },
+  {
+    "name": "ntr_onc_region",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "Region",
+      "Initial_Payout",
+      "Follow_On_Payout"
+    ],
+    "xsql": "SELECT \n    part_info.region AS Region,\n    SUM(CASE WHEN m.sub_category = 'Initial Patients' THEN p.amount ELSE 0 END) AS Initial_Payout,\n    SUM(CASE WHEN m.sub_category = 'Follow On Patients' THEN p.amount ELSE 0 END) AS Follow_On_Payout\nFROM xactly.xc_payment p\n\n-- 1. Inline Title Mapping Subquery\nINNER JOIN (\n    SELECT DISTINCT\n        ppa.participant_id AS master_participant_id,\n        pta.title_name AS title_name\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_pos_part_assignment ppa \n        ON ppa.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_position pos \n        ON ppa.position_id = pos.position_id\n        AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n    INNER JOIN xactly.xc_pos_title_assignment pta \n        ON pos.position_id = pta.position_id\n    WHERE per.period_id IN :v_month_period_ids\n) pta ON p.participant_id = pta.master_participant_id\n\n-- 2. Inline Region Mapping Subquery (Pulled directly from xc_participant)\nINNER JOIN (\n    SELECT DISTINCT\n        pa_input.participant_id AS master_participant_id,\n        pa_active.region AS region\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_participant pa_input \n        ON pa_input.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_participant pa_active \n        ON pa_input.employee_id = pa_active.employee_id\n        AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n    WHERE per.period_id IN :v_month_period_ids\n) part_info ON p.participant_id = part_info.master_participant_id\n\n-- 3. Master Mapping (for Sub-Category and Category)\nINNER JOIN NATERA_MASTER_MAPPING m \n    ON p.earning_group_name = m.earning_group\n   AND pta.title_name = m.title\n\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND p.period_id IN :v_month_period_ids\n  AND m.category = 'ONC'\n  -- Apply the Region Dashboard Filter here directly against the participant data\n  AND ('ALL' IN (:p_region) OR part_info.region IN (:p_region))\n  AND part_info.region IS NOT NULL\n\nGROUP BY \n    part_info.region\nORDER BY \n    part_info.region ASC\n    LIMIT 15;"
+  },
+  {
+    "name": "ntr_wh_region_deep",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "Region",
+      "Volume_Retention",
+      "Points_Goal"
+    ],
+    "xsql": "/*SELECT \n    '1' AS Region,\n    '1' AS Volume_Retention,\n    '1' AS Points_Goal*/\n    \n    \nSELECT \n    part_info.region AS Region,\n    SUM(CASE WHEN m.sub_category = 'Volume Retention' THEN p.amount ELSE 0 END) AS Volume_Retention,\n    SUM(CASE WHEN m.sub_category = 'Points Goal' THEN p.amount ELSE 0 END) AS Points_Goal\nFROM xactly.xc_payment p\n\n-- 1. Inline Title Mapping Subquery\nINNER JOIN (\n    SELECT DISTINCT\n        ppa.participant_id AS master_participant_id,\n        pta.title_name AS title_name\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_pos_part_assignment ppa \n        ON ppa.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_position pos \n        ON ppa.position_id = pos.position_id\n        AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n    INNER JOIN xactly.xc_pos_title_assignment pta \n        ON pos.position_id = pta.position_id\n    WHERE per.period_id IN :v_month_period_ids\n) pta ON p.participant_id = pta.master_participant_id\n\n-- 2. Inline Region Mapping Subquery (Pulled directly from xc_participant)\nINNER JOIN (\n    SELECT DISTINCT\n        pa_input.participant_id AS master_participant_id,\n        pa_active.region AS region\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_participant pa_input \n        ON pa_input.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_participant pa_active \n        ON pa_input.employee_id = pa_active.employee_id\n        AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n    WHERE per.period_id IN :v_month_period_ids\n) part_info ON p.participant_id = part_info.master_participant_id\n\n-- 3. Master Mapping (for Sub-Category and Category)\nINNER JOIN NATERA_MASTER_MAPPING m \n    ON p.earning_group_name = m.earning_group\n   AND pta.title_name = m.title\n\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND p.period_id IN :v_month_period_ids\n  AND m.category = 'WH'\n  -- Apply the Region Dashboard Filter here directly against the participant data\n  AND ('ALL' IN (:p_region) OR part_info.region IN (:p_region))\n  AND part_info.region IS NOT NULL\n\nGROUP BY \n    part_info.region\nORDER BY \n    part_info.region ASC;"
+  },
+  {
+    "name": "ntr_db_wh_Points_goal_payout",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "initial_patients_payout",
+      "initial_patients_percentage_of_onc"
+    ],
+    "xsql": "SELECT \n    Coalesce(initial_patients_payout, '0.00') AS initial_patients_payout,\n    Coalesce(initial_patients_percentage || '%', '0.00%') AS initial_patients_percentage_of_onc\nFROM (SELECT 1 AS dummy) d\nLEFT JOIN (\n    SELECT \n        -- 1. Format the total payout for Initial Patients\n        FormatNumber(\n            SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Points Goal' THEN p.amount ELSE 0 END), \n            '#,##0.00'\n        ) AS initial_patients_payout,\n        \n        -- 2. Calculate the raw percentage relative to the total ONC category payout\n        Round(\n            (SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Points Goal' THEN p.amount ELSE 0 END) * 100.0) / \n            CASE WHEN SUM(p.amount) = 0 THEN 1 ELSE SUM(p.amount) END, \n            2\n        ) AS initial_patients_percentage\n    FROM xactly.xc_payment p\n    \n    -- Embedded Title Mapping\n    INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n        ON p.participant_id = pta.master_participant_id\n    \n    -- Embedded Territory Mapping\n    INNER JOIN $framework.ntr_db_get_paticipant_territory_mapping ter\n        ON p.participant_id = ter.master_participant_id\n    \n    -- Configuration Mappings scoped directly to the ONC category\n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n       AND pta.title_name = m.title\n       AND m.category = 'WH'\n          INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON p.position_id = pos_reg.master_position_id\n  \n    LEFT JOIN NATERA_TERRITORY_MAPPING tm \n        ON ter.territory = tm.territory \n        \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n            AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n) AggData ON 1=1"
+  },
+  {
+    "name": "ntr_db_es_bottom_perf",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "bot_5_rank",
+      "bot_5_name",
+      "bot_5_div",
+      "bot_5_val",
+      "bot_4_rank",
+      "bot_4_name",
+      "bot_4_div",
+      "bot_4_val",
+      "bot_3_rank",
+      "bot_3_name",
+      "bot_3_div",
+      "bot_3_val",
+      "bot_2_rank",
+      "bot_2_name",
+      "bot_2_div",
+      "bot_2_val",
+      "bot_1_rank",
+      "bot_1_name",
+      "bot_1_div",
+      "bot_1_val"
+    ],
+    "xsql": "SELECT \n    -- Bottom 5 Performer\n    Coalesce(MAX(CASE WHEN rn_bot = 5 THEN CAST(rn_top AS VARCHAR) END), '0') AS bot_5_rank,\n    Coalesce(MAX(CASE WHEN rn_bot = 5 THEN name END), '') AS bot_5_name,\n    Coalesce(MAX(CASE WHEN rn_bot = 5 THEN division END), '') AS bot_5_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_bot = 5 THEN payout END), 0), '#,###'), '0') AS bot_5_val,\n    \n    -- Bottom 4 Performer\n    Coalesce(MAX(CASE WHEN rn_bot = 4 THEN CAST(rn_top AS VARCHAR) END), '0') AS bot_4_rank,\n    Coalesce(MAX(CASE WHEN rn_bot = 4 THEN name END), '') AS bot_4_name,\n    Coalesce(MAX(CASE WHEN rn_bot = 4 THEN division END), '') AS bot_4_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_bot = 4 THEN payout END), 0), '#,###'), '0') AS bot_4_val,\n    \n    -- Bottom 3 Performer\n    Coalesce(MAX(CASE WHEN rn_bot = 3 THEN CAST(rn_top AS VARCHAR) END), '0') AS bot_3_rank,\n    Coalesce(MAX(CASE WHEN rn_bot = 3 THEN name END), '') AS bot_3_name,\n    Coalesce(MAX(CASE WHEN rn_bot = 3 THEN division END), '') AS bot_3_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_bot = 3 THEN payout END), 0), '#,###'), '0') AS bot_3_val,\n    \n    -- Bottom 2 Performer\n    Coalesce(MAX(CASE WHEN rn_bot = 2 THEN CAST(rn_top AS VARCHAR) END), '0') AS bot_2_rank,\n    Coalesce(MAX(CASE WHEN rn_bot = 2 THEN name END), '') AS bot_2_name,\n    Coalesce(MAX(CASE WHEN rn_bot = 2 THEN division END), '') AS bot_2_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_bot = 2 THEN payout END), 0), '#,###'), '0') AS bot_2_val,\n    \n    -- Bottom 1 Performer\n    Coalesce(MAX(CASE WHEN rn_bot = 1 THEN CAST(rn_top AS VARCHAR) END), '0') AS bot_1_rank,\n    Coalesce(MAX(CASE WHEN rn_bot = 1 THEN name END), '') AS bot_1_name,\n    Coalesce(MAX(CASE WHEN rn_bot = 1 THEN division END), '') AS bot_1_div,\n    Coalesce(FormatNumber(Round(MAX(CASE WHEN rn_bot = 1 THEN payout END), 0), '#,###'), '0') AS bot_1_val\n\nFROM (\n    SELECT \n        name,\n        division,\n        payout,\n        Row_Number() OVER (ORDER BY payout DESC) AS rn_top,\n        Row_Number() OVER (ORDER BY payout ASC) AS rn_bot\n    FROM (\n        SELECT \n            SubString(p.participant_name, 0, IndexOf(p.participant_name, '(')) AS name,\n            m.category AS division, \n            SUM(p.amount) AS payout\n        FROM xactly.xc_payment p\n        \n        -- Embedded Title Mapping\n        INNER JOIN (\n            SELECT DISTINCT\n                ppa.participant_id AS master_participant_id,\n                pta.title_name AS title_name\n            FROM xactly.xc_period per \n            INNER JOIN xactly.xc_pos_part_assignment ppa \n                ON ppa.participant_id IN :v_child_master_participant_id\n            INNER JOIN xactly.xc_position pos \n                ON ppa.position_id = pos.position_id\n                AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n            INNER JOIN xactly.xc_pos_title_assignment pta \n                ON pos.position_id = pta.position_id\n            WHERE per.period_id IN :v_month_period_ids\n        ) pta ON p.participant_id = pta.master_participant_id\n        \n        INNER JOIN NATERA_MASTER_MAPPING m \n            ON p.earning_group_name = m.earning_group\n            AND pta.title_name = m.title\n            \n        WHERE p.participant_id IN :v_child_master_participant_id\n          AND p.period_id IN :v_month_period_ids\n        GROUP BY \n            p.participant_name, \n            m.category\n    ) AggData\n) RankedData;"
+  },
+  {
+    "name": "ntr_wh_grid",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "COS_Name",
+      "Final_Rank",
+      "Initial_Patients_Rank",
+      "Follow_On_Rank",
+      "Total_Payout"
+    ],
+    "xsql": "SELECT \n    name AS COS_Name, \n    RANK() OVER (ORDER BY payout DESC) AS Final_Rank, \n    RANK() OVER (ORDER BY initial_payout DESC) AS Initial_Patients_Rank, \n    RANK() OVER (ORDER BY followon_payout DESC) AS Follow_On_Rank, \n    '$' || Coalesce(FormatNumber(Round(payout, 0), '#,###'), '0') AS Total_Payout\nFROM (\n    SELECT \n        CASE \n            WHEN IndexOf(part.name, '(') > 0 THEN SubString(part.name, 0, IndexOf(part.name, '(')) \n            ELSE part.name \n        END AS name, \n        SUM(p.amount) AS payout,\n        SUM(CASE WHEN m.sub_category = 'Volume Retention' THEN p.amount ELSE 0 END) AS initial_payout,\n        SUM(CASE WHEN m.sub_category = 'Points Goal' THEN p.amount ELSE 0 END) AS followon_payout\n        \n    FROM xactly.xc_payment p\n    INNER JOIN xactly.xc_participant part\n        ON p.participant_id = part.participant_id\n        \n    -- FIXED Tie the period exactly to the payment line to prevent tripling!\n    INNER JOIN xactly.xc_period active_per\n        ON p.period_id = active_per.period_id\n    INNER JOIN xactly.xc_participant pa_active \n        ON part.employee_id = pa_active.employee_id\n        AND CAST(active_per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n        AND CAST(active_per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n    \n    INNER JOIN (\n        SELECT DISTINCT\n            ppa.participant_id AS master_participant_id,\n            pta.title_name AS title_name\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_pos_part_assignment ppa \n            ON ppa.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_position pos \n            ON ppa.position_id = pos.position_id\n            AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n        INNER JOIN xactly.xc_pos_title_assignment pta \n            ON pos.position_id = pta.position_id\n        WHERE per.period_id IN :v_month_period_ids\n    ) pta ON p.participant_id = pta.master_participant_id\n    \n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n       AND pta.title_name = m.title\n    \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n      AND m.category = 'WH'\n      \n      -- The region filter logic applied to the active participant record\n      AND ('ALL' IN (:p_region) OR pa_active.region IN (:p_region))\n      \n    GROUP BY \n        part.name\n) BaseData\nORDER BY Final_Rank ASC;"
+  },
+  {
+    "name": "ntr_region_wh",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "Territory"
+    ],
+    "xsql": "SELECT Territory \nFROM (\n    SELECT 'ALL' AS Territory, 0 AS Sort_Order \n    UNION \n    SELECT DISTINCT Territory, 1 AS Sort_Order \n    FROM EXT_NATERA_WH_PERF\n    WHERE Territory IS NOT NULL\n)\nORDER BY Sort_Order, Territory"
+  },
+  {
+    "name": "ntr_region_onc",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "Region"
+    ],
+    "xsql": "SELECT Region \nFROM (\n    SELECT 'ALL' AS Region, 0 AS Sort_Order \n    UNION \n    SELECT DISTINCT Region, 1 AS Sort_Order \n    FROM EXT_NATERA_ONC_PERF\n    WHERE Region IS NOT NULL\n)\nORDER BY Sort_Order, Region"
+  },
+  {
+    "name": "ntr_db_es_payout_Global",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "top_1_name",
+      "top_1_div",
+      "top_1_val",
+      "top_1_pct",
+      "top_2_name",
+      "top_2_div",
+      "top_2_val",
+      "top_2_pct",
+      "top_3_name",
+      "top_3_div",
+      "top_3_val",
+      "top_3_pct",
+      "top_4_name",
+      "top_4_div",
+      "top_4_val",
+      "top_4_pct",
+      "top_5_name",
+      "top_5_div",
+      "top_5_val",
+      "top_5_pct",
+      "top_6_name",
+      "top_6_div",
+      "top_6_val",
+      "top_6_pct",
+      "top_7_name",
+      "top_7_div",
+      "top_7_val",
+      "top_7_pct",
+      "top_8_name",
+      "top_8_div",
+      "top_8_val",
+      "top_8_pct",
+      "top_9_name",
+      "top_9_div",
+      "top_9_val",
+      "top_9_pct",
+      "top_10_name",
+      "top_10_div",
+      "top_10_val",
+      "top_10_pct"
+    ],
+    "xsql": "SELECT \n    -- Top 1 Performer\n    Coalesce(Max(CASE WHEN rank = 1 THEN name END), '') as top_1_name,\n    Coalesce(Max(CASE WHEN rank = 1 THEN division END), '') as top_1_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 1 THEN payout END), 0), '#,###'), '0') as top_1_val,\n    100.0 as top_1_pct,\n\n    -- Top 2 Performer\n    Coalesce(Max(CASE WHEN rank = 2 THEN name END), '') as top_2_name,\n    Coalesce(Max(CASE WHEN rank = 2 THEN division END), '') as top_2_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 2 THEN payout END), 0), '#,###'), '0') as top_2_val,\n    Round(Coalesce(Max(CASE WHEN rank = 2 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_2_pct,\n\n    -- Top 3 Performer\n    Coalesce(Max(CASE WHEN rank = 3 THEN name END), '') as top_3_name,\n    Coalesce(Max(CASE WHEN rank = 3 THEN division END), '') as top_3_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 3 THEN payout END), 0), '#,###'), '0') as top_3_val,\n    Round(Coalesce(Max(CASE WHEN rank = 3 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_3_pct,\n\n    -- Top 4 Performer\n    Coalesce(Max(CASE WHEN rank = 4 THEN name END), '') as top_4_name,\n    Coalesce(Max(CASE WHEN rank = 4 THEN division END), '') as top_4_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 4 THEN payout END), 0), '#,###'), '0') as top_4_val,\n    Round(Coalesce(Max(CASE WHEN rank = 4 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_4_pct,\n\n    -- Top 5 Performer\n    Coalesce(Max(CASE WHEN rank = 5 THEN name END), '') as top_5_name,\n    Coalesce(Max(CASE WHEN rank = 5 THEN division END), '') as top_5_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 5 THEN payout END), 0), '#,###'), '0') as top_5_val,\n    Round(Coalesce(Max(CASE WHEN rank = 5 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_5_pct,\n\n    -- Top 6 Performer\n    Coalesce(Max(CASE WHEN rank = 6 THEN name END), '') as top_6_name,\n    Coalesce(Max(CASE WHEN rank = 6 THEN division END), '') as top_6_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 6 THEN payout END), 0), '#,###'), '0') as top_6_val,\n    Round(Coalesce(Max(CASE WHEN rank = 6 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_6_pct,\n\n    -- Top 7 Performer\n    Coalesce(Max(CASE WHEN rank = 7 THEN name END), '') as top_7_name,\n    Coalesce(Max(CASE WHEN rank = 7 THEN division END), '') as top_7_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 7 THEN payout END), 0), '#,###'), '0') as top_7_val,\n    Round(Coalesce(Max(CASE WHEN rank = 7 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_7_pct,\n\n    -- Top 8 Performer\n    Coalesce(Max(CASE WHEN rank = 8 THEN name END), '') as top_8_name,\n    Coalesce(Max(CASE WHEN rank = 8 THEN division END), '') as top_8_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 8 THEN payout END), 0), '#,###'), '0') as top_8_val,\n    Round(Coalesce(Max(CASE WHEN rank = 8 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_8_pct,\n\n    -- Top 9 Performer\n    Coalesce(Max(CASE WHEN rank = 9 THEN name END), '') as top_9_name,\n    Coalesce(Max(CASE WHEN rank = 9 THEN division END), '') as top_9_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 9 THEN payout END), 0), '#,###'), '0') as top_9_val,\n    Round(Coalesce(Max(CASE WHEN rank = 9 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_9_pct,\n\n    -- Top 10 Performer\n    Coalesce(Max(CASE WHEN rank = 10 THEN name END), '') as top_10_name,\n    Coalesce(Max(CASE WHEN rank = 10 THEN division END), '') as top_10_div,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 10 THEN payout END), 0), '#,###'), '0') as top_10_val,\n    Round(Coalesce(Max(CASE WHEN rank = 10 THEN (payout * 100.0) / CASE WHEN max_payout = 0 THEN 1 ELSE max_payout END END), 0), 0) as top_10_pct\n\nFROM (\n    SELECT \n        name, \n        division, \n        payout,\n        Max(payout) Over () as max_payout,\n        Row_Number() Over (Order By payout Desc) as rank\n    FROM (\n        SELECT \n            SubString(p.participant_name, 0, IndexOf(p.participant_name, '(')) AS name, \n            m.category AS division, \n            SUM(p.amount) AS payout\n        FROM xactly.xc_payment p\n        \n        -- Embedded Title Mapping\n        INNER JOIN (\n            SELECT DISTINCT\n                ppa.participant_id AS master_participant_id,\n                pta.title_name AS title_name\n            FROM xactly.xc_period per \n            INNER JOIN xactly.xc_pos_part_assignment ppa \n                ON ppa.participant_id IN :v_child_master_participant_id\n            INNER JOIN xactly.xc_position pos \n                ON ppa.position_id = pos.position_id\n                AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n            INNER JOIN xactly.xc_pos_title_assignment pta \n                ON pos.position_id = pta.position_id\n            WHERE per.period_id IN :v_month_period_ids\n        ) pta ON p.participant_id = pta.master_participant_id\n        \n        INNER JOIN NATERA_MASTER_MAPPING m \n            ON p.earning_group_name = m.earning_group\n            AND pta.title_name = m.title\n            \n        WHERE p.participant_id IN :v_child_master_participant_id\n          AND p.period_id IN :v_month_period_ids\n        GROUP BY \n            p.participant_name,\n            m.category\n    ) AggregatedData\n) RankedData\nWHERE rank <= 10;"
+  },
+  {
+    "name": "ntr_db_es_donut_chart",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "v_total_payout_val",
+      "v_onc_mix_pct",
+      "v_wh_mix_pct",
+      "v_oh_mix_pct",
+      "v_onc_payout_val",
+      "v_wh_payout_val",
+      "v_oh_payout_val"
+    ],
+    "xsql": "SELECT \n    -- Grand Total Payout for Donut Center\n    Coalesce(FormatNumber(Round(SUM(amount), 0), '#,###'), '0') AS v_total_payout_val,\n\n    -- Mix Percentages\n    Coalesce(Round((SUM(CASE WHEN category IN ('ONC') THEN amount ELSE 0 END) * 100.0) / CASE WHEN SUM(amount) = 0 THEN 1 ELSE SUM(amount) END, 0), 0) AS v_onc_mix_pct,\n    Coalesce(Round((SUM(CASE WHEN category IN ('WH') THEN amount ELSE 0 END) * 100.0) / CASE WHEN SUM(amount) = 0 THEN 1 ELSE SUM(amount) END, 0), 0) AS v_wh_mix_pct,\n    Coalesce(Round((SUM(CASE WHEN category IN ('OH') THEN amount ELSE 0 END) * 100.0) / CASE WHEN SUM(amount) = 0 THEN 1 ELSE SUM(amount) END, 0), 0) AS v_oh_mix_pct,\n\n    -- Raw Payouts for Legend\n    Coalesce(FormatNumber(Round(SUM(CASE WHEN category IN ('ONC') THEN amount ELSE 0 END), 0), '#,###'), '0') AS v_onc_payout_val,\n    Coalesce(FormatNumber(Round(SUM(CASE WHEN category IN ('WH') THEN amount ELSE 0 END), 0), '#,###'), '0') AS v_wh_payout_val,\n    Coalesce(FormatNumber(Round(SUM(CASE WHEN category IN ('OH') THEN amount ELSE 0 END), 0), '#,###'), '0') AS v_oh_payout_val\n\nFROM (\n    SELECT \n        p.amount,\n        m.category\n    FROM xactly.xc_payment p\n    INNER JOIN (\n        -- Inlined Participant Title Mapping Query\n        SELECT DISTINCT\n            ppa.participant_id AS master_participant_id,\n            pta.title_name AS title_name\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_pos_part_assignment ppa \n            ON ppa.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_position pos \n            ON ppa.position_id = pos.position_id\n            AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n        INNER JOIN xactly.xc_pos_title_assignment pta \n            ON pos.position_id = pta.position_id\n        WHERE per.period_id IN :v_month_period_ids\n    ) pta \n        ON p.participant_id = pta.master_participant_id\n    INNER JOIN  NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n        AND pta.title_name = m.title\n        \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n) raw_data;"
+  },
+  {
+    "name": "ntr_exe_grid",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "gap_1_name",
+      "gap_1_r1",
+      "gap_1_r2",
+      "gap_1_diff",
+      "gap_2_name",
+      "gap_2_r1",
+      "gap_2_r2",
+      "gap_2_diff",
+      "gap_3_name",
+      "gap_3_r1",
+      "gap_3_r2",
+      "gap_3_diff",
+      "gap_4_name",
+      "gap_4_r1",
+      "gap_4_r2",
+      "gap_4_diff",
+      "gap_5_name",
+      "gap_5_r1",
+      "gap_5_r2",
+      "gap_5_diff"
+    ],
+    "xsql": "SELECT\n    Coalesce(MAX(CASE WHEN rn_gap = 1 THEN name END), '') AS gap_1_name,\n    Coalesce(MAX(CASE WHEN rn_gap = 1 THEN CAST(rank_primary AS VARCHAR) END), '0') AS gap_1_r1,\n    Coalesce(MAX(CASE WHEN rn_gap = 1 THEN CAST(rank_secondary AS VARCHAR) END), '0') AS gap_1_r2,\n    Coalesce(MAX(CASE WHEN rn_gap = 1 THEN CAST(rank_gap AS VARCHAR) END), '0') AS gap_1_diff,\n    \n    Coalesce(MAX(CASE WHEN rn_gap = 2 THEN name END), '') AS gap_2_name,\n    Coalesce(MAX(CASE WHEN rn_gap = 2 THEN CAST(rank_primary AS VARCHAR) END), '0') AS gap_2_r1,\n    Coalesce(MAX(CASE WHEN rn_gap = 2 THEN CAST(rank_secondary AS VARCHAR) END), '0') AS gap_2_r2,\n    Coalesce(MAX(CASE WHEN rn_gap = 2 THEN CAST(rank_gap AS VARCHAR) END), '0') AS gap_2_diff,\n    \n    Coalesce(MAX(CASE WHEN rn_gap = 3 THEN name END), '') AS gap_3_name,\n    Coalesce(MAX(CASE WHEN rn_gap = 3 THEN CAST(rank_primary AS VARCHAR) END), '0') AS gap_3_r1,\n    Coalesce(MAX(CASE WHEN rn_gap = 3 THEN CAST(rank_secondary AS VARCHAR) END), '0') AS gap_3_r2,\n    Coalesce(MAX(CASE WHEN rn_gap = 3 THEN CAST(rank_gap AS VARCHAR) END), '0') AS gap_3_diff,\n    \n    Coalesce(MAX(CASE WHEN rn_gap = 4 THEN name END), '') AS gap_4_name,\n    Coalesce(MAX(CASE WHEN rn_gap = 4 THEN CAST(rank_primary AS VARCHAR) END), '0') AS gap_4_r1,\n    Coalesce(MAX(CASE WHEN rn_gap = 4 THEN CAST(rank_secondary AS VARCHAR) END), '0') AS gap_4_r2,\n    Coalesce(MAX(CASE WHEN rn_gap = 4 THEN CAST(rank_gap AS VARCHAR) END), '0') AS gap_4_diff,\n    \n    Coalesce(MAX(CASE WHEN rn_gap = 5 THEN name END), '') AS gap_5_name,\n    Coalesce(MAX(CASE WHEN rn_gap = 5 THEN CAST(rank_primary AS VARCHAR) END), '0') AS gap_5_r1,\n    Coalesce(MAX(CASE WHEN rn_gap = 5 THEN CAST(rank_secondary AS VARCHAR) END), '0') AS gap_5_r2,\n    Coalesce(MAX(CASE WHEN rn_gap = 5 THEN CAST(rank_gap AS VARCHAR) END), '0') AS gap_5_diff\n\nFROM (\n    SELECT \n        name,\n        category,\n        rank_primary,\n        rank_secondary,\n        rank_gap,\n        Row_Number() OVER (ORDER BY rank_gap DESC) AS rn_gap\n    FROM (\n        SELECT \n            name, \n            category, \n            RANK() OVER (PARTITION BY category ORDER BY sub1_payout DESC) AS rank_primary,\n            RANK() OVER (PARTITION BY category ORDER BY sub2_payout DESC) AS rank_secondary,\n            \n            CASE \n                WHEN RANK() OVER (PARTITION BY category ORDER BY sub1_payout DESC) > RANK() OVER (PARTITION BY category ORDER BY sub2_payout DESC) \n                THEN RANK() OVER (PARTITION BY category ORDER BY sub1_payout DESC) - RANK() OVER (PARTITION BY category ORDER BY sub2_payout DESC)\n                ELSE RANK() OVER (PARTITION BY category ORDER BY sub2_payout DESC) - RANK() OVER (PARTITION BY category ORDER BY sub1_payout DESC)\n            END AS rank_gap\n        FROM (\n            SELECT \n                SubString(part.name, 0, IndexOf(part.name, '(')) AS name, \n                m.category AS category, \n                \n                -- Capture the Primary Sub-Category (e.g. Prospera, Initial, Volume)\n                SUM(CASE \n                    WHEN m.category = 'OH' AND Coalesce(m.sub_category, tm.sub_category) = 'Prospera' THEN p.amount \n                    WHEN m.category = 'ONC' AND Coalesce(m.sub_category, tm.sub_category) = 'Initial Patients' THEN p.amount \n                    WHEN m.category = 'WH' AND Coalesce(m.sub_category, tm.sub_category) = 'Volume Retention' THEN p.amount \n                    ELSE 0 \n                END) AS sub1_payout,\n                \n                -- Capture the Secondary Sub-Category (e.g. Renasight, Follow-On, Points)\n                SUM(CASE \n                    WHEN m.category = 'OH' AND Coalesce(m.sub_category, tm.sub_category) = 'Renasight' THEN p.amount \n                    WHEN m.category = 'ONC' AND Coalesce(m.sub_category, tm.sub_category) = 'Follow On Patients' THEN p.amount \n                    WHEN m.category = 'WH' AND Coalesce(m.sub_category, tm.sub_category) = 'Points Goal' THEN p.amount \n                    ELSE 0 \n                END) AS sub2_payout\n                \n            FROM xactly.xc_payment p\n            INNER JOIN xactly.xc_participant part\n                ON p.participant_id = part.participant_id\n            \n            -- 1. Embedded Title Mapping\n            INNER JOIN (\n                SELECT DISTINCT\n                    ppa.participant_id AS master_participant_id,\n                    pta.title_name AS title_name\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_pos_part_assignment ppa \n                    ON ppa.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_position pos \n                    ON ppa.position_id = pos.position_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                INNER JOIN xactly.xc_pos_title_assignment pta \n                    ON pos.position_id = pta.position_id\n                WHERE per.period_id IN :v_month_period_ids\n            ) pta ON p.participant_id = pta.master_participant_id\n            \n            -- 2. Embedded Territory Mapping (LEFT JOIN)\n            LEFT JOIN (\n                SELECT DISTINCT\n                    pa_input.participant_id AS master_participant_id,\n                    pa_active.territory AS territory\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_participant pa_input \n                    ON pa_input.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_participant pa_active \n                    ON pa_input.employee_id = pa_active.employee_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n                WHERE per.period_id IN :v_month_period_ids\n            ) ter ON p.participant_id = ter.master_participant_id\n\n            INNER JOIN NATERA_MASTER_MAPPING m \n                ON p.earning_group_name = m.earning_group\n               AND pta.title_name = m.title\n               \n            LEFT JOIN NATERA_TERRITORY_MAPPING tm \n                ON ter.territory = tm.territory \n            \n            WHERE p.participant_id IN :v_child_master_participant_id\n              AND p.period_id IN :v_month_period_ids\n              AND m.category IN ('OH', 'ONC', 'WH')\n            GROUP BY \n                part.name, \n                m.category\n        ) BaseData\n    ) RankedSubcategories\n) FinalData;"
+  },
+  {
+    "name": "ntr_db_period_dropdown",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "name",
+      "period_id"
+    ],
+    "xsql": "SELECT \n    per.name, \n    per.period_id \nFROM xactly.xc_period per \nWHERE LookupPeriodTypeById(period_type_id_fk) = 'QUARTERLY'\nORDER BY per.start_date DESC;"
+  },
+  {
+    "name": "ntr_db_default_participant_name",
+    "schema": "$framework",
+    "params": [
+      "v_is_admin",
+      "v_qtr_start_date"
+    ],
+    "columns": [
+      "name"
+    ],
+    "xsql": "/*select deafultvalues as name from demo.General_Deafult_values where deafultfieldtype = 'participant'\nand :v_is_admin = 'Yes'\nunion all*/\nselect pa.name as name from xactly.xc_user usr\ninner join xactly.xc_part_user_assignment pua \non usr.user_id = pua.user_id \nand :v_qtr_start_date between pua.effective_start_date and pua.effective_end_date\ninner join xactly.xc_participant pa \non pa.participant_id = pua.participant_id\nwhere usr.email = 'pgrinnell@natera.com'\nand :v_qtr_start_date between pa.effective_start_date and pa.effective_end_date\n--and :v_is_admin = 'No'"
+  },
+  {
+    "name": "ntr_db_renasight_avg_quota_attainment",
+    "schema": "$framework",
+    "params": [
+      "v_period_id",
+      "v_child_master_position_id",
+      "p_region",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "Average_Quarterly_Attainment"
+    ],
+    "xsql": "SELECT \n    Round(Coalesce(AVG(individual_attainment), 0.00), 2) AS Average_Quarterly_Attainment\nFROM (\n    SELECT \n        q.position_id,\n        Coalesce(c.credit_amount, 0.00) AS total_credits,\n        Coalesce(q.quota_amount, 0.00) AS total_quota,\n        CASE \n            WHEN Coalesce(q.quota_amount, 0.00) = 0 THEN 0.00\n            ELSE ((Coalesce(c.credit_amount, 0.00) / q.quota_amount) * 100)\n        END AS individual_attainment\n    FROM (\n        SELECT qa.assignment_id AS position_id, SUM(qa.amount) AS quota_amount\n        FROM xactly.xc_quota_assignment qa\n        INNER JOIN xactly.xc_quota q_tbl ON qa.quota_id = q_tbl.quota_id\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON qa.assignment_id = pos_reg.master_position_id\n        WHERE qa.assignment_type = 2\n          AND q_tbl.name = 'Renasight Goal'\n          AND qa.period_id = :v_period_id\n          AND qa.assignment_id IN :v_child_master_position_id\n        AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n        GROUP BY qa.assignment_id\n    ) q\n    LEFT JOIN (\n        SELECT cs.position_id, SUM(cs.Total_amount) AS credit_amount\n        FROM xactly.xc_credit_summary cs\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON cs.position_id = pos_reg.master_position_id\n        WHERE cs.credit_type_name = 'Renasight'\n          AND cs.period_id IN :v_month_period_ids\n          AND cs.position_id IN :v_child_master_position_id\n          AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n        GROUP BY cs.position_id\n    ) c ON q.position_id = c.position_id\n) sub"
+  },
+  {
+    "name": "ntr_db_prospera_rep_hitting_plan",
+    "schema": "$framework",
+    "params": [
+      "v_period_id",
+      "v_child_master_position_id",
+      "p_region",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "Positions_Over_100_Percent",
+      "Total_Positions_With_Quota"
+    ],
+    "xsql": "SELECT \n    Coalesce(SUM(CASE WHEN individual_attainment >= 100.00 THEN 1 ELSE 0 END), 0) AS Positions_Over_100_Percent,\n    Count(position_id) AS Total_Positions_With_Quota\nFROM (\n    SELECT \n        q.position_id,\n        Coalesce(c.credit_amount, 0.00) AS total_credits,\n        Coalesce(q.quota_amount, 0.00) AS total_quota,\n        CASE \n            WHEN Coalesce(q.quota_amount, 0.00) = 0 THEN 0.00\n            ELSE ((Coalesce(c.credit_amount, 0.00) / q.quota_amount) * 100)\n        END AS individual_attainment\n    FROM (\n        SELECT qa.assignment_id AS position_id, SUM(qa.amount) AS quota_amount\n        FROM xactly.xc_quota_assignment qa\n        INNER JOIN xactly.xc_quota q_tbl ON qa.quota_id = q_tbl.quota_id\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON qa.assignment_id = pos_reg.master_position_id\n        WHERE qa.assignment_type = 2\n          AND q_tbl.name = 'Prospera Goal'\n          AND qa.period_id = :v_period_id\n          AND qa.assignment_id IN :v_child_master_position_id\n          AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n        GROUP BY qa.assignment_id\n    ) q\n    LEFT JOIN (\n        SELECT cs.position_id, SUM(cs.Total_amount) AS credit_amount\n        FROM xactly.xc_credit_summary cs\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON cs.position_id = pos_reg.master_position_id\n        WHERE cs.credit_type_name = 'Prospera'\n          AND cs.period_id IN :v_month_period_ids\n          AND cs.position_id IN :v_child_master_position_id\n          AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n        GROUP BY cs.position_id\n    ) c ON q.position_id = c.position_id\n) sub"
+  },
+  {
+    "name": "ntr_db_category_mapping",
+    "schema": "$framework",
+    "params": [
+      "v_search_roll_up_1"
+    ],
+    "columns": [],
+    "xsql": "SELECT * FROM $framework.NATERA_TITLE_CATEGORY_MAPPING \nWHERE :v_search_roll_up_1 IS NULL \n   OR :v_search_roll_up_1 = ''\n   OR lower(title) LIKE lower('%' || :v_search_roll_up_1 || '%')\n   OR lower(category) LIKE lower('%' || :v_search_roll_up_1 || '%');"
+  },
+  {
+    "name": "ntr_db_set_default_period",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "value_field"
+    ],
+    "xsql": "select value_field from NATERA_DEFAULT_VALUE where column_type = 'Period_name';"
+  },
+  {
+    "name": "ntr_onc_bottom_10",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [],
+    "xsql": "SELECT \n    SubString(part.name, 0, IndexOf(part.name, '(')) AS COS_Name,\n    SUM(p.amount) AS Projected_Total_Payout\nFROM xactly.xc_payment p\nINNER JOIN xactly.xc_participant part\n    ON p.participant_id = part.participant_id\n\n-- 1. Embedded Title Mapping\nINNER JOIN (\n    SELECT DISTINCT\n        ppa.participant_id AS master_participant_id,\n        pta.title_name AS title_name\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_pos_part_assignment ppa \n        ON ppa.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_position pos \n        ON ppa.position_id = pos.position_id\n        AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n    INNER JOIN xactly.xc_pos_title_assignment pta \n        ON pos.position_id = pta.position_id\n    WHERE per.period_id IN :v_month_period_ids\n) pta ON p.participant_id = pta.master_participant_id\n\n-- 2. Embedded Position Region Mapping (to align with the :p_region parameter rule)\nINNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg \n    ON p.position_id = pos_reg.master_position_id\n\n-- 3. Configuration Master Mapping\nINNER JOIN NATERA_MASTER_MAPPING m \n    ON p.earning_group_name = m.earning_group\n   AND pta.title_name = m.title\n\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND p.period_id IN :v_month_period_ids\n  AND m.category = 'ONC'\n  AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\n\nGROUP BY \n    SubString(part.name, 0, IndexOf(part.name, '('))\nORDER BY Projected_Total_Payout ASC\nLIMIT 10;\n\n/*SELECT \n    COS_Name,\n    Projected_Total_Payout\nFROM EXT_NATERA_ONC_PERF\nWHERE 'ALL' IN (:p_region) OR Region IN (:p_region)\nORDER BY Projected_Total_Payout ASC\nLIMIT 10*/"
+  },
+  {
+    "name": "ntr_db_unique_regions",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_qtr_start_date"
+    ],
+    "columns": [
+      "count"
+    ],
+    "xsql": "select count(*) count from (\nselect distinct pa.region from xactly.xc_participant pa where employee_id in \n  (\n    select employee_id from xactly.xc_participant where participant_id in  :v_child_master_participant_id\n  ) \nand :v_qtr_start_date between pa.effective_start_date and pa.effective_end_date\n   )"
+  },
+  {
+    "name": "ntr_db_renasight_rep_hitting_plan",
+    "schema": "$framework",
+    "params": [
+      "v_period_id",
+      "v_child_master_position_id",
+      "p_region",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "Positions_Over_100_Percent",
+      "Total_Positions_With_Quota"
+    ],
+    "xsql": "SELECT \n    Coalesce(SUM(CASE WHEN individual_attainment >= 100.00 THEN 1 ELSE 0 END), 0) AS Positions_Over_100_Percent,\n    Count(position_id) AS Total_Positions_With_Quota\nFROM (\n    SELECT \n        q.position_id,\n        Coalesce(c.credit_amount, 0.00) AS total_credits,\n        Coalesce(q.quota_amount, 0.00) AS total_quota,\n        CASE \n            WHEN Coalesce(q.quota_amount, 0.00) = 0 THEN 0.00\n            ELSE ((Coalesce(c.credit_amount, 0.00) / q.quota_amount) * 100)\n        END AS individual_attainment\n    FROM (\n        SELECT qa.assignment_id AS position_id, SUM(qa.amount) AS quota_amount\n        FROM xactly.xc_quota_assignment qa\n        INNER JOIN xactly.xc_quota q_tbl ON qa.quota_id = q_tbl.quota_id\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON qa.assignment_id = pos_reg.master_position_id\n        WHERE qa.assignment_type = 2\n          AND q_tbl.name = 'Renasight Goal'\n          AND qa.period_id = :v_period_id\n          AND qa.assignment_id IN :v_child_master_position_id\n      AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n        GROUP BY qa.assignment_id\n    ) q\n    LEFT JOIN (\n        SELECT cs.position_id, SUM(cs.Total_amount) AS credit_amount\n        FROM xactly.xc_credit_summary cs\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON cs.position_id = pos_reg.master_position_id\n        WHERE cs.credit_type_name = 'Renasight'\n          AND cs.period_id IN :v_month_period_ids\n          AND cs.position_id IN :v_child_master_position_id\n      AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n        GROUP BY cs.position_id\n    ) c ON q.position_id = c.position_id\n) sub"
+  },
+  {
+    "name": "ntr_onc_top10",
+    "schema": "$framework",
+    "params": [
+      "p_region"
+    ],
+    "columns": [
+      "COS_Name",
+      "Projected_FollowOn_Payout"
+    ],
+    "xsql": "SELECT \n    COS_Name,\n    Projected_FollowOn_Payout\nFROM EXT_NATERA_ONC_PERF\nWHERE 'ALL' IN (:p_region) OR Region IN (:p_region)\nORDER BY Projected_FollowOn_Payout DESC\nLIMIT 10"
+  },
+  {
+    "name": "NTR_OH_bar",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "OHS_Name",
+      "Final_Rank",
+      "Prospera_Rank",
+      "Renasight_Rank",
+      "Total_Payout"
+    ],
+    "xsql": "SELECT \n    name AS OHS_Name, \n    RANK() OVER (ORDER BY payout DESC) AS Final_Rank, \n    RANK() OVER (ORDER BY prospera_payout DESC) AS Prospera_Rank, \n    RANK() OVER (ORDER BY renasight_payout DESC) AS Renasight_Rank, \n   '$' || Coalesce(FormatNumber(Round(payout, 0), '#,###'), '0') AS Total_Payout\nFROM (\n    SELECT \n        -- Using part.name as requested, with a safe parse just in case there are parentheses \n        CASE \n            WHEN IndexOf(part.name, '(') > 0 THEN SubString(part.name, 0, IndexOf(part.name, '(')) \n            ELSE part.name \n        END AS name, \n        \n        -- Aggregate Payouts\n        SUM(p.amount) AS payout,\n        SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Prospera' THEN p.amount ELSE 0 END) AS prospera_payout,\n        SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Renasight' THEN p.amount ELSE 0 END) AS renasight_payout\n        \n    FROM xactly.xc_payment p\n    INNER JOIN xactly.xc_participant part\n        ON p.participant_id = part.participant_id\n    \n    -- 1. Embedded Title Mapping\n    INNER JOIN (\n        SELECT DISTINCT\n            ppa.participant_id AS master_participant_id,\n            pta.title_name AS title_name\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_pos_part_assignment ppa \n            ON ppa.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_position pos \n            ON ppa.position_id = pos.position_id\n            AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n        INNER JOIN xactly.xc_pos_title_assignment pta \n            ON pos.position_id = pta.position_id\n        WHERE per.period_id IN :v_month_period_ids\n    ) pta ON p.participant_id = pta.master_participant_id\n    \n    -- 2. Embedded Territory Mapping\n    LEFT JOIN (\n        SELECT DISTINCT\n            pa_input.participant_id AS master_participant_id,\n            pa_active.territory AS territory\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_participant pa_input \n            ON pa_input.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_participant pa_active \n            ON pa_input.employee_id = pa_active.employee_id\n            AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n        WHERE per.period_id IN :v_month_period_ids\n    ) ter ON p.participant_id = ter.master_participant_id\n\n    -- 3. Master Mapping\n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n       AND pta.title_name = m.title\n       \n    -- 4. Territory Mapping (Still needed for sub_category fallback, but region logic removed)\n    LEFT JOIN NATERA_TERRITORY_MAPPING tm \n        ON ter.territory = tm.territory \n    \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n      AND m.category = 'OH'\n      \n    GROUP BY \n        part.name\n) BaseData\nORDER BY Final_Rank ASC;"
+  },
+  {
+    "name": "ntr_region_dd_2",
+    "schema": "$framework",
+    "params": [],
+    "columns": [
+      "Region"
+    ],
+    "xsql": "SELECT Region \nFROM (\n    SELECT 'ALL' AS Region, 0 AS Sort_Order \n    UNION \n    SELECT DISTINCT Region, 1 AS Sort_Order \n    FROM EXT_NATERA_OH_PERF\n    WHERE Region IS NOT NULL\n)\nORDER BY Sort_Order, Region"
+  },
+  {
+    "name": "ntr_oh_chart_2",
+    "schema": "$framework",
+    "params": [
+      "v_prev_month_period_ids",
+      "v_month_period_ids",
+      "v_child_master_participant_id",
+      "p_region"
+    ],
+    "columns": [
+      "Region",
+      "Prospera_Baseline",
+      "Prospera_Actual"
+    ],
+    "xsql": "SELECT \n    pos_reg.region AS Region,\n    SUM(CASE WHEN p.period_id IN :v_prev_month_period_ids THEN p.amount ELSE 0 END) AS Prospera_Baseline,\n    SUM(CASE WHEN p.period_id IN :v_month_period_ids THEN p.amount ELSE 0 END) AS Prospera_Actual\nFROM xactly.xc_credit p\nINNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg \n    ON p.position_id = pos_reg.master_position_id\nINNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta \n    ON p.participant_id = pta.master_participant_id\nINNER JOIN $framework.NATERA_TITLE_CATEGORY_MAPPING m \n    ON pta.title_name = m.title\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND (p.period_id IN :v_month_period_ids OR p.period_id IN :v_prev_month_period_ids)\n  AND m.category = 'OH' \n  AND p.credit_type_name IN ('Prospera', 'Prospera HEART', 'Prospera LUNG')\n  AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\nGROUP BY pos_reg.region\nORDER BY Prospera_Actual DESC;\n\n/*SELECT \n    Region,\n    SUM(Prospera_Baseline) AS Prospera_Baseline,\n    SUM(Actual_Prospera_Units) AS Prospera_Actual,\n    SUM(Renasight_Baseline) AS Renasight_Baseline,\n    SUM(Actual_Renasight_Units) AS Renasight_Actual\nFROM EXT_NATERA_OH_PERF\nWHERE ('ALL' IN (:p_region) OR Region IN (:p_region))\nGROUP BY Region\nORDER BY prospera_actual DESC LIMIT 5;*/"
+  },
+  {
+    "name": "ntr_oh_butterfly",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "mix_1_name",
+      "mix_1_payout",
+      "mix_1_pct",
+      "mix_1_prospera_pct",
+      "mix_1_renasight_pct",
+      "mix_1_others_pct",
+      "mix_2_name",
+      "mix_2_payout",
+      "mix_2_pct",
+      "mix_2_prospera_pct",
+      "mix_2_renasight_pct",
+      "mix_2_others_pct",
+      "mix_3_name",
+      "mix_3_payout",
+      "mix_3_pct",
+      "mix_3_prospera_pct",
+      "mix_3_renasight_pct",
+      "mix_3_others_pct",
+      "mix_4_name",
+      "mix_4_payout",
+      "mix_4_pct",
+      "mix_4_prospera_pct",
+      "mix_4_renasight_pct",
+      "mix_4_others_pct",
+      "mix_5_name",
+      "mix_5_payout",
+      "mix_5_pct",
+      "mix_5_prospera_pct",
+      "mix_5_renasight_pct",
+      "mix_5_others_pct",
+      "mix_6_name",
+      "mix_6_payout",
+      "mix_6_pct",
+      "mix_6_prospera_pct",
+      "mix_6_renasight_pct",
+      "mix_6_others_pct",
+      "mix_7_name",
+      "mix_7_payout",
+      "mix_7_pct",
+      "mix_7_prospera_pct",
+      "mix_7_renasight_pct",
+      "mix_7_others_pct",
+      "mix_8_name",
+      "mix_8_payout",
+      "mix_8_pct",
+      "mix_8_prospera_pct",
+      "mix_8_renasight_pct",
+      "mix_8_others_pct",
+      "mix_9_name",
+      "mix_9_payout",
+      "mix_9_pct",
+      "mix_9_prospera_pct",
+      "mix_9_renasight_pct",
+      "mix_9_others_pct",
+      "mix_10_name",
+      "mix_10_payout",
+      "mix_10_pct",
+      "mix_10_prospera_pct",
+      "mix_10_renasight_pct",
+      "mix_10_others_pct"
+    ],
+    "xsql": "SELECT \n    -- RANK 1\n    Coalesce(Max(CASE WHEN rank = 1 THEN name END), '') AS mix_1_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 1 THEN payout END), 0), '#,###'), '0') AS mix_1_payout,\n    Coalesce(Max(CASE WHEN rank = 1 THEN pct END), 0.0) AS mix_1_pct,\n    Coalesce(Max(CASE WHEN rank = 1 THEN prospera_pct END), 0) AS mix_1_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 1 THEN renasight_pct END), 0) AS mix_1_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 1 THEN others_pct END), 0) AS mix_1_others_pct,\n\n    -- RANK 2\n    Coalesce(Max(CASE WHEN rank = 2 THEN name END), '') AS mix_2_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 2 THEN payout END), 0), '#,###'), '0') AS mix_2_payout,\n    Coalesce(Max(CASE WHEN rank = 2 THEN pct END), 0.0) AS mix_2_pct,\n    Coalesce(Max(CASE WHEN rank = 2 THEN prospera_pct END), 0) AS mix_2_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 2 THEN renasight_pct END), 0) AS mix_2_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 2 THEN others_pct END), 0) AS mix_2_others_pct,\n\n    -- RANK 3\n    Coalesce(Max(CASE WHEN rank = 3 THEN name END), '') AS mix_3_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 3 THEN payout END), 0), '#,###'), '0') AS mix_3_payout,\n    Coalesce(Max(CASE WHEN rank = 3 THEN pct END), 0.0) AS mix_3_pct,\n    Coalesce(Max(CASE WHEN rank = 3 THEN prospera_pct END), 0) AS mix_3_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 3 THEN renasight_pct END), 0) AS mix_3_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 3 THEN others_pct END), 0) AS mix_3_others_pct,\n\n    -- RANK 4\n    Coalesce(Max(CASE WHEN rank = 4 THEN name END), '') AS mix_4_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 4 THEN payout END), 0), '#,###'), '0') AS mix_4_payout,\n    Coalesce(Max(CASE WHEN rank = 4 THEN pct END), 0.0) AS mix_4_pct,\n    Coalesce(Max(CASE WHEN rank = 4 THEN prospera_pct END), 0) AS mix_4_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 4 THEN renasight_pct END), 0) AS mix_4_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 4 THEN others_pct END), 0) AS mix_4_others_pct,\n\n    -- RANK 5\n    Coalesce(Max(CASE WHEN rank = 5 THEN name END), '') AS mix_5_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 5 THEN payout END), 0), '#,###'), '0') AS mix_5_payout,\n    Coalesce(Max(CASE WHEN rank = 5 THEN pct END), 0.0) AS mix_5_pct,\n    Coalesce(Max(CASE WHEN rank = 5 THEN prospera_pct END), 0) AS mix_5_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 5 THEN renasight_pct END), 0) AS mix_5_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 5 THEN others_pct END), 0) AS mix_5_others_pct,\n\n    -- RANK 6\n    Coalesce(Max(CASE WHEN rank = 6 THEN name END), '') AS mix_6_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 6 THEN payout END), 0), '#,###'), '0') AS mix_6_payout,\n    Coalesce(Max(CASE WHEN rank = 6 THEN pct END), 0.0) AS mix_6_pct,\n    Coalesce(Max(CASE WHEN rank = 6 THEN prospera_pct END), 0) AS mix_6_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 6 THEN renasight_pct END), 0) AS mix_6_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 6 THEN others_pct END), 0) AS mix_6_others_pct,\n\n    -- RANK 7\n    Coalesce(Max(CASE WHEN rank = 7 THEN name END), '') AS mix_7_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 7 THEN payout END), 0), '#,###'), '0') AS mix_7_payout,\n    Coalesce(Max(CASE WHEN rank = 7 THEN pct END), 0.0) AS mix_7_pct,\n    Coalesce(Max(CASE WHEN rank = 7 THEN prospera_pct END), 0) AS mix_7_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 7 THEN renasight_pct END), 0) AS mix_7_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 7 THEN others_pct END), 0) AS mix_7_others_pct,\n\n    -- RANK 8\n    Coalesce(Max(CASE WHEN rank = 8 THEN name END), '') AS mix_8_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 8 THEN payout END), 0), '#,###'), '0') AS mix_8_payout,\n    Coalesce(Max(CASE WHEN rank = 8 THEN pct END), 0.0) AS mix_8_pct,\n    Coalesce(Max(CASE WHEN rank = 8 THEN prospera_pct END), 0) AS mix_8_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 8 THEN renasight_pct END), 0) AS mix_8_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 8 THEN others_pct END), 0) AS mix_8_others_pct,\n\n    -- RANK 9\n    Coalesce(Max(CASE WHEN rank = 9 THEN name END), '') AS mix_9_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 9 THEN payout END), 0), '#,###'), '0') AS mix_9_payout,\n    Coalesce(Max(CASE WHEN rank = 9 THEN pct END), 0.0) AS mix_9_pct,\n    Coalesce(Max(CASE WHEN rank = 9 THEN prospera_pct END), 0) AS mix_9_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 9 THEN renasight_pct END), 0) AS mix_9_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 9 THEN others_pct END), 0) AS mix_9_others_pct,\n\n    -- RANK 10\n    Coalesce(Max(CASE WHEN rank = 10 THEN name END), '') AS mix_10_name,\n    Coalesce(FormatNumber(Round(Max(CASE WHEN rank = 10 THEN payout END), 0), '#,###'), '0') AS mix_10_payout,\n    Coalesce(Max(CASE WHEN rank = 10 THEN pct END), 0.0) AS mix_10_pct,\n    Coalesce(Max(CASE WHEN rank = 10 THEN prospera_pct END), 0) AS mix_10_prospera_pct,\n    Coalesce(Max(CASE WHEN rank = 10 THEN renasight_pct END), 0) AS mix_10_renasight_pct,\n    Coalesce(Max(CASE WHEN rank = 10 THEN others_pct END), 0) AS mix_10_others_pct\n\nFROM (\n    SELECT \n        name, \n        payout,\n        CAST(CASE WHEN Max(payout) Over () = 0 THEN 0.0 ELSE (payout * 100.0 / Max(payout) Over ()) END AS DECIMAL(10,1)) AS pct,\n        CAST(CASE WHEN payout = 0 THEN 0.0 ELSE (prospera_payout * 100.0 / payout) END AS DECIMAL(10,1)) AS prospera_pct,\n        CAST(CASE WHEN payout = 0 THEN 0.0 ELSE (renasight_payout * 100.0 / payout) END AS DECIMAL(10,1)) AS renasight_pct,\n        CAST(CASE WHEN payout = 0 THEN 0.0 ELSE (others_payout * 100.0 / payout) END AS DECIMAL(10,1)) AS others_pct,\n        Row_Number() Over (Order By payout Desc) as rank\n    FROM (\n        SELECT \n            SubString(p.participant_name, 0, IndexOf(p.participant_name, '(')) AS name, \n            SUM(p.amount) AS payout,\n            SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Prospera' THEN p.amount ELSE 0 END) AS prospera_payout,\n            SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Renasight' THEN p.amount ELSE 0 END) AS renasight_payout,\n            SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Others' THEN p.amount ELSE 0 END) AS others_payout\n        FROM xactly.xc_payment p\n        INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n            ON p.participant_id = pta.master_participant_id\n        INNER JOIN $framework.ntr_db_get_paticipant_territory_mapping ter\n            ON p.participant_id = ter.master_participant_id\n        INNER JOIN $framework.NATERA_MASTER_MAPPING m \n            ON p.earning_group_name = m.earning_group\n            AND pta.title_name = m.title\n        LEFT JOIN $framework.NATERA_TERRITORY_MAPPING tm \n            ON ter.territory = tm.territory \n            \n        WHERE p.participant_id IN :v_child_master_participant_id\n          AND p.period_id IN :v_month_period_ids\n          AND m.category = 'OH'\n        GROUP BY \n            p.participant_name\n    ) AggregatedData\n) RankedData\nWHERE rank <= 10;"
+  },
+  {
+    "name": "ntr_top_mix",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "mix_1_name",
+      "mix_1_payout",
+      "mix_1_pct",
+      "mix_1_vol_pct",
+      "mix_1_pts_pct",
+      "mix_1_others_pct",
+      "mix_2_name",
+      "mix_2_payout",
+      "mix_2_pct",
+      "mix_2_vol_pct",
+      "mix_2_pts_pct",
+      "mix_2_others_pct",
+      "mix_3_name",
+      "mix_3_payout",
+      "mix_3_pct",
+      "mix_3_vol_pct",
+      "mix_3_pts_pct",
+      "mix_3_others_pct",
+      "mix_4_name",
+      "mix_4_payout",
+      "mix_4_pct",
+      "mix_4_vol_pct",
+      "mix_4_pts_pct",
+      "mix_4_others_pct",
+      "mix_5_name",
+      "mix_5_payout",
+      "mix_5_pct",
+      "mix_5_vol_pct",
+      "mix_5_pts_pct",
+      "mix_5_others_pct",
+      "mix_6_name",
+      "mix_6_payout",
+      "mix_6_pct",
+      "mix_6_vol_pct",
+      "mix_6_pts_pct",
+      "mix_6_others_pct",
+      "mix_7_name",
+      "mix_7_payout",
+      "mix_7_pct",
+      "mix_7_vol_pct",
+      "mix_7_pts_pct",
+      "mix_7_others_pct",
+      "mix_8_name",
+      "mix_8_payout",
+      "mix_8_pct",
+      "mix_8_vol_pct",
+      "mix_8_pts_pct",
+      "mix_8_others_pct",
+      "mix_9_name",
+      "mix_9_payout",
+      "mix_9_pct",
+      "mix_9_vol_pct",
+      "mix_9_pts_pct",
+      "mix_9_others_pct",
+      "mix_10_name",
+      "mix_10_payout",
+      "mix_10_pct",
+      "mix_10_vol_pct",
+      "mix_10_pts_pct",
+      "mix_10_others_pct"
+    ],
+    "xsql": "Select \n    -- ROW 1\n    Max(Case When rn = 1 Then ASR_Name End) as mix_1_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 1 Then Total_Payout End), 0), '#,###'), '0') as mix_1_payout,\n    Cast(Max(Case When rn = 1 Then Bar_Pct End) as decimal(10,1)) as mix_1_pct,\n    Cast(Max(Case When rn = 1 Then Vol_Pct End) as decimal(10,1)) as mix_1_vol_pct,\n    Cast(Max(Case When rn = 1 Then Pts_Pct End) as decimal(10,1)) as mix_1_pts_pct,\n    Cast(Max(Case When rn = 1 Then Others_Pct End) as decimal(10,1)) as mix_1_others_pct,\n    \n    -- ROW 2\n    Max(Case When rn = 2 Then ASR_Name End) as mix_2_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 2 Then Total_Payout End), 0), '#,###'), '0') as mix_2_payout,\n    Cast(Max(Case When rn = 2 Then Bar_Pct End) as decimal(10,1)) as mix_2_pct,\n    Cast(Max(Case When rn = 2 Then Vol_Pct End) as decimal(10,1)) as mix_2_vol_pct,\n    Cast(Max(Case When rn = 2 Then Pts_Pct End) as decimal(10,1)) as mix_2_pts_pct,\n    Cast(Max(Case When rn = 2 Then Others_Pct End) as decimal(10,1)) as mix_2_others_pct,\n    \n    -- ROW 3\n    Max(Case When rn = 3 Then ASR_Name End) as mix_3_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 3 Then Total_Payout End), 0), '#,###'), '0') as mix_3_payout,\n    Cast(Max(Case When rn = 3 Then Bar_Pct End) as decimal(10,1)) as mix_3_pct,\n    Cast(Max(Case When rn = 3 Then Vol_Pct End) as decimal(10,1)) as mix_3_vol_pct,\n    Cast(Max(Case When rn = 3 Then Pts_Pct End) as decimal(10,1)) as mix_3_pts_pct,\n    Cast(Max(Case When rn = 3 Then Others_Pct End) as decimal(10,1)) as mix_3_others_pct,\n    \n    -- ROW 4\n    Max(Case When rn = 4 Then ASR_Name End) as mix_4_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 4 Then Total_Payout End), 0), '#,###'), '0') as mix_4_payout,\n    Cast(Max(Case When rn = 4 Then Bar_Pct End) as decimal(10,1)) as mix_4_pct,\n    Cast(Max(Case When rn = 4 Then Vol_Pct End) as decimal(10,1)) as mix_4_vol_pct,\n    Cast(Max(Case When rn = 4 Then Pts_Pct End) as decimal(10,1)) as mix_4_pts_pct,\n    Cast(Max(Case When rn = 4 Then Others_Pct End) as decimal(10,1)) as mix_4_others_pct,\n    \n    -- ROW 5\n    Max(Case When rn = 5 Then ASR_Name End) as mix_5_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 5 Then Total_Payout End), 0), '#,###'), '0') as mix_5_payout,\n    Cast(Max(Case When rn = 5 Then Bar_Pct End) as decimal(10,1)) as mix_5_pct,\n    Cast(Max(Case When rn = 5 Then Vol_Pct End) as decimal(10,1)) as mix_5_vol_pct,\n    Cast(Max(Case When rn = 5 Then Pts_Pct End) as decimal(10,1)) as mix_5_pts_pct,\n    Cast(Max(Case When rn = 5 Then Others_Pct End) as decimal(10,1)) as mix_5_others_pct,\n\n    -- ROW 6\n    Max(Case When rn = 6 Then ASR_Name End) as mix_6_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 6 Then Total_Payout End), 0), '#,###'), '0') as mix_6_payout,\n    Cast(Max(Case When rn = 6 Then Bar_Pct End) as decimal(10,1)) as mix_6_pct,\n    Cast(Max(Case When rn = 6 Then Vol_Pct End) as decimal(10,1)) as mix_6_vol_pct,\n    Cast(Max(Case When rn = 6 Then Pts_Pct End) as decimal(10,1)) as mix_6_pts_pct,\n    Cast(Max(Case When rn = 6 Then Others_Pct End) as decimal(10,1)) as mix_6_others_pct,\n\n    -- ROW 7\n    Max(Case When rn = 7 Then ASR_Name End) as mix_7_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 7 Then Total_Payout End), 0), '#,###'), '0') as mix_7_payout,\n    Cast(Max(Case When rn = 7 Then Bar_Pct End) as decimal(10,1)) as mix_7_pct,\n    Cast(Max(Case When rn = 7 Then Vol_Pct End) as decimal(10,1)) as mix_7_vol_pct,\n    Cast(Max(Case When rn = 7 Then Pts_Pct End) as decimal(10,1)) as mix_7_pts_pct,\n    Cast(Max(Case When rn = 7 Then Others_Pct End) as decimal(10,1)) as mix_7_others_pct,\n\n    -- ROW 8\n    Max(Case When rn = 8 Then ASR_Name End) as mix_8_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 8 Then Total_Payout End), 0), '#,###'), '0') as mix_8_payout,\n    Cast(Max(Case When rn = 8 Then Bar_Pct End) as decimal(10,1)) as mix_8_pct,\n    Cast(Max(Case When rn = 8 Then Vol_Pct End) as decimal(10,1)) as mix_8_vol_pct,\n    Cast(Max(Case When rn = 8 Then Pts_Pct End) as decimal(10,1)) as mix_8_pts_pct,\n    Cast(Max(Case When rn = 8 Then Others_Pct End) as decimal(10,1)) as mix_8_others_pct,\n\n    -- ROW 9\n    Max(Case When rn = 9 Then ASR_Name End) as mix_9_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 9 Then Total_Payout End), 0), '#,###'), '0') as mix_9_payout,\n    Cast(Max(Case When rn = 9 Then Bar_Pct End) as decimal(10,1)) as mix_9_pct,\n    Cast(Max(Case When rn = 9 Then Vol_Pct End) as decimal(10,1)) as mix_9_vol_pct,\n    Cast(Max(Case When rn = 9 Then Pts_Pct End) as decimal(10,1)) as mix_9_pts_pct,\n    Cast(Max(Case When rn = 9 Then Others_Pct End) as decimal(10,1)) as mix_9_others_pct,\n\n    -- ROW 10\n    Max(Case When rn = 10 Then ASR_Name End) as mix_10_name,\n    Coalesce(FormatNumber(Round(Max(Case When rn = 10 Then Total_Payout End), 0), '#,###'), '0') as mix_10_payout,\n    Cast(Max(Case When rn = 10 Then Bar_Pct End) as decimal(10,1)) as mix_10_pct,\n    Cast(Max(Case When rn = 10 Then Vol_Pct End) as decimal(10,1)) as mix_10_vol_pct,\n    Cast(Max(Case When rn = 10 Then Pts_Pct End) as decimal(10,1)) as mix_10_pts_pct,\n    Cast(Max(Case When rn = 10 Then Others_Pct End) as decimal(10,1)) as mix_10_others_pct\n\nFrom (\n    Select \n        ASR_Name,\n        Total_Payout,\n        (Total_Payout * 100.0 / Case When Max_Total = 0 Then 1 Else Max_Total End) as Bar_Pct,\n        (Vol_Payout * 100.0 / Case When Total_Payout = 0 Then 1 Else Total_Payout End) as Vol_Pct,\n        (Pts_Payout * 100.0 / Case When Total_Payout = 0 Then 1 Else Total_Payout End) as Pts_Pct,\n        (Others_Payout * 100.0 / Case When Total_Payout = 0 Then 1 Else Total_Payout End) as Others_Pct,\n        rn\n    From (\n        Select \n            ASR_Name,\n            Total_Payout,\n            Vol_Payout,\n            Pts_Payout,\n            Others_Payout,\n            Max(Total_Payout) Over () as Max_Total,\n            ROW_NUMBER() Over (Order By Total_Payout DESC) as rn\n        From (\n            Select \n                ASR_Name,\n                Sum(amount) As Total_Payout,\n                Sum(Case When sub_category = 'Initial Patients' Then amount Else 0 End) As Vol_Payout,\n                Sum(Case When sub_category = 'Follow On Patients' Then amount Else 0 End) As Pts_Payout,\n                Sum(Case When sub_category = 'Others' Then amount Else 0 End) As Others_Payout\n            From (\n                Select \n                    CASE \n                        WHEN IndexOf(pa_active.participant_name, '(') > 0 THEN SubString(pa_active.participant_name, 0, IndexOf(pa_active.participant_name, '(')) \n                        ELSE pa_active.participant_name \n                    END As ASR_Name,\n                    p.amount,\n                    Case \n                        When m.sub_category IS NULL Then tm.sub_category\n                        Else m.sub_category\n                    End As sub_category\n                From xactly.xc_payment p\n                \n                /* Inlined Title Mapping */\n                Inner Join (\n                    SELECT DISTINCT\n                        ppa.participant_id AS master_participant_id,\n                        pta.title_name AS title\n                    FROM xactly.xc_period per \n                    INNER JOIN xactly.xc_pos_part_assignment ppa \n                        ON ppa.participant_id IN :v_child_master_participant_id\n                    INNER JOIN xactly.xc_position pos \n                        ON ppa.position_id = pos.position_id\n                        AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                        AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                    INNER JOIN xactly.xc_pos_title_assignment pta \n                        ON pos.position_id = pta.position_id\n                    WHERE per.period_id IN :v_month_period_ids\n                ) title On p.participant_id = title.master_participant_id\n                \n                /* Inlined Territory Mapping & Region Filtering */\n                Inner Join (\n                    SELECT DISTINCT\n                        pa_input.participant_id AS master_participant_id,\n                        pa_active.territory AS territory,\n                        pa_active.region AS region,\n                        pa_active.name AS participant_name\n                    FROM xactly.xc_period per \n                    INNER JOIN xactly.xc_participant pa_input \n                        ON pa_input.participant_id IN :v_child_master_participant_id\n                    INNER JOIN xactly.xc_participant pa_active \n                        ON pa_input.employee_id = pa_active.employee_id\n                        AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                        AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n                    WHERE per.period_id IN :v_month_period_ids\n                ) pa_active On p.participant_id = pa_active.master_participant_id\n                \n                Inner Join NATERA_MASTER_MAPPING m \n                    On p.earning_group_name = m.earning_group\n                    And title.title = m.title\n                    And m.category = 'ONC'\n                Left Join NATERA_TERRITORY_MAPPING tm \n                    On pa_active.territory = tm.territory \n                    \n                Where p.participant_id IN :v_child_master_participant_id\n                  And p.period_id IN :v_month_period_ids\n                  \n                  -- Region Dashboard Filter\n                  And ('ALL' IN (:p_region) OR pa_active.region IN (:p_region))\n                  \n                  And p.earning_group_name IN (\n                      Select earning_group \n                      From NATERA_MASTER_MAPPING \n                      Where category = 'ONC'\n                  )\n\n            ) raw_data\n            Group By ASR_Name\n        ) agg_data\n    ) windowed_data\n) final_data;"
+  },
+  {
+    "name": "ntr_db_prospera_avg_quota_attainment",
+    "schema": "$framework",
+    "params": [
+      "v_period_id",
+      "v_child_master_position_id",
+      "p_region",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "Average_Quarterly_Attainment"
+    ],
+    "xsql": "SELECT \n    Round(Coalesce(AVG(individual_attainment), 0.00), 2) AS Average_Quarterly_Attainment\nFROM (\n    SELECT \n        q.position_id,\n        Coalesce(c.credit_amount, 0.00) AS total_credits,\n        Coalesce(q.quota_amount, 0.00) AS total_quota,\n        CASE \n            WHEN Coalesce(q.quota_amount, 0.00) = 0 THEN 0.00\n            ELSE ((Coalesce(c.credit_amount, 0.00) / q.quota_amount) * 100)\n        END AS individual_attainment\n    FROM (\n        SELECT qa.assignment_id AS position_id, SUM(qa.amount) AS quota_amount\n        FROM xactly.xc_quota_assignment qa\n        INNER JOIN xactly.xc_quota q_tbl ON qa.quota_id = q_tbl.quota_id\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON qa.assignment_id = pos_reg.master_position_id\n        WHERE qa.assignment_type = 2\n          AND q_tbl.name = 'Prospera Goal'\n          AND qa.period_id = :v_period_id\n          AND qa.assignment_id IN :v_child_master_position_id\n        AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n        GROUP BY qa.assignment_id\n    ) q\n    LEFT JOIN (\n        SELECT cs.position_id, SUM(cs.Total_amount) AS credit_amount\n        FROM xactly.xc_credit_summary cs\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON cs.position_id = pos_reg.master_position_id\n        WHERE cs.credit_type_name = 'Prospera'\n          AND cs.period_id IN :v_month_period_ids\n          AND cs.position_id IN :v_child_master_position_id\n          AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n        GROUP BY cs.position_id\n    ) c ON q.position_id = c.position_id\n) sub"
+  },
+  {
+    "name": "ntr_db_onc_total_payout",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_qtr_start_date",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "total_qtr_personal_target",
+      "onc_total_payout",
+      "onc_payout_percentage_of_budget"
+    ],
+    "xsql": "SELECT \n    Coalesce(v_total_qtr_personal_target, '0.00') AS total_qtr_personal_target,\n    Coalesce(v_onc_payout_val, '0.00') AS onc_total_payout,\n    Coalesce(v_onc_payout_pct, '0.00') AS onc_payout_percentage_of_budget\nFROM (SELECT 1 AS dummy) d\nLEFT JOIN (\n    SELECT\n        -- 1. Format the Approved Budget for ONC\n        FormatNumber(budget.total_qtr_personal_target, '#,##0.00') AS v_total_qtr_personal_target,\n        \n        -- 2. Format the Total Payout for ONC\n        FormatNumber(payout.onc_payout, '#,##0.00') AS v_onc_payout_val,\n        \n        -- 3. Calculate Payout Percentage relative to the Budget\n        Round(\n            (payout.onc_payout * 100.0) / \n            CASE WHEN budget.total_qtr_personal_target = 0 THEN 1 ELSE budget.total_qtr_personal_target END, \n            2\n        ) AS v_onc_payout_pct\n    FROM (\n        -- SUBQUERY A Calculates Budget Metrics\n        SELECT SUM(pa_active.personal_target / 4.0) AS total_qtr_personal_target\n        FROM xactly.xc_period per\n        INNER JOIN xactly.xc_participant pa_input \n            ON pa_input.participant_id IN :v_child_master_participant_id\n        INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n            ON pa_input.participant_id = pta.master_participant_id\n        INNER JOIN $framework.NATERA_TITLE_CATEGORY_MAPPING m \n            ON pta.title_name = m.title\n            AND m.category = 'ONC'\n   /*   INNER JOIN xactly.xc_pos_part_assignment ppa \n      on pa_input.participant_id = ppa.participant_id\n      INNER JOIN xactly.xc_position pos \n\t\t\ton ppa.position_id = pos.position_id\n      \t\tand :v_qtr_start_date between pos.effective_start_date and pos.effective_end_date\n              INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON pos.position_id = pos_reg.master_position_id*/\n        INNER JOIN xactly.xc_participant pa_active \n            ON pa_input.employee_id = pa_active.employee_id\n            AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n        WHERE per.period_id IN :v_month_period_ids\n      --AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n    ) budget\n    INNER JOIN (\n        -- SUBQUERY B Calculates Payout Metrics\n        SELECT SUM(p.amount) AS onc_payout\n        FROM xactly.xc_payment p\n        INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n        ON p.participant_id = pta.master_participant_id\n        INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON p.position_id = pos_reg.master_position_id\n        INNER JOIN NATERA_MASTER_MAPPING m \n            ON p.earning_group_name = m.earning_group\n            AND pta.title_name = m.title\n            AND m.category = 'ONC'\n        WHERE p.participant_id IN :v_child_master_participant_id\n          AND p.period_id IN :v_month_period_ids\n          AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n    ) payout ON 1=1  -- Safe, universal alternative to CROSS JOIN\n) AggData ON 1=1"
+  },
+  {
+    "name": "ntr_oh_chart_3",
+    "schema": "$framework",
+    "params": [
+      "v_prev_month_period_ids",
+      "v_month_period_ids",
+      "v_child_master_participant_id",
+      "p_region"
+    ],
+    "columns": [
+      "Region",
+      "Renasight_Baseline",
+      "Renasight_Actual"
+    ],
+    "xsql": "SELECT \n    pos_reg.region AS Region,\n    SUM(CASE WHEN p.period_id IN :v_prev_month_period_ids THEN p.amount ELSE 0 END) AS Renasight_Baseline,\n    SUM(CASE WHEN p.period_id IN :v_month_period_ids THEN p.amount ELSE 0 END) AS Renasight_Actual\nFROM xactly.xc_credit p\nINNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg \n    ON p.position_id = pos_reg.master_position_id\nINNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta \n    ON p.participant_id = pta.master_participant_id\nINNER JOIN $framework.NATERA_TITLE_CATEGORY_MAPPING m \n    ON pta.title_name = m.title\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND (p.period_id IN :v_month_period_ids OR p.period_id IN :v_prev_month_period_ids)\n  AND m.category = 'OH' \n  AND p.credit_type_name = 'Renasight'\n  AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\nGROUP BY pos_reg.region\nORDER BY Renasight_Actual DESC;"
+  },
+  {
+    "name": "ntr_db_get_master_partcipant_id",
+    "schema": "$framework",
+    "params": [
+      "v_participant_name"
+    ],
+    "columns": [
+      "participant_id"
+    ],
+    "xsql": "select participant_id from xactly.xc_participant where employee_id in (select employee_id from xactly.xc_participant where name = :v_participant_name) and is_master = 1"
+  },
+  {
+    "name": "ntr_territory_mapping",
+    "schema": "$framework",
+    "params": [
+      "v_search_territory"
+    ],
+    "columns": [],
+    "xsql": "SELECT * FROM $framework.NATERA_TERRITORY_MAPPING \nWHERE :v_search_territory IS NULL \n   OR :v_search_territory = ''\n   OR lower(territory) LIKE lower('%' || :v_search_territory || '%')\n   OR lower(category) LIKE lower('%' || :v_search_territory || '%')\n   OR lower(sub_category) LIKE lower('%' || :v_search_territory || '%');"
+  },
+  {
+    "name": "ntr_db_onc_approved_budger",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "total_qtr_personal_target"
+    ],
+    "xsql": "select Coalesce (total_qtr_personal_target,'0.00 ') total_qtr_personal_target from \n(select 1) dummy left join (\nSelect FormatNumber(sum(total_qtr_personal_target),'#,##0.00 ') total_qtr_personal_target\nfrom (\n  SELECT \n    SUM(pa_active.personal_target / 4.0) AS total_qtr_personal_target\nFROM xactly.xc_period per\nINNER JOIN xactly.xc_participant pa_input \n    ON pa_input.participant_id IN :v_child_master_participant_id\n  INNER JOIN $framework.ntr_db_get_paticipant_title_mapping pta\n  ON pa_input.participant_id = pta.master_participant_id\nINNER JOIN $framework.NATERA_TITLE_CATEGORY_MAPPING m \n    ON pta.title_name = m.title\n  and m.category = 'ONC'\n /* INNER JOIN xactly.xc_pos_part_assignment ppa \n      on pa_input.participant_id = ppa.participant_id\n      INNER JOIN xactly.xc_position pos \n\t\t\ton ppa.position_id = pos.position_id\n      \t\tAND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg ON pos.position_id = pos_reg.master_position_id*/\nINNER JOIN xactly.xc_participant pa_active \n    ON pa_input.employee_id = pa_active.employee_id\n    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\nWHERE per.period_id IN :v_month_period_ids\n       -- AND (:p_region = 'ALL' or pos_reg.region in (:p_region))\n)\n)\non 1=1"
+  },
+  {
+    "name": "ntr_db_es_payout_breakdown",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids"
+    ],
+    "columns": [
+      "Oh_prospera_pct",
+      "Oh_renasight_pct",
+      "Oh_others_pct",
+      "Onc_initial_pct",
+      "Onc_followon_pct",
+      "Onc_Others_pct",
+      "Wh_vol_pct",
+      "Wh_pts_pct",
+      "Wh_Others_pct"
+    ],
+    "xsql": "SELECT \n    -- Organ Health Percentages (Prospera vs. Renasight)\n    Coalesce(Round((SUM(CASE WHEN category IN ('OH') AND sub_category = 'Prospera' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('OH') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('OH') THEN amount ELSE 0 END) END, 0), 0) AS Oh_prospera_pct,\n               \n    Coalesce(Round((SUM(CASE WHEN category IN ('OH') AND sub_category = 'Renasight' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('OH') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('OH') THEN amount ELSE 0 END) END, 0), 0) AS Oh_renasight_pct,\n\n    Coalesce(Round((SUM(CASE WHEN category IN ('OH') AND sub_category = 'Others' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('OH') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('OH') THEN amount ELSE 0 END) END, 0), 0) AS Oh_others_pct,\n\n    -- Oncology Percentages (Initial vs. Follow-On)\n    Coalesce(Round((SUM(CASE WHEN category IN ('ONC') AND sub_category = 'Initial Patients' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('ONC') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('ONC') THEN amount ELSE 0 END) END, 0), 0) AS Onc_initial_pct,\n\n    Coalesce(Round((SUM(CASE WHEN category IN ('ONC') AND sub_category = 'Follow On Patients' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('ONC') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('ONC') THEN amount ELSE 0 END) END, 0), 0) AS Onc_followon_pct,\n\n    Coalesce(Round((SUM(CASE WHEN category IN ('ONC') AND sub_category = 'Others' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('ONC') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('ONC') THEN amount ELSE 0 END) END, 0), 0) AS Onc_Others_pct,\n\n    -- Women's Health Percentages (Volume vs. Points)\n    Coalesce(Round((SUM(CASE WHEN category IN ('WH') AND sub_category = 'Volume Retention' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('WH') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('WH') THEN amount ELSE 0 END) END, 0), 0) AS Wh_vol_pct,\n\n    Coalesce(Round((SUM(CASE WHEN category IN ('WH') AND sub_category = 'Points Goal' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('WH') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('WH') THEN amount ELSE 0 END) END, 0), 0) AS Wh_pts_pct,\n\n    Coalesce(Round((SUM(CASE WHEN category IN ('WH') AND sub_category = 'Others' THEN amount ELSE 0 END) * 100.0) / \n          CASE WHEN SUM(CASE WHEN category IN ('WH') THEN amount ELSE 0 END) = 0 THEN 1 \n               ELSE SUM(CASE WHEN category IN ('WH') THEN amount ELSE 0 END) END, 0), 0) AS Wh_Others_pct\n\nFROM (\n    SELECT \n        p.amount,\n        m.category,\n        /* Falls back to Territory Mapping if Master Mapping sub_category is NULL or blank */\n        CASE \n            WHEN m.sub_category IS NULL THEN tm.sub_category\n            ELSE m.sub_category\n        END AS sub_category\n    FROM xactly.xc_payment p\n    \n    -- 1. Embedded Title Mapping\n    INNER JOIN (\n        SELECT DISTINCT\n            ppa.participant_id AS master_participant_id,\n            pta.title_name AS title_name\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_pos_part_assignment ppa \n            ON ppa.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_position pos \n            ON ppa.position_id = pos.position_id\n            AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n        INNER JOIN xactly.xc_pos_title_assignment pta \n            ON pos.position_id = pta.position_id\n        WHERE per.period_id IN :v_month_period_ids\n    ) pta ON p.participant_id = pta.master_participant_id\n    \n    -- 2. Embedded Territory Mapping (LEFT JOIN to prevent dropping ONC data)\n    LEFT JOIN (\n        SELECT DISTINCT\n            pa_input.participant_id AS master_participant_id,\n            pa_active.territory AS territory\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_participant pa_input \n            ON pa_input.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_participant pa_active \n            ON pa_input.employee_id = pa_active.employee_id\n            AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n        WHERE per.period_id IN :v_month_period_ids\n    ) ter ON p.participant_id = ter.master_participant_id\n\n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n       AND pta.title_name = m.title\n       \n    LEFT JOIN NATERA_TERRITORY_MAPPING tm \n        ON ter.territory = tm.territory \n        \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n) raw_data;"
+  },
+  {
+    "name": "ntr_db_get_all_child_master_partcipant_id",
+    "schema": "$framework",
+    "params": [
+      "v_qtr_start_date"
+    ],
+    "columns": [
+      "participant_id"
+    ],
+    "xsql": "select pa.participant_id from ShowIncentHierarchy(EffectiveAsOf= :v_qtr_start_date, ParentId = '79167020263211') hier \ninner join xactly.xc_participant pa \non pa.employee_id = hier.person_latest_employee_id\ninner join xactly.xc_pos_title_assignment pta \non pta.position_id = hier.position_id\ninner join $framework.NATERA_TITLE_CATEGORY_MAPPING t\non t.title = pta.title_name\nwhere pa.is_master = 1"
+  },
+  {
+    "name": "ntr_wh_gap",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "COS_Name",
+      "Volume_Retention",
+      "Points_Goal",
+      "Total_Gap"
+    ],
+    "xsql": "SELECT \n    name AS COS_Name,\n    \n    CASE \n        WHEN CAST(rank_primary AS FLOAT) < CAST(rank_secondary AS FLOAT) \n             THEN CAST(rank_secondary AS FLOAT) - CAST(rank_primary AS FLOAT)\n        ELSE NULL \n    END AS Volume_Retention,\n    \n\n    CASE \n        WHEN CAST(rank_secondary AS FLOAT) < CAST(rank_primary AS FLOAT) \n             THEN CAST(rank_primary AS FLOAT) - CAST(rank_secondary AS FLOAT)\n        ELSE NULL \n    END AS Points_Goal,\n    \n    -- Sorter column capturing absolute rank variance\n    rank_gap AS Total_Gap\n\nFROM (\n    SELECT \n        name,\n        rank_primary,\n        rank_secondary,\n        CASE \n            WHEN rank_primary > rank_secondary THEN rank_primary - rank_secondary\n            ELSE rank_secondary - rank_primary\n        END AS rank_gap\n    FROM (\n        SELECT \n            name, \n            RANK() OVER (ORDER BY sub1_payout DESC) AS rank_primary,\n            RANK() OVER (ORDER BY sub2_payout DESC) AS rank_secondary\n        FROM (\n            SELECT \n                SubString(part.name, 0, IndexOf(part.name, '(')) AS name, \n                \n                -- Capture Initial Patients Payout\n                SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Volume Retention' THEN p.amount ELSE 0 END) AS sub1_payout,\n                \n                -- Capture Follow On Patients Payout\n                SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Points Goal' THEN p.amount ELSE 0 END) AS sub2_payout\n                \n            FROM xactly.xc_payment p\n            INNER JOIN xactly.xc_participant part\n                ON p.participant_id = part.participant_id\n            \n            -- 1. Embedded Position Region Mapping (For Parameter Filter)\n            INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg \n                ON p.position_id = pos_reg.master_position_id\n\n            -- 2. Embedded Title Mapping\n            INNER JOIN (\n                SELECT DISTINCT\n                    ppa.participant_id AS master_participant_id,\n                    pta.title_name AS title_name\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_pos_part_assignment ppa \n                    ON ppa.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_position pos \n                    ON ppa.position_id = pos.position_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                INNER JOIN xactly.xc_pos_title_assignment pta \n                    ON pos.position_id = pta.position_id\n                WHERE per.period_id IN :v_month_period_ids\n            ) pta ON p.participant_id = pta.master_participant_id\n            \n            -- 3. Embedded Territory Mapping\n            LEFT JOIN (\n                SELECT DISTINCT\n                    pa_input.participant_id AS master_participant_id,\n                    pa_active.territory AS territory\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_participant pa_input \n                    ON pa_input.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_participant pa_active \n                    ON pa_input.employee_id = pa_active.employee_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n                WHERE per.period_id IN :v_month_period_ids\n            ) ter ON p.participant_id = ter.master_participant_id\n\n            INNER JOIN NATERA_MASTER_MAPPING m \n                ON p.earning_group_name = m.earning_group\n               AND pta.title_name = m.title\n               \n            LEFT JOIN NATERA_TERRITORY_MAPPING tm \n                ON ter.territory = tm.territory \n            \n            WHERE p.participant_id IN :v_child_master_participant_id\n              AND p.period_id IN :v_month_period_ids\n              AND m.category = 'WH'\n              AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\n            GROUP BY \n                SubString(part.name, 0, IndexOf(part.name, '('))\n        ) BaseData\n    ) RankedSubcategories\n) FinalData\nORDER BY Total_Gap DESC\nLIMIT 10;"
+  },
+  {
+    "name": "ntr_wh_region",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "Region",
+      "Volume_Retention",
+      "Points_Goal"
+    ],
+    "xsql": "/*select\n '1'AS Region,\n  '1' AS Volume_Retention,\n   '1' AS Points_Goal*/\nSELECT \n    part_info.region AS Region,\n    SUM(CASE WHEN m.sub_category = 'Volume Retention' THEN p.amount ELSE 0 END) AS Volume_Retention,\n    SUM(CASE WHEN m.sub_category = 'Points Goal' THEN p.amount ELSE 0 END) AS Points_Goal\nFROM xactly.xc_payment p\n\n-- 1. Inline Title Mapping Subquery\nINNER JOIN (\n    SELECT DISTINCT\n        ppa.participant_id AS master_participant_id,\n        pta.title_name AS title_name\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_pos_part_assignment ppa \n        ON ppa.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_position pos \n        ON ppa.position_id = pos.position_id\n        AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n    INNER JOIN xactly.xc_pos_title_assignment pta \n        ON pos.position_id = pta.position_id\n    WHERE per.period_id IN :v_month_period_ids\n) pta ON p.participant_id = pta.master_participant_id\n\n-- 2. Inline Region Mapping Subquery (Pulled directly from xc_participant)\nINNER JOIN (\n    SELECT DISTINCT\n        pa_input.participant_id AS master_participant_id,\n        pa_active.region AS region\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_participant pa_input \n        ON pa_input.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_participant pa_active \n        ON pa_input.employee_id = pa_active.employee_id\n        AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n    WHERE per.period_id IN :v_month_period_ids\n) part_info ON p.participant_id = part_info.master_participant_id\n\n-- 3. Master Mapping (for Sub-Category and Category)\nINNER JOIN NATERA_MASTER_MAPPING m \n    ON p.earning_group_name = m.earning_group\n   AND pta.title_name = m.title\n\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND p.period_id IN :v_month_period_ids\n  AND m.category = 'WH'\n  -- Apply the Region Dashboard Filter here directly against the participant data\n  AND ('ALL' IN (:p_region) OR part_info.region IN (:p_region))\n  AND part_info.region IS NOT NULL\n\nGROUP BY \n    part_info.region\nORDER BY \n    part_info.region ASC\n    LIMIT 15;"
+  },
+  {
+    "name": "ntr_onc_gap",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "COS_Name",
+      "Initial_Gap",
+      "FollowOn_Gap",
+      "Total_Gap"
+    ],
+    "xsql": "SELECT \n    name AS COS_Name,\n    \n    -- Blue Bar calculation: Stronger in Initial Patients (Lower rank is better performance)\n    CASE \n        WHEN CAST(rank_primary AS FLOAT) < CAST(rank_secondary AS FLOAT) \n             THEN CAST(rank_secondary AS FLOAT) - CAST(rank_primary AS FLOAT)\n        ELSE NULL \n    END AS Initial_Gap,\n    \n    -- Green Bar calculation: Stronger in Follow-On Patients\n    CASE \n        WHEN CAST(rank_secondary AS FLOAT) < CAST(rank_primary AS FLOAT) \n             THEN CAST(rank_primary AS FLOAT) - CAST(rank_secondary AS FLOAT)\n        ELSE NULL \n    END AS FollowOn_Gap,\n    \n    -- Sorter column capturing absolute rank variance\n    rank_gap AS Total_Gap\n\nFROM (\n    SELECT \n        name,\n        rank_primary,\n        rank_secondary,\n        CASE \n            WHEN rank_primary > rank_secondary THEN rank_primary - rank_secondary\n            ELSE rank_secondary - rank_primary\n        END AS rank_gap\n    FROM (\n        SELECT \n            name, \n            RANK() OVER (ORDER BY sub1_payout DESC) AS rank_primary,\n            RANK() OVER (ORDER BY sub2_payout DESC) AS rank_secondary\n        FROM (\n            SELECT \n                SubString(part.name, 0, IndexOf(part.name, '(')) AS name, \n                \n                -- Capture Initial Patients Payout\n                SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Initial Patients' THEN p.amount ELSE 0 END) AS sub1_payout,\n                \n                -- Capture Follow On Patients Payout\n                SUM(CASE WHEN Coalesce(m.sub_category, tm.sub_category) = 'Follow On Patients' THEN p.amount ELSE 0 END) AS sub2_payout\n                \n            FROM xactly.xc_payment p\n            INNER JOIN xactly.xc_participant part\n                ON p.participant_id = part.participant_id\n            \n            -- 1. Embedded Position Region Mapping (For Parameter Filter)\n            INNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg \n                ON p.position_id = pos_reg.master_position_id\n\n            -- 2. Embedded Title Mapping\n            INNER JOIN (\n                SELECT DISTINCT\n                    ppa.participant_id AS master_participant_id,\n                    pta.title_name AS title_name\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_pos_part_assignment ppa \n                    ON ppa.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_position pos \n                    ON ppa.position_id = pos.position_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n                INNER JOIN xactly.xc_pos_title_assignment pta \n                    ON pos.position_id = pta.position_id\n                WHERE per.period_id IN :v_month_period_ids\n            ) pta ON p.participant_id = pta.master_participant_id\n            \n            -- 3. Embedded Territory Mapping\n            LEFT JOIN (\n                SELECT DISTINCT\n                    pa_input.participant_id AS master_participant_id,\n                    pa_active.territory AS territory\n                FROM xactly.xc_period per \n                INNER JOIN xactly.xc_participant pa_input \n                    ON pa_input.participant_id IN :v_child_master_participant_id\n                INNER JOIN xactly.xc_participant pa_active \n                    ON pa_input.employee_id = pa_active.employee_id\n                    AND CAST(per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n                    AND CAST(per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n                WHERE per.period_id IN :v_month_period_ids\n            ) ter ON p.participant_id = ter.master_participant_id\n\n            INNER JOIN NATERA_MASTER_MAPPING m \n                ON p.earning_group_name = m.earning_group\n               AND pta.title_name = m.title\n               \n            LEFT JOIN NATERA_TERRITORY_MAPPING tm \n                ON ter.territory = tm.territory \n            \n            WHERE p.participant_id IN :v_child_master_participant_id\n              AND p.period_id IN :v_month_period_ids\n              AND m.category = 'ONC'\n              AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region)) -- Region filter applied here\n            GROUP BY \n                SubString(part.name, 0, IndexOf(part.name, '('))\n        ) BaseData\n    ) RankedSubcategories\n) FinalData\nORDER BY Total_Gap DESC\nLIMIT 10;\n\n/*SELECT \n    COS_Name,\n    \n    -- Blue Bar: Stronger in Initial Patients\n    CASE \n        WHEN CAST(Initial_Patients_Rank AS FLOAT) < CAST(Follow_On_Rank AS FLOAT) \n             THEN CAST(Follow_On_Rank AS FLOAT) - CAST(Initial_Patients_Rank AS FLOAT)\n        ELSE NULL \n    END AS Initial_Gap,\n    \n    -- Green Bar: Stronger in Follow-On Patients\n    CASE \n        WHEN CAST(Follow_On_Rank AS FLOAT) < CAST(Initial_Patients_Rank AS FLOAT) \n             THEN CAST(Initial_Patients_Rank AS FLOAT) - CAST(Follow_On_Rank AS FLOAT)\n        ELSE NULL \n    END AS FollowOn_Gap,\n    \n    -- Hidden Sorter\n    CASE \n        WHEN CAST(Initial_Patients_Rank AS FLOAT) < CAST(Follow_On_Rank AS FLOAT) THEN CAST(Follow_On_Rank AS FLOAT) - CAST(Initial_Patients_Rank AS FLOAT)\n        WHEN CAST(Follow_On_Rank AS FLOAT) < CAST(Initial_Patients_Rank AS FLOAT) THEN CAST(Initial_Patients_Rank AS FLOAT) - CAST(Follow_On_Rank AS FLOAT)\n        ELSE 0 \n    END AS Total_Gap\n\nFROM EXT_NATERA_ONC_PERF\nWHERE 'ALL' IN (:p_region) OR Region IN (:p_region)\nORDER BY Total_Gap DESC\nLIMIT 15*/"
+  },
+  {
+    "name": "ntr_onc_grid",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "COS_Name",
+      "Final_Rank",
+      "Initial_Patients_Rank",
+      "Follow_On_Rank",
+      "Total_Payout"
+    ],
+    "xsql": "SELECT \n    name AS COS_Name, \n    RANK() OVER (ORDER BY payout DESC) AS Final_Rank, \n    RANK() OVER (ORDER BY initial_payout DESC) AS Initial_Patients_Rank, \n    RANK() OVER (ORDER BY followon_payout DESC) AS Follow_On_Rank, \n    '$' || Coalesce(FormatNumber(Round(payout, 0), '#,###'), '0') AS Total_Payout\nFROM (\n    SELECT \n        CASE \n            WHEN IndexOf(part.name, '(') > 0 THEN SubString(part.name, 0, IndexOf(part.name, '(')) \n            ELSE part.name \n        END AS name, \n        SUM(p.amount) AS payout,\n        SUM(CASE WHEN m.sub_category = 'Initial Patients' THEN p.amount ELSE 0 END) AS initial_payout,\n        SUM(CASE WHEN m.sub_category = 'Follow On Patients' THEN p.amount ELSE 0 END) AS followon_payout\n        \n    FROM xactly.xc_payment p\n    INNER JOIN xactly.xc_participant part\n        ON p.participant_id = part.participant_id\n        \n    -- FIXED: Tie the period exactly to the payment line to prevent tripling!\n    INNER JOIN xactly.xc_period active_per\n        ON p.period_id = active_per.period_id\n    INNER JOIN xactly.xc_participant pa_active \n        ON part.employee_id = pa_active.employee_id\n        AND CAST(active_per.end_date AS DATE) >= CAST(pa_active.effective_start_date AS DATE)\n        AND CAST(active_per.start_date AS DATE) <= CAST(pa_active.effective_end_date AS DATE)\n    \n    INNER JOIN (\n        SELECT DISTINCT\n            ppa.participant_id AS master_participant_id,\n            pta.title_name AS title_name\n        FROM xactly.xc_period per \n        INNER JOIN xactly.xc_pos_part_assignment ppa \n            ON ppa.participant_id IN :v_child_master_participant_id\n        INNER JOIN xactly.xc_position pos \n            ON ppa.position_id = pos.position_id\n            AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n            AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n        INNER JOIN xactly.xc_pos_title_assignment pta \n            ON pos.position_id = pta.position_id\n        WHERE per.period_id IN :v_month_period_ids\n    ) pta ON p.participant_id = pta.master_participant_id\n    \n    INNER JOIN NATERA_MASTER_MAPPING m \n        ON p.earning_group_name = m.earning_group\n       AND pta.title_name = m.title\n    \n    WHERE p.participant_id IN :v_child_master_participant_id\n      AND p.period_id IN :v_month_period_ids\n      AND m.category = 'ONC'\n      \n      -- The region filter logic applied to the active participant record\n      AND ('ALL' IN (:p_region) OR pa_active.region IN (:p_region))\n      \n    GROUP BY \n        part.name\n) BaseData\nORDER BY Final_Rank ASC;"
+  },
+  {
+    "name": "ntr_db_get_qtr_start_date",
+    "schema": "$framework",
+    "params": [
+      "v_period_id"
+    ],
+    "columns": [
+      "start_date"
+    ],
+    "xsql": "select start_date from xactly.xc_period per where per.period_id = :v_period_id"
+  },
+  {
+    "name": "ntr_wh_bottom_10",
+    "schema": "$framework",
+    "params": [
+      "v_child_master_participant_id",
+      "v_month_period_ids",
+      "p_region"
+    ],
+    "columns": [
+      "COS_Name",
+      "Projected_Total_Payout"
+    ],
+    "xsql": "/*SELECT \n    SubString(part.name, 0, IndexOf(part.name, '(')) AS COS_Name,\n    SUM(p.amount) AS Projected_Total_Payout\nFROM xactly.xc_payment p\nINNER JOIN xactly.xc_participant part\n    ON p.participant_id = part.participant_id\n\n-- 1. Embedded Title Mapping\nINNER JOIN (\n    SELECT DISTINCT\n        ppa.participant_id AS master_participant_id,\n        pta.title_name AS title_name\n    FROM xactly.xc_period per \n    INNER JOIN xactly.xc_pos_part_assignment ppa \n        ON ppa.participant_id IN :v_child_master_participant_id\n    INNER JOIN xactly.xc_position pos \n        ON ppa.position_id = pos.position_id\n        AND CAST(per.end_date AS DATE) >= CAST(pos.effective_start_date AS DATE)\n        AND CAST(per.start_date AS DATE) <= CAST(pos.effective_end_date AS DATE)\n    INNER JOIN xactly.xc_pos_title_assignment pta \n        ON pos.position_id = pta.position_id\n    WHERE per.period_id IN :v_month_period_ids\n) pta ON p.participant_id = pta.master_participant_id\n\n-- 2. Embedded Position Region Mapping (to align with the :p_region parameter rule)\nINNER JOIN $framework.ntr_db_get_position_region_mapping pos_reg \n    ON p.position_id = pos_reg.master_position_id\n\n-- 3. Configuration Master Mapping\nINNER JOIN NATERA_MASTER_MAPPING m \n    ON p.earning_group_name = m.earning_group\n   AND pta.title_name = m.title\n\nWHERE p.participant_id IN :v_child_master_participant_id\n  AND p.period_id IN :v_month_period_ids\n  AND m.category = 'WH'\n  AND (:p_region = 'ALL' OR pos_reg.region IN (:p_region))\n\nGROUP BY \n    SubString(part.name, 0, IndexOf(part.name, '('))\nORDER BY Projected_Total_Payout ASC\nLIMIT 10;*/\n\nSELECT \n    COS_Name,\n    Projected_Total_Payout\nFROM EXT_NATERA_ONC_PERF\nWHERE 'ALL' IN (:p_region) OR Region IN (:p_region)\nORDER BY Projected_Total_Payout ASC\nLIMIT 10"
+  }
+]

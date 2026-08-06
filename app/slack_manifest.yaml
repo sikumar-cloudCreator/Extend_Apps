@@ -1,0 +1,36 @@
+# Slack app manifest for Extend LLM (Socket Mode).
+# Create the app at https://api.slack.com/apps -> "From an app manifest", paste this,
+# then enable Socket Mode and generate an App-Level token (scope: connections:write).
+display_information:
+  name: Extend LLM
+  description: FRD -> Xactly Extend dashboard app, plus xSQL query assistant.
+features:
+  bot_user:
+    display_name: extend-llm
+    always_online: true
+  slash_commands:
+    - command: /extend
+      description: Open the Extend LLM menu (query or build a dashboard)
+      should_escape: false
+oauth_config:
+  scopes:
+    bot:
+      - commands            # slash command
+      - app_mentions:read   # @mention entry
+      - chat:write          # post replies
+      - files:read          # read uploaded FRDs
+      - files:write         # upload the FRD .docx and app bundle zip
+      - channels:history    # read thread messages (public)
+      - groups:history      # read thread messages (private)
+      - im:history          # DMs
+settings:
+  event_subscriptions:
+    bot_events:
+      - app_mention
+      - message.channels
+      - message.groups
+      - message.im
+  interactivity:
+    is_enabled: true
+  socket_mode_enabled: true
+  org_deploy_enabled: false
