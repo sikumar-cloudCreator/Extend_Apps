@@ -91,14 +91,38 @@ def det_feedback_roundtrip():
             os.unlink(tmp)
 
 
+# ---- golden fixtures (multiple app types, grounded in real catalog views) --------------------
+def golden_cases():
+    base = os.path.join(HERE, "golden")
+    for name in sorted(os.listdir(base)):
+        d = os.path.join(base, name)
+        frd, exp = os.path.join(d, "frd.md"), os.path.join(d, "expected.json")
+        if os.path.isdir(d) and os.path.exists(frd) and os.path.exists(exp):
+            yield name, frd, json.load(open(exp))
+
+
+def det_golden_fixtures_valid():
+    """No key: every golden's expected_reuse_views must exist in the catalog (keeps fixtures honest)."""
+    names = {v["name"] for v in st.list_views()}
+    cases = list(golden_cases())
+    check("golden: >=3 fixtures present", len(cases) >= 3, f"found {[c[0] for c in cases]}")
+    for case, _frd, exp in cases:
+        missing = [v for v in exp.get("expected_reuse_views", []) if v not in names]
+        check(f"golden[{case}]: reuse views exist in catalog", not missing, f"missing {missing}")
+
+
 # ---- LLM checks (need key) -------------------------------------------------------------------
-def llm_architect_coverage():
-    golden = os.path.join(HERE, "golden", "seller_frd.md")
-    expected = json.load(open(os.path.join(HERE, "golden", "expected.json")))
-    spec = aa.architect(open(golden).read())
-    names = {p["name"] for p in spec.get("pages", [])}
-    exp = set(expected["expected_page_names"])
-    check("architect: covers expected pages", exp <= names, f"got {sorted(names)}")
+def llm_golden_coverage():
+    """Run the architect on EVERY golden FRD; assert page count + that it reuses the expected views."""
+    for case, frd, exp in golden_cases():
+        spec = aa.architect(open(frd).read())
+        pages = spec.get("pages", [])
+        ds_names = {d["name"] for p in pages for d in p.get("datasources", [])}
+        check(f"architect[{case}]: >= {exp.get('min_pages',1)} pages", len(pages) >= exp.get("min_pages", 1),
+              f"got {len(pages)}")
+        missing = [v for v in exp.get("expected_reuse_views", []) if v not in ds_names]
+        check(f"architect[{case}]: reuses {exp.get('expected_reuse_views')}", not missing,
+              f"missing {missing}; chose {sorted(ds_names)}")
 
 
 def llm_query_pass():
@@ -110,13 +134,14 @@ def llm_query_pass():
 
 def main():
     include_llm = "--llm" in sys.argv or bool(os.environ.get("ANTHROPIC_API_KEY"))
-    for fn in (det_lint_regression, det_page_gate, det_bundle_shape, det_grounding, det_feedback_roundtrip):
+    for fn in (det_lint_regression, det_page_gate, det_bundle_shape, det_grounding,
+               det_feedback_roundtrip, det_golden_fixtures_valid):
         try:
             fn()
         except Exception as e:
             check(fn.__name__, False, f"EXCEPTION {e}")
     if include_llm:
-        for fn in (llm_architect_coverage, llm_query_pass):
+        for fn in (llm_golden_coverage, llm_query_pass):
             try:
                 fn()
             except Exception as e:

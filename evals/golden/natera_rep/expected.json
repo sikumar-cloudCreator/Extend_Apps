@@ -1,0 +1,5 @@
+{
+  "min_pages": 1,
+  "expected_reuse_views": ["ntr_db_total_payout", "ntr_db_period_dropdown"],
+  "note": "Different tenant/plan style (Natera ntr_db_* views); proves the builder isn't seller-shaped."
+}
