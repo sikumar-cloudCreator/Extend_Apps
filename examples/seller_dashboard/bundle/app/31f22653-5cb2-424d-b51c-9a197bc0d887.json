@@ -1,0 +1,3748 @@
+{
+  "pageDefinitionId": "31f22653-5cb2-424d-b51c-9a197bc0d887",
+  "pageSchema": {
+    "properties": {},
+    "controlSchema": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "control_1": {
+            "type": "PageLoader",
+            "controlId": "1fcdea1e-59e3-4547-b1ea-a7e778740441",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "layoutSize": null,
+            "title": "Loading...",
+            "loaderSize": "FULL",
+            "loaderOpacity": "75",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "1fcdea1e-59e3-4547-b1ea-a7e778740441",
+                "handlers": [
+                  "showLoader"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "current_period_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "1fcdea1e-59e3-4547-b1ea-a7e778740441",
+                "handlers": [
+                  "hideLoader"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ]
+          },
+          "control_2": {
+            "type": "variableConfigurator",
+            "controlId": "6ad30d5d-49e9-470a-89a4-411ea67f38fa",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "6ad30d5d-49e9-470a-89a4-411ea67f38fa",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "e_session_id",
+                "eventSelection": "CREATE_EVENT",
+                "id": "6ad30d5d-49e9-470a-89a4-411ea67f38fa",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_session_id",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_session_id"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "session_id"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Session Id VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Session Id VC"
+          },
+          "control_3": {
+            "type": "variableConfigurator",
+            "controlId": "e7d985c9-cee4-417e-9e13-4448663f8f13",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "e7d985c9-cee4-417e-9e13-4448663f8f13",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "e_refresh_date",
+                "eventSelection": "CREATE_EVENT",
+                "id": "e7d985c9-cee4-417e-9e13-4448663f8f13",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_refresh_date",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_refresh_date"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "refresh_date"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Refresh Date VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Refresh Date VC"
+          },
+          "control_4": {
+            "type": "variableConfigurator",
+            "controlId": "fd2567c5-4aa6-4cff-a461-81d0d933f678",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "fd2567c5-4aa6-4cff-a461-81d0d933f678",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "e_refresh_date",
+                "eventSelection": "BIND_EVENT",
+                "id": "fd2567c5-4aa6-4cff-a461-81d0d933f678",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "year_number_vc",
+                "eventSelection": "CREATE_EVENT",
+                "id": "fd2567c5-4aa6-4cff-a461-81d0d933f678",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_current_year",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_year_number"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "year_number"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Year Number VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Year Number VC"
+          },
+          "control_5": {
+            "type": "variableConfigurator",
+            "controlId": "0266d516-ee44-4445-a1f5-7d7c7e7a8f74",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "0266d516-ee44-4445-a1f5-7d7c7e7a8f74",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "year_number_vc",
+                "eventSelection": "BIND_EVENT",
+                "id": "0266d516-ee44-4445-a1f5-7d7c7e7a8f74",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "year_name_vc",
+                "eventSelection": "CREATE_EVENT",
+                "id": "0266d516-ee44-4445-a1f5-7d7c7e7a8f74",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_current_year",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_year_name"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "year_name"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Year Name VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Year Name VC"
+          },
+          "control_6": {
+            "type": "variableConfigurator",
+            "controlId": "1801e91e-0929-4dc5-adae-312786e2b4f2",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "1801e91e-0929-4dc5-adae-312786e2b4f2",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "year_name_vc",
+                "eventSelection": "BIND_EVENT",
+                "id": "1801e91e-0929-4dc5-adae-312786e2b4f2",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "current_period_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "1801e91e-0929-4dc5-adae-312786e2b4f2",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "incnt_stmt_current_period",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_current_period_id"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "current_period_id"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Current Period VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Current Period VC"
+          },
+          "control_7": {
+            "type": "Custom",
+            "controlId": "566c3f7d-d44b-45dc-834c-d4e5105781e1",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Header - Seller Dashboard",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "566c3f7d-d44b-45dc-834c-d4e5105781e1",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "e_refresh_date",
+                "eventSelection": "BIND_EVENT",
+                "id": "566c3f7d-d44b-45dc-834c-d4e5105781e1",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_refresh_date",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_refresh_date",
+                "boundToField": "refresh_date"
+              }
+            ],
+            "controlData": "<div style=\"padding:28px 36px;font-family:Poppins,Arial,sans-serif;background:#fff;border-bottom:2px solid #f2f5f7;border-radius:16px 16px 0 0;\"><span style=\"font-size:12px;font-weight:bold;color:#003087;text-transform:uppercase;\">PayPal Merchant Network</span> <span style=\"padding:2px 8px;font-size:11px;color:#475569;background:#f1f5f9;border-radius:4px;\">Refreshed: {{v_refresh_date}}</span><h1 style=\"margin:2px 0 0;font-size:26px;font-weight:bold;color:#003087;\">Seller Dashboard</h1></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_8": {
+            "type": "Custom",
+            "controlId": "20383750-95ce-4f23-bb5a-0572f3a41c91",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "KPI - Credits",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "20383750-95ce-4f23-bb5a-0572f3a41c91",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "20383750-95ce-4f23-bb5a-0572f3a41c91",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "20383750-95ce-4f23-bb5a-0572f3a41c91",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "20383750-95ce-4f23-bb5a-0572f3a41c91",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_summary_kpis",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_kpi_credits",
+                "boundToField": "total_qtd_credits"
+              },
+              {
+                "name": "v_kpi_quota",
+                "boundToField": "total_quota"
+              }
+            ],
+            "controlData": "<div style=\"background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:7px;font-family:Inter,system-ui,Arial,sans-serif;\"><div style=\"font-size:10.5px;font-weight:700;letter-spacing:.09em;color:#0079c1;text-transform:uppercase;\">Total QTD Credits Earned</div><div style=\"font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1;color:#003087;\">{{v_kpi_credits}}</div><div style=\"font-size:12px;color:#0079c1;\">Total Quota: <b style=\"color:#003087;font-weight:700;\">{{v_kpi_quota}}</b></div></div>",
+            "layoutSize": 25,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_9": {
+            "type": "Custom",
+            "controlId": "541d8669-bc6d-4901-ac76-9a6fe3fe13ac",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "KPI - Attainment",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "541d8669-bc6d-4901-ac76-9a6fe3fe13ac",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "541d8669-bc6d-4901-ac76-9a6fe3fe13ac",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "541d8669-bc6d-4901-ac76-9a6fe3fe13ac",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "541d8669-bc6d-4901-ac76-9a6fe3fe13ac",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_summary_kpis",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_kpi_attain",
+                "boundToField": "overall_qtd_attainment"
+              },
+              {
+                "name": "v_kpi_bar",
+                "boundToField": "attain_bar_pct"
+              },
+              {
+                "name": "v_kpi_target",
+                "boundToField": "target_met_flag"
+              }
+            ],
+            "controlData": "<div style=\"background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:7px;font-family:Inter,system-ui,Arial,sans-serif;\"><div style=\"font-size:10.5px;font-weight:700;letter-spacing:.09em;color:#0079c1;text-transform:uppercase;\">Overall QTD Attainment</div><div style=\"display:flex;align-items:center;gap:8px;\"><div style=\"font-size:27px;font-weight:800;color:#003087;line-height:1;\">{{v_kpi_attain}}</div><span style=\"font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:5px;background:#e6f0fa;color:#003087;\">{{v_kpi_target == 'Yes' ? 'Target Met' : 'Below Target'}}</span></div><div style=\"height:5px;border-radius:99px;background:#e2e8f0;overflow:hidden;margin-top:2px;\"><i style=\"display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#0079c1,#003087);width:{{v_kpi_bar}}%;\"></i></div></div>",
+            "layoutSize": 25,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_10": {
+            "type": "Custom",
+            "controlId": "f7c4946a-b046-4ff1-be10-85852f88a444",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "KPI - Commission",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "f7c4946a-b046-4ff1-be10-85852f88a444",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "f7c4946a-b046-4ff1-be10-85852f88a444",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "f7c4946a-b046-4ff1-be10-85852f88a444",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "f7c4946a-b046-4ff1-be10-85852f88a444",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_summary_kpis",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_kpi_comm",
+                "boundToField": "total_commission"
+              },
+              {
+                "name": "v_kpi_released",
+                "boundToField": "released_commission"
+              }
+            ],
+            "controlData": "<div style=\"background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:7px;font-family:Inter,system-ui,Arial,sans-serif;\"><div style=\"font-size:10.5px;font-weight:700;letter-spacing:.09em;color:#0079c1;text-transform:uppercase;\">Total Estimated Commission</div><div style=\"font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1;color:#003087;\">{{v_kpi_comm}}</div><div style=\"font-size:12px;color:#0079c1;\">Released: <b style=\"color:#003087;font-weight:700;\">{{v_kpi_released}}</b></div></div>",
+            "layoutSize": 25,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_11": {
+            "type": "Custom",
+            "controlId": "8f4b89bf-23a6-47a5-9c6a-aee8c845f56f",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "KPI - Pending",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "8f4b89bf-23a6-47a5-9c6a-aee8c845f56f",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "8f4b89bf-23a6-47a5-9c6a-aee8c845f56f",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "8f4b89bf-23a6-47a5-9c6a-aee8c845f56f",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "8f4b89bf-23a6-47a5-9c6a-aee8c845f56f",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_summary_kpis",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_kpi_pending",
+                "boundToField": "pending_payout"
+              }
+            ],
+            "controlData": "<div style=\"background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:7px;font-family:Inter,system-ui,Arial,sans-serif;\"><div style=\"font-size:10.5px;font-weight:700;letter-spacing:.09em;color:#0079c1;text-transform:uppercase;\">Pending Payout Balance</div><div style=\"font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1;color:#003087;\">{{v_kpi_pending}}</div><div style=\"font-size:12px;color:#0079c1;\">Verification in progress</div></div>",
+            "layoutSize": 25,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_12": {
+            "type": "dropdown",
+            "controlId": "01600198-f3d1-4169-835b-db1c83ebdbf7",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "01600198-f3d1-4169-835b-db1c83ebdbf7",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "defaultparticipant",
+                "eventSelection": "BIND_EVENT",
+                "id": "01600198-f3d1-4169-835b-db1c83ebdbf7",
+                "handlers": [
+                  "assignCurrentVariable",
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {},
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "rep_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "01600198-f3d1-4169-835b-db1c83ebdbf7",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_representative_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_participant"
+              }
+            ],
+            "isMultiSelect": false,
+            "shouldHideLabel": false,
+            "displayField": "rep_name",
+            "valueField": {
+              "dataType": "string",
+              "name": "rep_name"
+            },
+            "labelText": "Seller Representative",
+            "layoutSize": 25,
+            "shouldRenderHidden": false,
+            "controlKey": "control_01600198"
+          },
+          "control_13": {
+            "type": "variableConfigurator",
+            "controlId": "8e45f820-6a1a-48fb-928f-70ba81abde32",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "8e45f820-6a1a-48fb-928f-70ba81abde32",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "year_name_vc",
+                "eventSelection": "BIND_EVENT",
+                "id": "8e45f820-6a1a-48fb-928f-70ba81abde32",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "defaultparticipant",
+                "eventSelection": "CREATE_EVENT",
+                "id": "8e45f820-6a1a-48fb-928f-70ba81abde32",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_representative_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_default_participant"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "rep_name"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Default Participant VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Default Participant VC"
+          },
+          "control_14": {
+            "type": "dropdown",
+            "controlId": "6b08bb38-1235-463c-b56f-588071abada1",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "6b08bb38-1235-463c-b56f-588071abada1",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "6b08bb38-1235-463c-b56f-588071abada1",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "manager_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "6b08bb38-1235-463c-b56f-588071abada1",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_manager_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_manager"
+              }
+            ],
+            "isMultiSelect": false,
+            "shouldHideLabel": false,
+            "displayField": "manager_name",
+            "valueField": {
+              "dataType": "string",
+              "name": "manager_name"
+            },
+            "labelText": "Sales Director / Manager",
+            "layoutSize": 25,
+            "shouldRenderHidden": false,
+            "controlKey": "control_6b08bb38"
+          },
+          "control_15": {
+            "type": "dropdown",
+            "controlId": "4b29e626-3ee9-4f22-81d8-166b57c0c6f9",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "4b29e626-3ee9-4f22-81d8-166b57c0c6f9",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "year_number_vc",
+                "eventSelection": "BIND_EVENT",
+                "id": "4b29e626-3ee9-4f22-81d8-166b57c0c6f9",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "4b29e626-3ee9-4f22-81d8-166b57c0c6f9",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_fiscal_quarter_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_quarter"
+              }
+            ],
+            "isMultiSelect": false,
+            "shouldHideLabel": false,
+            "displayField": "name",
+            "valueField": {
+              "dataType": "string",
+              "name": "name"
+            },
+            "labelText": "Fiscal Quarter",
+            "layoutSize": 16.66,
+            "shouldRenderHidden": false,
+            "controlKey": "control_4b29e626"
+          },
+          "control_16": {
+            "type": "dropdown",
+            "controlId": "267ef0a8-5c3e-4545-8ae4-c757b9ec194b",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "267ef0a8-5c3e-4545-8ae4-c757b9ec194b",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "measure_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "267ef0a8-5c3e-4545-8ae4-c757b9ec194b",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_measure_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_measure"
+              }
+            ],
+            "isMultiSelect": false,
+            "shouldHideLabel": false,
+            "displayField": "measure_name",
+            "valueField": {
+              "dataType": "string",
+              "name": "measure_name"
+            },
+            "labelText": "Performance Measure",
+            "layoutSize": 16.66,
+            "shouldRenderHidden": false,
+            "controlKey": "control_267ef0a8"
+          },
+          "control_17": {
+            "type": "dropdown",
+            "controlId": "935eee9d-2398-4991-8b59-5040cdd3c2c7",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "935eee9d-2398-4991-8b59-5040cdd3c2c7",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "granularity_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "935eee9d-2398-4991-8b59-5040cdd3c2c7",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_granularity_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_granularity"
+              }
+            ],
+            "isMultiSelect": false,
+            "shouldHideLabel": false,
+            "displayField": "granularity",
+            "valueField": {
+              "dataType": "string",
+              "name": "granularity"
+            },
+            "labelText": "View",
+            "layoutSize": 16.66,
+            "shouldRenderHidden": false,
+            "controlKey": "control_935eee9d"
+          },
+          "control_18": {
+            "type": "button",
+            "controlId": "420f5e83-0baf-46ae-a69b-9a9422c2e780",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Download Statement",
+            "events": [
+              {
+                "name": "e_download",
+                "eventSelection": "CREATE_EVENT",
+                "id": "420f5e83-0baf-46ae-a69b-9a9422c2e780",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "controlData": "Download Statement",
+            "layoutSize": 16.66,
+            "buttonColorType": "link",
+            "icon": "",
+            "iconPosition": "left",
+            "shouldRenderHidden": false
+          },
+          "control_19": {
+            "type": "exportPagePDF",
+            "controlId": "b8fc95e3-ad60-42e5-a710-38751800682d",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "",
+            "layoutSize": null,
+            "title": "Export As PDF",
+            "variables": [],
+            "events": [
+              {
+                "name": "e_download",
+                "eventSelection": "BIND_EVENT",
+                "id": "b8fc95e3-ad60-42e5-a710-38751800682d",
+                "handlers": [
+                  "exportAsPDF"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ]
+          },
+          "control_20": {
+            "type": "variableConfigurator",
+            "controlId": "37c524d3-91cf-4492-bee4-7953b26994ec",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "37c524d3-91cf-4492-bee4-7953b26994ec",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "defaultparticipant",
+                "eventSelection": "BIND_EVENT",
+                "id": "37c524d3-91cf-4492-bee4-7953b26994ec",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "rep_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "37c524d3-91cf-4492-bee4-7953b26994ec",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "CREATE_EVENT",
+                "id": "37c524d3-91cf-4492-bee4-7953b26994ec",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_master_participant_id",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_master_participant_id"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "master_participant_id"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Master Participant ID VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Master Participant ID VC"
+          },
+          "control_21": {
+            "type": "variableConfigurator",
+            "controlId": "bb48b966-117e-4eb8-aa7f-ccc86488ca79",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "bb48b966-117e-4eb8-aa7f-ccc86488ca79",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "bb48b966-117e-4eb8-aa7f-ccc86488ca79",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "CREATE_EVENT",
+                "id": "bb48b966-117e-4eb8-aa7f-ccc86488ca79",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_master_position_id",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_master_position_id"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "master_position_id"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Master Position ID VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Master Position ID VC"
+          },
+          "control_22": {
+            "type": "variableConfigurator",
+            "controlId": "93c94534-0b8d-4631-a635-ee2b3a9586be",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "93c94534-0b8d-4631-a635-ee2b3a9586be",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "rep_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "93c94534-0b8d-4631-a635-ee2b3a9586be",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "role_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "93c94534-0b8d-4631-a635-ee2b3a9586be",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_participant_role",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_role"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "role"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "Role VC",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING",
+            "internalName": "Role VC"
+          },
+          "control_23": {
+            "type": "Custom",
+            "controlId": "e4bb414a-3723-4536-bbf3-082318fb7700",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Measure - Revenue",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "e4bb414a-3723-4536-bbf3-082318fb7700",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "e4bb414a-3723-4536-bbf3-082318fb7700",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "e4bb414a-3723-4536-bbf3-082318fb7700",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "granularity_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "e4bb414a-3723-4536-bbf3-082318fb7700",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_measure_revenue",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_rev_attain",
+                "boundToField": "qtd_attainment_pct"
+              },
+              {
+                "name": "v_rev_qquota",
+                "boundToField": "qtd_quota"
+              },
+              {
+                "name": "v_rev_qcredits",
+                "boundToField": "qtd_credits"
+              },
+              {
+                "name": "v_rev_aquota",
+                "boundToField": "annual_quota"
+              },
+              {
+                "name": "v_rev_aattain",
+                "boundToField": "annual_attainment_pct"
+              }
+            ],
+            "controlData": "<div style=\"background:#131c2e;border:1px solid #243049;border-radius:16px;overflow:hidden;font-family:Inter,system-ui,Arial,sans-serif;color:#f1f5f9;\"><div style=\"padding:18px 20px 14px;border-bottom:1px solid #1c2740;\"><div style=\"font-size:10.5px;font-weight:700;letter-spacing:.09em;color:#8595ac;text-transform:uppercase;\">Performance Measure</div><div style=\"display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-top:9px;\"><h3 style=\"margin:0;font-size:17px;font-weight:700;line-height:1.25;\">Revenue</h3><span style=\"font-size:10.5px;font-weight:700;color:#9fd8c0;background:rgba(52,211,153,.10);border:1px solid rgba(52,211,153,.25);border-radius:7px;padding:5px 8px;white-space:nowrap;\">1.25x Accelerator</span></div></div><div style=\"display:grid;place-items:center;padding:30px 0 34px;\"><div style=\"width:150px;height:150px;border-radius:50%;background:conic-gradient({{v_rev_attain >= 100 ? '#22c55e' : '#38bdf8'}} calc({{v_rev_attain > 100 ? 100 : v_rev_attain}}*1%), #26324a 0);display:grid;place-items:center;\"><div style=\"width:118px;height:118px;border-radius:50%;background:#131c2e;display:flex;flex-direction:column;align-items:center;justify-content:center;\"><div style=\"font-size:27px;font-weight:800;\">{{v_rev_attain}}%</div><div style=\"font-size:9.5px;font-weight:700;letter-spacing:.11em;color:#64748b;\">QTD ATTAIN</div></div></div></div><div style=\"padding:6px 20px 16px;\"><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Qtr YTD Quota</span><span style=\"font-weight:700;color:#f1f5f9;\">{{v_rev_qquota}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Qtr YTD Credits</span><span style=\"font-weight:700;color:#5cc7f0;\">{{v_rev_qcredits}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Annual Quota</span><span style=\"font-weight:700;color:#f1f5f9;\">{{v_rev_aquota}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Annual Attainment</span><span style=\"font-weight:700;color:#38bdf8;\">{{v_rev_aattain}}</span></div></div></div>",
+            "layoutSize": 33.33,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_24": {
+            "type": "Custom",
+            "controlId": "f87b8866-3f44-4b6a-9656-f12720444854",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Measure - Sales Profitability",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "f87b8866-3f44-4b6a-9656-f12720444854",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "f87b8866-3f44-4b6a-9656-f12720444854",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "f87b8866-3f44-4b6a-9656-f12720444854",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "granularity_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "f87b8866-3f44-4b6a-9656-f12720444854",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_measure_sales_profitability",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_sp_attain",
+                "boundToField": "qtd_attainment_pct"
+              },
+              {
+                "name": "v_sp_qquota",
+                "boundToField": "qtd_quota"
+              },
+              {
+                "name": "v_sp_qcredits",
+                "boundToField": "qtd_credits"
+              },
+              {
+                "name": "v_sp_aquota",
+                "boundToField": "annual_quota"
+              },
+              {
+                "name": "v_sp_aattain",
+                "boundToField": "annual_attainment_pct"
+              }
+            ],
+            "controlData": "<div style=\"background:#131c2e;border:1px solid #243049;border-radius:16px;overflow:hidden;font-family:Inter,system-ui,Arial,sans-serif;color:#f1f5f9;\"><div style=\"padding:18px 20px 14px;border-bottom:1px solid #1c2740;\"><div style=\"font-size:10.5px;font-weight:700;letter-spacing:.09em;color:#8595ac;text-transform:uppercase;\">Performance Measure</div><div style=\"display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-top:9px;\"><h3 style=\"margin:0;font-size:17px;font-weight:700;line-height:1.25;\">Profitability</h3></div></div><div style=\"display:grid;place-items:center;padding:30px 0 34px;\"><div style=\"width:150px;height:150px;border-radius:50%;background:conic-gradient({{v_sp_attain >= 100 ? '#22c55e' : '#38bdf8'}} calc({{v_sp_attain > 100 ? 100 : v_sp_attain}}*1%), #26324a 0);display:grid;place-items:center;\"><div style=\"width:118px;height:118px;border-radius:50%;background:#131c2e;display:flex;flex-direction:column;align-items:center;justify-content:center;\"><div style=\"font-size:27px;font-weight:800;\">{{v_sp_attain}}%</div><div style=\"font-size:9.5px;font-weight:700;letter-spacing:.11em;color:#64748b;\">QTD ATTAIN</div></div></div></div><div style=\"padding:6px 20px 16px;\"><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Qtr YTD Quota</span><span style=\"font-weight:700;color:#f1f5f9;\">{{v_sp_qquota}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Qtr YTD Credits</span><span style=\"font-weight:700;color:#5cc7f0;\">{{v_sp_qcredits}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Annual Quota</span><span style=\"font-weight:700;color:#f1f5f9;\">{{v_sp_aquota}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Annual Attainment</span><span style=\"font-weight:700;color:#38bdf8;\">{{v_sp_aattain}}</span></div></div></div>",
+            "layoutSize": 33.33,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_25": {
+            "type": "Custom",
+            "controlId": "f20047c8-96d0-4b36-af41-dda9a376b68c",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Measure - Branded Checkout (BXO TPV)",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "f20047c8-96d0-4b36-af41-dda9a376b68c",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "f20047c8-96d0-4b36-af41-dda9a376b68c",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "f20047c8-96d0-4b36-af41-dda9a376b68c",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "granularity_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "f20047c8-96d0-4b36-af41-dda9a376b68c",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_measure_branded_checkout",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_bc_attain",
+                "boundToField": "qtd_attainment_pct"
+              },
+              {
+                "name": "v_bc_qquota",
+                "boundToField": "qtd_quota"
+              },
+              {
+                "name": "v_bc_qcredits",
+                "boundToField": "qtd_credits"
+              },
+              {
+                "name": "v_bc_aquota",
+                "boundToField": "annual_quota"
+              },
+              {
+                "name": "v_bc_aattain",
+                "boundToField": "annual_attainment_pct"
+              }
+            ],
+            "controlData": "<div style=\"background:#131c2e;border:1px solid #243049;border-radius:16px;overflow:hidden;font-family:Inter,system-ui,Arial,sans-serif;color:#f1f5f9;\"><div style=\"padding:18px 20px 14px;border-bottom:1px solid #1c2740;\"><div style=\"font-size:10.5px;font-weight:700;letter-spacing:.09em;color:#8595ac;text-transform:uppercase;\">Performance Measure</div><div style=\"display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-top:9px;\"><h3 style=\"margin:0;font-size:17px;font-weight:700;line-height:1.25;\">Branded Checkout TPV (BXO TPV)</h3><span style=\"font-size:10.5px;font-weight:700;color:#9fd8c0;background:rgba(52,211,153,.10);border:1px solid rgba(52,211,153,.25);border-radius:7px;padding:5px 8px;white-space:nowrap;\">1.25x Accelerator</span></div></div><div style=\"display:grid;place-items:center;padding:30px 0 34px;\"><div style=\"width:150px;height:150px;border-radius:50%;background:conic-gradient({{v_bc_attain >= 100 ? '#22c55e' : '#38bdf8'}} calc({{v_bc_attain > 100 ? 100 : v_bc_attain}}*1%), #26324a 0);display:grid;place-items:center;\"><div style=\"width:118px;height:118px;border-radius:50%;background:#131c2e;display:flex;flex-direction:column;align-items:center;justify-content:center;\"><div style=\"font-size:27px;font-weight:800;\">{{v_bc_attain}}%</div><div style=\"font-size:9.5px;font-weight:700;letter-spacing:.11em;color:#64748b;\">QTD ATTAIN</div></div></div></div><div style=\"padding:6px 20px 16px;\"><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Qtr YTD Quota</span><span style=\"font-weight:700;color:#f1f5f9;\">{{v_bc_qquota}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Qtr YTD Credits</span><span style=\"font-weight:700;color:#5cc7f0;\">{{v_bc_qcredits}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Annual Quota</span><span style=\"font-weight:700;color:#f1f5f9;\">{{v_bc_aquota}}</span></div><div style=\"display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #1c2740;font-size:13px;\"><span style=\"color:#93a3b8;\">Annual Attainment</span><span style=\"font-weight:700;color:#38bdf8;\">{{v_bc_aattain}}</span></div></div></div>",
+            "layoutSize": 33.33,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_26": {
+            "type": "Custom",
+            "controlId": "f30d2f82-37bc-4624-bd0c-9c5e267c6e31",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Payout - Revenue",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "f30d2f82-37bc-4624-bd0c-9c5e267c6e31",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "f30d2f82-37bc-4624-bd0c-9c5e267c6e31",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "f30d2f82-37bc-4624-bd0c-9c5e267c6e31",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_payout_revenue",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_prev_calc",
+                "boundToField": "calculated_payout"
+              },
+              {
+                "name": "v_prev_rel",
+                "boundToField": "released_amount"
+              },
+              {
+                "name": "v_prev_pend",
+                "boundToField": "pending_amount"
+              }
+            ],
+            "controlData": "<div style=\"background:#131c2e;border:1px solid #243049;border-radius:16px;padding:16px 20px;font-family:Inter,system-ui,Arial,sans-serif;color:#f1f5f9;display:flex;justify-content:space-between;align-items:center;\"><div><div style=\"font-size:10px;font-weight:700;letter-spacing:.09em;color:#64748b;text-transform:uppercase;\">Calculated Payout</div><div style=\"font-size:22px;font-weight:800;color:#34d399;margin-top:3px;\">{{v_prev_calc}}</div></div><div style=\"font-size:12px;color:#93a3b8;text-align:right;line-height:1.8;\">Released: <b style=\"color:#34d399;\">{{v_prev_rel}}</b><br>Pending: <b style=\"color:#f5b544;\">{{v_prev_pend}}</b></div></div>",
+            "layoutSize": 33.33,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_27": {
+            "type": "Custom",
+            "controlId": "825888d3-8c3f-4ad9-8fbd-4eb30c7e4a13",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Payout - Sales Profitability",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "825888d3-8c3f-4ad9-8fbd-4eb30c7e4a13",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "825888d3-8c3f-4ad9-8fbd-4eb30c7e4a13",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "825888d3-8c3f-4ad9-8fbd-4eb30c7e4a13",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_payout_sales_profitability",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_psp_calc",
+                "boundToField": "calculated_payout"
+              },
+              {
+                "name": "v_psp_rel",
+                "boundToField": "released_amount"
+              },
+              {
+                "name": "v_psp_pend",
+                "boundToField": "pending_amount"
+              }
+            ],
+            "controlData": "<div style=\"background:#131c2e;border:1px solid #243049;border-radius:16px;padding:16px 20px;font-family:Inter,system-ui,Arial,sans-serif;color:#f1f5f9;display:flex;justify-content:space-between;align-items:center;\"><div><div style=\"font-size:10px;font-weight:700;letter-spacing:.09em;color:#64748b;text-transform:uppercase;\">Calculated Payout</div><div style=\"font-size:22px;font-weight:800;color:#34d399;margin-top:3px;\">{{v_psp_calc}}</div></div><div style=\"font-size:12px;color:#93a3b8;text-align:right;line-height:1.8;\">Released: <b style=\"color:#34d399;\">{{v_psp_rel}}</b><br>Pending: <b style=\"color:#f5b544;\">{{v_psp_pend}}</b></div></div>",
+            "layoutSize": 33.33,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_28": {
+            "type": "Custom",
+            "controlId": "4ee94e9f-b20a-4891-8d1c-d17f44f50519",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Payout - Branded Checkout (BXO TPV)",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "4ee94e9f-b20a-4891-8d1c-d17f44f50519",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "4ee94e9f-b20a-4891-8d1c-d17f44f50519",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "quarter_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "4ee94e9f-b20a-4891-8d1c-d17f44f50519",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_payout_branded_checkout",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_pbc_calc",
+                "boundToField": "calculated_payout"
+              },
+              {
+                "name": "v_pbc_rel",
+                "boundToField": "released_amount"
+              },
+              {
+                "name": "v_pbc_pend",
+                "boundToField": "pending_amount"
+              }
+            ],
+            "controlData": "<div style=\"background:#131c2e;border:1px solid #243049;border-radius:16px;padding:16px 20px;font-family:Inter,system-ui,Arial,sans-serif;color:#f1f5f9;display:flex;justify-content:space-between;align-items:center;\"><div><div style=\"font-size:10px;font-weight:700;letter-spacing:.09em;color:#64748b;text-transform:uppercase;\">Calculated Payout</div><div style=\"font-size:22px;font-weight:800;color:#34d399;margin-top:3px;\">{{v_pbc_calc}}</div></div><div style=\"font-size:12px;color:#93a3b8;text-align:right;line-height:1.8;\">Released: <b style=\"color:#34d399;\">{{v_pbc_rel}}</b><br>Pending: <b style=\"color:#f5b544;\">{{v_pbc_pend}}</b></div></div>",
+            "layoutSize": 33.33,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_29": {
+            "type": "Custom",
+            "controlId": "c5e973e5-ad05-4491-b8ef-7071cb61d0bd",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Header - Historical Performance",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "c5e973e5-ad05-4491-b8ef-7071cb61d0bd",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "measure_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "c5e973e5-ad05-4491-b8ef-7071cb61d0bd",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_current_year",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_year_name",
+                "boundToField": "year_name"
+              }
+            ],
+            "controlData": "<div style=\"padding:24px 32px;font-family:Poppins,Arial,sans-serif;background:#fff;border-radius:16px 16px 0 0;\"><h2 style=\"margin:0;font-size:18px;font-weight:700;color:#003087;\">Historical Performance</h2><div style=\"font-size:12px;color:#64748b;\">YTD Attainment Trend \u2014 {{v_year_name}} \u00b7 Measure: {{v_measure}}</div></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_30": {
+            "type": "composedChart",
+            "controlId": "5178183f-1560-486a-8d7c-275efdb82a64",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Chart - Historical Attainment Trend",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "5178183f-1560-486a-8d7c-275efdb82a64",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "5178183f-1560-486a-8d7c-275efdb82a64",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "measure_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "5178183f-1560-486a-8d7c-275efdb82a64",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_attainment_trend_monthly",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "title": "",
+            "subtitle": "",
+            "xAxis": {
+              "title": {
+                "text": ""
+              },
+              "type": ""
+            },
+            "yAxis": {
+              "title": {
+                "text": ""
+              }
+            },
+            "ref": {},
+            "xAxisField": "month_name",
+            "yAxisFields": [
+              {
+                "id": 2,
+                "dataKey": "attainment_pct",
+                "customLabel": "Attainment %",
+                "fill": "#3b82f6",
+                "selectedChart": "bar"
+              },
+              {
+                "id": 3,
+                "dataKey": "accelerator_goal_pct",
+                "customLabel": "Accelerator Goal",
+                "fill": "#d97706",
+                "selectedChart": "line"
+              }
+            ],
+            "layoutSize": 100,
+            "titleAlignment": "left",
+            "subtitleAlignment": "left",
+            "helpIconValue": null,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosition": "right",
+            "shouldRenderHidden": false
+          },
+          "control_31": {
+            "type": "Custom",
+            "controlId": "aad21819-05c2-43e9-812f-c1ff9aab1a0c",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Header - Attainment & Ledger Matrix",
+            "events": [],
+            "datasource": {
+              "name": null,
+              "schema": null,
+              "fields": null,
+              "type": null,
+              "isReadOnly": false,
+              "columns": null,
+              "seriesColors": {},
+              "customLabels": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [],
+            "controlData": "<div style=\"padding:16px 20px;font-family:Poppins,Arial,sans-serif;background:#fff;\"><h2 style=\"margin:0;font-size:16px;font-weight:700;color:#1e293b;\">Attainment &amp; Ledger Matrix</h2></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_32": {
+            "type": "table",
+            "controlId": "1e0d2f5e-002a-4dc6-b598-eab7756dec70",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Table - Attainment & Ledger Matrix",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "1e0d2f5e-002a-4dc6-b598-eab7756dec70",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "1e0d2f5e-002a-4dc6-b598-eab7756dec70",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "granularity_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "1e0d2f5e-002a-4dc6-b598-eab7756dec70",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_attainment_ledger_matrix",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [
+              {
+                "field": "period_component",
+                "name": "period_component",
+                "headerName": "Period / Component",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "paypal_core",
+                "name": "paypal_core",
+                "headerName": "PayPal Core",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "braintree",
+                "name": "braintree",
+                "headerName": "Braintree",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "qtd_total",
+                "name": "qtd_total",
+                "headerName": "QTD Totals",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              }
+            ],
+            "whereClauseVariable": null,
+            "variables": [],
+            "table": "grid",
+            "title": "Table - Attainment & Ledger Matrix",
+            "maxHeight": null,
+            "shouldRenderHidden": false,
+            "staticAllCoumns": false,
+            "layoutSize": 100
+          },
+          "control_33": {
+            "type": "Custom",
+            "controlId": "f3d39700-ea0b-4487-b5ec-a8a2b9e4e91d",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Header - Deal Ledger Details",
+            "events": [],
+            "datasource": {
+              "name": null,
+              "schema": null,
+              "fields": null,
+              "type": null,
+              "isReadOnly": false,
+              "columns": null,
+              "seriesColors": {},
+              "customLabels": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [],
+            "controlData": "<div style=\"padding:20px 24px;font-family:Poppins,Arial,sans-serif;background:#fff;border-radius:16px 16px 0 0;\"><h2 style=\"margin:0;font-size:16px;font-weight:700;color:#0f172a;\">Deal Ledger Details</h2></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_34": {
+            "type": "input",
+            "controlId": "4d7894e7-ea77-4d2c-a54d-a911cd54cf42",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Input - Ledger Search",
+            "events": [
+              {
+                "name": "ledger_search",
+                "eventSelection": "CREATE_EVENT",
+                "id": "4d7894e7-ea77-4d2c-a54d-a911cd54cf42",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "variables": [
+              {
+                "name": "v_ledger_search"
+              }
+            ],
+            "labelText": "",
+            "labelValue": "Search Opportunity, product, account id....",
+            "isMultiLine": false,
+            "isDisabled": false,
+            "layoutSize": 100,
+            "useEnterBroadcast": true,
+            "shouldRenderHidden": false,
+            "allowClear": true
+          },
+          "control_35": {
+            "type": "table",
+            "controlId": "633223c0-6ca9-40c4-9c2a-705acf4a7e1a",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Table - Deal Ledger Details",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "633223c0-6ca9-40c4-9c2a-705acf4a7e1a",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "633223c0-6ca9-40c4-9c2a-705acf4a7e1a",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "ledger_search",
+                "eventSelection": "BIND_EVENT",
+                "id": "633223c0-6ca9-40c4-9c2a-705acf4a7e1a",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_deal_ledger",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [
+              {
+                "field": "opportunity_name",
+                "name": "opportunity_name",
+                "headerName": "Opportunity",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "rep_name",
+                "name": "rep_name",
+                "headerName": "Rep",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "product_family",
+                "name": "product_family",
+                "headerName": "Product Family",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "actual_vol_ytd",
+                "name": "actual_vol_ytd",
+                "headerName": "Actual Vol YTD",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "commission_date",
+                "name": "commission_date",
+                "headerName": "Commission Date",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              }
+            ],
+            "whereClauseVariable": null,
+            "variables": [],
+            "table": "grid",
+            "title": "Table - Deal Ledger Details",
+            "maxHeight": null,
+            "shouldRenderHidden": false,
+            "staticAllCoumns": false,
+            "layoutSize": 100
+          },
+          "control_36": {
+            "type": "Custom",
+            "controlId": "203775ab-9e9f-48b1-aecf-2ca1747f0720",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Header - Portfolio Details",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "203775ab-9e9f-48b1-aecf-2ca1747f0720",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "measure_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "203775ab-9e9f-48b1-aecf-2ca1747f0720",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_measure_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_measure",
+                "boundToField": "measure_name"
+              }
+            ],
+            "controlData": "<div style=\"padding:20px 24px;font-family:Poppins,Arial,sans-serif;background:#fff;border-radius:16px 16px 0 0;\"><h2 style=\"margin:0;font-size:16px;font-weight:700;color:#0f172a;\">Portfolio Details</h2><div style=\"font-size:12px;color:#64748b;\">Measure: {{v_measure}} \u00b7 View: {{v_granularity}}</div></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_37": {
+            "type": "input",
+            "controlId": "acedc16f-cae4-421e-9453-b1361b4903ca",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Input - Portfolio Search",
+            "events": [
+              {
+                "name": "portfolio_search",
+                "eventSelection": "CREATE_EVENT",
+                "id": "acedc16f-cae4-421e-9453-b1361b4903ca",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "variables": [
+              {
+                "name": "v_portfolio_search"
+              }
+            ],
+            "labelText": "",
+            "labelValue": "Search Account Name, Customer ID, BT ID...",
+            "isMultiLine": false,
+            "isDisabled": false,
+            "layoutSize": 100,
+            "useEnterBroadcast": true,
+            "shouldRenderHidden": false,
+            "allowClear": true
+          },
+          "control_38": {
+            "type": "table",
+            "controlId": "57e0d1eb-c4ed-46d5-b71b-dc2988969118",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Table - Portfolio Details",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "57e0d1eb-c4ed-46d5-b71b-dc2988969118",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "57e0d1eb-c4ed-46d5-b71b-dc2988969118",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "measure_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "57e0d1eb-c4ed-46d5-b71b-dc2988969118",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "granularity_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "57e0d1eb-c4ed-46d5-b71b-dc2988969118",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "portfolio_search",
+                "eventSelection": "BIND_EVENT",
+                "id": "57e0d1eb-c4ed-46d5-b71b-dc2988969118",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_portfolio_details",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [
+              {
+                "field": "account_name",
+                "name": "account_name",
+                "headerName": "Account Name",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "customer_id",
+                "name": "customer_id",
+                "headerName": "Customer ID",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "bt_id",
+                "name": "bt_id",
+                "headerName": "BT ID",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "measure_value",
+                "name": "measure_value",
+                "headerName": "Value",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              }
+            ],
+            "whereClauseVariable": null,
+            "variables": [],
+            "table": "grid",
+            "title": "Table - Portfolio Details",
+            "maxHeight": null,
+            "shouldRenderHidden": false,
+            "staticAllCoumns": false,
+            "layoutSize": 100
+          },
+          "control_39": {
+            "type": "Custom",
+            "controlId": "189ba7c9-1a05-4e8b-88fc-3ef35ce8f784",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Header - Incremental Details",
+            "events": [],
+            "datasource": {
+              "name": null,
+              "schema": null,
+              "fields": null,
+              "type": null,
+              "isReadOnly": false,
+              "columns": null,
+              "seriesColors": {},
+              "customLabels": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [],
+            "controlData": "<div style=\"padding:20px 24px;font-family:Poppins,Arial,sans-serif;background:#fff;border-radius:16px 16px 0 0;\"><h2 style=\"margin:0;font-size:16px;font-weight:700;color:#0f172a;\">Incremental Details</h2></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_40": {
+            "type": "input",
+            "controlId": "ece6017a-66b3-4e5d-b082-a8c4211e39f9",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Input - Incremental Search",
+            "events": [
+              {
+                "name": "incremental_search",
+                "eventSelection": "CREATE_EVENT",
+                "id": "ece6017a-66b3-4e5d-b082-a8c4211e39f9",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "variables": [
+              {
+                "name": "v_incremental_search"
+              }
+            ],
+            "labelText": "",
+            "labelValue": "Search Opportunity ID, Opportunity Name, Customer ID, BT ID...",
+            "isMultiLine": false,
+            "isDisabled": false,
+            "layoutSize": 100,
+            "useEnterBroadcast": true,
+            "shouldRenderHidden": false,
+            "allowClear": true
+          },
+          "control_41": {
+            "type": "table",
+            "controlId": "ed72d8e5-a374-4fa2-8b90-c47b8e1e5878",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Table - Incremental Details",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "ed72d8e5-a374-4fa2-8b90-c47b8e1e5878",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "ed72d8e5-a374-4fa2-8b90-c47b8e1e5878",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "measure_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "ed72d8e5-a374-4fa2-8b90-c47b8e1e5878",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "granularity_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "ed72d8e5-a374-4fa2-8b90-c47b8e1e5878",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "incremental_search",
+                "eventSelection": "BIND_EVENT",
+                "id": "ed72d8e5-a374-4fa2-8b90-c47b8e1e5878",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_incremental_details",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [
+              {
+                "field": "opportunity_id",
+                "name": "opportunity_id",
+                "headerName": "Opportunity ID",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "opportunity_name",
+                "name": "opportunity_name",
+                "headerName": "Opportunity Name",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "customer_id",
+                "name": "customer_id",
+                "headerName": "Customer ID",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "bt_id",
+                "name": "bt_id",
+                "headerName": "BT ID",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "measure_value",
+                "name": "measure_value",
+                "headerName": "Value",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              }
+            ],
+            "whereClauseVariable": null,
+            "variables": [],
+            "table": "grid",
+            "title": "Table - Incremental Details",
+            "maxHeight": null,
+            "shouldRenderHidden": false,
+            "staticAllCoumns": false,
+            "layoutSize": 100
+          },
+          "control_42": {
+            "type": "Custom",
+            "controlId": "6469f513-19c8-4a70-ab2e-a62c8764e872",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Header - Team Section",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "6469f513-19c8-4a70-ab2e-a62c8764e872",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "role_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "6469f513-19c8-4a70-ab2e-a62c8764e872",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_participant_role",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_role",
+                "boundToField": "role"
+              }
+            ],
+            "controlData": "<div style=\"padding:20px 24px;font-family:Poppins,Arial,sans-serif;background:#fff;border-radius:16px 16px 0 0;\"><h2 style=\"margin:0;font-size:16px;font-weight:700;color:#003087;\">Team Performance</h2><div style=\"font-size:12px;color:#64748b;\">Visible for Managers & Leaders \u00b7 Role: {{v_role}}</div></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": true
+          },
+          "control_43": {
+            "type": "table",
+            "controlId": "095c86e2-bf85-44af-a2c1-62508d9bf80e",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Table - Team Leaderboard",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "095c86e2-bf85-44af-a2c1-62508d9bf80e",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "095c86e2-bf85-44af-a2c1-62508d9bf80e",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "role_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "095c86e2-bf85-44af-a2c1-62508d9bf80e",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_team_leaderboard",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [
+              {
+                "field": "rep_name",
+                "name": "rep_name",
+                "headerName": "Rep",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "attainment_pct",
+                "name": "attainment_pct",
+                "headerName": "Attainment %",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "credits",
+                "name": "credits",
+                "headerName": "Credits",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "rank",
+                "name": "rank",
+                "headerName": "Rank",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": false,
+                "readOnly": false,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              }
+            ],
+            "whereClauseVariable": null,
+            "variables": [],
+            "table": "grid",
+            "title": "Table - Team Leaderboard",
+            "maxHeight": null,
+            "shouldRenderHidden": true,
+            "staticAllCoumns": false,
+            "layoutSize": 66.66
+          },
+          "control_44": {
+            "type": "Custom",
+            "controlId": "b88f77f6-5063-4997-97d9-2d4901ed42f4",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Card - IC Contribution to Team",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "b88f77f6-5063-4997-97d9-2d4901ed42f4",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": []
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "b88f77f6-5063-4997-97d9-2d4901ed42f4",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "role_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "b88f77f6-5063-4997-97d9-2d4901ed42f4",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "seller_team_contribution",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_ic_contrib_pct",
+                "boundToField": "contribution_pct"
+              }
+            ],
+            "controlData": "<div style=\"height:260px;padding:22px;font-family:Poppins,Arial,sans-serif;background:#fff;border:1px solid #eef2f6;border-top:4px solid #003087;border-radius:20px;\"><h3 style=\"margin:0;font-size:14px;font-weight:800;color:#0f172a;\">IC Contribution to Team</h3><div style=\"font-size:32px;font-weight:800;color:#003087;margin-top:16px;\">{{v_ic_contrib_pct}}</div><div style=\"font-size:12px;color:#64748b;\">of overall team performance</div></div>",
+            "layoutSize": 33.33,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": true
+          }
+        }
+      }
+    }
+  },
+  "title": "Seller Dashboard",
+  "versionName": "v2"
+}
