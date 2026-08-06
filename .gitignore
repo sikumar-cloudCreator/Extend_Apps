@@ -20,3 +20,4 @@ out_app/
 # os
 .DS_Store
 SellerPerformance_app/
+*.db

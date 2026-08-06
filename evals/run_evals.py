@@ -74,10 +74,11 @@ def det_grounding():
 
 
 def det_feedback_roundtrip():
-    tmp = tempfile.mktemp(suffix=".jsonl")
-    old = fb.STORE
+    import db
+    tmp = tempfile.mktemp(suffix=".db")
+    old = db.DB_PATH
     try:
-        fb.STORE = tmp
+        db.DB_PATH = tmp
         fb.record("query", "give credits", "CREATE VIEW demo.x AS SELECT 1 AS a", accepted=True)
         fb.record("query", "bad one", "SELECT LIMIT", accepted=False, comment="no LIMIT")
         shot = fb.few_shot("query")
@@ -86,7 +87,7 @@ def det_feedback_roundtrip():
         check("feedback: stats counts", stats["by_kind"]["query"]["accepted"] == 1 and
               stats["by_kind"]["query"]["corrected"] == 1, str(stats["by_kind"]))
     finally:
-        fb.STORE = old
+        db.DB_PATH = old
         if os.path.exists(tmp):
             os.unlink(tmp)
 

@@ -1,60 +1,53 @@
 #!/usr/bin/env python3
 """
-feedback_store.py — the learning loop (user point 5), realized as a feedback store + few-shot recall
-(decision D1: no live weight-training; improve by reusing accepted examples and surfacing recurring fixes).
+feedback_store.py — the learning loop (user point 5), stored in the shared SQLite DB (db.py).
 
-Every accepted/corrected artifact is appended as one JSONL record. The engines pull the top accepted
-examples of the relevant kind and inject them as few-shot context, so good outputs get reinforced and
-past corrections stop recurring. `promote_candidates()` surfaces frequent correction signatures to graduate
-into the prompt guardrails.
-
-Record kinds: "query" (xSQL), "page" (control list / page design), "frd" (FRD revision), "app".
-Store: ~/Downloads/extend-llm/feedback/feedback.jsonl (override with EXTEND_FEEDBACK_PATH).
-Stdlib only — fully testable, no API key.
-
-CLI:
-    python feedback_store.py stats
-    python feedback_store.py promote
+Accepted input->output EXAMPLES (few-shot) and corrections, persisted so the whole team's feedback
+compounds. Complements knowledge_base's distilled RULES. Kinds: "query", "page", "frd", "app".
+CLI:  python feedback_store.py stats   |   python feedback_store.py promote
 """
-import os, json, time, hashlib
+import os, sys, json, time, hashlib
 
-STORE = os.path.expanduser(os.environ.get(
-    "EXTEND_FEEDBACK_PATH",
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "feedback", "feedback.jsonl")))
-
-
-def _ensure():
-    os.makedirs(os.path.dirname(STORE), exist_ok=True)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import db
 
 
 def record(kind: str, request: str, output: str, accepted: bool,
            verdict: str | None = None, comment: str = "", meta: dict | None = None) -> dict:
-    """Append one feedback record. `accepted`=True for approvals, False for corrections/rejections."""
-    _ensure()
+    """Append one feedback record. accepted=True for approvals, False for corrections/rejections."""
     rec = {"ts": time.time(), "kind": kind, "request": request, "output": output,
            "accepted": bool(accepted), "verdict": verdict, "comment": comment, "meta": meta or {}}
-    with open(STORE, "a", encoding="utf-8") as f:
-        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    c = db.connect()
+    try:
+        c.execute("INSERT INTO feedback(ts,kind,request,output,accepted,verdict,comment,meta) VALUES(?,?,?,?,?,?,?,?)",
+                  (rec["ts"], kind, request, output, 1 if accepted else 0, verdict, comment, json.dumps(rec["meta"])))
+        c.commit()
+    finally:
+        c.close()
     return rec
 
 
 def iter_records(kind: str | None = None, accepted: bool | None = None):
-    if not os.path.exists(STORE):
-        return
-    with open(STORE, encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
+    q = "SELECT ts,kind,request,output,accepted,verdict,comment,meta FROM feedback"
+    conds, args = [], []
+    if kind is not None:
+        conds.append("kind=?"); args.append(kind)
+    if accepted is not None:
+        conds.append("accepted=?"); args.append(1 if accepted else 0)
+    if conds:
+        q += " WHERE " + " AND ".join(conds)
+    q += " ORDER BY id"
+    c = db.connect()
+    try:
+        for r in c.execute(q, args):
+            d = dict(r); d["accepted"] = bool(d["accepted"])
             try:
-                r = json.loads(line)
+                d["meta"] = json.loads(d["meta"] or "{}")
             except Exception:
-                continue
-            if kind is not None and r.get("kind") != kind:
-                continue
-            if accepted is not None and r.get("accepted") is not accepted:
-                continue
-            yield r
+                d["meta"] = {}
+            yield d
+    finally:
+        c.close()
 
 
 def few_shot(kind: str, k: int = 3, max_chars: int = 4000) -> str:
@@ -65,40 +58,34 @@ def few_shot(kind: str, k: int = 3, max_chars: int = 4000) -> str:
     blocks = ["PRIOR ACCEPTED EXAMPLES (match this style; do not repeat past mistakes):"]
     for r in reversed(accepted):
         blocks.append(f"--- request:\n{r['request'].strip()}\n--- accepted output:\n{r['output'].strip()}")
-    text = "\n".join(blocks)
-    return text[:max_chars]
+    return "\n".join(blocks)[:max_chars]
 
 
 def stats() -> dict:
     by_kind: dict = {}
     for r in iter_records():
-        k = r.get("kind", "?")
-        d = by_kind.setdefault(k, {"total": 0, "accepted": 0, "corrected": 0})
+        d = by_kind.setdefault(r["kind"], {"total": 0, "accepted": 0, "corrected": 0})
         d["total"] += 1
-        d["accepted" if r.get("accepted") else "corrected"] += 1
-    return {"store": STORE, "by_kind": by_kind, "total": sum(d["total"] for d in by_kind.values())}
+        d["accepted" if r["accepted"] else "corrected"] += 1
+    return {"db": db.DB_PATH, "by_kind": by_kind, "total": sum(d["total"] for d in by_kind.values())}
 
 
 def promote_candidates(min_count: int = 2) -> list[dict]:
-    """Recurring correction comments/verdicts → candidates to graduate into the prompt guardrails."""
+    """Recurring correction comments/verdicts -> candidates to graduate into the knowledge base."""
     counts: dict = {}
     for r in iter_records(accepted=False):
         sig = (r.get("comment") or r.get("verdict") or "").strip().lower()
         if not sig:
             continue
         key = hashlib.md5(sig.encode()).hexdigest()[:8]
-        c = counts.setdefault(key, {"signature": sig[:200], "count": 0, "kinds": set()})
-        c["count"] += 1
-        c["kinds"].add(r.get("kind"))
+        cc = counts.setdefault(key, {"signature": sig[:200], "count": 0, "kinds": set()})
+        cc["count"] += 1
+        cc["kinds"].add(r.get("kind"))
     out = [{"signature": v["signature"], "count": v["count"], "kinds": sorted(k for k in v["kinds"] if k)}
            for v in counts.values() if v["count"] >= min_count]
     return sorted(out, key=lambda x: -x["count"])
 
 
 if __name__ == "__main__":
-    import sys
     cmd = sys.argv[1] if len(sys.argv) > 1 else "stats"
-    if cmd == "promote":
-        print(json.dumps(promote_candidates(), indent=2))
-    else:
-        print(json.dumps(stats(), indent=2))
+    print(json.dumps(promote_candidates() if cmd == "promote" else stats(), indent=2))
