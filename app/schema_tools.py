@@ -5,8 +5,8 @@ schema_tools.py — the grounding layer for the Extend LLM query engine.
 Two real sources, no guessing:
   1. The Xactly data dictionary: ~/Downloads/xc_tables/xc_<table>.csv (one row per column;
      name, type, PK ordinal, FK table/column). Ignore *_hist.csv.
-  2. The tenant view catalog: ~/Downloads/extend-mcp/datasources.json (82 existing views with
-     name, schema, params, columns, xsql) — the reuse-first source.
+  2. The tenant view catalog: gate/datasources.json (or $EXTEND_CATALOG_PATH) — existing views with
+     name, schema, params, columns, xsql — the reuse-first source.
 
 Stdlib only — importable and CLI-testable with no API key:
     python schema_tools.py xc_credit          # dump a table's columns/PK/FK
@@ -15,7 +15,8 @@ Stdlib only — importable and CLI-testable with no API key:
 import os, csv, json, glob
 
 XC_DIR = os.path.expanduser(os.environ.get("XC_TABLES_DIR", "~/Documents/xc_tables"))
-CATALOG_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "gate", "datasources.json")
+CATALOG_PATH = os.environ.get("EXTEND_CATALOG_PATH") or \
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "gate", "datasources.json")
 
 
 # ---- source 1: the xc_* data dictionary ------------------------------------------------------

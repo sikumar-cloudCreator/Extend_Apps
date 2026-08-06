@@ -29,6 +29,7 @@ import page_designer as pdz
 
 MODEL = "claude-opus-4-8"
 ARCH_PROMPT = os.path.join(os.path.dirname(HERE), "prompts", "40_architect.md")
+DEFAULT_SCHEMA = os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
 
 
 # ---- deterministic bundle files (no API key) -------------------------------------------------
@@ -39,7 +40,7 @@ def _ent_id(kind: str, name: str) -> str:
 def query_file(view: dict) -> dict:
     """queries/<schema>/<name>.json content for a datasource view (view has name/schema/xsql)."""
     return {"savedInEditor": True, "isValid": True, "name": view["name"],
-            "schemaName": view.get("schema", "demo"), "xsql": view.get("xsql", ""), "properties": {}}
+            "schemaName": view.get("schema", DEFAULT_SCHEMA), "xsql": view.get("xsql", ""), "properties": {}}
 
 
 def table_schema_file(table: str) -> dict:
@@ -83,7 +84,7 @@ def write_bundle(out_dir: str, app_name: str, icon: str, pages: list[dict],
     # views
     view_names = []
     for v in views:
-        schema = v.get("schema", "demo")
+        schema = v.get("schema", DEFAULT_SCHEMA)
         d = os.path.join(out_dir, "queries", schema); os.makedirs(d, exist_ok=True)
         with open(os.path.join(d, f"{v['name']}.json"), "w") as f:
             json.dump(query_file(v), f, indent=2)
@@ -167,13 +168,13 @@ def assemble_app(build_spec: dict, page_id_map: dict, out_dir: str, session=None
         for d in p.get("datasources", []):
             if d.get("action") == "new" and d["name"] not in all_views:
                 res = qe.generate_query(p["spec"], needed_columns=d.get("columns"),
-                                        params=d.get("params"), view_name=d["name"], schema=d.get("schema", "demo"))
+                                        params=d.get("params"), view_name=d["name"], schema=d.get("schema", DEFAULT_SCHEMA))
                 if res.get("action") == "author" and res.get("verdict") == "PASS":
-                    all_views[d["name"]] = {"name": d["name"], "schema": d.get("schema", "demo"), "xsql": res["xsql"]}
+                    all_views[d["name"]] = {"name": d["name"], "schema": d.get("schema", DEFAULT_SCHEMA), "xsql": res["xsql"]}
             else:  # reuse: pull the real xsql from the catalog for the bundle
                 v = st.get_view(d["name"])
                 if v:
-                    all_views[d["name"]] = {"name": v["name"], "schema": v.get("schema", "demo"), "xsql": v.get("xsql", "")}
+                    all_views[d["name"]] = {"name": v["name"], "schema": v.get("schema", DEFAULT_SCHEMA), "xsql": v.get("xsql", "")}
         design = pdz.design_page(p["spec"], ds_names, shell={"pageDefinitionId": pid, "title": p["title"]})
         results.append({"name": p["name"], "verdict": design.get("verdict"), "errors": design.get("errors", [])})
         if design.get("page"):

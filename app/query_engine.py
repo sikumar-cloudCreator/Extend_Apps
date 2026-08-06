@@ -98,9 +98,10 @@ def _load_examples(kind: str) -> str:
 
 
 def generate_query(request: str, tables=None, needed_columns=None, params=None,
-                   schema="demo", view_name=None, dry=False, examples=None) -> dict:
+                   schema=None, view_name=None, dry=False, examples=None) -> dict:
     """Author (or reuse) a lint-passing xSQL view for the request. Few-shot examples from the feedback
     store (point 5 learning loop) are auto-injected unless `examples` is passed ('' to disable)."""
+    schema = schema or os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
     system = open(PROMPT_PATH).read()
     if examples is None:
         examples = _load_examples("query")
@@ -145,7 +146,7 @@ if __name__ == "__main__":
     ap.add_argument("--tables", nargs="*", default=[])
     ap.add_argument("--columns", nargs="*", default=[])
     ap.add_argument("--params", nargs="*", default=[])
-    ap.add_argument("--schema", default="demo")
+    ap.add_argument("--schema", default=None, help="datasource schema (default: $EXTEND_DEFAULT_SCHEMA or 'demo')")
     ap.add_argument("--name", default=None)
     ap.add_argument("--dry", action="store_true", help="grounding + prompt only, no API call")
     a = ap.parse_args()

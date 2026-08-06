@@ -13,7 +13,7 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
 { "kind": "label|pageloader|dropdown|vc|tile|card|table|chart",
   "title": "<label/heading text>",
   "ds": "<datasource view name>",        // data controls only
-  "schema": "demo",                       // datasource schema
+  "schema": "<the datasource's schema from the grounding>",   // e.g. demo, tenant, $framework — NOT hardcoded
   "valueField": "<col>", "displayField": "<col>",   // dropdown/vc
   "var": "v_x",                           // variable the driver sets (dropdown/vc)
   "produces": "e_channel",                // channel this control CREATEs (driver)

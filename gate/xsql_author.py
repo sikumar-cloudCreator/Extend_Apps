@@ -20,7 +20,8 @@ the human authors use), so a match emits query text that already obeys the rules
 import os, re, json, importlib.util
 
 # ---- the real tenant view catalog (reuse an existing view before authoring a new one) --------
-_CATALOG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "datasources.json")
+_CATALOG_PATH = os.environ.get("EXTEND_CATALOG_PATH") or \
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "datasources.json")
 try:
     _CATALOG = json.load(open(_CATALOG_PATH))
 except Exception:
@@ -213,7 +214,7 @@ def write_xsql(spec: dict) -> dict:
     Returns real xSQL for a known pattern (lint-gated) or a grounded scaffold for 'custom'/unknown.
     """
     name = spec.get("view_name") or "v_new_view"
-    schema = spec.get("schema") or "demo"
+    schema = spec.get("schema") or os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
     pattern = spec.get("pattern") or "custom"
 
     # 0) Reuse an existing real view before authoring anything new (unless caller forces fresh).
