@@ -19,7 +19,8 @@ import os, uuid
 
 # Tenant schema is not universal — default is configurable; "demo" only as a last resort.
 DEFAULT_SCHEMA = os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
-VALID_KINDS = {"label","pageloader","dropdown","vc","tile","card","table","chart"}
+VALID_KINDS = {"label","pageloader","dropdown","vc","tile","card","table","chart",
+               "input","button","export"}
 S3 = {"useComponentShadow": False, "useGreyBackground": False, "useInnerGreyBackground": False}
 S3s = {"useComponentShadow": True, "useGreyBackground": False, "useInnerGreyBackground": False}
 PAG = {"currentPage": 1, "totalItems": None, "itemsPerPage": 200}
@@ -153,6 +154,31 @@ def build_page(controls: list, shell: dict) -> dict:
                           "layoutSize": ls or 100, "titleAlignment": "left", "subtitleAlignment": "left",
                           "helpIconValue": None, "helpIconPosition": "alignLeft", "helpIconTooltipPosition": "right",
                           "shouldRenderHidden": False}
+        elif kind == "input":  # B1: search / free-text input; CREATEs a channel on Enter
+            props[key] = {"type": "input", "controlId": cid, "privileges": None, "styles": S3,
+                          "internalName": spec.get("internalName", title or "Input"),
+                          "events": _events(spec, cid, None),
+                          "variables": [{"name": spec["var"]}] if spec.get("var") else [],
+                          "labelText": spec.get("labelText", ""), "labelValue": spec.get("placeholder", title or ""),
+                          "isMultiLine": spec.get("isMultiLine", False), "isDisabled": False,
+                          "layoutSize": ls or 100, "useEnterBroadcast": spec.get("useEnterBroadcast", True),
+                          "shouldRenderHidden": False, "allowClear": spec.get("allowClear", True)}
+        elif kind == "button":  # B1: action button; CREATEs a channel when clicked
+            props[key] = {"type": "button", "controlId": cid, "privileges": None, "styles": S3,
+                          "internalName": spec.get("internalName", title or "Button"),
+                          "events": _events(spec, cid, None), "controlData": title or spec.get("label", "Button"),
+                          "layoutSize": ls or 16.66, "buttonColorType": spec.get("buttonColorType", "link"),
+                          "icon": spec.get("icon", ""), "iconPosition": spec.get("iconPosition", "left"),
+                          "shouldRenderHidden": False}
+        elif kind == "export":  # B1/B2: export-page-to-PDF; BINDs a channel with exportAsPDF
+            props[key] = {"type": "exportPagePDF", "controlId": cid, "privileges": None, "styles": S3,
+                          "internalName": spec.get("internalName", ""), "layoutSize": ls,
+                          "title": title or "Export As PDF", "variables": [],
+                          "events": _events(spec, cid, None)}
+
+        # B3: conditional visibility — any control may be marked hidden (shouldRenderHidden).
+        if spec.get("hidden") and isinstance(props.get(key), dict) and "shouldRenderHidden" in props[key]:
+            props[key]["shouldRenderHidden"] = True
 
     page = {"pageDefinitionId": shell["pageDefinitionId"],
             "pageSchema": {"properties": {}, "controlSchema": {"schema": {"type": "object", "properties": props}}},
@@ -205,8 +231,8 @@ def validate_page(page: dict, shell: dict | None = None, catalog: list | None = 
         warnings.append({"control": "<root>", "note": "page-level variables[] present — real pages declare variables per control, not at page level"})
 
     valid_types = {"label","PageLoader","dropdown","variableConfigurator","tile","Custom","table","composedChart",
-                   "button","input","slideout","modal","tabContainer","Timer","xSQLRunner","xSQLButton",
-                   "workflowButton","xsqlWorkflowTrigger"}
+                   "button","input","exportPagePDF","slideout","modal","tabContainer","Timer","xSQLRunner",
+                   "xSQLButton","workflowButton","xsqlWorkflowTrigger"}
     produced, subscribed, ids = set(), {}, []
     for key, c in props.items():
         for e in c.get("events", []):

@@ -25,6 +25,7 @@ import frd_flows as ff
 import app_assembler as aa
 import page_designer as pdz
 import feedback_store as fb
+import knowledge_base as kb
 
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
@@ -219,9 +220,10 @@ def on_message(event, say, client):
         say(blocks=ACCEPT_BLOCK, text="Accept or correct?", thread_ts=thread)
     elif mode == "correcting" and text:
         last = s.get("last", {})
-        fb.record(last.get("kind", "query"), last.get("request", ""), last.get("output", ""),
-                  accepted=False, comment=text)
-        say(":memo: Logged the correction. Thanks — it improves future outputs.", thread_ts=thread)
+        scope = last.get("kind", "query")
+        fb.record(scope, last.get("request", ""), last.get("output", ""), accepted=False, comment=text)
+        kb.add_lesson(scope, text, why="from user correction", source="slack_correction")  # compound knowledge
+        say(":brain: Logged and *learned* it — this rule now applies to every future build.", thread_ts=thread)
         s["mode"] = "query"
     elif mode == "generate" and text:
         start_generate(s, text, say, client, channel, thread)

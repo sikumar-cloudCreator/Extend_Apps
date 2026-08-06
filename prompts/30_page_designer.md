@@ -10,7 +10,7 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
 
 ## Control object shape (one per control)
 ```
-{ "kind": "label|pageloader|dropdown|vc|tile|card|table|chart",
+{ "kind": "label|pageloader|dropdown|vc|tile|card|table|chart|input|button|export",
   "title": "<label/heading text>",
   "ds": "<datasource view name>",        // data controls only
   "schema": "<the datasource's schema from the grounding>",   // e.g. demo, tenant, $framework — NOT hardcoded
@@ -23,7 +23,10 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
   "columns": [{"field":"<col>","headerName":"<label>"}],   // table columns
   "chart": {"x":"<col>","ys":[{"key":"<col>","label":"..","type":"bar|line","fill":"#66B6DE"}]},
   "bound": [["v_x","<col>"]], "html": "<div>{{v_x}}</div>",  // card (Custom) only — FIXED fields
-  "layoutSize": 100|50|25|16.66 }
+  "placeholder": "Search…", "useEnterBroadcast": true,       // input
+  "buttonColorType": "link", "icon": "",                     // button
+  "hidden": false,                                            // any control — conditional visibility (B3)
+  "layoutSize": 100|50|33.33|25|16.66 }
 ```
 
 ## Choose the right control (graphical, plug-and-play — point 4)
@@ -41,6 +44,9 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
   - If a dropdown's option-list view requires a `:param` (e.g. a period-scoped participant list), the driving
     filter must set that param with a sensible default AND fire on `$onPageLoad`, so the list resolves at runtime.
 - **Section heading** → `label`. **Loading gate** → `pageloader`.
+- **Free-text / search box** → `input` (set `var`, `produces` a channel, `useEnterBroadcast:true`); a table
+  filters on it via `whereClauseVariable`. **Action button** → `button` (`produces` a channel). **Export to
+  PDF** → `export` (`subscribes` the button's channel with `["exportAsPDF"]`).
 
 ## Wiring rules (everything runs on events + params — point 6)
 - A filter/driver **CREATEs** a channel (`produces`) and sets its `var`. Every data control that depends on it
@@ -51,12 +57,23 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
   Without it the driver chain never runs and the page loads empty. (The gate now fails a datasource control
   that omits `$onPageLoad`.) A driver VC therefore binds `$onPageLoad` + its upstream channel AND creates its
   downstream channel.
-- **PageLoader:** use `"onload": ["showLoader"]` and `subscribes` the terminal (last) channel with `["hideLoader"]`
-  — a loader shows on load and hides when data is ready. Do NOT give a PageLoader a `refresh` handler.
+- **PageLoader:** `"onload": ["showLoader"]`, and `subscribes` **hideLoader on an EARLY channel that ALWAYS fires
+  on page load** — the period / init-filter channel (e.g. `current_period_select`). Do **NOT** hide on the deepest
+  chain channel (master_position_id, a data table's ready-signal, etc.): if any downstream step doesn't complete,
+  the loader spins forever. Never give a PageLoader a `refresh` handler.
 - A view's `:param`s are satisfied by the page variables the drivers set. If a view needs `:v_period`, some
   dropdown/vc must set `v_period`. Only use datasource columns and params that exist in the grounding.
 - Cascading filters: the downstream `vc`/dropdown BINDs the upstream channel AND CREATEs its own.
-- Repeated cards over the same entity (measure 1/2/3…) → **one `table`** bound to the by-measure view, not N controls.
+- A dropdown that **sets its own variable** (its default comes from an upstream channel) binds that channel with
+  handlers `["assignCurrentVariable", "refresh"]` — assign the current value, then re-query. (B5)
+- **Dynamic/variable-column data → one `table`** bound to the view. But a fixed set of **richly-styled KPI/measure
+  cards** (e.g. Revenue / Profitability / Component C, each a known fixed field set) is legitimately N `card`
+  (Custom HTML) controls at `layoutSize:33.33` — do NOT force those into a table. Table = when columns/rows vary. (B4)
+- **Measure / granularity selectors** (e.g. show Revenue vs Profitability vs Component C; Quarter vs Monthly): a `dropdown`
+  sets `v_measure` / `v_granularity` and CREATEs a channel; the data views take it as a `:param`; every dependent
+  control BINDs that channel. (B6)
+- **Conditional sections** (e.g. show team components only for Manager/Leader): derive a role variable, and mark
+  the role-only controls `"hidden": true` by default — they render when the role condition sets them visible. (B3)
 
 ## Grounding
 You are given, for each datasource the page uses: its real **columns** and **params**. Use only these.
