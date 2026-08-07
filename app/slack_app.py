@@ -26,6 +26,7 @@ import app_assembler as aa
 import page_designer as pdz
 import feedback_store as fb
 import knowledge_base as kb
+import llm
 
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
@@ -50,11 +51,20 @@ MENU_BLOCKS = [
     {"type": "section", "text": {"type": "mrkdwn",
         "text": "*Extend LLM.* What do you want to do?"}},
     {"type": "actions", "elements": [
+        {"type": "button", "text": {"type": "plain_text", "text": "Ask a Question"}, "action_id": "mode_ask"},
         {"type": "button", "text": {"type": "plain_text", "text": "Write a Query"}, "action_id": "mode_query"},
         {"type": "button", "text": {"type": "plain_text", "text": "Upload FRD"}, "action_id": "mode_upload"},
         {"type": "button", "text": {"type": "plain_text", "text": "Generate FRD"}, "action_id": "mode_generate"},
     ]},
 ]
+
+# General Q&A: grounded in the same Xactly Extend expertise, but free-form (not xSQL/FRD-gated).
+ASK_SYSTEM = (
+    "You are the Extend LLM assistant for a Xactly Incent / Extend team. Answer questions clearly and "
+    "concisely. You know Xactly Incent, Extend page design, xSQL, and FRD authoring. When a question is "
+    "really a request to write xSQL or build an app, tell the user to use the *Write a Query* or "
+    "*Generate FRD* buttons instead — those paths are validated. Otherwise, just answer."
+)
 
 
 # ---- entry -----------------------------------------------------------------------------------
@@ -70,6 +80,13 @@ def on_mention(event, say):
 
 
 # ---- mode buttons ----------------------------------------------------------------------------
+@app.action("mode_ask")
+def a_ask(ack, body, say):
+    ack(); _sess(_key(body["container"]))["mode"] = "ask"
+    say("*Ask mode.* Ask me anything about Xactly Incent, Extend, xSQL, or FRDs.",
+        thread_ts=body["container"].get("thread_ts") or body["container"].get("message_ts"))
+
+
 @app.action("mode_query")
 def a_query(ack, body, say):
     ack(); _sess(_key(body["container"]))["mode"] = "query"
@@ -213,7 +230,13 @@ def on_message(event, say, client):
     channel = event.get("channel")
     mode = s.get("mode")
 
-    if mode == "query" and text:
+    if mode == "ask" and text:
+        try:
+            answer = llm.complete(ASK_SYSTEM, [{"role": "user", "content": text}])
+        except Exception as e:
+            say(f":warning: {e}", thread_ts=thread); return
+        say(answer, thread_ts=thread)
+    elif mode == "query" and text:
         r = run_query(text)
         s["last"] = {"kind": "query", "request": r["request"], "output": r["output"]}
         say(r["display"], thread_ts=thread)
