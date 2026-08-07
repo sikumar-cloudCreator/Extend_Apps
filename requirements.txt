@@ -1,3 +1,4 @@
 anthropic>=0.40        # Opus 4.8 authoring calls (query engine + sub-agents)
+#   company providers (no personal key): pip install "anthropic[vertex]"  or  "anthropic[aws]" ; Bedrock needs boto3 creds
 python-docx>=1.1       # Generate-FRD -> Word doc (later)
 slack-bolt>=1.20       # Slack surface (later)

@@ -129,21 +129,13 @@ def markdown_to_docx(md: str, out_path: str) -> str:
 # ---- generate an FRD from plain English (Opus) -----------------------------------------------
 def generate_frd(requirements: str, extra_context: str = "") -> str:
     """plain-English requirements -> FRD markdown (EFM template). Needs ANTHROPIC_API_KEY."""
-    try:
-        import anthropic
-    except ImportError:
-        raise RuntimeError("pip install anthropic to generate an FRD")
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        raise RuntimeError("set ANTHROPIC_API_KEY to generate an FRD (read/export work without it)")
+    import llm  # provider-agnostic
     system = open(PROMPT_PATH).read()
     template = open(TEMPLATE_PATH).read() if os.path.exists(TEMPLATE_PATH) else ""
     user = (f"REQUIREMENTS (plain English):\n{requirements}\n\n"
             + (f"ADDITIONAL CONTEXT:\n{extra_context}\n\n" if extra_context else "")
             + f"FRD TEMPLATE TO FOLLOW:\n{template}")
-    client = anthropic.Anthropic()
-    resp = client.messages.create(model=MODEL, max_tokens=8000, system=system,
-                                  messages=[{"role": "user", "content": user}])
-    return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text").strip()
+    return llm.complete(system, [{"role": "user", "content": user}], max_tokens=8000).strip()
 
 
 # ---- session state + the finalize-before-build gate (point 2) --------------------------------

@@ -71,14 +71,8 @@ def _extract_controls(text: str):
 
 
 def _call_opus(system, messages):
-    try:
-        import anthropic
-    except ImportError:
-        raise RuntimeError("pip install anthropic to run page design")
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        raise RuntimeError("set ANTHROPIC_API_KEY to run page design (assemble/gate work without it)")
-    r = anthropic.Anthropic().messages.create(model=MODEL, max_tokens=4000, system=system, messages=messages)
-    return "".join(b.text for b in r.content if getattr(b, "type", None) == "text")
+    import llm  # provider-agnostic
+    return llm.complete(system, messages, max_tokens=4000)
 
 
 PAGE_ID_PROMPT = ("Please provide the Extend **pageDefinitionId** (create the page in Extend first and paste "

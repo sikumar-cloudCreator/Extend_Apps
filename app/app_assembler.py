@@ -137,12 +137,7 @@ def required_page_ids(build_spec: dict, page_id_map: dict) -> list[str]:
 
 # ---- architect (Opus) ------------------------------------------------------------------------
 def architect(frd_markdown: str) -> dict:
-    try:
-        import anthropic
-    except ImportError:
-        raise RuntimeError("pip install anthropic to run the architect")
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        raise RuntimeError("set ANTHROPIC_API_KEY to run the architect")
+    import llm  # provider-agnostic
     system = open(ARCH_PROMPT).read()
     grounding = "REUSABLE VIEW CATALOG:\n" + "\n".join(
         f"  {v['name']}  params={v['params']}  columns={v['columns']}" for v in st.list_views())
@@ -152,9 +147,7 @@ def architect(frd_markdown: str) -> dict:
     except Exception:
         knowledge = ""
     user = (f"{knowledge}\n\n" if knowledge else "") + f"FRD:\n{frd_markdown}\n\n{grounding}"
-    r = anthropic.Anthropic().messages.create(model=MODEL, max_tokens=6000, system=system,
-        messages=[{"role": "user", "content": user}])
-    text = "".join(b.text for b in r.content if getattr(b, "type", None) == "text")
+    text = llm.complete(system, [{"role": "user", "content": user}], max_tokens=6000)
     m = re.search(r"```json\s*(.*?)```", text, re.S)
     return json.loads((m.group(1) if m else text).strip())
 
