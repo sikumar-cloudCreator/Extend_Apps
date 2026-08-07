@@ -72,7 +72,9 @@ The builder is a general-purpose tool — nothing is hardcoded to one tenant. Po
 
 | Env var | Default | Purpose |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | — | Opus 4.8 calls (authoring steps) |
+| `EXTEND_LLM_PROVIDER` | `anthropic` | Where Claude runs — bill through the **company**, not a personal key: `anthropic` (org key), `bedrock` (AWS), `vertex` (GCP), `foundry` (Azure), `aws` (Claude Platform on AWS). See `app/llm.py`. |
+| `EXTEND_LLM_MODEL` | per-provider Opus 4.8 | override the model id |
+| `ANTHROPIC_API_KEY` | — | only for `EXTEND_LLM_PROVIDER=anthropic`; Bedrock/Vertex use cloud creds (no Anthropic key) |
 | `EXTEND_DEFAULT_SCHEMA` | `demo` | datasource schema when a view's own schema isn't known (e.g. `paypal`, `$framework`) |
 | `EXTEND_CATALOG_PATH` | `gate/datasources.json` | the tenant's reusable-view catalog (name/params/columns/xsql) |
 | `XC_TABLES_DIR` | `~/Documents/xc_tables` | the Xactly `xc_*` data dictionary (one CSV per table) |

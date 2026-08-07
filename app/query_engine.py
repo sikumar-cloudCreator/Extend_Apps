@@ -78,15 +78,8 @@ def check(sql: str, declared_params: list[str] | None) -> dict:
 
 # ---- LLM authoring (needs ANTHROPIC_API_KEY) -------------------------------------------------
 def _call_opus(system: str, messages: list[dict]) -> str:
-    try:
-        import anthropic
-    except ImportError:
-        raise RuntimeError("pip install anthropic (in the extend-llm env) to run authoring")
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        raise RuntimeError("set ANTHROPIC_API_KEY to run authoring (grounding/lint work without it)")
-    client = anthropic.Anthropic()
-    resp = client.messages.create(model=MODEL, max_tokens=1500, system=system, messages=messages)
-    return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text")
+    import llm  # provider-agnostic (anthropic key / Bedrock / Vertex / Foundry / AWS)
+    return llm.complete(system, messages, max_tokens=1500)
 
 
 def _load_examples(kind: str) -> str:
