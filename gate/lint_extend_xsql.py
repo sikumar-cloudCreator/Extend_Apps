@@ -13,7 +13,13 @@ Usage:
     python3 lint_extend_xsql.py views.sql --page page.json # + cross-check every :param is a declared page variable
 
 Checks:
-  * LIMIT                         strict:ERROR  view:WARN   (use `AND rownum = 1`)
+  * ToNumber(...)                 ERROR         banned cast — bind directly, declare dataType in the query object
+  * ToString(col)/ToChar(col) in a predicate   ERROR   per-row cast, defeats the index
+  * rownum / RowNumber() / LIMIT  ERROR         no row limiters — aggregate to one row (MAX/SUM) or use IN
+  * eff_participant_id            ERROR         use participant_id
+  * Nvl outside Concat/FormatNumber            WARN    ships a bare $/% when the value is NULL
+  * card/tile view with no aggregate           WARN    a zero-row view renders the literal `undefined`
+  * hardcoded measure/component name LIKE      WARN    parameterize (:v_measure) or resolve the name
   * Empty()                       strict:ERROR  view:ok
   * ORDER BY inside a UNION member strict:ERROR view:WARN   (only allowed at very end of full UNION)
   * JOIN <ShowXxx(...)>           WARN          table function re-evaluated per row -> 504; make it sole FROM + IN
@@ -90,6 +96,34 @@ def split_views(sql):
         yield "(raw)", clean_body(sql)
 
 
+CLAUSE_RE = re.compile(r"\b(SELECT|WHERE|ON|HAVING|GROUP\s+BY|ORDER\s+BY|CASE)\b", re.I)
+PREDICATE_CLAUSES = ("WHERE", "ON", "HAVING")
+# view names whose control renders a single value set (card/tile/Custom/resolver) -> one-row contract
+CARD_NAME_RE = re.compile(r"(card|tile|kpi|summary|measure|payout|header|_id)$", re.I)
+AGG_RE = re.compile(r"\b(SUM|MAX|MIN|COUNT|AVG)\s*\(", re.I)
+
+
+def in_predicate(body, pos):
+    """True if offset `pos` sits in a WHERE / JOIN..ON / HAVING clause (vs the SELECT list)."""
+    last = None
+    for m in CLAUSE_RE.finditer(body, 0, pos):
+        last = m.group(1).upper().split()[0]
+    return last in PREDICATE_CLAUSES
+
+
+def call_args(body, fn):
+    """Yield the argument text of every `fn(...)` call, paren-balanced."""
+    for m in re.finditer(r"\b" + fn + r"\s*\(", body, re.I):
+        depth, i = 1, m.end()
+        while i < len(body) and depth:
+            if body[i] == "(":
+                depth += 1
+            elif body[i] == ")":
+                depth -= 1
+            i += 1
+        yield body[m.end():i - 1]
+
+
 def mid_union_order_by(body):
     """True if an ORDER BY occurs before a later UNION (i.e., inside a member, not final)."""
     if not re.search(r"\bUNION\b", body, re.I):
@@ -109,8 +143,22 @@ def lint_body(label, body, dialect, declared, errors, warns):
         E(f"{fn.upper()}() is not a valid xSQL function — use {alt}")
     if "||" in strip_literals(body):
         (E if strict else W)("|| string-concat operator — prefer Concat(a, b) (nest for 3+ parts); disallowed in strict VC/whereClause/validationXsql context")
+
+    # --- binding contract: no casts, no row limiters, no eff_participant_id (2026-08-15 directive) ---
+    if re.search(r"\bToNumber\s*\(", body, re.I):
+        E("ToNumber() is banned — bind the param directly (col = :v_x) and declare its dataType in the "
+          "query object's variables[]")
+    for m in re.finditer(r"\b(ToString|ToChar)\s*\(", body, re.I):
+        if in_predicate(body, m.start()):
+            E(f"{m.group(1)}() in a WHERE/JOIN predicate — per-row cast on every column value, defeats the "
+              f"index; compare the column to the param directly")
+    if re.search(r"\brownum\b|\bRow_?Number\s*\(", body, re.I):
+        E("rownum / RowNumber() is banned — guarantee a single row by aggregating "
+          "(SELECT Nvl(MAX(id), 0) …), or pick one of many with a non-correlated IN (SELECT …)")
     if re.search(r"\bLIMIT\b", body, re.I):
-        (E if strict else W)("LIMIT used — not allowed in strict xSQL; use `AND rownum = 1`")
+        E("LIMIT is not valid xSQL — aggregate to a single row (MAX/SUM) instead")
+    if re.search(r"\beff_participant_id\b", body, re.I):
+        E("eff_participant_id — this tenant scopes facts on participant_id")
     if re.search(r"\bEmpty\s*\(", body, re.I) and strict:
         E("Empty() used — invalid in strict variableConfigurator/whereClause xSQL")
     if mid_union_order_by(body):
@@ -127,6 +175,27 @@ def lint_body(label, body, dialect, declared, errors, warns):
         for p in sorted(set(re.findall(r":(\w+)", strip_literals(body)))):
             if p not in declared:
                 E(f"param :{p} is not a declared page variable")
+
+    # --- render-quality checks (render-defect rules R1-R4, R8) ---
+    for args in call_args(body, "Nvl"):
+        if re.match(r"\s*Concat\s*\(", args, re.I):
+            W("Nvl() wraps a Concat() — the NULL is inside, so the page ships a bare '$'/'%' with no number; "
+              "put Nvl innermost: Concat('$', FormatNumber(Nvl(x, 0), '#,##0'))")
+    for args in call_args(body, "Concat"):
+        if re.search(r"\b(SUM|MAX|MIN|AVG|Round|FormatNumber)\s*\(", args, re.I) and not re.search(r"\bNvl\s*\(", args, re.I):
+            W("Concat() over an unguarded value — a NULL renders as a bare prefix/suffix; wrap the value in Nvl()")
+    name = label.split()[-1] if label.startswith("view ") else ""
+    if name and CARD_NAME_RE.search(name):
+        if not AGG_RE.search(body):
+            W(f"'{name}' looks like a card/tile/resolver view but has no aggregate — a zero-row result renders "
+              f"the literal string 'undefined'; aggregate (SUM/MAX) with no GROUP BY so it always returns one row")
+        elif re.search(r"\bGROUP\s+BY\b", body, re.I):
+            W(f"'{name}' looks like a card/tile/resolver view but has a GROUP BY — it can return zero rows "
+              f"(renders 'undefined') or many; a card view must return exactly one row")
+    for col, lit in re.findall(r"\b(\w*name)\s*(?:=|LIKE)\s*'([^']+)'", body, re.I):
+        if lit.strip("%").lower() not in ("all", ""):
+            W(f"hardcoded name literal ({col} = '{lit}') — measure/component names are data: take them as a "
+              f":param (e.g. :v_measure) or resolve them from the list view, or a tenant mismatch silently yields 0")
 
 
 def main():

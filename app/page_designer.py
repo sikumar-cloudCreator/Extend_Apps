@@ -50,10 +50,25 @@ def build_grounding(datasources: list[str], tables: list[str] | None = None) -> 
 
 # ---- deterministic assemble + gate (no API key) ----------------------------------------------
 def assemble(controls: list[dict], shell: dict) -> dict:
-    """Build the page JSON and gate it. Returns {page, verdict, errors, warnings}."""
+    """Build the page JSON and gate it (structure/wiring + render quality).
+    Returns {page, verdict, errors, warnings}."""
     page = extend_build.build_page(controls, shell)
     gate = extend_build.validate_page(page, shell, catalog=CATALOG)
-    return {"page": page, "verdict": gate["verdict"], "errors": gate["errors"], "warnings": gate["warnings"]}
+    errors, warnings = list(gate["errors"]), list(gate["warnings"])
+
+    # render-quality gate: the defects that pass a structural check and still look broken on screen
+    # (duplicate headings, unbounded tables, placeholder copy) — see knowledge/dashboard_render_defects.md
+    import tempfile, check_page_render as cpr
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+        json.dump(page, f)
+        tmp = f.name
+    try:
+        cpr.check_page(tmp, errors, warnings)
+    finally:
+        os.unlink(tmp)
+
+    verdict = "FAIL" if errors else gate["verdict"]
+    return {"page": page, "verdict": verdict, "errors": errors, "warnings": warnings}
 
 
 # ---- LLM design loop -------------------------------------------------------------------------
