@@ -38,6 +38,84 @@ def det_lint_regression():
     check("lint: Nvl -> PASS", good["verdict"] == "PASS", str(good["errors"]))
 
 
+def det_binding_rules():
+    """The 2026-08-15 binding directives + the render-defect rules must be hard lint errors."""
+    cases = [
+        ("ToNumber banned", "CREATE VIEW demo.x AS SELECT Nvl(SUM(c.amount),0) AS a FROM xactly.xc_credit c "
+                            "WHERE c.participant_id = ToNumber(:v_master_participant_id)"),
+        ("ToString(col) in predicate banned", "CREATE VIEW demo.x AS SELECT Nvl(SUM(c.amount),0) AS a "
+                                              "FROM xactly.xc_credit c WHERE ToString(c.participant_id) = :v_x"),
+        ("rownum banned", "CREATE VIEW demo.x AS SELECT Nvl(MAX(c.credit_id),0) AS a FROM xactly.xc_credit c "
+                          "WHERE rownum = 1"),
+        ("eff_participant_id banned", "CREATE VIEW demo.x AS SELECT Nvl(SUM(c.amount),0) AS a "
+                                      "FROM xactly.xc_credit c WHERE c.eff_participant_id = :v_x"),
+    ]
+    for label, sql in cases:
+        r = qe.check(sql, None)
+        check(f"lint: {label} -> FAIL", r["verdict"] == "FAIL", str(r["errors"]))
+
+    ok = ("CREATE VIEW demo.seller_kpi_card AS SELECT Concat('$', FormatNumber(Nvl(SUM(c.amount),0), '#,##0')) "
+          "AS qtd_credits FROM xactly.xc_credit c WHERE c.participant_id = :v_master_participant_id")
+    r = qe.check(ok, None)
+    check("lint: direct bind + aggregate + Nvl -> PASS", r["verdict"] == "PASS" and not r["warnings"],
+          f"errors={r['errors']} warns={r['warnings']}")
+
+    # one-row contract + Nvl placement are warnings, not blockers
+    warn_sql = ("CREATE VIEW demo.seller_total_tile AS SELECT Nvl(Concat('$', FormatNumber(c.amount, '#,##0')), '$0') "
+                "AS v FROM xactly.xc_credit c WHERE c.participant_id = :v_x")
+    w = qe.check(warn_sql, None)
+    joined = " ".join(w["warnings"])
+    check("lint: zero-row card view warns", "undefined" in joined, joined)
+    check("lint: Nvl outside Concat warns", "Nvl innermost" in joined or "bare" in joined, joined)
+
+
+def det_render_gate():
+    """Render-quality defects observed on the shipped page must fail the page gate."""
+    shell = {"pageDefinitionId": "pg_eval", "title": "Eval"}
+    ds = "incnt_stmt_active_participant_list_admin_view"
+    dup = [{"kind": "label", "title": "Deal Ledger Details"},
+           {"kind": "table", "title": "Deal Ledger Details", "ds": ds, "schema": "demo",
+            "columns": [{"field": "participant_name_display"}], "onload": ["refresh"]}]
+    r = pdz.assemble(dup, shell)
+    page = r["page"]
+    tbl = next(c for c in page["pageSchema"]["controlSchema"]["schema"]["properties"].values()
+               if c.get("type") == "table")
+    check("render: duplicate heading dropped from the table title", tbl["title"] == "", tbl["title"])
+    check("render: table height is bounded", tbl["maxHeight"] and tbl["pagination"]["itemsPerPage"] <= 25,
+          f"maxHeight={tbl['maxHeight']} rows={tbl['pagination']['itemsPerPage']}")
+
+    ph = [{"kind": "card", "title": "Pending", "html": "<div>Pending Payout<br/>Verification in progress</div>"}]
+    r2 = pdz.assemble(ph, shell)
+    check("render: placeholder copy -> FAIL", r2["verdict"] == "FAIL"
+          and any("placeholder" in str(e) for e in r2["errors"]), str(r2["errors"]))
+
+
+def det_query_object_typing():
+    """Params are typed in the query object (that's what removes the need for a predicate cast)."""
+    q = aa.query_file({"name": "v", "schema": "demo",
+                       "xsql": "SELECT 1 AS a WHERE p = :v_master_participant_id AND n = :v_measure "
+                               "AND d = :v_start_date"})
+    types = {v["name"]: (v["dataType"], v["value"]) for v in q["variables"]}
+    check("query object: numeric id typed Number, seeded 0",
+          types["v_master_participant_id"] == ("Number", "0"), str(types))
+    check("query object: filter typed String, seeded All", types["v_measure"] == ("String", "All"), str(types))
+    check("query object: date param typed Date", types["v_start_date"][0] == "Date", str(types))
+
+
+def det_knowledge_currency():
+    """Overturned lessons must not be injected into any build prompt."""
+    import knowledge_base as kb
+    text = kb.render("query") + kb.render("page") + kb.render("architect")
+    stale = [frag for frag in ("still use ToString(col)", "WHERE rownum = 1",
+                               "IC self-view filters by the built-in current-user lookups")
+             if frag in text]
+    check("knowledge: overturned lessons retired", not stale, str(stale))
+    fresh = ["ToNumber() is banned", "No rownum", "participant_id, never eff_participant_id",
+             "exactly one row", "Title once"]
+    missing = [f for f in fresh if f not in text]
+    check("knowledge: new rules present", not missing, str(missing))
+
+
 def det_page_gate():
     shell = {"pageDefinitionId": "pg_eval", "title": "Eval"}
     ok = [{"kind": "dropdown", "title": "Period", "ds": "incnt_stmt_monthly_period_list_till_curr_month",
@@ -54,16 +132,38 @@ def det_page_gate():
 
 def det_bundle_shape():
     d = tempfile.mkdtemp()
+    rep = {"policySet": {"version": 16, "name": "Eval_Rep_Reporting", "visibleToTenant": True, "description": "self"},
+           "policySetItems": [{"itemType": "ALLOW", "resourceName": "xactly.xc_credit", "resourceType": "TABLE",
+                               "operation": "READ", "predicates": "participant_id = LookupCurrentUserMasterParticipantId()",
+                               "conjunctionType": "AND", "isExclusive": False}]}
+    views = [{"name": "v1", "schema": "demo", "xsql": "SELECT 1 AS a WHERE ( :v_measure = 'All' OR n = :v_measure )"}]
     aa.write_bundle(d, "Eval App", "Analytics",
                     pages=[{"pageDefinitionId": "pid-1", "title": "P1", "page": {"pageDefinitionId": "pid-1"}}],
-                    views=[{"name": "v1", "schema": "demo", "xsql": "SELECT 1 AS a"}],
-                    tables=["xc_credit"], workflows=[])
+                    views=views, tables=["xc_credit"], workflows=[],
+                    policy_sets=[rep], access_roles=["Sales Rep", "Administrator"])
+    # DEFAULT: queries ship as xSQL .sql
     need = ["ADLC.json", "app/Application.json", "app/pid-1.json", "queries/demo/v1.sql",
-            "tables/schemas/xactly/xc_credit.json"]
+            "policy_sets/Eval_Rep_Reporting.json", "tables/schemas/xactly/xc_credit.json"]
     missing = [p for p in need if not os.path.exists(os.path.join(d, p))]
-    check("bundle: real export layout", not missing, f"missing {missing}")
+    check("bundle: real export layout (xsql default)", not missing, f"missing {missing}")
+    sql = open(os.path.join(d, "queries/demo/v1.sql")).read()
+    check("bundle: query is xSQL CREATE VIEW", sql.lstrip().upper().startswith("CREATE VIEW DEMO.V1"), sql[:40])
     adlc = json.load(open(os.path.join(d, "ADLC.json")))
-    check("bundle: ADLC manifest keys", set(adlc) >= {"application", "queries", "pageDefinitions", "tables"})
+    check("bundle: ADLC manifest keys", set(adlc) >= {"application", "queries", "pageDefinitions", "tables",
+          "policySets", "agents"} and adlc["policySets"] and adlc["queries"][0].endswith(".sql"))
+    # OPT-IN: json query-object format still available
+    d2 = tempfile.mkdtemp()
+    aa.write_bundle(d2, "Eval App", "Analytics",
+                    pages=[{"pageDefinitionId": "pid-1", "title": "P1", "page": {"pageDefinitionId": "pid-1"}}],
+                    views=views, tables=[], workflows=[], query_format="json")
+    q = json.load(open(os.path.join(d2, "queries/demo/v1.json")))
+    check("bundle: json format seeds vars", q.get("name") == "v1"
+          and any(v["name"] == "v_measure" and v["value"] == "All" for v in q.get("variables", [])), str(q.get("variables")))
+    app = json.load(open(os.path.join(d, "app/Application.json")))
+    check("bundle: landingPage + role-gated nav", app.get("landingPageId") == "pid-1"
+          and app["sections"][0]["accessRoles"] == ["Sales Rep", "Administrator"])
+    page = json.load(open(os.path.join(d, "app/pid-1.json")))
+    check("bundle: page envelope versionName", page.get("versionName") == "v1")
 
 
 def det_grounding():
@@ -106,7 +206,9 @@ def det_golden_fixtures_valid():
     """No key: every golden's expected_reuse_views must exist in the catalog (keeps fixtures honest)."""
     names = {v["name"] for v in st.list_views()}
     cases = list(golden_cases())
-    check("golden: >=3 fixtures present", len(cases) >= 3, f"found {[c[0] for c in cases]}")
+    # Customer-specific fixtures live outside the repo (gitignored) — the committed set is the
+    # generic ones, so this floor is 2. Drop your own FRDs into evals/golden/<name>/ to widen it.
+    check("golden: >=2 fixtures present", len(cases) >= 2, f"found {[c[0] for c in cases]}")
     for case, _frd, exp in cases:
         missing = [v for v in exp.get("expected_reuse_views", []) if v not in names]
         check(f"golden[{case}]: reuse views exist in catalog", not missing, f"missing {missing}")
@@ -135,7 +237,8 @@ def llm_query_pass():
 
 def main():
     include_llm = "--llm" in sys.argv or bool(os.environ.get("ANTHROPIC_API_KEY"))
-    for fn in (det_lint_regression, det_page_gate, det_bundle_shape, det_grounding,
+    for fn in (det_lint_regression, det_binding_rules, det_render_gate, det_query_object_typing,
+               det_knowledge_currency, det_page_gate, det_bundle_shape, det_grounding,
                det_feedback_roundtrip, det_golden_fixtures_valid):
         try:
             fn()

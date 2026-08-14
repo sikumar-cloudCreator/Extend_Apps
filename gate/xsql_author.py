@@ -171,7 +171,14 @@ TEMPLATES = {
 HARD_RULES = [
     "BANNED functions: LEAST, GREATEST, COALESCE, IFNULL — cap/floor with CASE, null-coalesce with Nvl().",
     "No || in strict contexts — use Concat(a,b) (nest for 3+).",
-    "No LIMIT (use `AND rownum = 1`), no Empty(), no SELECT *, no trailing ;, no correlated subqueries.",
+    "No LIMIT / rownum / RowNumber() — reduce to one row by aggregating (Nvl(MAX(id),0)) or a non-correlated IN.",
+    "No ToNumber(); no ToString(col)/ToChar(col) in a predicate. Compare col = :v_param directly and declare the "
+    "param's dataType in the query object's variables[].",
+    "Scope facts on participant_id — never eff_participant_id.",
+    "A card/tile/resolver view must ALWAYS return exactly one row (aggregate, no GROUP BY, every output Nvl'd): "
+    "a zero-row view renders the literal string 'undefined'.",
+    "Nvl goes innermost: Concat('$', FormatNumber(Nvl(x,0), '#,##0')) — never Nvl(Concat(...)).",
+    "No Empty(), no SELECT *, no trailing ;, no correlated subqueries.",
     "No ORDER BY inside a UNION member; UNION members must type-match (FormatNumber -> string, so static members must be '0.00').",
     "Don't reference a computed alias from a derived table in another computed expr — repeat the aggregate inline.",
     "JOIN ShowXxx(...) re-runs per row (504) — make the table func the sole FROM and filter with a non-correlated IN.",

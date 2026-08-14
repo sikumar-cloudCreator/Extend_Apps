@@ -53,7 +53,12 @@ Bounded retries per artifact (default 3); if still failing, return it marked `ne
 - **Banned functions:** `LEAST`, `GREATEST`, `COALESCE`, `IFNULL`. Cap/floor with `CASE`; null-coalesce with `Nvl()`.
 - No `||` in **strict** context (variableConfigurator / whereClause / validationXsql) — use `Concat(a,b)` (nest for 3+).
   In a plain view SELECT `||` is tolerated but prefer `Concat`.
-- No `LIMIT` (use `AND rownum = 1`), no `Empty()` in strict, no `SELECT *`, no trailing `;`, no unbalanced parens.
+- No `LIMIT` / `rownum` / `RowNumber()` — aggregate to one row (`Nvl(MAX(id), 0)`) or use a non-correlated `IN`.
+- No `ToNumber()`; no `ToString(col)`/`ToChar(col)` in a predicate. Compare `col = :v_param` directly and declare
+  the param's `dataType` in the query object's `variables[]`. Scope facts on `participant_id`, never `eff_participant_id`.
+- A card/tile/resolver view must ALWAYS return exactly one row (aggregate, no `GROUP BY`, outputs `Nvl`'d) —
+  a zero-row view renders the literal string `undefined` on the page.
+- No `Empty()` in strict, no `SELECT *`, no trailing `;`, no unbalanced parens.
 - No `ORDER BY` inside a `UNION` member; UNION members must type-match (`FormatNumber` → string, so static members must be `'0.00'`).
 - **Effective-date overlap joins:** `xc_participant` and `xc_position` need range-overlap conditions
   (`effective_start_date < p.end_date AND effective_end_date > p.start_date`; `xc_position` **also** needs the

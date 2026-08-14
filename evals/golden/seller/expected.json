@@ -1,5 +1,0 @@
-{
-  "min_pages": 2,
-  "expected_reuse_views": ["q_sd_annual_credits_by_measure", "q_sd_payouts_by_measure"],
-  "note": "Seller dashboard: sales + payouts pages. Coverage check = >= min_pages AND the expected reuse views appear among the architect's chosen datasources (robust to slug naming)."
-}

@@ -3,7 +3,7 @@
 schema_tools.py — the grounding layer for the Extend LLM query engine.
 
 Two real sources, no guessing:
-  1. The Xactly data dictionary: ~/Downloads/xc_tables/xc_<table>.csv (one row per column;
+  1. The Xactly data dictionary: ~/Documents/xc_tables/xc_<table>.csv (one row per column;
      name, type, PK ordinal, FK table/column). Ignore *_hist.csv.
   2. The tenant view catalog: gate/datasources.json (or $EXTEND_CATALOG_PATH) — existing views with
      name, schema, params, columns, xsql — the reuse-first source.

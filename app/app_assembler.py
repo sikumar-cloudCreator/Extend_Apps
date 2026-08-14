@@ -37,10 +37,36 @@ def _ent_id(kind: str, name: str) -> str:
     return kind + hashlib.md5(f"{kind}:{name}".encode()).hexdigest()[:30]
 
 
+_FILTER_SEEDS = {"v_measure": "All", "v_granularity": "All", "v_lock_status": "current"}
+
+
+def param_type(p: str) -> str:
+    """Declared dataType for a :param. This declaration is what types the bind — which is why the
+    xSQL predicate never casts (no ToNumber; user directive 2026-08-15)."""
+    if re.search(r"(_id|_number|_pct|_amount|_count)$", p):
+        return "Number"
+    if re.search(r"_date$", p):
+        return "Date"
+    return "String"
+
+
+def param_seed(p: str) -> str:
+    """Default value so the query returns rows on first load. Numeric ids seed 0 (= 'nothing selected',
+    which returns an empty result set instead of erroring); optional filters seed 'All'."""
+    if p in _FILTER_SEEDS:
+        return _FILTER_SEEDS[p]
+    return "0" if param_type(p) == "Number" else ""
+
+
 def query_file(view: dict) -> dict:
-    """queries/<schema>/<name>.json content for a datasource view (view has name/schema/xsql)."""
-    return {"savedInEditor": True, "isValid": True, "name": view["name"],
-            "schemaName": view.get("schema", DEFAULT_SCHEMA), "xsql": view.get("xsql", ""), "properties": {}}
+    """queries/<schema>/<name>.json content for a datasource view (view has name/schema/xsql).
+    Seeds variables[] with a default AND a dataType per :param so the query returns rows before the
+    user filters and binds without a predicate cast."""
+    xsql = view.get("xsql", "")
+    params = sorted(set(re.findall(r":(v_[a-z0-9_]+)", xsql)))
+    variables = [{"name": p, "value": param_seed(p), "dataType": param_type(p)} for p in params]
+    return {"variables": variables, "savedInEditor": True, "isValid": True, "name": view["name"],
+            "schemaName": view.get("schema", DEFAULT_SCHEMA), "xsql": xsql, "properties": {}}
 
 
 def table_schema_file(table: str) -> dict:
@@ -52,46 +78,72 @@ def table_schema_file(table: str) -> dict:
             "using": f"Incent(TableName='Incent.{t.upper()}');", "audited": False, "effectiveDated": False}
 
 
-def application_json(app_name: str, icon: str, nav_pages: list[dict]) -> dict:
-    """app/Application.json — nav sections point at each page's pageDefinitionId."""
+def application_json(app_name: str, icon: str, nav_pages: list[dict],
+                     access_roles: list[str] | None = None) -> dict:
+    """app/Application.json — nav sections point at each page's pageDefinitionId. Sets landingPageId
+    (first page) and per-section accessRoles (role-gated nav), matching the real export shape."""
     sections = [{"name": p["title"], "icon": p.get("icon", icon), "pageDefinitionId": p["pageDefinitionId"],
-                 "description": "", "sections": [], "accessRoles": None, "privileges": None} for p in nav_pages]
-    return {"applicationId": _ent_id("app", app_name), "applicationName": app_name, "icon": icon,
+                 "description": "", "sections": [], "accessRoles": access_roles, "privileges": None}
+                for p in nav_pages]
+    return {"applicationId": _ent_id("app", app_name), "applicationName": app_name,
+            "landingPageId": nav_pages[0]["pageDefinitionId"] if nav_pages else None, "icon": icon,
             "sections": sections, "accessRoles": [], "tagIds": [], "applicationState": "DRAFT",
             "applicationI18nFiles": []}
 
 
-def adlc_json(view_names: list[tuple], page_ids: list[str], tables: list[str], workflows: list[str]) -> dict:
-    """ADLC.json manifest. view_names = [(schema, name)]; page_ids = [pageDefinitionId]."""
+def adlc_json(view_names: list[tuple], page_ids: list[str], tables: list[str], workflows: list[str],
+              policy_files: list[str] | None = None, query_ext: str = "sql") -> dict:
+    """ADLC.json manifest. view_names = [(schema, name)]; page_ids = [pageDefinitionId]. Queries listed as
+    .sql (xSQL, default) or .json (query objects)."""
     return {"application": "app/Application.json",
-            "queries": sorted(f"queries/{s}/{n}.sql" for s, n in view_names),
+            "queries": sorted(f"queries/{s}/{n}.{query_ext}" for s, n in view_names),
             "workflows": sorted(f"workflows/{w}.sql" for w in workflows),
             "pageDefinitions": sorted(f"app/{pid}.json" for pid in page_ids),
-            "policySets": None,
+            "policySets": sorted(policy_files) if policy_files else None,
             "tables": {"schemas": sorted(f"tables/schemas/xactly/{t if t.startswith('xc_') else 'xc_'+t}.json"
-                                         for t in tables)}}
+                                         for t in tables)},
+            "compositeComponents": [], "applicationTags": [], "agents": None}
 
 
 def write_bundle(out_dir: str, app_name: str, icon: str, pages: list[dict],
-                 views: list[dict], tables: list[str], workflows: list[dict] | None = None) -> dict:
-    """Write the full deployable folder tree. pages = [{pageDefinitionId, title, page(json), icon?}]."""
+                 views: list[dict], tables: list[str], workflows: list[dict] | None = None,
+                 policy_sets: list[dict] | None = None, access_roles: list[str] | None = None,
+                 query_format: str = "xsql") -> dict:
+    """Write the full deployable folder tree. pages = [{pageDefinitionId, title, page(json), icon?}].
+    query_format='xsql' (default) emits queries/<schema>/<name>.sql (CREATE VIEW xSQL);
+    query_format='json' emits query OBJECTS (Extend import/export shape). policy_sets = [policy-set dict]."""
     workflows = workflows or []
+    policy_sets = policy_sets or []
+    ext = "json" if query_format == "json" else "sql"
     os.makedirs(os.path.join(out_dir, "app"), exist_ok=True)
-    # pages
+    # pages (ensure export envelope: versionName present, no stray description)
     for p in pages:
+        page = dict(p["page"])
+        page.setdefault("versionName", "v1")
         with open(os.path.join(out_dir, "app", f"{p['pageDefinitionId']}.json"), "w") as f:
-            json.dump(p["page"], f, indent=2)
-    # views — emit xSQL (.sql), not the JSON envelope (design page = JSON; queries = xSQL)
+            json.dump(page, f, indent=2)
+    # views — emit xSQL .sql (default) or query OBJECTS .json
     view_names = []
     for v in views:
         schema = v.get("schema", DEFAULT_SCHEMA)
         d = os.path.join(out_dir, "queries", schema); os.makedirs(d, exist_ok=True)
-        sql = (v.get("xsql", "") or "").strip()
-        if not re.match(r"(?is)\s*create\s+view", sql):
-            sql = f"CREATE VIEW {schema}.{v['name']} AS\n{sql}"
-        with open(os.path.join(d, f"{v['name']}.sql"), "w") as f:
-            f.write(sql + "\n")
+        body = re.sub(r"(?is)^\s*create\s+view\s+[\w.]+\s+as\s+", "", (v.get("xsql", "") or "").strip()).rstrip(";").strip()
+        if ext == "json":
+            with open(os.path.join(d, f"{v['name']}.json"), "w") as f:
+                json.dump(query_file({**v, "xsql": body, "schema": schema}), f, indent=2)
+        else:
+            with open(os.path.join(d, f"{v['name']}.sql"), "w") as f:
+                f.write(f"CREATE VIEW {schema}.{v['name']} AS\n{body}\n;\n")
         view_names.append((schema, v["name"]))
+    # policy sets
+    policy_files = []
+    if policy_sets:
+        d = os.path.join(out_dir, "policy_sets"); os.makedirs(d, exist_ok=True)
+        for ps in policy_sets:
+            nm = ps["policySet"]["name"]
+            with open(os.path.join(d, f"{nm}.json"), "w") as f:
+                json.dump(ps, f, indent=2)
+            policy_files.append(f"policy_sets/{nm}.json")
     # base tables
     if tables:
         d = os.path.join(out_dir, "tables", "schemas", "xactly"); os.makedirs(d, exist_ok=True)
@@ -108,12 +160,12 @@ def write_bundle(out_dir: str, app_name: str, icon: str, pages: list[dict],
                 f.write(sql + "\n")
     # application + manifest
     with open(os.path.join(out_dir, "app", "Application.json"), "w") as f:
-        json.dump(application_json(app_name, icon, pages), f, indent=2)
+        json.dump(application_json(app_name, icon, pages, access_roles), f, indent=2)
     with open(os.path.join(out_dir, "ADLC.json"), "w") as f:
         json.dump(adlc_json(view_names, [p["pageDefinitionId"] for p in pages],
-                            tables, [w["name"] for w in workflows]), f, indent=2)
+                            tables, [w["name"] for w in workflows], policy_files, ext), f, indent=2)
     return {"out_dir": out_dir, "pages": len(pages), "views": len(views), "tables": len(tables),
-            "workflows": len(workflows)}
+            "workflows": len(workflows), "policy_sets": len(policy_files)}
 
 
 def coverage_report(build_spec: dict, page_results: list[dict]) -> dict:

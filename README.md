@@ -33,8 +33,13 @@ extend-llm/
 │   ├── extend_build.py        # build_page + validate_page (structure/wiring/binding/param)
 │   ├── xsql_author.py         # write_xsql + lint_xsql
 │   ├── lint_extend_xsql.py    # canonical xSQL rules
+│   ├── check_page_render.py   # render-quality gate (dup headings, unbounded tables, placeholders)
+│   ├── check_export_completeness.py  # bundle gate (datasource↔query, param producers, policies)
 │   └── datasources.json       # 82-view tenant catalog (reuse-first)
-├── knowledge/frd_template.md  # EFM FRD template
+├── knowledge/
+│   ├── extend_xsql_cookbook.md            # canonical query patterns (injected into the query prompt)
+│   ├── dashboard_render_defects.md        # render failure classes R1–R15 → the rule each became
+│   └── frd_template.md                    # EFM FRD template
 ├── evals/                     # golden FRDs + regression/coverage suite
 └── requirements.txt
 ```
@@ -42,7 +47,8 @@ extend-llm/
 ## Pipeline (generate → validate → self-correct → assemble)
 1. **Query engine** — request → grounded xSQL → `lint_xsql` gate.
 2. **FRD flows** — upload an FRD, or generate one (→ downloadable Word doc); **no build until finalized**.
-3. **Page designer** — page-spec → control list → `build_page` → `validate_page` gate (events + `:param` wiring).
+3. **Page designer** — page-spec → control list → `build_page` → `validate_page` gate (events + `:param` wiring)
+   → `check_page_render` gate (render quality: duplicate headings, unbounded tables, placeholder copy).
 4. **App assembler** — architect plan → per-page views + pages → deployable Extend export bundle.
 5. **Slack** — one app: query assistant **+** FRD→dashboard build trigger.
 6. **Feedback + evals** — accepted examples reused as few-shot; golden-FRD regression suite.

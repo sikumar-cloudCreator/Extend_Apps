@@ -67,13 +67,43 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
 - A dropdown that **sets its own variable** (its default comes from an upstream channel) binds that channel with
   handlers `["assignCurrentVariable", "refresh"]` — assign the current value, then re-query. (B5)
 - **Dynamic/variable-column data → one `table`** bound to the view. But a fixed set of **richly-styled KPI/measure
-  cards** (e.g. Revenue / Profitability / Branded-Checkout, each a known fixed field set) is legitimately N `card`
+  cards** (one per measure, each a known fixed field set) is legitimately N `card`
   (Custom HTML) controls at `layoutSize:33.33` — do NOT force those into a table. Table = when columns/rows vary. (B4)
-- **Measure / granularity selectors** (e.g. show Revenue vs Profitability vs BXO; Quarter vs Monthly): a `dropdown`
+- **Measure / granularity selectors** (e.g. switch the measure shown; Quarter vs Monthly): a `dropdown`
   sets `v_measure` / `v_granularity` and CREATEs a channel; the data views take it as a `:param`; every dependent
   control BINDs that channel. (B6)
 - **Conditional sections** (e.g. show team components only for Manager/Leader): derive a role variable, and mark
   the role-only controls `"hidden": true` by default — they render when the role condition sets them visible. (B3)
+
+## Render-quality rules (from reviewing SHIPPED dashboards — `knowledge/dashboard_render_defects.md`)
+These are the defects that pass the structural gate and still look broken on screen. The page-render gate
+(`gate/check_page_render.py`) fails a page for the first four.
+
+- **R9 — title once.** Never put a `label` section header directly above a `table`/`chart` that renders its own
+  title. Pick one: give the section a `label` and leave the data control's `title` empty, or title the data
+  control and drop the label. (A shipped page read every heading twice: "X" then "Table - X".)
+- **R10 — stack, never overlap.** A `table` has **data-driven height** (pagination, variable row count). Give
+  every table its own row at `"layoutSize": 100`, and never place a control after it that assumes a fixed
+  height. Cards/tiles may share a row (33.33 / 50 / 25); tables and charts get their own. (Sections rendered
+  on top of each other on a shipped page.)
+- **R13 — a variable that is set must be read.** If a selector sets `v_measure`/`v_granularity`, then every
+  dependent control BINDs its channel **and** its view takes it as a `:param` — including the section
+  subtitle/header text. A produced-but-unconsumed selector is a defect: on a shipped page the measure filter
+  read one measure while the chart below it stayed captioned with another.
+- **R15 — no placeholder copy, no unbound meters.** Never ship literal `TODO`, `Coming soon`,
+  `Verification in progress`, `undefined`, or lorem text in `html`/`controlData`. If you draw a progress bar,
+  gauge, or rank badge, its fill/value MUST come from a bound field — otherwise omit the visual.
+- **R11 — role gating is wiring, not copy.** Do not write "Visible for Managers & Leaders" into a card and call
+  it gated. Derive `v_role` from a role view, mark every control in the section `"hidden": true`, and drive
+  visibility from the role channel. (On a shipped page an IC saw the whole manager-only section.)
+- **R1/R12 — cards need one-row views.** Every `tile`/`card` must bind a view that always returns exactly one
+  row (aggregate + `Nvl`); a zero-row view renders the literal string `undefined`. If a card can legitimately
+  have no data, give it an explicit empty-state string, not a raw bind.
+- **R14 — chart axes.** Never plot a percent series and an amount series on one axis: either chart percents
+  only, or put the amount series on the second y-axis. Keep the legend outside the plot area, and bind a trend
+  chart to a **zero-filled, one-row-per-period** view so the line doesn't collapse onto the periods with data.
+- **R8 — consistent formatting.** Money and percent come pre-formatted from the view (`$#,##0`, `#,##0.0%`).
+  Don't format some tiles in the HTML and others in the query — a shipped page mixed bare numbers with `$` values.
 
 ## Grounding
 You are given, for each datasource the page uses: its real **columns** and **params**. Use only these.

@@ -17,7 +17,16 @@ out_app/
 *.docx
 *.bak
 
+# customer deliverables — this repo is the BUILDER only, never a built app or a
+# customer's data. Built pages/bundles, per-customer analyses and fixtures stay local.
+examples/seller_dashboard/
+docs/seller_*
+evals/golden/seller/
+
 # os
 .DS_Store
 SellerPerformance_app/
 *.db
+
+knowledge/seller_*
+docs/production_generator_design.md

@@ -1,6 +1,6 @@
 """
 Extend page builder + validator — REAL model (channel events, PageLoader, Custom HTML cards,
-tiles, VC id-chain). Derived from deployed apps: Natera, Goaland, EPOC, PayPal Seller Dashboard.
+tiles, VC id-chain). Derived from real deployed Extend apps.
 
 Control spec (input to build_page) — one dict per control:
   { "kind": "label|pageloader|dropdown|vc|tile|card|table|chart",
@@ -15,7 +15,7 @@ Control spec (input to build_page) — one dict per control:
     "columns": [{"field","headerName"},...],         # table (optional)
     "schema": "demo" }
 """
-import os, uuid
+import os, re, uuid
 
 # Tenant schema is not universal — default is configurable; "demo" only as a last resort.
 DEFAULT_SCHEMA = os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
@@ -24,6 +24,10 @@ VALID_KINDS = {"label","pageloader","dropdown","vc","tile","card","table","chart
 S3 = {"useComponentShadow": False, "useGreyBackground": False, "useInnerGreyBackground": False}
 S3s = {"useComponentShadow": True, "useGreyBackground": False, "useInnerGreyBackground": False}
 PAG = {"currentPage": 1, "totalItems": None, "itemsPerPage": 200}
+# A table's height is data-driven: an unbounded one renders over the controls below it (observation R10).
+# Tables therefore page at TABLE_ROWS and carry a maxHeight unless the spec overrides both.
+TABLE_ROWS = 25
+TABLE_MAX_HEIGHT = 480
 NULLDS = {"name": None, "schema": None, "fields": None, "type": None, "isReadOnly": False,
           "columns": None, "seriesColors": {}, "customLabels": {}}
 
@@ -65,6 +69,27 @@ def _events(spec, cid, default_onload):
     return ev
 
 
+def _norm_title(s):
+    s = re.sub(r"^\s*(table|chart|grid)\s*[-–:]\s*", "", s or "", flags=re.I)
+    return re.sub(r"[^a-z0-9]+", "", s.lower())
+
+
+def _titled_by_sibling(controls: list, spec: dict) -> bool:
+    """True if a label/card just above this data control already renders the same heading (R9).
+    The data control then ships with an empty title so the page doesn't show 'X' then 'Table - X'."""
+    mine = _norm_title(spec.get("title") or spec.get("internalName") or "")
+    if not mine:
+        return False
+    i = controls.index(spec)
+    for prev in controls[max(0, i - 2):i]:
+        if prev.get("kind") in ("label", "card") and _norm_title(prev.get("title") or "") == mine:
+            return True
+        html = prev.get("html") or ""
+        if prev.get("kind") == "card" and mine and mine in _norm_title(re.sub(r"<[^>]+>", " ", html)):
+            return True
+    return False
+
+
 def build_page(controls: list, shell: dict) -> dict:
     props, n = {}, 0
     for spec in controls:
@@ -96,7 +121,8 @@ def build_page(controls: list, shell: dict) -> dict:
                           "events": _events(spec, cid, ["refresh"]), "datasource": _dsv(ds, schema, True),
                           "pagination": PAG, "columns": [], "whereClauseVariable": None,
                           "variables": [{"name": spec["var"]}], "isMultiSelect": False, "shouldHideLabel": False,
-                          "displayField": spec.get("displayField", spec.get("valueField")),
+                          "displayField": {"dataType": "string",
+                                           "name": spec.get("displayField", spec["valueField"])},
                           "valueField": {"dataType": "string", "name": spec["valueField"]},
                           "labelText": title, "layoutSize": ls or 25, "shouldRenderHidden": False,
                           "controlKey": _ckey(cid)}
@@ -133,10 +159,15 @@ def build_page(controls: list, shell: dict) -> dict:
             props[key] = {"type": "table", "controlId": cid, "privileges": None, "styles": S3,
                           "internalName": spec.get("internalName", title or "Grid Component"),
                           "events": _events(spec, cid, ["refresh"]), "datasource": _dsv(ds, schema),
-                          "pagination": PAG, "columns": [_grid_column(c) for c in spec.get("columns", [])],
+                          "pagination": {"currentPage": 1, "totalItems": None,
+                                         "itemsPerPage": spec.get("pageSize", TABLE_ROWS)},
+                          "columns": [_grid_column(c) for c in spec.get("columns", [])],
                           "whereClauseVariable": None,
-                          "variables": [], "table": "grid", "title": spec.get("internalName", title or ""),
-                          "maxHeight": None, "shouldRenderHidden": False, "staticAllCoumns": not spec.get("columns")}
+                          "variables": [], "table": "grid",
+                          "title": "" if _titled_by_sibling(controls, spec) else spec.get("internalName", title or ""),
+                          "maxHeight": spec.get("maxHeight", TABLE_MAX_HEIGHT),
+                          "shouldRenderHidden": bool(spec.get("hidden", False)),
+                          "staticAllCoumns": not spec.get("columns")}
             if ls is not None:  # real tables omit layoutSize (full width) unless explicitly sized
                 props[key]["layoutSize"] = ls
         elif kind == "chart":

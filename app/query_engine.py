@@ -98,12 +98,27 @@ def _load_knowledge(scope: str) -> str:
         return ""
 
 
+def _load_cookbook() -> str:
+    """The canonical patterns the prompt points at. Appended to the system prompt so the recipes are
+    actually in context — a prompt that only NAMES the cookbook leaves the model to invent the shape,
+    which is how the 'not Extend-compatible' views got written."""
+    parts = []
+    for fname in ("extend_xsql_cookbook.md",):
+        p = os.path.join(os.path.dirname(HERE), "knowledge", fname)
+        if os.path.exists(p):
+            parts.append(open(p, encoding="utf-8").read())
+    return "\n\n---\n\n".join(parts)
+
+
 def generate_query(request: str, tables=None, needed_columns=None, params=None,
                    schema=None, view_name=None, dry=False, examples=None) -> dict:
     """Author (or reuse) a lint-passing xSQL view for the request. Few-shot examples from the feedback
     store (point 5 learning loop) are auto-injected unless `examples` is passed ('' to disable)."""
     schema = schema or os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
     system = open(PROMPT_PATH).read()
+    cookbook = _load_cookbook()
+    if cookbook:
+        system = f"{system}\n\n---\n\n# Reference: {os.path.basename(PROMPT_PATH)} cites these patterns\n\n{cookbook}"
     if examples is None:
         examples = _load_examples("query")
     user = build_user_message(request, tables, needed_columns, params, schema, view_name)
