@@ -194,12 +194,21 @@ def det_feedback_roundtrip():
 
 # ---- golden fixtures (multiple app types, grounded in real catalog views) --------------------
 def golden_cases():
-    base = os.path.join(HERE, "golden")
-    for name in sorted(os.listdir(base)):
-        d = os.path.join(base, name)
-        frd, exp = os.path.join(d, "frd.md"), os.path.join(d, "expected.json")
-        if os.path.isdir(d) and os.path.exists(frd) and os.path.exists(exp):
-            yield name, frd, json.load(open(exp))
+    """Committed fixtures from evals/golden/ — tenant-neutral, they only name views that ship in
+    gate/datasources.sample.json. Customer fixtures live in evals/golden.local/ (gitignored) and are
+    included ONLY when EXTEND_CATALOG_PATH points at the catalog they were written against; running
+    them against the sample catalog would fail on views it doesn't contain."""
+    bases = [os.path.join(HERE, "golden")]
+    if os.environ.get("EXTEND_CATALOG_PATH"):
+        bases.append(os.path.join(HERE, "golden.local"))
+    for base in bases:
+        if not os.path.isdir(base):
+            continue
+        for name in sorted(os.listdir(base)):
+            d = os.path.join(base, name)
+            frd, exp = os.path.join(d, "frd.md"), os.path.join(d, "expected.json")
+            if os.path.isdir(d) and os.path.exists(frd) and os.path.exists(exp):
+                yield name, frd, json.load(open(exp))
 
 
 def det_golden_fixtures_valid():

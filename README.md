@@ -35,7 +35,7 @@ extend-llm/
 │   ├── lint_extend_xsql.py    # canonical xSQL rules
 │   ├── check_page_render.py   # render-quality gate (dup headings, unbounded tables, placeholders)
 │   ├── check_export_completeness.py  # bundle gate (datasource↔query, param producers, policies)
-│   └── datasources.json       # 82-view tenant catalog (reuse-first)
+│   └── datasources.sample.json # small tenant-neutral view catalog (reuse-first)
 ├── knowledge/
 │   ├── extend_xsql_cookbook.md            # canonical query patterns (injected into the query prompt)
 │   ├── dashboard_render_defects.md        # render failure classes R1–R15 → the rule each became
@@ -81,8 +81,8 @@ The builder is a general-purpose tool — nothing is hardcoded to one tenant. Po
 | `EXTEND_LLM_PROVIDER` | `anthropic` | Where Claude runs — bill through the **company**, not a personal key: `anthropic` (org key), `bedrock` (AWS), `vertex` (GCP), `foundry` (Azure), `aws` (Claude Platform on AWS). See `app/llm.py`. |
 | `EXTEND_LLM_MODEL` | per-provider Opus 4.8 | override the model id |
 | `ANTHROPIC_API_KEY` | — | only for `EXTEND_LLM_PROVIDER=anthropic`; Bedrock/Vertex use cloud creds (no Anthropic key) |
-| `EXTEND_DEFAULT_SCHEMA` | `demo` | datasource schema when a view's own schema isn't known (e.g. `tenant`, `$framework`) |
-| `EXTEND_CATALOG_PATH` | `gate/datasources.json` | the tenant's reusable-view catalog (name/params/columns/xsql) |
+| `EXTEND_DEFAULT_SCHEMA` | `demo` | datasource schema when a view's own schema isn't known (e.g. your tenant schema, `$framework`) |
+| `EXTEND_CATALOG_PATH` | `gate/datasources.sample.json` | your tenant's reusable-view catalog (name/params/columns/xsql). Point this at your own export — the shipped file is a small generic sample |
 | `XC_TABLES_DIR` | `~/Documents/xc_tables` | the Xactly `xc_*` data dictionary (one CSV per table) |
 | `EXTEND_DB_PATH` | `knowledge/extend.db` | SQLite DB for shared learning (lessons + feedback). Put on a shared volume for the team so knowledge compounds across users |
 | `SLACK_BOT_TOKEN` / `SLACK_APP_TOKEN` | — | Slack Socket-Mode bot (team surface) |
@@ -105,8 +105,10 @@ in `app/db.py`) when you outgrow one instance.
 ## External data (not vendored)
 - **Xactly `xc_*` data dictionary** — one CSV per table (columns/types/PK/FK); used by
   `schema_tools.schema_lookup` for grounding. Set `XC_TABLES_DIR` to your tenant's dictionary.
-- **View catalog** (`gate/datasources.json`) ships one tenant's 82 views as a starting reuse set; replace via
-  `EXTEND_CATALOG_PATH` for a different tenant.
+- **View catalog** (`gate/datasources.sample.json`) ships 10 stock-schema views (participant/position resolvers,
+  period + participant lists, credit/payout/attainment by measure) as a starting reuse set. **No customer data
+  lives in this repo** — point `EXTEND_CATALOG_PATH` at your own tenant catalog, and keep customer FRD fixtures
+  in `evals/golden.local/` (gitignored; the eval suite picks them up only when `EXTEND_CATALOG_PATH` is set).
 
 ## Notes
 - Secrets live only in `.env` (gitignored). Never commit an API key.

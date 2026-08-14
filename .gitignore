@@ -21,7 +21,7 @@ out_app/
 # customer's data. Built pages/bundles, per-customer analyses and fixtures stay local.
 examples/seller_dashboard/
 docs/seller_*
-evals/golden/seller/
+
 
 # os
 .DS_Store
@@ -30,3 +30,7 @@ SellerPerformance_app/
 
 knowledge/seller_*
 docs/production_generator_design.md
+
+gate/datasources.tenant.json
+gate/datasources.demo.json
+evals/golden.local/

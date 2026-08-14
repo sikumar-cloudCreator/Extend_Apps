@@ -1,0 +1,5 @@
+{
+  "min_pages": 1,
+  "expected_reuse_views": ["q_sd_summary_kpis", "q_sd_payouts_by_measure"],
+  "note": "Rep payout summary: KPI tiles + by-measure breakdown. A second app shape (rep self-service, not manager coaching) so architect coverage isn't proven on one fixture. Tenant-neutral — every view it names ships in gate/datasources.sample.json."
+}
