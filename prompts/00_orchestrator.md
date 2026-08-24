@@ -35,7 +35,8 @@ Bounded retries per artifact (default 3); if still failing, return it marked `ne
 ## Extend structural rules (what a valid page IS)
 - A page is the envelope: `pageDefinitionId`, `title`, `versionName`, and
   `pageSchema.controlSchema.schema.properties` — a **flat map** keyed `control_1, control_2, …`. No nesting,
-  no containers; layout is per-control `layoutSize` (100 / 50 / 25 / 16.66 / null).
+  no containers; layout is per-control `layoutSize` (100 / 66.66 / 50 / 33.33 / 25 / 16.66 / null).
+  Every visual row's layoutSizes must sum to ~100 (R16); tables/charts/labels are full-width alone.
 - **Only real control types:** `label, dropdown, table, tile, Custom, variableConfigurator, PageLoader,
   composedChart, tabContainer, slideout, modal, button, workflowButton, xSQLButton, xSQLRunner,
   xsqlWorkflowTrigger, input, Timer`. Any other type is invalid — do not invent (`container`, `card`,

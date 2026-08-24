@@ -33,6 +33,7 @@ specific to one customer or one page; they are the recurring ways a dashboard sh
 | **R13** | A selector is set to one value while the chart, table, or subtitle below still reflects another | The selector set its variable, but the dependent view / caption never consumed it | **A variable that is set must be read** — by the view's `:param`, by every dependent control's channel, and by the header/subtitle copy. A produced-but-unconsumed selector is a defect. |
 | **R14** | A trend chart has bars on only a couple of periods, a y-axis scaled to one series, other series flat on zero, and the legend drawn over the data | A percent series and an amount series share one y-axis; the view returned only periods that had data; the legend sits inside the plot | **Never plot a percent series and an amount series on one axis** (chart the percent, or use the second axis). A trend view returns **one row per period, zero-filled**. Legend outside the plot. |
 | **R15** | Placeholder copy visible to the customer; a progress bar or gauge that never fills | Literal placeholder text shipped in `controlData`; the meter's fill was static HTML | **No placeholder copy** (`TODO`, `Coming soon`, `Verification in progress`, `undefined`) and **no unbound meters** — if the fill can't be bound, don't draw the bar. |
+| **R16** | Filters / KPI tiles / cards sit in a ragged row — half the row empty, or five controls totaling ~83% — so columns don't line up with the section below | Sibling `layoutSize` values on a visual row do not sum to ~100 | **Every visual row must fill the grid.** Allowed widths: `100`, `66.66`, `50`, `33.33`, `25`, `16.66`. Pick a size so N siblings sum to 100 (2→50, 3→33.33, 4→25, 6→16.66). Tables, charts, section labels, and search inputs are always `100` on their own row. Invisible drivers (`variableConfigurator`, `PageLoader`) are skipped. Five filters → two rows (3+2), never five×16.66. |
 
 ---
 
@@ -47,6 +48,7 @@ specific to one customer or one page; they are the recurring ways a dashboard sh
 | R9, R10, R13, R15 | `gate/check_page_render.py` + `prompts/30_page_designer.md` |
 | R11, R12 | `prompts/30_page_designer.md` + `gate/check_page_render.py` (P5 advisory) |
 | R14 | `prompts/30_page_designer.md` (chart axis rules) + cookbook Pattern G |
+| R16 | `gate/check_page_render.py` (P7) + `gate/extend_build.py` layout normalizer + `prompts/30_page_designer.md` |
 
 ## Binding rules (2026-08-15 directive)
 
