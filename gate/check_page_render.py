@@ -16,6 +16,7 @@ in knowledge/dashboard_render_defects.md:
   P5 (R11)  a control whose copy claims role gating ("visible for managers", "role:") while no
             control in the page is hidden by default                                          WARN
   P6 (R15)  meter/progress/gauge markup with no bound field in the same control               WARN
+  P7 (R16)  a visual row whose layoutSize values do not sum to ~100 (ragged / half-empty row) ERROR
 
 Usage:  python check_page_render.py <page.json> [<page2.json> ...] [--queries <dir>]
 Exit 0 iff no ERRORs.
@@ -23,6 +24,8 @@ Exit 0 iff no ERRORs.
 import sys, os, re, json, glob
 
 MAX_UNBOUNDED_ROWS = 25          # rows a table may render before it needs a maxHeight
+ROW_SUM_TOLERANCE = 1.0          # 33.33*3 and 16.66*6 land just under 100
+ALLOWED_LAYOUT = {100, 66.66, 50, 33.33, 25, 16.66}
 
 PLACEHOLDER_RE = re.compile(r"\b(TODO|FIXME|coming soon|verification in progress|undefined|lorem ipsum|"
                             r"placeholder|tbd|xxx+)\b", re.I)
@@ -31,6 +34,17 @@ ROLE_COPY_RE = re.compile(r"(visible (for|to) (managers|leaders)|role\s*[:=]\s*(
                           r"managers? (&|and) leaders?)", re.I)
 DATA_KINDS = ("table", "chart", "composedChart", "grid")
 SELECTOR_KINDS = ("dropdown", "input", "variableConfigurator")
+# Invisible / overlay controls — they don't occupy the visual grid (R16).
+LAYOUT_SKIP_TYPES = {"PageLoader", "variableConfigurator", "Timer"}
+# When layoutSize is omitted, Extend / the assembler treat these as full-width.
+LAYOUT_DEFAULT_100 = {"table", "grid", "composedChart", "chart", "label", "input", "exportPagePDF"}
+# Assembler defaults for other visible kinds (same as gate/extend_build.py).
+LAYOUT_DEFAULT_OTHER = {
+    "dropdown": 25.0,
+    "tile": 25.0,
+    "Custom": 33.33,
+    "button": 16.66,
+}
 
 
 def props_of(doc):
@@ -104,6 +118,42 @@ def owned_vars(ctrl):
     return {v.get("name") for v in (ctrl.get("variables") or []) if isinstance(v, dict) and v.get("name")}
 
 
+def layout_width(ctrl):
+    """Effective grid width for a visible control. None => skip (invisible driver)."""
+    ctype = ctrl.get("type", "")
+    if ctype in LAYOUT_SKIP_TYPES:
+        return None
+    ls = ctrl.get("layoutSize")
+    if ls in (None, ""):
+        if ctype in LAYOUT_DEFAULT_100:
+            return 100.0
+        return LAYOUT_DEFAULT_OTHER.get(ctype)  # None => unknown type, skip
+    try:
+        return float(ls)
+    except (TypeError, ValueError):
+        return None
+
+
+def pack_visual_rows(controls):
+    """Greedy left-to-right row packing of visible controls (same model Extend uses)."""
+    rows, row, acc = [], [], 0.0
+    for cid, c in controls:
+        w = layout_width(c)
+        if w is None:
+            continue
+        if row and acc + w > 100.0 + ROW_SUM_TOLERANCE:
+            rows.append((row, acc))
+            row, acc = [], 0.0
+        row.append((cid, c.get("type", ""), w))
+        acc += w
+        if abs(acc - 100.0) <= ROW_SUM_TOLERANCE:
+            rows.append((row, acc))
+            row, acc = [], 0.0
+    if row:
+        rows.append((row, acc))
+    return rows
+
+
 def query_params(qdir):
     """Every :v_param referenced by the shipped queries in <dir> (.sql or query-object .json)."""
     params = set()
@@ -161,6 +211,22 @@ def check_page(path, errors, warns, qparams=None):
         if METER_RE.search(html_of(c)) and not bound_fields(c):
             warns.append(f"{tag}:{cid} draws a progress/meter element with no bound field — bind its fill or "
                          f"drop the visual (a static bar reads as 0%)")
+
+        # P7a — layoutSize must be an allowed grid width when set on a visible control
+        w = layout_width(c)
+        if w is not None and c.get("layoutSize") not in (None, ""):
+            if not any(abs(w - a) < 0.01 for a in ALLOWED_LAYOUT):
+                errors.append(f"{tag}:{cid} layoutSize={c.get('layoutSize')!r} is not an allowed grid width "
+                              f"({sorted(ALLOWED_LAYOUT)}); use a size that tiles a row to 100")
+
+    # P7 — every visual row's layoutSizes must sum to ~100 (R16)
+    for row, total in pack_visual_rows(controls):
+        if abs(total - 100.0) <= ROW_SUM_TOLERANCE:
+            continue
+        desc = " + ".join(f"{cid}:{t}@{w:g}" for cid, t, w in row)
+        errors.append(f"{tag}: visual row sums to {total:g}% (need ~100) — {desc}. "
+                      f"Size siblings so N×width=100 (2→50, 3→33.33, 4→25, 6→16.66); "
+                      f"split 5 filters into two rows; tables/charts/labels stay at 100 alone")
 
     # P4 — a selector variable nobody consumes (needs the shipped queries: page-embedded xSQL alone
     # can't show that a tenant view reads the param)

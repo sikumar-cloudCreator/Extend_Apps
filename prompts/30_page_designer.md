@@ -26,8 +26,26 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
   "placeholder": "Search…", "useEnterBroadcast": true,       // input
   "buttonColorType": "link", "icon": "",                     // button
   "hidden": false,                                            // any control — conditional visibility (B3)
-  "layoutSize": 100|50|33.33|25|16.66 }
+  "layoutSize": 100|66.66|50|33.33|25|16.66 }
 ```
+
+## Layout alignment (R16 — rows must fill the grid)
+Extend has **no containers**. Controls flow left-to-right and wrap by `layoutSize` (percent of the row).
+A mis-sized row leaves empty gutter or wraps mid-group — the page looks unaligned.
+
+**Hard rules:**
+1. **Every visual row sums to ~100.** Allowed widths only: `100`, `66.66`, `50`, `33.33`, `25`, `16.66`.
+2. **Size by sibling count on that row** (do not leave a default `25` when only 2 tiles share the row):
+   - 1 control → `100`
+   - 2 → `50` + `50` (or `66.66` + `33.33` for a primary + side card)
+   - 3 → `33.33` × 3
+   - 4 → `25` × 4
+   - 6 → `16.66` × 6
+   - **5 does not divide evenly** → split into two rows (e.g. 3+2), never five × `16.66` (≈83).
+3. **Full-width alone:** every `label` (section heading), `table`, `chart`, and search `input` is `"layoutSize": 100` on its own row.
+4. **Filter / action bars:** all filters + action buttons that belong together share one row (or two even rows) with equal (or 66.66/33.33) sizes that sum to 100.
+5. **Invisible drivers skip the grid:** `pageloader` and `vc` (variableConfigurator) do not participate in row math — omit `layoutSize` or leave it null.
+6. Set `layoutSize` **explicitly** on every visible control — do not rely on builder defaults (`dropdown`/`tile` defaulting to 25 is what produces half-empty rows).
 
 ## Choose the right control (graphical, plug-and-play — point 4)
 - **KPI value** → `tile` (bind one `column`). Not a Custom card.
@@ -77,15 +95,17 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
 
 ## Render-quality rules (from reviewing SHIPPED dashboards — `knowledge/dashboard_render_defects.md`)
 These are the defects that pass the structural gate and still look broken on screen. The page-render gate
-(`gate/check_page_render.py`) fails a page for the first four.
+(`gate/check_page_render.py`) fails a page for R9/R10/R13/R15/R16 (P1–P4, P7).
 
 - **R9 — title once.** Never put a `label` section header directly above a `table`/`chart` that renders its own
   title. Pick one: give the section a `label` and leave the data control's `title` empty, or title the data
   control and drop the label. (A shipped page read every heading twice: "X" then "Table - X".)
 - **R10 — stack, never overlap.** A `table` has **data-driven height** (pagination, variable row count). Give
   every table its own row at `"layoutSize": 100`, and never place a control after it that assumes a fixed
-  height. Cards/tiles may share a row (33.33 / 50 / 25); tables and charts get their own. (Sections rendered
-  on top of each other on a shipped page.)
+  height. Cards/tiles may share a row (33.33 / 50 / 25) **only when those sizes sum to 100**; tables and
+  charts get their own. (Sections rendered on top of each other on a shipped page.)
+- **R16 — fill every row.** Sibling `layoutSize`s on a visual row must sum to ~100 (see Layout alignment).
+  Two KPI tiles at `25`+`25` (half-empty) or five filters at `16.66` (≈83%) fail the render gate.
 - **R13 — a variable that is set must be read.** If a selector sets `v_measure`/`v_granularity`, then every
   dependent control BINDs its channel **and** its view takes it as a `:param` — including the section
   subtitle/header text. A produced-but-unconsumed selector is a defect: on a shipped page the measure filter

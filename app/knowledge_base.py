@@ -75,6 +75,8 @@ SEED = [
      "R11: an IC saw the whole team section, subtitled 'Visible for Managers & Leaders · Role: IC'."),
     ("page", "Never ship placeholder copy (TODO / Coming soon / Verification in progress / undefined) in controlData, and never draw a meter/progress bar whose fill isn't bound.",
      "R15: 'Verification in progress' and an empty progress bar under a 96.77% attainment shipped to the customer."),
+    ("page", "Every visual row's layoutSizes must sum to ~100 (allowed: 100, 66.66, 50, 33.33, 25, 16.66). Size by sibling count: 2→50, 3→33.33, 4→25, 6→16.66. Tables/charts/labels/search inputs are layoutSize 100 alone. Five filters → two rows (3+2), never five×16.66. Set layoutSize explicitly — do not leave dropdown/tile at default 25 when only two share a row.",
+     "R16: half-empty KPI rows and an 83%-wide filter bar make the page look unaligned even when wiring is correct."),
 
     ("architect", "A production Extend app export ships more than pages+queries: ADLC.json (application, queries, workflows, pageDefinitions, policySets, tables, compositeComponents, applicationTags, agents), app/Application.json (landingPageId + per-section accessRoles[]), app/<pageDefinitionId>.json (with versionName), queries/<schema>/<name>.json query objects ({name,schemaName,xsql,variables[]}), policy_sets/ (row/role access), workflows/, tables/.",
      "Grounded on the EFM Goals&Guarantees + Certification reference exports; a bundle missing policy sets or Application nav imports but doesn't work. Note: a policy-set PREDICATE is the one place a current-user lookup legitimately appears (row-level security) — query scoping still uses the selected-rep chain."),
