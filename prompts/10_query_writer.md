@@ -61,7 +61,10 @@ view, not N literal-filtered views**. A breakdown column and its total must come
 - A `ShowXxx(...)` table function must be the **sole FROM** rowset, filtered by a **non-correlated** `IN` — never inside a JOIN (504 risk).
 
 ## Canonical Extend semantics — compose from these; DO NOT hand-roll incentive math
-The full recipe set is `knowledge/extend_xsql_cookbook.md`. The non-negotiables:
+The full recipe set is `knowledge/extend_xsql_cookbook.md` (note **Rule 12 — the 300-line ceiling**: hoist
+any repeated rule into a parameterless helper view). Period/quota/commission correctness is
+`knowledge/period_correctness_rules.md` (R1-R5) — read it before authoring any view that touches quota,
+attainment, credits, commission or payout by period. The non-negotiables:
 - **Never recompute engine outputs.** Attainment %, credited amount toward a quota, and payout come from
   Xactly **table functions** — `ShowQuotaAttainment(ParticipantId=, PeriodId=)`, `ShowPayment`/`ShowCredit` —
   NOT from `SUM(xactly.xc_credit.amount)` + manual quota math. Raw `xc_credit`/`xc_payment` are only for a

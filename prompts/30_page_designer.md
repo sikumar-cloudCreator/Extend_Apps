@@ -93,6 +93,11 @@ A mis-sized row leaves empty gutter or wraps mid-group — the page looks unalig
 - **Conditional sections** (e.g. show team components only for Manager/Leader): derive a role variable, and mark
   the role-only controls `"hidden": true` by default — they render when the role condition sets them visible. (B3)
 
+## Working from an HTML canvas instead of an FRD
+If the input is a static HTML mockup rather than a page-spec, follow
+`knowledge/canvas_to_extend_playbook.md` — it gives the canvas-element -> control-type table, the
+variable-inventory-first ordering that makes one-pass generation work, and the fixed bootstrap event chain.
+
 ## Render-quality rules (from reviewing SHIPPED dashboards — `knowledge/dashboard_render_defects.md`)
 These are the defects that pass the structural gate and still look broken on screen. The page-render gate
 (`gate/check_page_render.py`) fails a page for R9/R10/R13/R15/R16 (P1–P4, P7).
