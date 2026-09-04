@@ -44,6 +44,34 @@ SEED = [
     ("all", "Output convention: the design page is emitted as JSON; all datasource queries AND workflows are emitted as xSQL (.sql) files, not JSON envelopes.",
      "Matches the Extend authoring workflow (paste xSQL into the query editor); import only the page JSON."),
 
+    # --- period correctness, 2026-09-04 call (knowledge/period_correctness_rules.md) ---
+    ("query", "R1 Quota = the version EFFECTIVE FOR THE SELECTED PERIOD, never 'the latest'. Filter effective-window overlap (qstart.start_date <= period.end_date AND qend.end_date >= period.start_date) AND pin qstart.start_date = MAX(qstart.start_date) over the same overlap.",
+     "Two overlapping versions both land in the SUM and the quota doubles (a rep's Q1 quota rendered as the sum of both versions). The overlap test alone is usually enough; the MAX pin is what makes doubling structurally impossible."),
+    ("query", "R2 Quotas load CUMULATIVE (QTD/YTD): read the quota row AT the selected period. Never SUM Q1+Q2+Q3, never annual_quota/4.",
+     "Quota is loaded cumulatively (10 / 20 / 30), not per-quarter (10 / 10 / 10). Summing or dividing invents a number nobody pays on. annual/4 shipped in a live BXO measure card."),
+    ("query", "R3 Historical credits are NOT recoverable once PPAs are processed (they load onto the original incentive date). Do not reconstruct: ship a :v_lock_status gate ('current' vs 'as_paid') plus a visible reporting-basis selector.",
+     "Source the as-paid branch from the BATCH NAME, not created_date -- a reset/recalc rewrites created_date and silently reclassifies history. Target state is a processing-period DATE column on the order load."),
+    ("query", "R4 Commission != payment. Commission is running YTD earnings (xc_commission); payment is the discrete per-period release (xc_payment). Show both; give releases one line per quarter (Released Q1 / Released Q2 / Pending Q3).",
+     "Annual plans calculate YTD commission on YTD performance; the payment is that minus what was already released. A page showing only payment cannot be reconciled by a rep."),
+    ("query", "R5 Commission attribution is two-part: rows carrying quota_name (Earned) UNION rows whose rule_name contains 'previous' and carry NO quota (True-up). Normalise both in one helper view to measure_name + commission_kind.",
+     "Miss the true-up half and every YTD commission is overstated by the whole negation. Match '%revious%' -- case varies."),
+
+    # --- composition & canvas intake, 2026-09-04 ---
+    ("query", "A view over ~300 lines does not run. Hoist any rule that would repeat into a PARAMETERLESS helper view keyed by the columns consumers filter on; leaves bind :params and stay short.",
+     "The v3 quota rule appeared 11 times written naively. Four helpers took the longest view from 140 to 95 lines, and correctness became one edit in one place. Keep helpers parameterless -- do not rely on bind propagation into a nested view."),
+    ("page", "Chain the bootstrap VCs LINEARLY, one per link. Two VCs bound to the same upstream event have no ordering guarantee between them.",
+     "seller_team_leaderboard binds :v_month_start_date; month_start_date and default_quarter both hung off current_period_id, so the leaderboard could fire with the month unresolved."),
+    ("page", "Seed every :param that no dropdown sets on load with a static VC (useStaticValue:true, staticValue:'<const>', fired on $onPageLoad).",
+     "Otherwise the first query runs with an unbound param. v3 seeds v_lock_status='current' and v_credit_search=''."),
+    ("page", "Show/hide gates come in complementary PAIRS, both wired: team_show -> ['show'], team_hide -> ['hide'], target shouldRenderHidden:true. Default hidden, show on proof.",
+     "Default-visible-and-hide-on-proof leaves the section exposed to the wrong audience whenever the gate view returns zero rows."),
+    ("page", "Every data control INSIDE a tab must bind $onTabOpen -> refresh in addition to its filter subscriptions.",
+     "A tab child is not rendered until the tab opens, so it misses every event broadcast before that."),
+    ("page", "Working from an HTML canvas: build the VARIABLE INVENTORY before emitting any control -- every displayed value maps to a view column, a filter var, or static copy.",
+     "The one thing that forces a second pass is discovering mid-emit that a control needs a variable nothing produces. See knowledge/canvas_to_extend_playbook.md."),
+    ("page", "A variable a control OWNS but nothing consumes fails the render gate (a selector that changes nothing). Either delete the control or give it a guard that references it (validationXsql ':v_x=1').",
+     "v3 inherited three dead variables from v2: v_session_id, v_year_number, v_team_hide."),
+
     # --- shipped-dashboard review, 2026-08-15 (knowledge/dashboard_render_defects.md) ---
     ("query", "Bind params directly: `col = :v_x`. ToNumber() is banned; ToString(col)/ToChar(col) in a predicate is banned. Type the param via the query object's variables[].dataType.",
      "Casting in the predicate defeats the index; the type belongs in the declaration, not the SQL. (user directive 2026-08-15)"),
