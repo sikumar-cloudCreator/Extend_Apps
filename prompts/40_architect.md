@@ -30,6 +30,11 @@ Return **one** fenced ```json object with this shape:
 ```
 
 ## Rules
+- **One customer-defined schema per app** (lowercase, starts with a letter). Put all new tables/queries there —
+  never `$framework` for app data. See `knowledge/xactly_extend_best_practices.md` (S1–S6).
+- If the FRD is a seller / IC / manager **compensation dashboard**, set implicit `app_class: comp_dashboard` in
+  the spec prose and require the gold spine (see `knowledge/gold_comp_dashboard_shape.md`): matrix Custom,
+  payout-by-quarter, supplemental cards, measure pills, credit tabs, team gate pair, `data_ready` loader.
 - One `pages[]` entry per page in the FRD's PAGES section. Preserve FRD order in `navigation`.
 - For each datasource, decide **reuse vs new** honestly: if the FRD's "Fields and their source" points at an
   existing tenant view (given in grounding), mark `reuse`; otherwise `new` and list the exact columns/params.
@@ -38,9 +43,11 @@ Return **one** fenced ```json object with this shape:
 - `spec` must be complete enough for the page designer to place controls without re-reading the whole FRD
   (filters, KPI tiles, charts, tables, and which fields are dynamic → table). Call out **row layout**
   explicitly (e.g. "3 KPI tiles at 33.33", "Period+Seller filters at 50+50") so layoutSizes sum to 100.
+- Workflows: pass page-scoped vars (no globals); sync Incent commands; batch 200–500 with checkpoints; UTC schedules.
 - Do not invent pageDefinitionIds — those come from the user later. Do not write SQL or control JSON.
 
 ## Grounding
 You are given the reusable tenant view catalog (names, params, columns). Prefer these for `reuse`.
+Also obey `knowledge/xactly_extend_best_practices.md`.
 
 Return only the ```json build-spec.

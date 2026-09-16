@@ -1,18 +1,24 @@
 # Extend xSQL Cookbook — canonical, tenant-validated query patterns
 
 These are the **real** shapes that run inside a Xactly Extend datasource view. Compose measure/quota/
-attainment/resolver views from these building blocks. **Do NOT hand-roll incentive math from raw ledgers.**
+attainment/resolver views from these building blocks.
 
-Companion doc: `knowledge/dashboard_render_defects.md` — the shipped-page defects (R1–R15) that these
-rules exist to prevent. Read both.
+**Law:** `knowledge/xactly_extend_best_practices.md` (Xactly official BPs, 2026-09-16) wins on conflict.
+Also read: `dashboard_render_defects.md`, `period_correctness_rules.md`, `runtime_data_defects.md`.
 
 ---
 
-## Rule 0 — never recompute what the engine computes
-Attainment %, credited amount toward a quota, and payout are **engine outputs**. Get them from Xactly
-table functions (`ShowQuotaAttainment`, `ShowPayment`/`ShowCredit`), NOT by `SUM(xactly.xc_credit.amount)`
-+ ad-hoc quota math. Raw `xc_credit` / `xc_payment` are only for a **literal detail/ledger table**
-(one row per transaction), never for attainment or KPI tiles.
+## Rule 0 — fully qualify; prefer functions; never invent compensation math
+
+1. **Every object is schema-qualified** — `xactly.xc_credit`, `dealclaims.approval_records`.
+   Unqualified Incent names (`FROM xc_commission`) are deprecated and fail after **October 2026**.
+2. Prefer platform **functions** (`ShowFunctions()`) over hand-rolled join graphs when the function is
+   correct for the use case (portability + one place to fix bugs).
+3. **Compensation / employee-facing attainment / payout / MBO — do NOT use `ShowQuotaAttainment()`.**
+   Official Xactly BP: known discrepancies vs raw tables. Build from `xactly.xc_quota_assignment`,
+   credits, and commission with `period_correctness_rules.md` (R1–R5) and runtime D1–D4.
+4. Raw ledgers remain correct for **detail/ledger** grids (one row per transaction). KPI tiles still
+   obey the one-row contract (Rule 2) via aggregates + `Nvl`.
 
 ## Rule 1 — a table function is the SOLE FROM, filtered by a non-correlated IN/WHERE
 `ShowXxx(...)` is re-evaluated **once per probe row** if placed in a JOIN → gateway 504. Put it alone in
@@ -62,48 +68,39 @@ separately filtered sub-selects (that's how a shipped breakdown table showed eve
 
 ---
 
-## Pattern A — Measure card: attainment + credits + quota  (VALIDATED, ~2s)
-One view, **parameterized by measure**. `ShowQuotaAttainment` gives attainment + credited total;
-`xc_quota_assignment.amount` gives the quota value (walked up the period hierarchy). Both sides are
-aggregates → each is exactly one row → the join is one row (Rule 2). **One period grain per card** (R5):
-everything below is QTD; annual figures are separate, explicitly-named columns.
+## Pattern A — Measure card: credits + quota + attainment  (period-correct, no ShowQuotaAttainment)
+One view, **parameterized by measure**. Quota from `xactly.xc_quota_assignment` with period R1/R2
+(effective version + grain-aware cumulation); credits from the enriched credit spine (runtime D1);
+attainment = credits/quota in SELECT. Both sides are aggregates → one row (Rule 2). **One period grain
+per card** (render R5). Do **not** call `ShowQuotaAttainment` here (official BP Q18).
 
 ```sql
 CREATE VIEW demo.seller_measure_card AS
 SELECT
-  Concat(FormatNumber(Nvl(cr.qtd_attainment, 0), '#,##0.0'), '%')  AS qtd_attainment_pct,
   Concat('$', FormatNumber(Nvl(cr.total_credit, 0), '#,##0'))      AS qtd_credits,
   Concat('$', FormatNumber(Nvl(qt.quota_amount, 0), '#,##0'))      AS qtd_quota,
   Concat(FormatNumber(CASE WHEN Nvl(qt.quota_amount, 0) = 0 THEN 0
                            ELSE Nvl(cr.total_credit, 0) / qt.quota_amount * 100 END,
-                      '#,##0.0'), '%')                             AS qtd_attainment_recomputed_pct
+                      '#,##0.0'), '%')                             AS qtd_attainment_pct
 FROM
-  ( SELECT Nvl(SUM(qr.total_credit), 0)   AS total_credit,
-           Nvl(SUM(qr.qtd_attainment), 0) AS qtd_attainment
-    FROM ShowQuotaAttainment(
-           ParticipantId = :v_master_participant_id,
-           PeriodId      = ( SELECT MAX(period_id) FROM xactly.xc_period WHERE name = :v_quarter )
-         ) qr
-    WHERE qr.quota_name = :v_measure
+  ( SELECT Nvl(SUM(ce.amount), 0) AS total_credit
+    FROM   demo.seller_credit_enriched ce
+    WHERE  ce.participant_id = :v_master_participant_id
+      AND  ce.measure_key    = :v_measure
+      AND  ce.quarter_name   = :v_quarter
   ) cr
 JOIN
-  ( SELECT Nvl(SUM(xqa.amount), 0) AS quota_amount
-    FROM xactly.xc_quota_assignment xqa
-    JOIN xactly.xc_period p ON p.period_id = xqa.period_id
-    WHERE xqa.assignment_id = :v_master_position_id
-      AND xqa.quota_id IN ( SELECT quota_id FROM xactly.xc_quota WHERE name = :v_measure )
-      AND ( p.name = :v_quarter
-            OR p.parent_period_id IN ( SELECT period_id FROM xactly.xc_period WHERE name = :v_quarter ) )
+  ( SELECT Nvl(SUM(qe.quota_amount), 0) AS quota_amount
+    FROM   demo.seller_quota_effective qe   -- H1: period R1 version pick already applied
+    WHERE  qe.assignment_id = :v_master_position_id
+      AND  qe.quota_name    = :v_measure
+      AND  qe.period_name   = :v_quarter    -- leaf may apply grain-aware R2 cumulation instead
   ) qt ON 1 = 1
 ```
 params: `v_master_participant_id`, `v_master_position_id`, `v_quarter`, `v_measure`
-- `ShowQuotaAttainment(ParticipantId=, PeriodId=)` returns one row per quota: `quota_name`, `total_credit`,
-  `quota_amount`, `Yearly_attainment`, `qtd_attainment`. Filter to one measure with `WHERE qr.quota_name = :v_measure`.
-- Quota value = **`xc_quota_assignment.amount`** (NOT `xc_quota.quotavalue`). Resolve `quota_id` by name via `IN`.
-- Period hierarchy: `p.name = :v_quarter` (booked at the quarter) **OR** `p.parent_period_id IN (…quarter…)`
-  (booked at the parent/year and rolled down).
-- `qtd_attainment_recomputed_pct` is the engine % re-derived from the two numbers the card **displays**;
-  if it disagrees with `qtd_attainment_pct` the card is mixing grains (R5) — fix the query, don't ship both.
+- Quota value = **`xc_quota_assignment.amount`** via helper H1 (NOT `xc_quota.quotavalue`, NOT `ShowQuotaAttainment`).
+- Credits from the deduped enrichment spine (runtime D1), not a raw multi-join fan-out.
+- Attainment % is computed from the **same** credits/quota pair the card displays (render R5).
 - Two single-row derived tables → `JOIN … ON 1 = 1` is fine **in view context**. (In strict
   variableConfigurator/whereClause context, prefer a constant-key join `ON a.k = b.k`.)
 
@@ -243,9 +240,12 @@ A datasource is a query OBJECT, not a bare .sql file: `queries/<schema>/<name>.j
 - ❌ A card/tile view that can return **zero rows** → renders `undefined` (R1). Aggregate it.
 - ❌ `Nvl(Concat(x, '%'), '0%')` → the NULL is inside; you ship a bare `%` (R2). `Nvl` goes innermost.
 - ❌ Hardcoded measure/component names (`LIKE '<Component>%'`) → parameterize or resolve (R3/R4).
-- ❌ `SUM(c.amount)` from `xc_credit` as "credits earned toward attainment" → use `ShowQuotaAttainment.total_credit`.
-- ❌ `MAX(xq.quotavalue)` from `xc_quota` as the quota → use `SUM(xc_quota_assignment.amount)`.
-- ❌ `ShowQuotaAttainment(...)` inside a JOIN → 504; make it the sole FROM.
+- ❌ `SUM(c.amount)` from a **fan-out** enrichment join as credits → collapse lookups first (runtime D1).
+- ❌ `MAX(xq.quotavalue)` from `xc_quota` as the quota → use `SUM(xc_quota_assignment.amount)` with period R1/R2.
+- ❌ `ShowQuotaAttainment(...)` for employee-facing attainment / payout / MBO → official BP Q18; use Pattern A.
+- ❌ `ShowQuotaAttainment(...)` inside a JOIN → 504; make it the sole FROM (only if used for a non-comp lookup).
+- ❌ Unqualified Incent tables (`FROM xc_commission`) → fail after Oct 2026; use `xactly.xc_commission`.
+- ❌ App tables/queries in `$framework` → use a customer-defined schema (BP S1).
 - ❌ NULL params to a table function → full scan/timeout; always bind resolved ids.
 - ❌ `LookupCurrentUser*` → binds to the logged-in user, not the selected rep; use Pattern B/C for ALL users.
 
@@ -307,3 +307,26 @@ Three measure tiles differing solely in `'Revenue'` / `'Sales Profitability'` /
 `'BXO TPV'` stay as three views. Merging them behind a `:v_measure` param would
 merge them into one control — and the design calls for three tiles side by side.
 Repetition of a *literal* is fine; repetition of a *rule* is the thing to hoist.
+
+---
+
+## Rule 13 — runtime data defects (numbers that lie)
+
+Full write-up: `knowledge/runtime_data_defects.md` (D1–D5, Seller Dashboard
+2026-09-05 → 2026-09-10). The non-negotiables when authoring enrichment / payout /
+quota leaves:
+
+- **D1 — collapse enrichment before `SUM`.** `xc_order_stage` keyed on
+  `(order_code, item_code)` is multi-row; `xc_customer` is period-versioned. Dedup
+  with `GROUP BY` + `Max(...)` or every consumer's `SUM(amount)` inflates (~3×
+  measured). Enrichment `COUNT(*)` must equal spine credit `COUNT(*)`.
+- **D2 — flags are strings.** `IS_RELEASED` / `IS_ACTIVE` are `string(1)`. Write
+  `IN ('1','Y')` / `= '1'`, never `= 1`. Pending = complement of released.
+- **D3 — quota cumulation is grain-aware** (refines period R2). PERIOD grain:
+  `SUM` ordinals `<=` selected. YEAR grain: `ordinal/4`, never also sum quarters.
+  R1 version pick runs first.
+- **D4 — period predicates stay symmetric.** Credits, commission, and payment must
+  use the same overlap / start-date shape. A "wholly contained" test on commission
+  alone zeroes every coarser-than-monthly row.
+- **D5 — bundle resolution.** Control↔query both directions (`simulate_events` S8/S9);
+  import blockers I1–I5 in `knowledge/import_blockers.md`.

@@ -1,0 +1,80 @@
+{
+  "app_class": "comp_dashboard",
+  "version": "2026-09-16",
+  "source_pageDefinitionId": "1af96141-f716-4633-9606-6ffbbde05de1",
+  "required_types": [
+    "PageLoader",
+    "variableConfigurator",
+    "dropdown",
+    "Custom",
+    "table",
+    "input",
+    "button",
+    "exportPagePDF",
+    "tabContainer",
+    "label"
+  ],
+  "required_create_events": [
+    "defaultperiod",
+    "defaultparticipant",
+    "current_period_id",
+    "month_start_date",
+    "default_quarter",
+    "master_participant_id",
+    "master_position_id",
+    "data_ready",
+    "team_show",
+    "team_hide",
+    "measure_select"
+  ],
+  "required_patterns": [
+    {
+      "id": "pageloader_data_ready",
+      "type": "PageLoader",
+      "bind_hide": "data_ready",
+      "bind_show": "$onPageLoad"
+    },
+    {
+      "id": "linear_bootstrap_tail",
+      "note": "master_position_id must CREATE before data_ready; data controls bind data_ready or master_position_id"
+    },
+    {
+      "id": "seed_vars",
+      "owned_vars_any": ["v_lock_status", "v_credit_search", "v_measure"]
+    },
+    {
+      "id": "team_gate",
+      "events": ["team_show", "team_hide"],
+      "hidden_default_types": ["table", "label", "Custom"]
+    },
+    {
+      "id": "blank_table_titles",
+      "table_title_must_be_empty_if_header_custom": true
+    },
+    {
+      "id": "tables_have_maxHeight",
+      "min_tables_with_maxHeight": 1
+    },
+    {
+      "id": "tab_onTabOpen",
+      "every_tab_data_control_binds": "$onTabOpen"
+    },
+    {
+      "id": "export_pdf_wired",
+      "has_exportPagePDF": true,
+      "has_button_create": true
+    },
+    {
+      "id": "supp_or_matrix_customs",
+      "min_datasource_customs": 3
+    },
+    {
+      "id": "filter_row_sum",
+      "note": "visible filter/action row layoutSizes should sum ~100"
+    }
+  ],
+  "forbidden_xsql_substrings": [
+    "ShowQuotaAttainment"
+  ],
+  "notes": "Full branded page JSON stays in evals/golden.local or out_app — not in git. This manifest is the trainable contract."
+}

@@ -50,22 +50,33 @@ short predicate and cannot get it wrong.
 
 ---
 
-## R2 — Quotas load **cumulative**. Never sum periods.
+## R2 — Quotas load **cumulative**. Cumulation is **grain-aware**.
 
 > "We don't load the quarterly value, we load quarter-to-date value. We would load
 > 10, then 20, then 30 — not 10, 10, 10."
 > "You're adding the quarters up. That's not how quota is actually structured."
 
-The quota row **at** a period already contains everything to date. Therefore:
+What "cumulative" means depends on how the tenant **loads** quota:
 
-- ✅ read the row at the selected period: `qe.period_name = :v_quarter`
-- ❌ `SUM` across Q1+Q2+Q3
-- ❌ `annual_quota / 4` to derive a quarter (this was a live defect in
-  `seller_measure_branded_checkout` v2)
+| Pivot grain | What each row holds | QTD / in-force YTD |
+|---|---|---|
+| **YEAR** (one annual row) | Full-year amount | Prorate with `ordinal/4` — **do not** also `SUM` across quarters or it multiplies |
+| **PERIOD** (separate Q1–Q4 rows) | That quarter's slice only | `SUM` amounts where `quarter_ordinal <= selected_ordinal` **after** R1 has picked one in-force version per quarter |
+
+Therefore:
+
+- ✅ branch on grain — PERIOD cumulates ordinals; YEAR prorates
+- ✅ version selection (R1) happens **before** cumulation; cumulation never re-opens versions
+- ❌ `annual_quota / 4` when the pivot already carries period amounts (live defect in
+  `seller_measure_branded_checkout` v2, and again when PERIOD grain was mis-read as "row at quarter")
 - ❌ any "divide by remaining quarters" arithmetic
+- ❌ reading only `period_name = :v_quarter` on a PERIOD-grain pivot and calling it QTD —
+  that is **this quarter**, not year-to-date (Seller Dashboard fix, 2026-09-09)
 
 Same for credits used against a cumulative quota: compare QTD credits to the QTD
 quota, YTD credits to the annual quota. Never mix the two grains.
+
+See also `knowledge/runtime_data_defects.md` **D3**.
 
 ---
 
@@ -148,33 +159,18 @@ Match `'%revious%'` — case varies across rule names.
 
 ---
 
-## Note on cookbook Rule 0
+## Note on cookbook Rule 0 / ShowQuotaAttainment
 
-`extend_xsql_cookbook.md` Rule 0 says: don't recompute what the engine computes —
-prefer `ShowQuotaAttainment` over `SUM(xc_credit.amount)` + quota math.
+**Superseded 2026-09-16 by Xactly official BP Q18** (`knowledge/xactly_extend_best_practices.md`):
+do **not** use `ShowQuotaAttainment()` for employee-facing attainment, payout, or MBO.
 
-That rule stands generally. R1/R2 are the documented exception: the requirement is
-explicit control over *which quota version* is read, and an engine attainment
-function applies its own period semantics that you cannot inspect or override. The
-v3 views therefore compute quota selection explicitly, from
-`xc_quota_assignment` + effective periods.
+Keep computing quota selection explicitly from `xactly.xc_quota_assignment` + effective periods
+(H1 / R1–R2). Additional reasons this remains correct even aside from the official ban:
 
-**Open, unverified.** What is established from existing exports:
+- The function is keyed on **participant**; assignments are held by **position** — mid-year
+  position changes diverge.
+- Its period/version semantics are opaque; overlapping versions cannot be inspected or pinned
+  the way H1 does.
 
-- `ShowQuotaAttainment` **does** return a quota value, so it could in principle
-  replace H1. Signature `(ParticipantId=, PeriodId=)` or
-  `(PeriodName=, ParticipantName=)`; columns `quota_name, total_credit,
-  quota_amount, Yearly_attainment, qtd_attainment, month_attainment`.
-- Two prior builds had it available and **still hand-rolled the quota** from
-  `xc_quota_assignment` — including one headed "rebuilt to the engine-native
-  pattern". Neither wrote down why. That build also had no effective-date
-  filtering and used `quota_amount / 4`, so it carried both the R1 and R2
-  defects: going engine-native is not by itself a route to a correct quota.
-- **Scope mismatch, independent of the version question.**
-  `ShowQuotaAttainment` is keyed on **participant**; quota assignments are held
-  by **position**. For a rep who changed position mid-year these are different
-  sets, so the function may not be a drop-in for H1 even if it applies the
-  in-force rule.
-
-What is **not** established: what it returns when two versions overlap a
-quarter. That needs one run against a tenant. Until then, keep H1.
+What is **not** established (and no longer needed for the build path): what the function returns
+when two versions overlap a quarter. Do not call it for compensation tiles.

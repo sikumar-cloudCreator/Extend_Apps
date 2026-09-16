@@ -60,40 +60,22 @@ view, not N literal-filtered views**. A breakdown column and its total must come
 - Don't reference a computed alias from a derived table inside another computed expression — repeat the aggregate inline.
 - A `ShowXxx(...)` table function must be the **sole FROM** rowset, filtered by a **non-correlated** `IN` — never inside a JOIN (504 risk).
 
-## Canonical Extend semantics — compose from these; DO NOT hand-roll incentive math
-The full recipe set is `knowledge/extend_xsql_cookbook.md` (note **Rule 12 — the 300-line ceiling**: hoist
-any repeated rule into a parameterless helper view). Period/quota/commission correctness is
-`knowledge/period_correctness_rules.md` (R1-R5) — read it before authoring any view that touches quota,
-attainment, credits, commission or payout by period. The non-negotiables:
-- **Never recompute engine outputs.** Attainment %, credited amount toward a quota, and payout come from
-  Xactly **table functions** — `ShowQuotaAttainment(ParticipantId=, PeriodId=)`, `ShowPayment`/`ShowCredit` —
-  NOT from `SUM(xactly.xc_credit.amount)` + manual quota math. Raw `xc_credit`/`xc_payment` are only for a
-  literal transaction **detail** table, never for attainment/KPI tiles.
-- **Quota value** = `SUM(xactly.xc_quota_assignment.amount)` (NOT `xc_quota.quotavalue`), joined to
-  `xc_period` on `xqa.period_id`, with the period-hierarchy OR: `p.name = :v_quarter OR p.parent_period_id = (…quarter…)`.
-- **Measure card (attainment + credits + quota)** — the validated shape, parameterized by measure:
-  ```sql
-  FROM ( SELECT Nvl(SUM(qr.total_credit),0) AS total_credit, Nvl(SUM(qr.qtd_attainment),0) AS qtd_attainment
-         FROM ShowQuotaAttainment(ParticipantId = :v_master_participant_id,
-                                  PeriodId = (SELECT MAX(period_id) FROM xactly.xc_period WHERE name = :v_quarter)) qr
-         WHERE qr.quota_name = :v_measure ) cr
-  JOIN ( SELECT Nvl(SUM(xqa.amount),0) AS quota_amount
-         FROM xactly.xc_quota_assignment xqa JOIN xactly.xc_period p ON p.period_id = xqa.period_id
-         WHERE xqa.assignment_id = :v_master_position_id
-           AND xqa.quota_id IN (SELECT quota_id FROM xactly.xc_quota WHERE name = :v_measure)
-           AND (p.name = :v_quarter OR p.parent_period_id IN (SELECT period_id FROM xactly.xc_period WHERE name = :v_quarter)) ) qt ON 1 = 1
-  ```
-  `ShowQuotaAttainment` returns one row per quota: `quota_name, total_credit, quota_amount, Yearly_attainment, qtd_attainment`.
-  Both sides are aggregates → each is one row → the card can never render `undefined`.
-- **One period grain per card.** If a card lists QTD credits and QTD quota, its headline % must be that same
-  QTD pair — never a `Yearly_attainment` headline over QTD detail rows (a shipped card showed a headline %
-  that its own listed credits and quota contradicted).
-- **Trend views return one row per period, zero-filled**: the period table is the spine, `LEFT JOIN` the facts,
-  `GROUP BY p.name, p.start_date ORDER BY p.start_date`. All plotted series must share one unit — never mix a
-  credit amount with an attainment %.
-- **Detail/ledger views**: exclude engine trigger/adjustment rows (`o.order_code NOT LIKE 'Trigger%'`) and
-  `GROUP BY` exactly the displayed columns so join fan-out doesn't duplicate rows.
-- A table function is the **sole FROM** filtered by a non-correlated `WHERE`/`IN` — never in a JOIN (504). Never pass NULL params.
+## Canonical Extend semantics — compose from these; DO NOT invent compensation math
+**Law:** `knowledge/xactly_extend_best_practices.md` (official Xactly BPs) wins on conflict.
+Cookbook: `knowledge/extend_xsql_cookbook.md` (Rule 12 ceiling; Rule 13 runtime D1–D5).
+Period: `knowledge/period_correctness_rules.md`. Runtime: `knowledge/runtime_data_defects.md`.
+Non-negotiables:
+- **Fully qualify every object** (`xactly.xc_commission`, `appschema.view`). Unqualified Incent names fail after Oct 2026. App objects in a **customer-defined schema** — never `$framework` for custom data.
+- **No `ShowQuotaAttainment()` for employee-facing attainment / payout / MBO** (official BP Q18). Quota from `xactly.xc_quota_assignment` + period R1/R2; credits from a deduped spine (D1); attainment = credits/quota in SELECT (cookbook Pattern A).
+- Prefer `ShowFunctions()` for non-compensation lookups when correct; any table function you do use must be the **sole FROM** (never in a JOIN — 504).
+- **Measure card** = Pattern A, parameterized by `:v_measure`, both sides aggregated to one row.
+- **One period grain per card.** QTD credits + QTD quota → headline % from that same pair.
+- **Trend views:** one row per period, zero-filled; all series share one unit.
+- **Detail/ledger:** exclude trigger/adjustment rows; `GROUP BY` displayed columns (D1 collapse first).
+- **Avoid deep query-in-query**; one parameterless helper (Rule 12) is the allowed exception.
+- **Flags:** `1`/`0` or `'Y'`/`'N'`/`'1'` — never `'true'`/`'false'`.
+- **Never JOIN `xc_part_user_assignment` to dedupe** — bypasses RLS; `DISTINCT` on `xc_participant` + manager impersonation test.
+- Join on IDs; prefer `UNION ALL` + `DISTINCT` over `GROUP BY col, 2`; static table/column names in DDL/DML.
 - Two single-row rowsets → `JOIN … ON 1 = 1` is fine in **view** context (constant-key join in strict context).
 
 ## Render-on-load & participant scoping (production dashboards)

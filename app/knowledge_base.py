@@ -44,11 +44,53 @@ SEED = [
     ("all", "Output convention: the design page is emitted as JSON; all datasource queries AND workflows are emitted as xSQL (.sql) files, not JSON envelopes.",
      "Matches the Extend authoring workflow (paste xSQL into the query editor); import only the page JSON."),
 
+    # --- Xactly official BPs, 2026-09-16 (knowledge/xactly_extend_best_practices.md) ---
+    ("all", "S1–S5 Customer-defined schema per app (lowercase, starts with a letter). Never put app tables/queries in $framework. Fully qualify every object (xactly.xc_*, appschema.*). Unqualified Incent names fail after Oct 2026.",
+     "Official schema BP — organization, no upgrade conflicts, Builder schema-scoped datasource lists."),
+    ("query", "Q18 Do NOT use ShowQuotaAttainment() for employee-facing attainment, payout, or MBO. Build from xactly.xc_quota_assignment + credits/commission with period_correctness R1–R5 (cookbook Pattern A).",
+     "Official Xactly BP: known calculation discrepancies vs raw tables."),
+    ("query", "Q10 Never JOIN xactly.xc_part_user_assignment to dedupe participants — it can bypass row-level security on xc_participant. Use DISTINCT on xc_participant; test via manager impersonation.",
+     "Official BP — JOIN strips manager filters and returns all employees."),
+    ("query", "Q8 Avoid deep query-in-query nesting (production perf #1). Allowed exception: one parameterless helper view that collapses a repeated domain rule (cookbook Rule 12).",
+     "Official BP — nested queries cascade-break and hide cost."),
+    ("query", "Q14 Boolean/flag filters use integer 1/0 or string 'Y'/'N'/'1' — never true/false keywords. Flag columns are often string(1).",
+     "Official BP + runtime D2."),
+    ("query", "Q13 Static table and column names in DDL/DML — no :v_table / :v_col interpolation (breaks app export).",
+     "Official BP — exporter misclassifies dynamic DDL as physical tables."),
+    ("query", "Q11 Conditional single-row insert: INSERT…SELECT…FROM Empty() WHERE…NOT IN (…). Empty() is for DML/workflow only — still banned in strict VC/whereClause.",
+     "Official BP — ANSI WHERE NOT EXISTS does not work in xSQL."),
+    ("page", "C2 Bind Custom Datasource directly — never push data into Custom via Variable Configurator events (render race).",
+     "Official BP — VC event order vs component render is non-deterministic."),
+    ("page", "C3 Never use hidden controls as layout spacers. Platform 2026: hidden no longer reserves space. Use empty text/padding; hidden only for real show/hide.",
+     "Official BP — layouts that relied on hidden spacers broke after the 2026 update."),
+    ("page", "C5 Grid loads ≤1000 rows initially then lazy-loads. Bulk actions and totals hit the underlying table/query, not rendered grid rows.",
+     "Official BP."),
+    ("page", "V1–V2 Page-scoped component variables only (no global set varname). Seed every query :param on $onPageLoad via VC before first refresh. Audit with show variables;.",
+     "Official BP — globals collide across sessions; uninitialized params error on load."),
+    ("architect", "W2–W5 Workflows: pass named page vars into XFlow (not session); incent synchronous … when chained; batch 200–500 with checkpoint log; schedules in UTC; no xFlow→xFlow calls.",
+     "Official BP — async races, 20min timeout, no native cron."),
+    ("architect", "I1 CAE PeriodName must match a real xactly.xc_period name — territory/model strings silently assign zero territories.",
+     "Official BP."),
+
+    # --- gold comp dashboard shape, 2026-09-16 (knowledge/gold_comp_dashboard_shape.md) ---
+    ("page", "Comp dashboard: linear VC spine ending in data_ready; PageLoader hideLoader on data_ready; seed v_lock_status / v_credit_search / v_measure on $onPageLoad.",
+     "Finalized seller gold 1af96141… — fan-out VCs race; unbound seeds error on first query."),
+    ("page", "Comp dashboard: one measure MATRIX Custom (all measures × credits/quota/attainment/commission/released/pending), not N separate measure tiles.",
+     "Gold scorecard shape — separate tiles diverged from the approved design."),
+    ("page", "Comp dashboard: supplemental SPIFF/Bonus/PPP/Draw as four Customs at layoutSize 25; payout-by-quarter as its own table with blank title under a header Custom.",
+     "Gold layout — period R4 one line per quarter; R9 title once."),
+    ("page", "Comp dashboard: measure pills Custom + pick VCs CREATE measure_select; trend percent-only; credit tabs bind $onTabOpen and data_ready; team_show/team_hide with shouldRenderHidden true.",
+     "Gold interaction + R11/R13/R14."),
+    ("architect", "Deliver only via app_assembler.write_bundle + pack_bundle. For app_class comp_dashboard run gate/check_gold_shape.py against evals/golden/comp_dashboard/shape_manifest.json before pack.",
+     "Hand-zip and ungated JSON are how ClaimRequest and early seller drafts failed import/PRD."),
+    ("all", "After each generated app: add lessons for every live defect (knowledge_base add) and follow knowledge/training_loop.md. Promote scrubbed golds under evals/golden/<app_class>/.",
+     "Training compounds only when defects become seeds + gates."),
+
     # --- period correctness, 2026-09-04 call (knowledge/period_correctness_rules.md) ---
     ("query", "R1 Quota = the version EFFECTIVE FOR THE SELECTED PERIOD, never 'the latest'. Filter effective-window overlap (qstart.start_date <= period.end_date AND qend.end_date >= period.start_date) AND pin qstart.start_date = MAX(qstart.start_date) over the same overlap.",
      "Two overlapping versions both land in the SUM and the quota doubles (a rep's Q1 quota rendered as the sum of both versions). The overlap test alone is usually enough; the MAX pin is what makes doubling structurally impossible."),
-    ("query", "R2 Quotas load CUMULATIVE (QTD/YTD): read the quota row AT the selected period. Never SUM Q1+Q2+Q3, never annual_quota/4.",
-     "Quota is loaded cumulatively (10 / 20 / 30), not per-quarter (10 / 10 / 10). Summing or dividing invents a number nobody pays on. annual/4 shipped in a live BXO measure card."),
+    ("query", "R2 Quotas load CUMULATIVE (QTD/YTD), grain-aware: PERIOD-grain SUM ordinals <= selected quarter (after R1 picks one version per quarter); YEAR-grain uses ordinal/4 proration and must NOT also sum across quarters. Never invent annual_quota/4 when the pivot already carries period amounts; never call a single PERIOD-grain quarter row 'QTD'.",
+     "PERIOD grain mis-read as 'row at quarter' shipped QTD = this quarter only (2026-09-09). YEAR grain summed across quarters multiplies. annual/4 was a live BXO defect."),
     ("query", "R3 Historical credits are NOT recoverable once PPAs are processed (they load onto the original incentive date). Do not reconstruct: ship a :v_lock_status gate ('current' vs 'as_paid') plus a visible reporting-basis selector.",
      "Source the as-paid branch from the BATCH NAME, not created_date -- a reset/recalc rewrites created_date and silently reclassifies history. Target state is a processing-period DATE column on the order load."),
     ("query", "R4 Commission != payment. Commission is running YTD earnings (xc_commission); payment is the discrete per-period release (xc_payment). Show both; give releases one line per quarter (Released Q1 / Released Q2 / Pending Q3).",
@@ -71,6 +113,16 @@ SEED = [
      "The one thing that forces a second pass is discovering mid-emit that a control needs a variable nothing produces. See knowledge/canvas_to_extend_playbook.md."),
     ("page", "A variable a control OWNS but nothing consumes fails the render gate (a selector that changes nothing). Either delete the control or give it a guard that references it (validationXsql ':v_x=1').",
      "v3 inherited three dead variables from v2: v_session_id, v_year_number, v_team_hide."),
+
+    # --- runtime data defects, 2026-09-05..09 (knowledge/runtime_data_defects.md) ---
+    ("query", "D1 Enrichment joins must collapse to one row per business key before any SUM. Dedup xc_order_stage / xc_customer with GROUP BY + Max(...); verify enrichment COUNT(*) equals spine credit COUNT(*).",
+     "Joining order_stage on (order_code, item_code) measured 3.4x fan-out and inflated every SUM(amount) in 13 consumers (2026-09-09)."),
+    ("query", "D2 Flag columns (IS_RELEASED, IS_ACTIVE) are string(1): compare IN ('1','Y') / = '1', never = 1. Pending payout = complement of released so the two always total.",
+     "Numeric compares matched nothing — released AND pending both shipped $0.00 (2026-09-09)."),
+    ("query", "D4 Period predicates must be symmetric across credits / commission / payment. Use the same overlap or start-date-in-range shape; never a stricter 'period wholly inside window' test on one fact only.",
+     "Commission required wholly-contained periods while credits used start-date overlap — every coarser-than-monthly commission row went to $0 (2026-09-09)."),
+    ("query", "D5 A control that binds a datasource the bundle does not ship renders empty forever (simulate_events S8 ERROR). A shipped query with no consumer is drift (S9 WARN). Run import_ready + simulate before delivery.",
+     "ClaimRequest 2026-09-05 passed page gates and still would not import; Seller v3.4 stranded three queries after a layout change."),
 
     # --- shipped-dashboard review, 2026-08-15 (knowledge/dashboard_render_defects.md) ---
     ("query", "Bind params directly: `col = :v_x`. ToNumber() is banned; ToString(col)/ToChar(col) in a predicate is banned. Type the param via the query object's variables[].dataType.",
@@ -128,6 +180,10 @@ RETIRED = [
     ("A scalar resolver view", "no rownum — aggregate to one row (2026-08-15)"),
     ("Emit numeric equality filters on resolver-driven", "no predicate casts — bind directly + declare dataType (2026-08-15)"),
     ("IC self-view filters by the built-in current-user lookups", "user-context lookups are banned; resolve via the selected-rep chain"),
+    ("R2 Quotas load CUMULATIVE (QTD/YTD): read the quota row AT the selected period",
+     "grain-aware cumulation 2026-09-09 — PERIOD sums ordinals, YEAR prorates"),
+    ("Attainment %, credited amount toward quota, and payout are ENGINE outputs",
+     "official BP 2026-09-16 — do not use ShowQuotaAttainment for employee-facing comp; Pattern A from tables"),
 ]
 # Rules replaced in place (same opening, corrected body): retire only the version that still carries
 # the bad construct, identified by (prefix, offending substring).

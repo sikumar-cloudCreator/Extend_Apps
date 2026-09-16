@@ -105,15 +105,34 @@ def det_query_object_typing():
 def det_knowledge_currency():
     """Overturned lessons must not be injected into any build prompt."""
     import knowledge_base as kb
-    text = kb.render("query") + kb.render("page") + kb.render("architect")
+    text = kb.render("query", 14000) + kb.render("page", 14000) + kb.render("architect", 14000)
     stale = [frag for frag in ("still use ToString(col)", "WHERE rownum = 1",
-                               "IC self-view filters by the built-in current-user lookups")
+                               "IC self-view filters by the built-in current-user lookups",
+                               "Attainment %, credited amount toward quota, and payout are ENGINE outputs")
              if frag in text]
     check("knowledge: overturned lessons retired", not stale, str(stale))
     fresh = ["ToNumber() is banned", "No rownum", "participant_id, never eff_participant_id",
-             "exactly one row", "Title once"]
+             "exactly one row", "Title once", "Do NOT use ShowQuotaAttainment",
+             "measure MATRIX Custom", "write_bundle + pack_bundle"]
     missing = [f for f in fresh if f not in text]
     check("knowledge: new rules present", not missing, str(missing))
+
+
+def det_gold_shape_gate():
+    """comp_dashboard manifest + check_gold_shape must load and reject a bare page."""
+    import check_gold_shape as gs
+    root = os.path.dirname(HERE)
+    manifest_path = os.path.join(HERE, "golden", "comp_dashboard", "shape_manifest.json")
+    check("gold: shape_manifest present", os.path.isfile(manifest_path), manifest_path)
+    with open(manifest_path, encoding="utf-8") as f:
+        manifest = json.load(f)
+    bare = {"pageDefinitionId": "x", "title": "Bare",
+            "pageSchema": {"controlSchema": {"schema": {"type": "object", "properties": {
+                "control_1": {"type": "label", "controlId": "00000000-0000-4000-8000-000000000001",
+                              "controlData": "hi", "events": []}}}}}}
+    gs.ERRORS.clear(); gs.WARNS.clear()
+    gs.check_page(bare, manifest, "bare")
+    check("gold shape: bare page FAIL", len(gs.ERRORS) >= 3, str(gs.ERRORS[:5]))
 
 
 def det_page_gate():
@@ -210,7 +229,14 @@ def det_golden_fixtures_valid():
     # generic ones, so this floor is 2. Drop your own FRDs into evals/golden/<name>/ to widen it.
     check("golden: >=2 fixtures present", len(cases) >= 2, f"found {[c[0] for c in cases]}")
     for case, _frd, exp in cases:
-        missing = [v for v in exp.get("expected_reuse_views", []) if v not in names]
+        reuse = exp.get("expected_reuse_views", [])
+        if not reuse:
+            # shape-only golds (comp_dashboard) — require manifest instead
+            man = exp.get("shape_manifest")
+            path = os.path.join(HERE, "golden", case, man) if man else ""
+            check(f"golden[{case}]: shape manifest present", bool(man) and os.path.isfile(path), path)
+            continue
+        missing = [v for v in reuse if v not in names]
         check(f"golden[{case}]: reuse views exist in catalog", not missing, f"missing {missing}")
 
 
@@ -223,8 +249,16 @@ def llm_golden_coverage():
         ds_names = {d["name"] for p in pages for d in p.get("datasources", [])}
         check(f"architect[{case}]: >= {exp.get('min_pages',1)} pages", len(pages) >= exp.get("min_pages", 1),
               f"got {len(pages)}")
-        missing = [v for v in exp.get("expected_reuse_views", []) if v not in ds_names]
-        check(f"architect[{case}]: reuses {exp.get('expected_reuse_views')}", not missing,
+        reuse = exp.get("expected_reuse_views", [])
+        if not reuse:
+            # Comp gold: architect prose should mention matrix / team / payout concepts
+            blob = json.dumps(spec).lower()
+            hits = sum(1 for k in ("matrix", "payout", "measure", "team", "commission") if k in blob)
+            check(f"architect[{case}]: comp shape concepts present", hits >= 3,
+                  f"hits={hits}; chose {sorted(ds_names)[:12]}")
+            continue
+        missing = [v for v in reuse if v not in ds_names]
+        check(f"architect[{case}]: reuses {reuse}", not missing,
               f"missing {missing}; chose {sorted(ds_names)}")
 
 
@@ -238,7 +272,7 @@ def llm_query_pass():
 def main():
     include_llm = "--llm" in sys.argv or bool(os.environ.get("ANTHROPIC_API_KEY"))
     for fn in (det_lint_regression, det_binding_rules, det_render_gate, det_query_object_typing,
-               det_knowledge_currency, det_page_gate, det_bundle_shape, det_grounding,
+               det_knowledge_currency, det_gold_shape_gate, det_page_gate, det_bundle_shape, det_grounding,
                det_feedback_roundtrip, det_golden_fixtures_valid):
         try:
             fn()

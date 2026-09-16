@@ -83,6 +83,18 @@ Bounded retries per artifact (default 3); if still failing, return it marked `ne
   `incent_st_date/incent_end_date` overlap). `xc_pos_part_assignment` has **no** effective-date columns.
 - A `ShowXxx(...)` table function must be the **sole FROM** rowset filtered by a non-correlated `IN` — never inside a JOIN (504 risk).
 - **Every `:param` in a view must be a declared page variable** set by some control. The page and its views must agree.
+- **Knowledge pack (read before inventing):** `knowledge/xactly_extend_best_practices.md` (**law** — official Xactly BPs),
+  `knowledge/gold_comp_dashboard_shape.md` + `knowledge/training_loop.md` (PRD-ready discipline),
+  `knowledge/dashboard_render_defects.md` (R1–R16),
+  `knowledge/period_correctness_rules.md` (quota/commission R1–R5),
+  `knowledge/runtime_data_defects.md` (D1–D5),
+  `knowledge/extend_xsql_cookbook.md`, `knowledge/canvas_to_extend_playbook.md` (§6 gold patterns),
+  `knowledge/import_blockers.md` (I1–I5 + S8/S9).
+- **Schemas:** one customer-defined schema per app; fully qualify every object; never put app data in `$framework`.
+- **Variables:** page-scoped VC only (no global `set`); seed every `:param` on `$onPageLoad` before first refresh.
+- **Comp tiles:** no `ShowQuotaAttainment` for employee-facing attainment/payout/MBO.
+- **Delivery:** `app_assembler.write_bundle` then `pack_bundle` ONLY. For compensation/seller-style pages also run
+  `gate/check_gold_shape.py --manifest evals/golden/comp_dashboard/shape_manifest.json`. Never hand-zip.
 
 ## Tools
 - `schema_lookup(table)` → columns/types/PK/FK for `xc_<table>` (authoritative; ignore `_hist`).

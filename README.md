@@ -34,13 +34,23 @@ extend-llm/
 │   ├── xsql_author.py         # write_xsql + lint_xsql
 │   ├── lint_extend_xsql.py    # canonical xSQL rules
 │   ├── check_page_render.py   # render-quality gate (dup headings, unbounded tables, placeholders)
-│   ├── check_export_completeness.py  # bundle gate (datasource↔query, param producers, policies)
-│   └── datasources.json       # 82-view tenant catalog (reuse-first)
+│   ├── check_import_ready.py  # zip/import blockers
+│   ├── check_gold_shape.py    # comp_dashboard gold spine / control patterns
+│   ├── simulate_events.py     # load-path param binding
+│   └── datasources.sample.json
 ├── knowledge/
-│   ├── extend_xsql_cookbook.md            # canonical query patterns (injected into the query prompt)
-│   ├── dashboard_render_defects.md        # render failure classes R1–R15 → the rule each became
-│   └── frd_template.md                    # EFM FRD template
+│   ├── xactly_extend_best_practices.md    # official Xactly BPs (law)
+│   ├── gold_comp_dashboard_shape.md       # finalized seller control architecture
+│   ├── training_loop.md                   # how each next app trains the builder
+│   ├── extend_xsql_cookbook.md            # canonical query patterns
+│   ├── period_correctness_rules.md        # quota/commission R1–R5
+│   ├── runtime_data_defects.md            # D1–D5 number-lie defects
+│   ├── canvas_to_extend_playbook.md       # canvas → page (+ §6 gold)
+│   ├── dashboard_render_defects.md        # render R1–R16
+│   ├── import_blockers.md
+│   └── frd_template.md
 ├── evals/                     # golden FRDs + regression/coverage suite
+│   └── golden/comp_dashboard/ # shape manifest for compensation apps
 └── requirements.txt
 ```
 
@@ -49,9 +59,11 @@ extend-llm/
 2. **FRD flows** — upload an FRD, or generate one (→ downloadable Word doc); **no build until finalized**.
 3. **Page designer** — page-spec → control list → `build_page` → `validate_page` gate (events + `:param` wiring)
    → `check_page_render` gate (render quality: duplicate headings, unbounded tables, placeholder copy).
-4. **App assembler** — architect plan → per-page views + pages → deployable Extend export bundle.
+4. **App assembler** — architect plan → per-page views + pages → **`write_bundle` + `pack_bundle` only**
+   (import_ready + simulate). Comp dashboards also run `check_gold_shape`.
 5. **Slack** — one app: query assistant **+** FRD→dashboard build trigger.
 6. **Feedback + evals** — accepted examples reused as few-shot; golden-FRD regression suite.
+   After each reviewed app: `python app/learn_from_review.py <scope> "<rule>" "<why>"` (see `knowledge/training_loop.md`).
 
 ## Quickstart
 ```bash

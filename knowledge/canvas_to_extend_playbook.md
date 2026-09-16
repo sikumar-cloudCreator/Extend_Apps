@@ -120,22 +120,19 @@ $onPageLoad
   → default_quarter      (:v_quarter)
   → master_participant_id(:v_master_participant_id)   ← also binds rep_select
   → master_position_id   (:v_master_position_id)
-  → quarter_code         (:v_quarter_code)            ← last link
+  → data_ready           (:v_quarter_code)            ← CREATE data_ready; data controls bind this
         ↓
-   every data control binds master_position_id / quarter_select
+   every data control binds data_ready (and/or master_position_id / quarter_select)
 ```
+
+**PageLoader:** For the full compensation spine, `showLoader` on `$onPageLoad` and
+`hideLoader` on **`data_ready`** (terminal link after `master_position_id`). That is the
+finalized seller gold pattern. On shorter pages, hide mid-chain once period is resolved
+(`default_quarter`). Never hide on a channel that might never fire.
 
 **Linear, not fan-out.** Two `vc`s bound to the same upstream event have *no
 ordering guarantee* between them. If a downstream view binds both their variables,
-it can fire with one unresolved. v3 hit exactly this: `month_start_date` and
-`default_quarter` both hung off `current_period_id`, and
-`seller_team_leaderboard` binds `:v_month_start_date` — so `default_quarter` was
-rechained beneath `month_start_date`. When in doubt, make it a chain.
-
-**PageLoader hides mid-chain, never on the terminal link.** `showLoader` on
-`$onPageLoad`; `hideLoader` on an event that always fires on load *and* by which
-the period is resolved (`default_quarter` in v3). Hiding on the deepest channel
-leaves the loader spinning forever if any link fails — a shipped defect.
+it can fire with one unresolved. When in doubt, make it a chain.
 
 ### Seeding a variable with no view
 A filter default that is a constant (a lock status, an empty search string) is a
@@ -185,3 +182,25 @@ Warnings you may leave, with a reason recorded:
   seeded by a static `vc`. The checker looks for `IS NULL` / `'All'`.
 
 Everything else, fix.
+
+---
+
+## 6. Gold compensation dashboard patterns (final seller, 2026-09-16)
+
+When the canvas / FRD is a seller-style comp dashboard, **clone these shapes** — do not
+reinvent tiles. Full contract: `knowledge/gold_comp_dashboard_shape.md`.
+
+| Canvas look | Emit |
+|---|---|
+| Wide KPI matrix (measures as columns, metrics as rows) | **One** `Custom` + one multi-measure view — not N measure cards |
+| Pill / chip measure switcher | `Custom` HTML pills with `data-xactly-event` + one pick-`vc` per pill that CREATEs `measure_select` |
+| Attainment bars (percent) | Percent-only HTML bars **or** composedChart of % only — never mix $ credits with % on one axis (R14) |
+| Profile / waterfall band | One `Custom` `layoutSize: 100` with internal CSS grid |
+| Four equal supp cards | `layoutSize: 25` × 4 |
+| Filter strip with download | Size siblings so the row sums to 100; empty `label` spacers OK; `button` + `exportPagePDF` |
+| Credit detail by measure | `tabContainer`; every nested data control BINDs `$onTabOpen` **and** `data_ready` |
+| Manager-only block | Complementary `team_show` / `team_hide` VCs; targets `shouldRenderHidden: true` |
+
+Gate: `python gate/check_gold_shape.py <page.json> --manifest evals/golden/comp_dashboard/shape_manifest.json`
+
+Delivery: `write_bundle` + `pack_bundle` only (`knowledge/training_loop.md`).

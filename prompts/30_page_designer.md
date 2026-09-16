@@ -13,7 +13,7 @@ Order matters — controls render top-to-bottom, left-to-right by `layoutSize`.
 { "kind": "label|pageloader|dropdown|vc|tile|card|table|chart|input|button|export",
   "title": "<label/heading text>",
   "ds": "<datasource view name>",        // data controls only
-  "schema": "<the datasource's schema from the grounding>",   // the tenant schema or $framework — NOT hardcoded
+  "schema": "<customer-defined app schema from grounding — NOT $framework for app data>",
   "valueField": "<col>", "displayField": "<col>",   // dropdown/vc
   "var": "v_x",                           // variable the driver sets (dropdown/vc)
   "produces": "e_channel",                // channel this control CREATEs (driver)
@@ -48,6 +48,11 @@ A mis-sized row leaves empty gutter or wraps mid-group — the page looks unalig
 6. Set `layoutSize` **explicitly** on every visible control — do not rely on builder defaults (`dropdown`/`tile` defaulting to 25 is what produces half-empty rows).
 
 ## Choose the right control (graphical, plug-and-play — point 4)
+For **compensation / seller-style** pages follow `knowledge/gold_comp_dashboard_shape.md` and canvas playbook §6 (matrix Custom, pills, percent-only trend, `data_ready` loader, team gates). Run `gate/check_gold_shape.py` before delivery. Scorecard = **one matrix Custom**, not N measure tiles.
+Official BPs (`knowledge/xactly_extend_best_practices.md`): bind Custom **Datasource directly** (never VC-push
+data into Custom — race); **never use hidden controls as spacers** (2026: hidden no longer reserve space —
+use empty text/padding); Grid for wide desktop only (≤1000 rows initial — bulk actions hit the table, not the
+grid); List for mobile few-column; keep Tab Container content under height limits; unique control keys.
 - **KPI value** → `tile` (bind one `column`). Not a Custom card.
 - **Trend / comparison** → `chart` (composedChart: bars/lines over an x field).
 - **Detail rows OR dynamic/variable columns** → `table` bound to the view (columns come from the view).

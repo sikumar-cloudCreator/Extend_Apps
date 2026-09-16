@@ -1,0 +1,8 @@
+{
+  "min_pages": 1,
+  "app_class": "comp_dashboard",
+  "shape_manifest": "shape_manifest.json",
+  "expected_reuse_views": [],
+  "required_new_view_prefixes": ["seller_", "comp_"],
+  "note": "Architect must plan a single-page comp dashboard. Shape checked by gate/check_gold_shape.py against shape_manifest.json. Reuse list empty on purpose — views are app-schema helpers, not catalog generics."
+}
