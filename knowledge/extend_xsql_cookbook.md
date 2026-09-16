@@ -248,3 +248,62 @@ A datasource is a query OBJECT, not a bare .sql file: `queries/<schema>/<name>.j
 - ❌ `ShowQuotaAttainment(...)` inside a JOIN → 504; make it the sole FROM.
 - ❌ NULL params to a table function → full scan/timeout; always bind resolved ids.
 - ❌ `LookupCurrentUser*` → binds to the logged-in user, not the selected rep; use Pattern B/C for ALL users.
+
+---
+
+## Rule 12 — the 300-line ceiling: compose, don't copy
+
+**A view over ~300 lines does not run.** That is an operational limit, not a style
+preference, and it binds hardest exactly where you are most tempted to copy-paste:
+a dashboard with three measure tiles, three payout tiles, three detail grids and a
+leaderboard, all needing the same period/quota/commission logic.
+
+Written naively, the v3 Seller Dashboard's quota rule (R1, an overlap test plus a
+correlated `MAX(effective_start)` — 28 lines) appears **11 times**. The measure
+scorecard alone hit 140 lines with two of its four subqueries inlined.
+
+### The pattern: parameterless helper views + short leaves
+
+Hoist every rule that would repeat into a **parameterless** view keyed by the
+columns consumers filter on. Leaves bind `:params` and stay short.
+
+```sql
+-- helper: no :params, resolves the rule once, keyed for lookup
+CREATE VIEW demo.seller_quota_effective AS
+SELECT xqa.assignment_id, q.name AS quota_name, psel.name AS period_name,
+       Nvl(SUM(xqa.amount), 0) AS quota_amount
+FROM   ...28 lines of R1 version-selection...
+GROUP BY xqa.assignment_id, q.name, psel.name
+
+-- leaf: 5 lines, and structurally cannot get the version rule wrong
+JOIN ( SELECT Nvl(SUM(qe.quota_amount), 0) AS amt
+       FROM   demo.seller_quota_effective qe
+       WHERE  qe.assignment_id = :v_master_position_id
+         AND  qe.quota_name    = 'Revenue'
+         AND  qe.period_name   = :v_quarter ) qq ON 1 = 1
+```
+
+v3 ships four helpers — quota-effective, commission-attribution, credit-enriched,
+payment-scoped — and its **longest** view is then 95 lines.
+
+### Keep helpers parameterless
+
+Do not put `:params` in a helper that another view selects from. Bind propagation
+into a nested view is not something to rely on; put the bind predicates in the
+consuming leaf, where the query object declares them. A helper that needs a
+per-request value should expose the raw column and let the leaf filter it (H3
+exposes `batch_name`; the leaf applies the `:v_lock_status` gate).
+
+### Two consequences worth knowing
+
+- **Correctness concentrates.** Fixing the quota rule is one edit in one view, not
+  eleven edits you might do ten of.
+- **The lint's "card view has no aggregate" warning goes false-positive** on
+  helpers whose names end in `_measure` / `_id`. A helper feeding a `table` is
+  meant to be multi-row. Record the reason and move on.
+
+### Still repeat when the literal is the only difference
+Three measure tiles differing solely in `'Revenue'` / `'Sales Profitability'` /
+`'BXO TPV'` stay as three views. Merging them behind a `:v_measure` param would
+merge them into one control — and the design calls for three tiles side by side.
+Repetition of a *literal* is fine; repetition of a *rule* is the thing to hoist.

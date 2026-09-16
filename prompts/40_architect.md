@@ -36,7 +36,8 @@ Return **one** fenced ```json object with this shape:
 - Keep `params` consistent across pages — the same concept uses the same variable name (`v_period`,
   `v_master_participant_id`, `v_master_position_id`, `v_year_number`, …) so filters wire cleanly app-wide.
 - `spec` must be complete enough for the page designer to place controls without re-reading the whole FRD
-  (filters, KPI tiles, charts, tables, and which fields are dynamic → table).
+  (filters, KPI tiles, charts, tables, and which fields are dynamic → table). Call out **row layout**
+  explicitly (e.g. "3 KPI tiles at 33.33", "Period+Seller filters at 50+50") so layoutSizes sum to 100.
 - Do not invent pageDefinitionIds — those come from the user later. Do not write SQL or control JSON.
 
 ## Grounding

@@ -1,0 +1,143 @@
+[
+  {
+    "name": "Master_Position_id",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_period"
+    ],
+    "columns": [
+      "position_name"
+    ],
+    "xsql": "SELECT pos.master_position_id,\n         MIN(pos.name) AS position_name\n  FROM xactly.xc_participant master_part\n  JOIN xactly.xc_period curr ON 1 = 1\n  LEFT JOIN xactly.xc_pos_part_assignment ppa\n    ON ppa.participant_id = master_part.participant_id\n  JOIN xactly.xc_position pos\n    ON pos.position_id            = ppa.position_id\n    AND pos.effective_start_date  < curr.end_date\n    AND pos.effective_end_date    > curr.start_date\n    AND pos.incent_st_date        < curr.end_date\n    AND pos.incent_end_date       > curr.start_date\n  WHERE master_part.participant_id = :v_master_participant_id\n    AND master_part.is_master      = 1\n    AND curr.name                  = :v_period\n  GROUP BY pos.master_position_id"
+  },
+  {
+    "name": "Master_participant_id",
+    "schema": "demo",
+    "params": [
+      "v_participant",
+      "v_period"
+    ],
+    "columns": [
+      "master_participant_id"
+    ],
+    "xsql": "select pa.name, master_pa.participant_id as master_participant_id from xactly.xc_participant pa \ninner join \nxactly.xc_period p \non pa.effective_start_date < p.end_date \nand pa.effective_end_date > p.start_date\njoin xactly.xc_participant master_pa on pa.employee_id=master_pa.employee_id and master_pa.is_master=1\nwhere p.name = :v_period and pa.name=:v_participant\norder by pa.name asc"
+  },
+  {
+    "name": "incnt_stmt_active_participant_list_admin_view",
+    "schema": "demo",
+    "params": [
+      "v_period"
+    ],
+    "columns": [
+      "participant_name_display"
+    ],
+    "xsql": "SELECT pa.name as participant_name_display, pa.name, pa.participant_id FROM xactly.xc_participant pa INNER JOIN xactly.xc_period p ON pa.effective_start_date < p.end_date AND pa.effective_end_date > p.start_date WHERE p.name = :v_period AND pa.is_master = 1 ORDER BY pa.name ASC"
+  },
+  {
+    "name": "incnt_stmt_monthly_period_list_till_curr_month",
+    "schema": "demo",
+    "params": [],
+    "columns": [
+      "name_ft"
+    ],
+    "xsql": "select case when is_open = 1 then p.name || ' (open)' else p.name || ' (closed)' end as name_ft, p.name from xactly.xc_period p where LookupPeriodTypeById(p.period_type_id_fk) = 'MONTHLY' and p.name not in ('SOT','EOT') order by p.period_id desc"
+  },
+  {
+    "name": "q_sd_annual_credits_by_measure",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_master_position_id",
+      "v_period",
+      "v_year_number"
+    ],
+    "columns": [
+      "annual_attainment_pct",
+      "annual_quota",
+      "annual_ytd_credits",
+      "measure_name"
+    ],
+    "xsql": "SELECT\n    q.name AS measure_name,\n    Nvl(FormatNumber(SUM(cr.amount), '#,##0.00'), '0.00') AS annual_ytd_credits,\n    Nvl(FormatNumber(tg.annual_quota, '#,##0.00'), '0.00') AS annual_quota,\n    CASE WHEN Nvl(tg.annual_quota, 0) > 0\n         THEN Nvl(FormatNumber(SUM(cr.amount) / tg.annual_quota * 100, '#,##0.00'), '0.00') || '%'\n         ELSE '\u2014' END AS annual_attainment_pct\nFROM xactly.xc_participant master_part\nJOIN xactly.xc_period curr ON 1=1\nJOIN xactly.xc_commission cm\n    ON cm.participant_id = master_part.participant_id\n    AND cm.position_id = :v_master_position_id\nJOIN xactly.xc_credit cr ON cr.credit_id = cm.credit_id\nJOIN xactly.xc_period per\n    ON per.period_id = cm.period_id\n    AND per.name LIKE Concat('%-', :v_year_number)\n    AND per.end_date <= curr.end_date\nJOIN xactly.xc_quota q ON q.quota_id = cm.quota_id\nLEFT JOIN (\n    SELECT qa.quota_id, SUM(qa.amount) AS annual_quota\n    FROM xactly.xc_quota_assignment qa\n    JOIN xactly.xc_period yp ON yp.period_id = qa.period_id\n    WHERE qa.assignment_id = :v_master_position_id\n      AND yp.name LIKE Concat('%-', :v_year_number)\n    GROUP BY qa.quota_id\n) tg ON tg.quota_id = q.quota_id\nWHERE master_part.participant_id = :v_master_participant_id\n  AND master_part.is_master = 1\n  AND curr.name = :v_period\nGROUP BY q.name, tg.annual_quota\nORDER BY q.name"
+  },
+  {
+    "name": "q_sd_payouts_by_measure",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_master_position_id",
+      "v_period",
+      "v_year_number"
+    ],
+    "columns": [
+      "calculated_payout",
+      "measure_name",
+      "pending_payout",
+      "released_payout"
+    ],
+    "xsql": "SELECT\n    q.name AS measure_name,\n    Nvl(FormatNumber(SUM(cm.amount), '#,##0.00'), '0.00') AS calculated_payout,\n    Nvl(FormatNumber(SUM(CASE WHEN pay.is_released = '1' THEN pay.amount ELSE 0 END), '#,##0.00'), '0.00') AS released_payout,\n    Nvl(FormatNumber(SUM(CASE WHEN Nvl(pay.is_released,'0') != '1' THEN pay.amount ELSE 0 END), '#,##0.00'), '0.00') AS pending_payout\nFROM xactly.xc_participant master_part\nJOIN xactly.xc_period curr ON 1=1\nJOIN xactly.xc_commission cm\n    ON cm.participant_id = master_part.participant_id\n    AND cm.position_id = :v_master_position_id\nJOIN xactly.xc_period per\n    ON per.period_id = cm.period_id\n    AND per.name LIKE Concat('%-', :v_year_number)\n    AND per.end_date <= curr.end_date\nJOIN xactly.xc_quota q ON q.quota_id = cm.quota_id\nLEFT JOIN xactly.xc_payment pay\n    ON pay.participant_id = master_part.participant_id\n    AND pay.period_id = cm.period_id\nWHERE master_part.participant_id = :v_master_participant_id\n  AND master_part.is_master = 1\n  AND curr.name = :v_period\nGROUP BY q.name\nORDER BY q.name"
+  },
+  {
+    "name": "q_sd_qtr_credits_by_measure",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_master_position_id",
+      "v_period"
+    ],
+    "columns": [
+      "attainment_pct",
+      "measure_name",
+      "qtr_quota",
+      "qtr_ytd_credits",
+      "tgt"
+    ],
+    "xsql": "SELECT\n    q.name AS measure_name,\n    Nvl(FormatNumber(SUM(cr.amount), '#,##0.00'), '0.00') AS qtr_ytd_credits,\n    Nvl(FormatNumber(tg.tgt, '#,##0.00'), '0.00') AS qtr_quota,\n    CASE WHEN Nvl(tg.tgt, 0) > 0\n         THEN Nvl(FormatNumber(SUM(cr.amount) / tg.tgt * 100, '#,##0.00'), '0.00') || '%'\n         ELSE '\u2014' END AS attainment_pct\nFROM xactly.xc_participant master_part\nJOIN xactly.xc_period curr ON 1=1\nJOIN xactly.xc_commission cm\n    ON cm.participant_id = master_part.participant_id\n    AND cm.position_id = :v_master_position_id\nJOIN xactly.xc_credit cr ON cr.credit_id = cm.credit_id\nJOIN xactly.xc_period per ON per.period_id = cm.period_id AND per.name = :v_period\nJOIN xactly.xc_quota q ON q.quota_id = cm.quota_id\nLEFT JOIN (\n    SELECT qa.quota_id, SUM(qa.amount) AS tgt\n    FROM xactly.xc_quota_assignment qa\n    JOIN xactly.xc_period yp ON yp.period_id = qa.period_id\n    WHERE qa.assignment_id = :v_master_position_id\n      AND yp.name = :v_period\n    GROUP BY qa.quota_id\n) tg ON tg.quota_id = q.quota_id\nWHERE master_part.participant_id = :v_master_participant_id\n  AND master_part.is_master = 1\n  AND curr.name = :v_period\nGROUP BY q.name, tg.tgt\nORDER BY q.name"
+  },
+  {
+    "name": "q_sd_quota_attainment_by_measure",
+    "schema": "demo",
+    "params": [
+      "v_master_position_id",
+      "v_period",
+      "v_year_number"
+    ],
+    "columns": [
+      "att",
+      "attainment_pct",
+      "cred",
+      "quota_amount",
+      "quota_name",
+      "tgt",
+      "total_credit"
+    ],
+    "xsql": "SELECT\n    quota_name,\n    Nvl(FormatNumber(Round(att, 2), '#,##0.00'), '0.00') || '%' AS attainment_pct,\n    Nvl(FormatNumber(cred, '#,##0.00'), '0.00') AS total_credit,\n    Nvl(FormatNumber(tgt, '#,##0.00'), '0.00') AS quota_amount\nFROM (\n    SELECT\n        q.name AS quota_name,\n        Nvl(b.cred, 0) AS cred,\n        tg.tgt AS tgt,\n        CASE WHEN tg.tgt > 0 THEN Nvl(b.cred, 0) / tg.tgt * 100 ELSE 0 END AS att\n    FROM (\n        SELECT qa.quota_id, Max(qa.amount) AS tgt\n        FROM xactly.xc_quota_assignment qa\n        JOIN xactly.xc_period yp ON yp.period_id = qa.period_id\n        WHERE qa.assignment_id = :v_master_position_id\n          AND yp.name LIKE Concat('%-', :v_year_number)\n        GROUP BY qa.quota_id\n    ) tg\n    JOIN xactly.xc_quota q ON q.quota_id = tg.quota_id\n    LEFT JOIN (\n        SELECT cq.quota_id, SUM(cr.amount) AS cred\n        FROM (\n            SELECT DISTINCT cm.quota_id, cm.credit_id\n            FROM xactly.xc_commission cm\n            WHERE cm.position_id = :v_master_position_id\n        ) cq\n        JOIN xactly.xc_credit cr ON cr.credit_id = cq.credit_id\n        JOIN (\n            SELECT period_id FROM xactly.xc_period\n            WHERE name LIKE Concat('%-', :v_year_number)\n              AND end_date <= (SELECT end_date FROM xactly.xc_period WHERE name = :v_period)\n        ) ps ON ps.period_id = cr.period_id\n        GROUP BY cq.quota_id\n    ) b ON b.quota_id = tg.quota_id\n)"
+  },
+  {
+    "name": "q_sd_summary_kpis",
+    "schema": "demo",
+    "params": [
+      "v_master_participant_id",
+      "v_period",
+      "v_year_number"
+    ],
+    "columns": [
+      "total_commissions",
+      "total_pending",
+      "total_released",
+      "total_ytd_credits"
+    ],
+    "xsql": "SELECT\n    Nvl(FormatNumber(SUM(cr.amount), '$#,##0.00'), '$0.00') AS total_ytd_credits,\n    Nvl(FormatNumber(SUM(cm.amount), '$#,##0.00'), '$0.00') AS total_commissions,\n    Nvl(FormatNumber(SUM(CASE WHEN pay.is_released = '1' THEN pay.amount ELSE 0 END), '$#,##0.00'), '$0.00') AS total_released,\n    Nvl(FormatNumber(SUM(CASE WHEN Nvl(pay.is_released,'0') != '1' THEN pay.amount ELSE 0 END), '$#,##0.00'), '$0.00') AS total_pending\nFROM xactly.xc_participant master_part\nJOIN xactly.xc_period curr ON 1=1\nJOIN xactly.xc_credit cr ON cr.participant_id = master_part.participant_id\nJOIN xactly.xc_period per ON per.period_id = cr.period_id\n    AND per.name LIKE Concat('%-', :v_year_number)\n    AND per.end_date <= (SELECT end_date FROM xactly.xc_period WHERE name = :v_period)\nLEFT JOIN xactly.xc_commission cm ON cm.credit_id = cr.credit_id\nLEFT JOIN xactly.xc_payment pay ON pay.participant_id = master_part.participant_id\n    AND pay.period_id = cr.period_id\nWHERE master_part.participant_id = :v_master_participant_id\n  AND master_part.is_master = 1\n  AND curr.name = :v_period"
+  },
+  {
+    "name": "q_sd_year_number",
+    "schema": "demo",
+    "params": [
+      "v_period"
+    ],
+    "columns": [
+      "period_year"
+    ],
+    "xsql": "SELECT SubString(p.name, 3, 7) AS period_year\nFROM xactly.xc_period p\nINNER JOIN xactly.xc_period_type pt ON p.period_type_id_fk = pt.period_type_id\nINNER JOIN xactly.xc_period per ON per.start_date BETWEEN p.start_date AND p.end_date\nWHERE pt.name = 'YEARLY'\n  AND per.name = :v_period"
+  }
+]

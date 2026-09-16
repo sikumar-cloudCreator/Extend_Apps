@@ -12,8 +12,25 @@ passed the deterministic gate**.
    (`schema_lookup`, the `xc_*` data dictionary) and the tenant view catalog — not from memory.
 3. **Reuse before authoring.** Call `resolve_datasource` / `list_datasources` first; only write a new view
    when no existing tenant view covers the needed columns.
-4. **Never invent a `pageDefinitionId` or page `title`.** They come from the created-page shell and are
-   passed through byte-for-byte. Your job is only to fill the control map.
+4. **Never invent ANY id.** Not a `pageDefinitionId`, not a `title`, not an `applicationId`, not a
+   `controlId`. Page ids and titles come from the created-page shell and pass through byte-for-byte;
+   every other id is minted by the assembler. Ids the importer parses as UUIDs must be real hex —
+   a UUID-*shaped* placeholder like `c1a1m000-0000-4000-8000-claimrequest01` or
+   `adm00001-0001-4001-8001-000000000001` contains non-hex letters, is rejected at import, and passes
+   every page-level gate on the way there. If you catch yourself typing a mnemonic id, stop.
+4b. **Never hand-author the bundle.** Do not write `ADLC.json`, `Application.json`, query objects, or
+   table schemas yourself, and do not zip the folder yourself. Call `app_assembler.write_bundle(...)`
+   then `app_assembler.pack_bundle(...)`. Both self-check with `gate/check_import_ready.py`, and
+   `pack_bundle` refuses to emit a zip that would not import **or would not work**:
+   it runs `gate/simulate_events.py`, which replays the load path and fails the build
+   when any control fires with a parameter still unbound, when a channel has no
+   producer or two producers, or when the PageLoader can only hide behind an
+   xSQLRunner chain (a slow DML then hangs the page forever), or when a control
+   binds a datasource no shipped query provides. A hand-assembled bundle is exactly how
+   ClaimRequest (2026-09-05) shipped five import-blocking defects that every other gate passed:
+   a wrapping zip directory, an invalid `applicationId`, 25 invalid `controlId`s, `CREATE VIEW ... AS`
+   embedded inside `xsql` (it must be a BARE SELECT — the importer builds the DDL from
+   `name` + `schemaName`), and 3 CSV rows short of their schema's column count.
 5. **Cover the FRD.** Every requirement maps to a page/component/view/workflow, or is explicitly flagged as
    not buildable in Extend (with the reason). No silent drops.
 
@@ -35,7 +52,8 @@ Bounded retries per artifact (default 3); if still failing, return it marked `ne
 ## Extend structural rules (what a valid page IS)
 - A page is the envelope: `pageDefinitionId`, `title`, `versionName`, and
   `pageSchema.controlSchema.schema.properties` — a **flat map** keyed `control_1, control_2, …`. No nesting,
-  no containers; layout is per-control `layoutSize` (100 / 50 / 25 / 16.66 / null).
+  no containers; layout is per-control `layoutSize` (100 / 66.66 / 50 / 33.33 / 25 / 16.66 / null).
+  Every visual row's layoutSizes must sum to ~100 (R16); tables/charts/labels are full-width alone.
 - **Only real control types:** `label, dropdown, table, tile, Custom, variableConfigurator, PageLoader,
   composedChart, tabContainer, slideout, modal, button, workflowButton, xSQLButton, xSQLRunner,
   xsqlWorkflowTrigger, input, Timer`. Any other type is invalid — do not invent (`container`, `card`,

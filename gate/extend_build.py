@@ -15,6 +15,7 @@ Control spec (input to build_page) — one dict per control:
     "columns": [{"field","headerName"},...],         # table (optional)
     "schema": "demo" }
 """
+from __future__ import annotations
 import os, re, uuid
 
 # Tenant schema is not universal — default is configurable; "demo" only as a last resort.
@@ -30,6 +31,87 @@ TABLE_ROWS = 25
 TABLE_MAX_HEIGHT = 480
 NULLDS = {"name": None, "schema": None, "fields": None, "type": None, "isReadOnly": False,
           "columns": None, "seriesColors": {}, "customLabels": {}}
+
+# Visual grid (R16). Invisible drivers skip the row math.
+ALLOWED_LAYOUT = (100, 66.66, 50, 33.33, 25, 16.66)
+LAYOUT_SKIP_KINDS = {"pageloader", "vc"}
+LAYOUT_FALLBACK = {
+    "label": 100, "table": 100, "chart": 100, "input": 100, "export": 100,
+    "dropdown": 25, "tile": 25, "card": 33.33, "button": 16.66,
+}
+
+
+def _spec_width(spec: dict):
+    if spec.get("kind") in LAYOUT_SKIP_KINDS:
+        return None
+    ls = spec.get("layoutSize")
+    if ls is not None and ls != "":
+        try:
+            return float(ls)
+        except (TypeError, ValueError):
+            return LAYOUT_FALLBACK.get(spec.get("kind"), 100)
+    return float(LAYOUT_FALLBACK.get(spec.get("kind"), 100))
+
+
+def _equal_row_size(n: int):
+    """Allowed layoutSize so n equal siblings fill a row, or None if n can't tile to 100."""
+    if n <= 0:
+        return None
+    if n == 1:
+        return 100.0
+    for s in ALLOWED_LAYOUT:
+        if abs(s * n - 100.0) <= 1.0:
+            return float(s)
+    return None
+
+
+def align_control_layout(controls: list) -> list:
+    """Mutate control specs so each visual row's layoutSizes sum to ~100 (R16).
+
+    Incomplete rows of N siblings are redistributed to an allowed equal size (2→50, 3→33.33, …).
+    Rows that cannot tile evenly (e.g. 5 filters) are left for the render gate to fail so the
+    LLM splits them. Invisible drivers (pageloader / vc) are skipped. Missing layoutSize on a
+    visible control is materialized to the width used for packing so the assembler doesn't
+    apply a wrong kind-default later.
+    """
+    items = []
+    for i, spec in enumerate(controls):
+        w = _spec_width(spec)
+        if w is not None:
+            items.append((i, spec, w))
+
+    rows, row, acc = [], [], 0.0
+    for item in items:
+        _, _, w = item
+        if row and acc + w > 101.0:
+            rows.append((row, acc))
+            row, acc = [], 0.0
+        row.append(item)
+        acc += w
+        if abs(acc - 100.0) <= 1.0:
+            rows.append((row, acc))
+            row, acc = [], 0.0
+    if row:
+        rows.append((row, acc))
+
+    for row, total in rows:
+        if abs(total - 100.0) <= 1.0:
+            # Row already fills — still write explicit sizes so omitted values don't get a
+            # wrong assembler default (e.g. card → 100) later.
+            for _, spec, w in row:
+                if spec.get("layoutSize") in (None, ""):
+                    spec["layoutSize"] = w
+            continue
+        size = _equal_row_size(len(row))
+        if size is None:
+            # e.g. 5 siblings — materialize current widths; gate will fail and designer splits
+            for _, spec, w in row:
+                if spec.get("layoutSize") in (None, ""):
+                    spec["layoutSize"] = w
+            continue
+        for _, spec, _ in row:
+            spec["layoutSize"] = size
+    return controls
 
 
 def _ev(name, sel, cid, handlers):
@@ -91,6 +173,8 @@ def _titled_by_sibling(controls: list, spec: dict) -> bool:
 
 
 def build_page(controls: list, shell: dict) -> dict:
+    # R16: normalize ragged rows (e.g. two tiles at default 25 → 50+50) before emitting props.
+    controls = align_control_layout([dict(c) for c in controls])
     props, n = {}, 0
     for spec in controls:
         kind = spec.get("kind")
@@ -152,7 +236,7 @@ def build_page(controls: list, shell: dict) -> dict:
                           "datasource": _dsv(ds, schema, True) if ds else NULLDS,
                           "pagination": PAG, "columns": [], "whereClauseVariable": None,
                           "variables": [{"name": v, "boundToField": f} for v, f in spec.get("bound", [])],
-                          "controlData": spec["html"], "layoutSize": ls, "intl": False,
+                          "controlData": spec["html"], "layoutSize": ls if ls is not None else 100, "intl": False,
                           "helpIconPosition": "alignLeft", "helpIconTooltipPosiiton": "right",
                           "helpIconValue": None, "shouldRenderHidden": False}
         elif kind == "table":
