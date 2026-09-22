@@ -31,6 +31,7 @@ BASE = Path("/home/ubuntu/.cursor/projects/workspace/uploads/Wesco_SOW16_FRD_v2_
 OUT_NAME = "Wesco_SOW14_FRD_v1_Connect_Incent_xactly_style.docx"
 ARTIFACT_DIR = Path("/opt/cursor/artifacts")
 OUT_DIR = Path("/workspace/out_frd")
+ARTIFACT_STAMP_NAME = "Wesco_SOW14_FRD_v1_Connect_Incent_xactly_style_credit_assignment_app.docx"
 
 HEADER_FILL = "FBD5B5"
 H1_COLOR = RGBColor(0x34, 0x5A, 0x8A)
@@ -273,8 +274,8 @@ DATALAKE_MAPPING = [
     ["Description", "sku_description", ""],
     ["Related Order Code", "Leave Blank", ""],
     ["Related Item Code", "Leave Blank", ""],
-    ["Employee ID", "Derived via TMCA (OSR/ISR rules-based crediting)", ""],
-    ["Split Amount (%)", "From TMCA SPLIT_PERCENTAGE", ""],
+    ["Employee ID", "Derived via Credit Assignment app (OSR/ISR from feed)", "Credit Assignment app resolves payees"],
+    ["Split Amount (%)", "From Credit Assignment app split %", ""],
     ["Xactly Custom Order Field Names", "Source / Derivation", "NOTES"],
     ["OSR_Code", "outside_sales_rep_id", ""],
     ["ISR_Code", "inside_sales_rep_id", ""],
@@ -303,7 +304,11 @@ VALIDATIONS = [
     ["Format — invoice_date", "REJECT", "Invalid date M/d/yyyy"],
     ["Format — numeric amounts", "REJECT", "Invalid number for sales/cost/qty/standard_cost/freight when present"],
     ["Warning — sales_amount", "WARNING", "DataLake-Warning: SALES Amt is Null or zero"],
-    ["TMCA CR assignment missing", "REJECT / Email", "Raw TMCA txn without credited_trans → email error log"],
+    [
+        "Credit Assignment missing",
+        "REJECT / Email",
+        "Orders not credited by Credit Assignment app → email error log with missing assignment orders",
+    ],
 ]
 
 PIPELINE_BULLETS = [
@@ -313,9 +318,12 @@ PIPELINE_BULLETS = [
     "p_o_load_sourcedata_UploadDataLake — create validation_errors_UploadDataLake; DirList /inbound/ for DataLake_____-__-__.csv; ReadFile into UploadDataLake_DataLake_dump.",
     "p_o_validate_source_file_UploadDataLake_DataLake — mandatory + datatype validations; load clean excluding error rows.",
     "Create prestage order item / assignment / process_log; load participant + business group dumps.",
-    "p_o_transform_UploadDataLake — TMCA order item dump from clean DataLake; upload geo/customer/product; purge/validate/upload/calculate TMCA; build credited assignments; prestage Incent orders with BG-suffixed order/batch codes.",
-    "p_o_order_validations_UploadDataLake — custom + standard order validations; insert valid rows to staging.",
-    "p_o_shared_upload_orders — create batches, validate/upload orders, queue downstream process groups; email on invocation errors.",
+    "p_o_transform_UploadDataLake / p_transform_CreditAssignment_datalake — transform clean DataLake rows for the Credit Assignment app (OSR/ISR and order attributes as inputs); upload required geo/customer/product reference data.",
+    "Credit Assignment app — credit assignment is performed in the Credit Assignment app (not direct employee ID on the inbound file). Connect invokes/consumes Credit Assignment app results to obtain employee_id and split % per order/item.",
+    "Build delta source assignment dump from Credit Assignment app output; email notification when orders are missing credit assignment.",
+    "Populate prestage_order_item_assignment and prestage_order_item from Credit Assignment app results (order/batch codes suffixed with business group).",
+    "p_o_order_validations_UploadDataLake — custom + standard order validations (including missing assignments); insert valid rows to staging.",
+    "p_o_shared_upload_orders — create batches, validate/upload orders to Incent, queue downstream process groups; email on invocation errors.",
 ]
 
 
@@ -604,9 +612,12 @@ def rebuild_data_section(doc: Document):
             ],
             [
                 "Employee ID / Split %",
-                "TMCA validate/upload/calculate using OSR/ISR; join credited transactions to participants; "
-                "write prestage_order_item_assignment; suffix order/batch with business group before Incent upload.",
-                "OSR/ISR resolved to employee_id via TMCA",
+                "Credit assignment is performed through the Credit Assignment app. Connect transforms DataLake "
+                "orders (including OSR_Code / ISR_Code) into the Credit Assignment app input, runs/consumes "
+                "Credit Assignment app results, then writes employee_id and split_amount_pct to "
+                "prestage_order_item_assignment. Order/batch codes are suffixed with business group before "
+                "Incent order upload. Direct employee ID is not supplied on the inbound DataLake file.",
+                "OSR/ISR from feed → Credit Assignment app → employee_id + split %",
             ],
             [
                 "Batch Name",
@@ -627,7 +638,9 @@ def rebuild_data_section(doc: Document):
     add_p("Connect Pipeline Structure — UploadDataLake", style="Heading 3")
     add_p(
         "Pipeline structure follows Xactly Connect standards used in the UploadDDP pattern. Object and "
-        "variable names are updated for DataLake; mapping fields follow the tables above."
+        "variable names are updated for DataLake; mapping fields follow the tables above. "
+        "Credit assignment (employee_id / split %) is performed through the Credit Assignment app; "
+        "Connect prepares inputs for that app and uses its results to build Incent order assignments."
     )
     for b in PIPELINE_BULLETS:
         cursor = insert_paragraph_after(cursor, text=b, size=10)
@@ -880,8 +893,8 @@ def main():
 
     out_path = OUT_DIR / OUT_NAME
     art_path = ARTIFACT_DIR / OUT_NAME
-    # also timestamped immutable artifact
-    art_ts = ARTIFACT_DIR / "Wesco_SOW14_FRD_v1_Connect_Incent_xactly_style_20260922.docx"
+    # immutable unique artifact name for download
+    art_ts = ARTIFACT_DIR / ARTIFACT_STAMP_NAME
 
     doc.save(str(out_path))
     doc.save(str(art_path))
@@ -890,7 +903,7 @@ def main():
     # zip pack
     import zipfile
 
-    zpath = ARTIFACT_DIR / "Wesco_SOW14_FRD_xactly_style_download.zip"
+    zpath = ARTIFACT_DIR / "Wesco_SOW14_FRD_xactly_style_credit_assignment_download.zip"
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(out_path, OUT_NAME)
         csv = OUT_DIR / "section4_datalake_order_field_mapping.csv"
@@ -900,6 +913,7 @@ def main():
             "README.txt",
             "Wesco SOW-14 FRD (Xactly template style)\n"
             f"- {OUT_NAME}\n"
+            "Credit assignment via Credit Assignment app.\n"
             "Built from Wesco SOW16 FRD v2 Xactly house template.\n",
         )
 
