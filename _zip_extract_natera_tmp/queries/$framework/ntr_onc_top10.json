@@ -1,0 +1,1 @@
+{"variables":[{"name":"p_region","value":"ALL","dataType":"String"}],"savedInEditor":true,"isValid":true,"name":"ntr_onc_top10","schemaName":"$framework","xsql":"SELECT \n    COS_Name,\n    Projected_FollowOn_Payout\nFROM EXT_NATERA_ONC_PERF\nWHERE 'ALL' IN (:p_region) OR Region IN (:p_region)\nORDER BY Projected_FollowOn_Payout DESC\nLIMIT 10","properties":{}}

@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_refresh_date",
+  "schemaName": "demo",
+  "xsql": "SELECT FormatDateTime(Now(), 'MMM dd, yyyy hh:mm a') AS refresh_date",
+  "properties": {}
+}

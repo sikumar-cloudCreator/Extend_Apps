@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_default_reason",
+  "schemaName": "demo",
+  "xsql": "SELECT Nvl(MAX(r.reason_code), '') AS reason_code\nFROM   claim.claim_reason_code r\nWHERE  r.is_active = 'Y'\n  AND  r.sort_order = ( SELECT MIN(r2.sort_order)\n                        FROM   claim.claim_reason_code r2\n                        WHERE  r2.is_active = 'Y' )",
+  "properties": {}
+}

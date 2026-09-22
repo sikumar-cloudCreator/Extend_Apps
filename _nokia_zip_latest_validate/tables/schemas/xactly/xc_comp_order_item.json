@@ -1,0 +1,1 @@
+{"id":"entaac5a03141797a797c1b4a586a096","schemaName":"xactly","tableName":"xc_comp_order_item","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_COMP_ORDER_ITEM', ObjectType='OrderItem');","audited":false,"effectiveDated":false}

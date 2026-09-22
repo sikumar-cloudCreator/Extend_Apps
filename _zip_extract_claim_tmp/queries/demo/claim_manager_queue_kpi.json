@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_master_position_id",
+      "value": "0",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_manager_queue_kpi",
+  "schemaName": "demo",
+  "xsql": "SELECT FormatNumber(Nvl(COUNT(CASE WHEN c.status = 'Submitted' THEN 1 END), 0), '#,##0') AS awaiting_count,\n       FormatNumber(Nvl(COUNT(CASE WHEN c.status = 'Approved'  THEN 1 END), 0), '#,##0') AS approved_count,\n       FormatNumber(Nvl(COUNT(CASE WHEN c.status = 'Rejected'  THEN 1 END), 0), '#,##0') AS rejected_count,\n       FormatNumber(Nvl(SUM(CASE WHEN c.status = 'Submitted' THEN c.claim_amount END), 0), '$#,###0.00') AS awaiting_value\nFROM   claim.claim_request c\nWHERE  c.employee_id IN ( SELECT pa.employee_id\n                          FROM   xactly.xc_pos_hierarchy ph\n                          INNER JOIN xactly.xc_position pos\n                              ON pos.master_position_id = ph.to_pos_id\n                          INNER JOIN xactly.xc_pos_part_assignment ppa\n                              ON ppa.position_id = pos.position_id\n                          INNER JOIN xactly.xc_participant pa\n                              ON  pa.participant_id = ppa.participant_id\n                              AND pa.is_master      = 1\n                          WHERE  ph.from_pos_id = :v_master_position_id\n                            AND  ph.is_active   = 1 )",
+  "properties": {}
+}

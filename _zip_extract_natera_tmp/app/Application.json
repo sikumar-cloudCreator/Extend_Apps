@@ -1,0 +1,53 @@
+{
+  "applicationId" : "1a635898-8c7f-4278-8d3c-c811e172d85a",
+  "applicationName" : "Natera",
+  "landingPageId" : "f3e3c27d-e358-4702-951e-003f5012dad3",
+  "icon" : "LogoIconOnlyBenchmarkingComponent",
+  "sections" : [ {
+    "name" : "Executive Summary",
+    "icon" : "Home",
+    "pageDefinitionId" : "f3e3c27d-e358-4702-951e-003f5012dad3",
+    "description" : "",
+    "sections" : [ ],
+    "accessRoles" : null,
+    "privileges" : null
+  }, {
+    "name" : "Organ Health (OH)",
+    "icon" : "Apps",
+    "pageDefinitionId" : "804312a1-1b55-413d-bbef-f0687c588c21",
+    "description" : "",
+    "sections" : [ ],
+    "accessRoles" : null,
+    "privileges" : null
+  }, {
+    "name" : "Oncology (ONC)",
+    "icon" : "Align Justify",
+    "pageDefinitionId" : "59f89628-320a-4f26-b6e0-9d8bffaeaa0e",
+    "description" : "",
+    "sections" : [ ],
+    "accessRoles" : null,
+    "privileges" : null
+  }, {
+    "name" : "Women's Health (WH)",
+    "icon" : "Align Justify",
+    "pageDefinitionId" : "817ebf09-f0b7-47fb-a2ec-f6ad3424f9ad",
+    "description" : "",
+    "sections" : [ ],
+    "accessRoles" : null,
+    "privileges" : null,
+    "isReferredPage" : false
+  }, {
+    "name" : "Admin",
+    "icon" : "Analytics",
+    "pageDefinitionId" : "8a89f1c4-928f-4025-a96f-28b426611e6f",
+    "description" : "",
+    "sections" : [ ],
+    "accessRoles" : null,
+    "privileges" : null,
+    "isReferredPage" : false
+  } ],
+  "accessRoles" : [ ],
+  "tagIds" : [ ],
+  "applicationState" : "DRAFT",
+  "applicationI18nFiles" : [ ]
+}

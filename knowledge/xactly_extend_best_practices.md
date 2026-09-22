@@ -13,22 +13,24 @@ Companion docs (still apply; where they conflict, **this file wins**):
 
 ---
 
-## 1. Schemas (customer-defined, never `$framework` for app data)
+## 1. Schemas (team standard: `$framework`)
 
 A **schema** is a namespace for tables, views, and Extend queries — a folder for the
 app's data architecture.
 
+**This builder's standard app schema is `$framework`.** All new app tables and queries
+default there unless the FRD or grounding names another schema. Always fully qualify.
+
 | Rule | Detail |
 |---|---|
-| **S1** | All **new** app objects go in a **customer-defined schema**. `$framework` is reserved for the platform. |
-| **S2** | Prefer **one schema per application** (`dealclaims`, `seller_dashboard`). Use a shared schema only for data truly shared across thematically related apps (`hr_data`). |
-| **S3** | Naming: lowercase letters, numbers, underscores; **must start with a letter**; immutable after create. |
-| **S4** | Always **fully qualify**: `schema_name.object_name`. Example: `SELECT * FROM dealclaims.approval_records`. |
+| **S1** | Default app schema = **`$framework`** (`EXTEND_DEFAULT_SCHEMA`). Override only when grounding/FRD requires it. |
+| **S2** | Shared cross-app objects may still live in `$framework` (team convention). Dedicated customer schemas are optional, not required for this pipeline. |
+| **S3** | Naming for *new* custom schemas (if ever used): lowercase letters, numbers, underscores; must start with a letter; immutable after create. |
+| **S4** | Always **fully qualify**: `schema_name.object_name`. Example: `SELECT * FROM $framework.approval_records`. |
 | **S5** | **MANDATORY by Oct 2026:** unqualified Incent tables fail. ✅ `xactly.xc_commission` ❌ `xc_commission`. |
-| **S6** | Builder components: pick the app schema in the Schema drop-down first so the Datasource list is scoped (faster, fewer mistakes). |
+| **S6** | Builder components: pick `$framework` (or the app schema) in the Schema drop-down first so the Datasource list is scoped. |
 
-Do **not** park custom tables/queries in `$framework` — naming conflicts on upgrade,
-clutter, and no logical app boundary.
+Platform Incent facts stay under `xactly.*`. App-authored views/tables use `$framework.*` by default.
 
 ---
 
@@ -51,7 +53,7 @@ clutter, and no logical app boundary.
 |---|---|
 | **Q1** | Names: lowercase + underscores (case-insensitive, but be consistent). |
 | **Q2** | Include `$` on system fields: `SELECT $id … FROM $framework.my_custom_table`. |
-| **Q3** | Fully qualify every object (`xactly.…`, `app_schema.…`, `$framework.…` only when touching platform tables). |
+| **Q3** | Fully qualify every object (`xactly.…` for Incent facts, `$framework.…` for app tables/queries). |
 | **Q4** | Join on **IDs** (PK/FK), not names, whenever possible. |
 | **Q5** | Point Grids/Lists/Dropdowns at structured queries. If a dropdown needs dynamic vars/functions, **materialize into a table first** — type-to-filter breaks on dynamic query sources. |
 | **Q6** | Prefer queries over ETL copies into `$framework` — one source of truth; create tables only when required (Extend Data → Tables). |
@@ -120,7 +122,7 @@ clutter, and no logical app boundary.
 - [ ] Security tested via **manager impersonation** (not admin-only)
 - [ ] Workflow health log reviewed
 - [ ] No deprecated `DeployIncent()` / Assistants API
-- [ ] All objects in customer schema; all SQL fully qualified
+- [ ] App objects in **`$framework`** (team standard) unless FRD says otherwise; all SQL fully qualified
 - [ ] Comp tiles do **not** call `ShowQuotaAttainment`
 
 ---
@@ -129,7 +131,7 @@ clutter, and no logical app boundary.
 
 | Topic | Avoid | Best practice |
 |---|---|---|
-| Schema | App objects in `$framework` | One customer schema per app; fully qualify |
+| Schema | Unqualified / wrong schema | **`$framework`** for app objects; fully qualify; `xactly.*` for Incent facts |
 | Variables | Global `set` | VC on `$onPageLoad`, page-scoped |
 | Variable setup | Query before init | Seed defaults first |
 | Row security | JOIN `xc_part_user_assignment` to dedupe | `DISTINCT` on `xc_participant` + impersonation test |

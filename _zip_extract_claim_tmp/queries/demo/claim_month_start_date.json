@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_period",
+      "value": "JAN-2026",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_month_start_date",
+  "schemaName": "demo",
+  "xsql": "SELECT Nvl(MAX(p.start_date), CurDate()) AS month_start_date\nFROM   xactly.xc_period p\nWHERE  p.name = :v_period",
+  "properties": {}
+}

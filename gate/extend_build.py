@@ -13,13 +13,13 @@ Control spec (input to build_page) — one dict per control:
     "layoutSize": 25|100|None,
     "chart": {"x":"month","ys":[{"key":"attain","label":"Attainment %","fill":"#66B6DE","type":"bar"}]},
     "columns": [{"field","headerName"},...],         # table (optional)
-    "schema": "demo" }
+    "schema": "$framework" }
 """
 from __future__ import annotations
 import os, re, uuid
 
-# Tenant schema is not universal — default is configurable; "demo" only as a last resort.
-DEFAULT_SCHEMA = os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
+# Tenant schema is not universal — default is configurable; team standard is $framework.
+DEFAULT_SCHEMA = os.environ.get("EXTEND_DEFAULT_SCHEMA", "$framework")
 VALID_KINDS = {"label","pageloader","dropdown","vc","tile","card","table","chart",
                "input","button","export"}
 S3 = {"useComponentShadow": False, "useGreyBackground": False, "useInnerGreyBackground": False}

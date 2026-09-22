@@ -1,0 +1,20 @@
+{
+  "variables": [
+    {
+      "name": "v_participant",
+      "value": "AHMAD RAZMAN MOHD RASHID(69055291)",
+      "dataType": "String"
+    },
+    {
+      "name": "v_period",
+      "value": "MAY-2025",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "q_get_name_from_participant_N",
+  "schemaName": "exincst",
+  "xsql": "Select SubString(pa.name, 0, IndexOf(pa.name, '(')) As participant_name_only \nfrom xactly.xc_participant pa \ninner join \nxactly.xc_period p \non pa.effective_start_date < p.end_date \nand pa.effective_end_date > p.start_date\nwhere p.name = :v_period\nand pa.name = :v_participant\norder by pa.name asc",
+  "properties": {}
+}

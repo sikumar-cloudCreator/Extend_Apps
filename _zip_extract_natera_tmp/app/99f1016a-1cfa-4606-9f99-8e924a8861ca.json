@@ -1,0 +1,898 @@
+{
+  "pageDefinitionId" : "99f1016a-1cfa-4606-9f99-8e924a8861ca",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_6" : {
+            "type" : "Custom",
+            "controlId" : "6e0fbd74-7d30-4d80-b4e3-176d9763a83a",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"width: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #e2e8f0; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); overflow: hidden;\">\n<div style=\"position: relative; padding: 20px 24px; padding-left: 28px; display: flex; align-items: center; justify-content: space-between;\">\n<div style=\"display: flex; flex-direction: column;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #8b5cf6);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 19px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">[[Header]]</h2>\n<p style=\"margin: 4px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">[[sub Header]]</p>\n</div>\n<div style=\"display: flex; align-items: center; gap: 12px;\"><button style=\"padding: 8px 16px; font-size: 13px; font-weight: 600; color: #475569; background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); font-family: inherit;\" data-xactly-event=\"export_mappings_1\"> Export Mappings </button> <button style=\"padding: 8px 16px; font-size: 13px; font-weight: 600; color: #0f172a; background-color: #f1f5f9; border: 1px solid transparent; border-radius: 6px; cursor: pointer; font-family: inherit;\" data-xactly-event=\"upload_mapping_1\"> &uarr; Upload Mapping </button> <button style=\"padding: 8px 20px; font-size: 13px; font-weight: 600; color: #ffffff; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(59,130,246,0.3); font-family: inherit;\" data-xactly-event=\"b_mapping\"> + Add New Mapping </button></div>\n</div>\n</div>",
+            "layoutSize" : null,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_27" : {
+            "type" : "input",
+            "controlId" : "3cd6a158-0477-4a6d-b6d1-f88665275334",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "v_search",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "3cd6a158-0477-4a6d-b6d1-f88665275334",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "variables" : [ {
+              "name" : "v_search_roll_up_1"
+            } ],
+            "labelText" : "",
+            "labelValue" : "Search titles or roll-up status",
+            "isMultiLine" : false,
+            "isDisabled" : false,
+            "layoutSize" : 25,
+            "useEnterBroadcast" : false,
+            "shouldRenderHidden" : false,
+            "allowClear" : false
+          },
+          "control_7" : {
+            "type" : "table",
+            "controlId" : "4f4ff194-cc36-45d1-9d1e-a2d5d9acb907",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onTabOpen",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "4f4ff194-cc36-45d1-9d1e-a2d5d9acb907",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "export_mappings_1",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "4f4ff194-cc36-45d1-9d1e-a2d5d9acb907",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "exportAsCSV" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "trigger_table_edit_2",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "4f4ff194-cc36-45d1-9d1e-a2d5d9acb907",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "trigger_table_edit_refresh_2",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "4f4ff194-cc36-45d1-9d1e-a2d5d9acb907",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "4f4ff194-cc36-45d1-9d1e-a2d5d9acb907",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "v_search",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "4f4ff194-cc36-45d1-9d1e-a2d5d9acb907",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_category_mapping",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ {
+              "field" : "category",
+              "name" : "category",
+              "headerName" : "Category",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "title",
+              "name" : "title",
+              "headerName" : "Title",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            } ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_id_1",
+              "boundToField" : "$id"
+            }, {
+              "name" : "v_category_1",
+              "boundToField" : "category"
+            }, {
+              "name" : "v_title_1",
+              "boundToField" : "title"
+            } ],
+            "table" : "grid",
+            "title" : "",
+            "maxHeight" : null,
+            "shouldRenderHidden" : false,
+            "staticAllCoumns" : false,
+            "showRowCount" : true,
+            "rowAlternatingColorsEnabled" : true
+          },
+          "control_8" : {
+            "type" : "modal",
+            "controlId" : "b09a8af7-cbfa-4b06-9ec0-37d37537da03",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : true
+            },
+            "events" : [ {
+              "name" : "trigger_table_edit_2",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "b09a8af7-cbfa-4b06-9ec0-37d37537da03",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "toggle" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "b_mapping",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "b09a8af7-cbfa-4b06-9ec0-37d37537da03",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "variables" : [ ],
+            "modalSize" : "md",
+            "hasHeader" : true,
+            "hasFooter" : true,
+            "modalHeaderMessage" : "Update/Add",
+            "pageSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "control_9" : {
+                      "type" : "tabContainer",
+                      "controlId" : "efee707d-b7d8-4126-8f9b-488dc9f160f4",
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ ],
+                      "variables" : [ ],
+                      "tabType" : "primary",
+                      "pageSchema" : {
+                        "properties" : { },
+                        "controlSchema" : {
+                          "schema" : {
+                            "type" : "object",
+                            "properties" : {
+                              "control_10" : {
+                                "type" : "tab",
+                                "controlId" : "27a7d534-a30e-4cee-89e2-dd4366dcf69f",
+                                "privileges" : null,
+                                "styles" : {
+                                  "useComponentShadow" : false,
+                                  "useGreyBackground" : false,
+                                  "useInnerGreyBackground" : false
+                                },
+                                "events" : [ ],
+                                "controlData" : "Update",
+                                "pageSchema" : {
+                                  "properties" : { },
+                                  "controlSchema" : {
+                                    "schema" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                        "control_11" : {
+                                          "type" : "variableConfigurator",
+                                          "controlId" : "1133c26f-b597-46c3-9ddf-63741166cdae",
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "1133c26f-b597-46c3-9ddf-63741166cdae",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          }, {
+                                            "name" : "e_up",
+                                            "eventSelection" : "CREATE_EVENT",
+                                            "broadcastArgs" : {
+                                              "validationXsql" : ""
+                                            },
+                                            "id" : "1133c26f-b597-46c3-9ddf-63741166cdae",
+                                            "handlers" : [ ],
+                                            "handlerArgs" : [ ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : null,
+                                            "schema" : null,
+                                            "fields" : null,
+                                            "type" : null,
+                                            "isReadOnly" : false,
+                                            "columns" : null,
+                                            "seriesColors" : { },
+                                            "customLabels" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ ],
+                                          "valueField" : {
+                                            "dataType" : null,
+                                            "name" : null
+                                          },
+                                          "usingMultiSelectVariableFormat" : false,
+                                          "title" : "Variable Configurator",
+                                          "staticValue" : "",
+                                          "useStaticValue" : true,
+                                          "staticDataType" : "STRING"
+                                        },
+                                        "control_12" : {
+                                          "type" : "dropdown",
+                                          "controlId" : "e8f91240-3f5f-4329-977a-90657ace1b6a",
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "e8f91240-3f5f-4329-977a-90657ace1b6a",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : "ntr_db_dd",
+                                            "type" : "view",
+                                            "isReadOnly" : true,
+                                            "schema" : "$framework",
+                                            "seriesColors" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ {
+                                            "name" : "v_category_1"
+                                          } ],
+                                          "isMultiSelect" : false,
+                                          "shouldHideLabel" : false,
+                                          "displayField" : {
+                                            "dataType" : "string",
+                                            "name" : "category"
+                                          },
+                                          "valueField" : {
+                                            "dataType" : "string",
+                                            "name" : "category"
+                                          },
+                                          "labelText" : "Category",
+                                          "layoutSize" : null,
+                                          "shouldRenderHidden" : false,
+                                          "allowClearForSingleSelect" : false
+                                        },
+                                        "control_23" : {
+                                          "type" : "input",
+                                          "controlId" : "1cfe0799-6099-40d4-9bcd-5293836e91f3",
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "broadcastArgs" : {
+                                              "validationXsql" : ""
+                                            },
+                                            "id" : "1cfe0799-6099-40d4-9bcd-5293836e91f3",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "variables" : [ {
+                                            "name" : "v_title_1"
+                                          } ],
+                                          "labelText" : "Title",
+                                          "labelValue" : "",
+                                          "isMultiLine" : false,
+                                          "isDisabled" : false,
+                                          "layoutSize" : null,
+                                          "useEnterBroadcast" : false,
+                                          "shouldRenderHidden" : false,
+                                          "allowClear" : false
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "innerCanvasMappings" : {
+                                  "pageSchema" : "appElements"
+                                }
+                              },
+                              "control_15" : {
+                                "type" : "tab",
+                                "controlId" : "7e379a51-3d18-4aa2-a331-7e05db212fd0",
+                                "privileges" : null,
+                                "styles" : {
+                                  "useComponentShadow" : false,
+                                  "useGreyBackground" : false,
+                                  "useInnerGreyBackground" : false
+                                },
+                                "events" : [ ],
+                                "controlData" : "Add",
+                                "pageSchema" : {
+                                  "properties" : { },
+                                  "controlSchema" : {
+                                    "schema" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                        "control_16" : {
+                                          "type" : "variableConfigurator",
+                                          "controlId" : "27429456-cc54-4781-aa44-6989f11e823b",
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "27429456-cc54-4781-aa44-6989f11e823b",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          }, {
+                                            "name" : "e_add",
+                                            "eventSelection" : "CREATE_EVENT",
+                                            "broadcastArgs" : {
+                                              "validationXsql" : ""
+                                            },
+                                            "id" : "27429456-cc54-4781-aa44-6989f11e823b",
+                                            "handlers" : [ ],
+                                            "handlerArgs" : [ ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : null,
+                                            "schema" : null,
+                                            "fields" : null,
+                                            "type" : null,
+                                            "isReadOnly" : false,
+                                            "columns" : null,
+                                            "seriesColors" : { },
+                                            "customLabels" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ ],
+                                          "valueField" : {
+                                            "dataType" : null,
+                                            "name" : null
+                                          },
+                                          "usingMultiSelectVariableFormat" : false,
+                                          "title" : "Variable Configurator",
+                                          "staticValue" : "",
+                                          "useStaticValue" : true,
+                                          "staticDataType" : "STRING"
+                                        },
+                                        "control_17" : {
+                                          "type" : "dropdown",
+                                          "controlId" : "f6931303-83c6-4b64-af16-f7ab9d4382c6",
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "f6931303-83c6-4b64-af16-f7ab9d4382c6",
+                                            "broadcastArgs" : {
+                                              "validationXsql" : ""
+                                            },
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : "ntr_db_dd",
+                                            "type" : "view",
+                                            "isReadOnly" : true,
+                                            "schema" : "$framework",
+                                            "seriesColors" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ {
+                                            "name" : "v_category_2"
+                                          } ],
+                                          "isMultiSelect" : false,
+                                          "shouldHideLabel" : false,
+                                          "displayField" : {
+                                            "dataType" : "string",
+                                            "name" : "category"
+                                          },
+                                          "valueField" : {
+                                            "dataType" : "string",
+                                            "name" : "category"
+                                          },
+                                          "labelText" : "Category",
+                                          "layoutSize" : null,
+                                          "shouldRenderHidden" : false,
+                                          "allowClearForSingleSelect" : false
+                                        },
+                                        "control_25" : {
+                                          "type" : "input",
+                                          "controlId" : "0f1a9727-0f28-4846-9642-25bd0981c9d5",
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ ],
+                                          "variables" : [ {
+                                            "name" : "v_title_2"
+                                          } ],
+                                          "labelText" : "Title",
+                                          "labelValue" : "",
+                                          "isMultiLine" : false,
+                                          "isDisabled" : false,
+                                          "layoutSize" : null,
+                                          "useEnterBroadcast" : false,
+                                          "shouldRenderHidden" : false,
+                                          "allowClear" : false
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "innerCanvasMappings" : {
+                                  "pageSchema" : "appElements"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "innerCanvasMappings" : {
+                        "pageSchema" : "appElements"
+                      },
+                      "shouldRenderHidden" : false,
+                      "maxHeight" : null
+                    }
+                  }
+                }
+              }
+            },
+            "footerSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "control_146" : {
+                      "type" : "workflowButton",
+                      "controlId" : "6e048514-b0a4-47cf-b013-3382dfb3abb9",
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "trigger_table_edit_2",
+                        "eventSelection" : "CREATE_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "6e048514-b0a4-47cf-b013-3382dfb3abb9",
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "trigger_table_edit_refresh_2",
+                        "eventSelection" : "CREATE_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "6e048514-b0a4-47cf-b013-3382dfb3abb9",
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_up",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "6e048514-b0a4-47cf-b013-3382dfb3abb9",
+                        "handlers" : [ "show" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_add",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "6e048514-b0a4-47cf-b013-3382dfb3abb9",
+                        "handlers" : [ "hide" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "controlData" : "Delete",
+                      "xSQL" : "call StartXFlow(XFlowName='ntr_wf_category_delete')",
+                      "workflowName" : "ntr_wf_category_delete",
+                      "layoutSize" : null,
+                      "buttonColorType" : "danger",
+                      "shouldRenderHidden" : false,
+                      "shouldRunSync" : false,
+                      "icon" : "Delete"
+                    },
+                    "control_145" : {
+                      "type" : "workflowButton",
+                      "controlId" : "39e2b831-ebbd-41e4-b23c-6ce60c0f8a8a",
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "e_up",
+                        "eventSelection" : "BIND_EVENT",
+                        "id" : "39e2b831-ebbd-41e4-b23c-6ce60c0f8a8a",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ "show" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_add",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "39e2b831-ebbd-41e4-b23c-6ce60c0f8a8a",
+                        "handlers" : [ "hide" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "trigger_table_edit_2",
+                        "eventSelection" : "CREATE_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "39e2b831-ebbd-41e4-b23c-6ce60c0f8a8a",
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "trigger_table_edit_refresh_2",
+                        "eventSelection" : "CREATE_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "39e2b831-ebbd-41e4-b23c-6ce60c0f8a8a",
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "controlData" : "Update",
+                      "xSQL" : "call StartXFlow(XFlowName='ntr_wf_category_edit')",
+                      "workflowName" : "ntr_wf_category_edit",
+                      "layoutSize" : null,
+                      "buttonColorType" : "primary",
+                      "shouldRenderHidden" : false,
+                      "shouldRunSync" : false,
+                      "icon" : "Arrow Up"
+                    },
+                    "control_144" : {
+                      "type" : "workflowButton",
+                      "controlId" : "519cec4a-f003-45b9-9f5e-f21234485553",
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "trigger_table_edit_2",
+                        "eventSelection" : "CREATE_EVENT",
+                        "id" : "519cec4a-f003-45b9-9f5e-f21234485553",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "trigger_table_edit_refresh_2",
+                        "eventSelection" : "CREATE_EVENT",
+                        "id" : "519cec4a-f003-45b9-9f5e-f21234485553",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "$onModalOpen",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "519cec4a-f003-45b9-9f5e-f21234485553",
+                        "handlers" : [ "hide" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_add",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "519cec4a-f003-45b9-9f5e-f21234485553",
+                        "handlers" : [ "show" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_up",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "519cec4a-f003-45b9-9f5e-f21234485553",
+                        "handlers" : [ "hide" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "controlData" : "+ Add",
+                      "xSQL" : "call StartXFlow(XFlowName='ntr_wf_category_add')",
+                      "workflowName" : "ntr_wf_category_add",
+                      "layoutSize" : null,
+                      "buttonColorType" : "info",
+                      "shouldRenderHidden" : false,
+                      "shouldRunSync" : false
+                    }
+                  }
+                }
+              }
+            },
+            "innerCanvasMappings" : {
+              "pageSchema" : "appElements",
+              "footerSchema" : "footerElements"
+            }
+          },
+          "control_13" : {
+            "type" : "label",
+            "controlId" : "b28eb2f1-d0c2-4a13-91fd-fc75575eea52",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "",
+            "layoutSize" : 91.66,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_14" : {
+            "type" : "upload_csv",
+            "controlId" : "f24cd613-72d0-4663-b0a8-c85116703388",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "upload_mapping_1",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "f24cd613-72d0-4663-b0a8-c85116703388",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "show", "enable" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "u_action",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f24cd613-72d0-4663-b0a8-c85116703388",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "NATERA_MAPPING_MAIN",
+              "type" : "table",
+              "isReadOnly" : false,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "layoutSize" : 8.33,
+            "label" : "+ Upload",
+            "shouldRenderHidden" : true
+          }
+        }
+      }
+    }
+  },
+  "title" : "admin_roll_up",
+  "versionName" : "1.0"
+}

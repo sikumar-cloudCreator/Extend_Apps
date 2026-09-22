@@ -1,0 +1,1 @@
+{"id":"ent77bf2d0923a0458072ae54f8a78f6","schemaName":"xactly","tableName":"xc_business_group","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_BUSINESS_GROUP');","audited":false,"effectiveDated":false}

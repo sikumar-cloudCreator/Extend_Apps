@@ -1,0 +1,59 @@
+{
+  "application" : "app/Application.json",
+  "queries" : [ "queries/$framework/ntr_wh_region.json", "queries/$framework/ntr_wh_bottom_10.json", "queries/$framework/ntr_db_get_position_region_mapping.json", "queries/$framework/ntr_wh_gap.json", "queries/$framework/ntr_division_dd.json", "queries/$framework/ntr_region_dd.json", "queries/$framework/ntr_db_get_paticipant_title_mapping.json", "queries/$framework/ntr_oh_chart_2.json", "queries/$framework/ntr_db_wh_volume_retention.json", "queries/$framework/ntr_exe_grid.json", "queries/$framework/ntr_onc_chart_2.json", "queries/$framework/ntr_onc_gap.json", "queries/$framework/ntr_onc_top10.json", "queries/$framework/ntr_db_wh_total_payout.json", "queries/$framework/ntr_oh_attainment.json", "queries/$framework/ntr_db_get_paticipant_territory_mapping.json", "queries/$framework/ntr_oh_butterfly.json", "queries/$framework/ntr_oh_donut_default.json", "queries/$framework/ntr_region_wh.json", "queries/$framework/ntr_db_renasight_rep_hitting_plan.json", "queries/$framework/NTR_OH_bar.json", "queries/$framework/ntr_test_case.json", "queries/$framework/ntr_region_dd_2.json", "queries/$framework/ntr_oh_renasight_baseline_act.json", "queries/$framework/ntr_db_get_prev_monthly_period_ids.json", "queries/$framework/ntr_onc_region_deep.json", "queries/$framework/ntr_db_get_master_partcipant_id.json", "queries/$framework/ntr_db_get_all_child_master_partcipant_id.json", "queries/$framework/ntr_db_get_all_child_master_position_id.json", "queries/$framework/ntr_db_get_monthly_period_ids.json", "queries/$framework/ntr_db_default_participant_name.json", "queries/$framework/ntr_db_es_payout_breakdown.json", "queries/$framework/ntr_db_es_payout_Global.json", "queries/$framework/ntr_db_es_Efficiency.json", "queries/$framework/ntr_db_es_top_perf.json", "queries/$framework/ntr_db_es_bottom_perf.json", "queries/$framework/ntr_db_prospera_avg_quota_attainment.json", "queries/$framework/ntr_db_active_rep_headcount.json", "queries/$framework/ntr_db_unique_regions.json", "queries/$framework/ntr_db_dd.json", "queries/$framework/ntr_db_dd_sub_category.json", "queries/$framework/ntr_db_get_master_position_id.json", "queries/$framework/ntr_db_set_default_period.json", "queries/$framework/ntr_onc_region.json", "queries/$framework/ntr_region_onc.json", "queries/$framework/ntr_top_performer.json", "queries/$framework/ntr_top_mix.json", "queries/$framework/ntr_db_period_dropdown.json", "queries/$framework/ntr_db_get_qtr_start_date.json", "queries/$framework/ntr_db_es_donut_chart.json", "queries/$framework/ntr_db_category_mapping.json", "queries/$framework/ntr_db_total_payout.json", "queries/$framework/ntr_db_renasight_avg_quota_attainment.json", "queries/$framework/ntr_db_approved_budger.json", "queries/$framework/ntr_db_prospera_rep_hitting_plan.json", "queries/$framework/ntr_db_onc_inpatient_payout.json", "queries/$framework/ntr_db_onc_followon_payout.json", "queries/$framework/ntr_oh_p1_baseline_act.json", "queries/$framework/ntr_db_set_default_period_id.json", "queries/$framework/ntr_db_admin_mapping_main.json", "queries/$framework/ntr_territory_mapping.json", "queries/$framework/ntr_db_onc_approved_budger.json", "queries/$framework/ntr_wh_top_mix.json", "queries/$framework/ntr_onc_grid.json", "queries/$framework/ntr_wh_region_deep.json", "queries/$framework/ntr_onc_bottom_10.json", "queries/$framework/ntr_db_onc_total_payout.json", "queries/$framework/ntr_db_wh_approved_budger.json", "queries/$framework/ntr_wh_grid.json", "queries/$framework/ntr_wh_top_performer.json", "queries/$framework/ntr_oh_chart_3.json", "queries/$framework/ntr_db_wh_Points_goal_payout.json" ],
+  "workflows" : [ "workflows/ntr_wf_earning_delete.json", "workflows/ntr_wf_earning_edit.json", "workflows/ntr_wf_earning_add.json", "workflows/ntr_wf_category_add.json", "workflows/ntr_wf_category_delete.json", "workflows/ntr_wf_category_edit.json" ],
+  "pageDefinitions" : [ "app/59f89628-320a-4f26-b6e0-9d8bffaeaa0e.json", "app/804312a1-1b55-413d-bbef-f0687c588c21.json", "app/817ebf09-f0b7-47fb-a2ec-f6ad3424f9ad.json", "app/8a89f1c4-928f-4025-a96f-28b426611e6f.json", "app/f3e3c27d-e358-4702-951e-003f5012dad3.json" ],
+  "policySets" : null,
+  "tables" : {
+    "schemas" : [ "tables/schemas/$framework/EXT_NATERA_OH_PERF.json", "tables/schemas/$framework/EXT_NATERA_ONC_PERF.json", "tables/schemas/$framework/EXT_NATERA_TERRITORY_MAP.json", "tables/schemas/$framework/EXT_NATERA_WH_PERF.json", "tables/schemas/$framework/NATERA_DEFAULT_VALUE.json", "tables/schemas/$framework/NATERA_MAPPING_MAIN.json", "tables/schemas/$framework/NATERA_MASTER_MAPPING.json", "tables/schemas/$framework/NATERA_TERRITORY_MAPPING.json", "tables/schemas/$framework/NATERA_TITLE_CATEGORY_MAPPING.json", "tables/schemas/xactly/xc_credit.json", "tables/schemas/xactly/xc_credit_summary.json", "tables/schemas/xactly/xc_part_user_assignment.json", "tables/schemas/xactly/xc_participant.json", "tables/schemas/xactly/xc_payment.json", "tables/schemas/xactly/xc_period.json", "tables/schemas/xactly/xc_pos_part_assignment.json", "tables/schemas/xactly/xc_pos_title_assignment.json", "tables/schemas/xactly/xc_position.json", "tables/schemas/xactly/xc_quota.json", "tables/schemas/xactly/xc_quota_assignment.json", "tables/schemas/xactly/xc_user.json" ],
+    "data" : [ {
+      "name" : "$framework.NATERA_DEFAULT_VALUE",
+      "path" : "tables/data/$framework/NATERA_DEFAULT_VALUE.csv"
+    }, {
+      "name" : "$framework.NATERA_MAPPING_MAIN",
+      "path" : "tables/data/$framework/NATERA_MAPPING_MAIN.csv"
+    }, {
+      "name" : "$framework.NATERA_MASTER_MAPPING",
+      "path" : "tables/data/$framework/NATERA_MASTER_MAPPING.csv"
+    }, {
+      "name" : "$framework.NATERA_TERRITORY_MAPPING",
+      "path" : "tables/data/$framework/NATERA_TERRITORY_MAPPING.csv"
+    }, {
+      "name" : "$framework.NATERA_TITLE_CATEGORY_MAPPING",
+      "path" : "tables/data/$framework/NATERA_TITLE_CATEGORY_MAPPING.csv"
+    } ]
+  },
+  "compositeComponents" : [ {
+    "pageDefinitionId" : "6d58127c-b941-4cb2-b96e-b5ee936cbc80",
+    "path" : "app/6d58127c-b941-4cb2-b96e-b5ee936cbc80.json",
+    "icon" : null,
+    "category" : null
+  }, {
+    "pageDefinitionId" : "4d770325-7781-4e9a-9d89-d3c453ffcb4a",
+    "path" : "app/4d770325-7781-4e9a-9d89-d3c453ffcb4a.json",
+    "icon" : null,
+    "category" : null
+  }, {
+    "pageDefinitionId" : "f0c217f2-dd71-4072-80bf-0ef06e224af7",
+    "path" : "app/f0c217f2-dd71-4072-80bf-0ef06e224af7.json",
+    "icon" : null,
+    "category" : null
+  }, {
+    "pageDefinitionId" : "3a55905e-eef5-480d-a1df-4c667b25afca",
+    "path" : "app/3a55905e-eef5-480d-a1df-4c667b25afca.json",
+    "icon" : null,
+    "category" : null
+  }, {
+    "pageDefinitionId" : "8a3a090f-cef3-4466-80cd-8ff94d39b047",
+    "path" : "app/8a3a090f-cef3-4466-80cd-8ff94d39b047.json",
+    "icon" : null,
+    "category" : null
+  }, {
+    "pageDefinitionId" : "99f1016a-1cfa-4606-9f99-8e924a8861ca",
+    "path" : "app/99f1016a-1cfa-4606-9f99-8e924a8861ca.json",
+    "icon" : null,
+    "category" : null
+  } ],
+  "applicationTags" : [ ],
+  "agents" : null
+}

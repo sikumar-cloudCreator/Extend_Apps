@@ -1,0 +1,2523 @@
+{
+  "pageDefinitionId" : "804312a1-1b55-413d-bbef-f0687c588c21",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_216" : {
+            "type" : "PageLoader",
+            "controlId" : "4dc1063b-fd36-40e4-aa45-bdd484361734",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "title" : "Page Loader",
+            "loaderSize" : "PAGE",
+            "loaderOpacity" : "100",
+            "events" : [ {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "4dc1063b-fd36-40e4-aa45-bdd484361734",
+              "handlers" : [ "hideLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "4dc1063b-fd36-40e4-aa45-bdd484361734",
+              "handlers" : [ "showLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "4dc1063b-fd36-40e4-aa45-bdd484361734",
+              "handlers" : [ "showLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ]
+          },
+          "control_191" : {
+            "type" : "variableConfigurator",
+            "controlId" : "9646e3cf-f169-4665-afb8-9af04faede41",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_participant_name_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "9646e3cf-f169-4665-afb8-9af04faede41",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_master_participant_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "9646e3cf-f169-4665-afb8-9af04faede41",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_master_partcipant_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_master_participant_id"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "participant_id"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : " master Par",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_194" : {
+            "type" : "variableConfigurator",
+            "controlId" : "303c13c3-369a-413e-bcf1-895813305282",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_qtr_start_date_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "303c13c3-369a-413e-bcf1-895813305282",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_participant_name_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "303c13c3-369a-413e-bcf1-895813305282",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_default_participant_name",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_participant_name"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Participant Name",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_182" : {
+            "type" : "variableConfigurator",
+            "controlId" : "26b1d0e1-d095-4c9c-84f1-13fa27bdb55e",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "26b1d0e1-d095-4c9c-84f1-13fa27bdb55e",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "26b1d0e1-d095-4c9c-84f1-13fa27bdb55e",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_set_default_period_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_period_id"
+            } ],
+            "valueField" : {
+              "dataType" : "long",
+              "name" : "value_field"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Default Period value",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_183" : {
+            "type" : "variableConfigurator",
+            "controlId" : "c946a3d2-eba6-41ea-98e1-e6c7901ed247",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "c946a3d2-eba6-41ea-98e1-e6c7901ed247",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "sp_1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "c946a3d2-eba6-41ea-98e1-e6c7901ed247",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_monthly_period_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "c946a3d2-eba6-41ea-98e1-e6c7901ed247",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "c946a3d2-eba6-41ea-98e1-e6c7901ed247",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_monthly_period_ids",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_month_period_ids"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "period_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get Monthly Period Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_218" : {
+            "type" : "variableConfigurator",
+            "controlId" : "e554bd77-01cb-4bd4-b62b-a484a186fc4c",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "e554bd77-01cb-4bd4-b62b-a484a186fc4c",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "e554bd77-01cb-4bd4-b62b-a484a186fc4c",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_prev_monthly_period_ids",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_prev_month_period_ids"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "period_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get Prev Monthly Period Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING",
+            "internalName" : "OH Get Prev Monthly Period Id"
+          },
+          "control_184" : {
+            "type" : "variableConfigurator",
+            "controlId" : "b421a201-4447-4317-983d-a7762f6188b3",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "b421a201-4447-4317-983d-a7762f6188b3",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "b421a201-4447-4317-983d-a7762f6188b3",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_qtr_start_date_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "b421a201-4447-4317-983d-a7762f6188b3",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_qtr_start_date",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_qtr_start_date"
+            } ],
+            "valueField" : {
+              "dataType" : "date",
+              "name" : "start_date"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Qtr Start Date",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_185" : {
+            "type" : "variableConfigurator",
+            "controlId" : "f9e9747b-19b7-4f37-a60c-a0538b6c112c",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_qtr_start_date_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "f9e9747b-19b7-4f37-a60c-a0538b6c112c",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "f9e9747b-19b7-4f37-a60c-a0538b6c112c",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_master_position_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_master_position_id"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "master_position_id"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Master Position Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_189" : {
+            "type" : "variableConfigurator",
+            "controlId" : "eb89b316-f41e-4471-996b-a3a825bd95b1",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "eb89b316-f41e-4471-996b-a3a825bd95b1",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "eb89b316-f41e-4471-996b-a3a825bd95b1",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_all_child_master_partcipant_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_child_master_participant_id"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "participant_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get all child Master Participant Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_190" : {
+            "type" : "variableConfigurator",
+            "controlId" : "4d6ca21b-68ef-49f4-90a6-a222a40e66ec",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "4d6ca21b-68ef-49f4-90a6-a222a40e66ec",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "4d6ca21b-68ef-49f4-90a6-a222a40e66ec",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_all_child_master_position_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_child_master_position_id"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "position_master_position_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get all child Master Position Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING",
+            "internalName" : "Child Master Position VC"
+          },
+          "control_139" : {
+            "type" : "label",
+            "controlId" : "768dd793-a2a7-4ed8-ba98-7155af95c440",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "<h2><span style=\"font-size: 18pt;\">Organ Health</span></h2>\n<hr />",
+            "layoutSize" : 100,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_193" : {
+            "type" : "dropdown",
+            "controlId" : "c06da3ee-1883-4a3a-a9ab-e7bbe0d8ec64",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "c06da3ee-1883-4a3a-a9ab-e7bbe0d8ec64",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "c06da3ee-1883-4a3a-a9ab-e7bbe0d8ec64",
+              "handlers" : [ "assignCurrentVariable" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "select_period",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "c06da3ee-1883-4a3a-a9ab-e7bbe0d8ec64",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "sp_1",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "c06da3ee-1883-4a3a-a9ab-e7bbe0d8ec64",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_period_dropdown",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_period_id"
+            }, {
+              "name" : "v_period_name"
+            } ],
+            "isMultiSelect" : false,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "period_id"
+            },
+            "labelText" : "Select Period",
+            "layoutSize" : 16.66,
+            "shouldRenderHidden" : false,
+            "allowClearForSingleSelect" : false,
+            "alignItem" : "bottom-left"
+          },
+          "control_170" : {
+            "type" : "dropdown",
+            "controlId" : "1a876c39-0ae3-4ff8-b469-aeb31b3ecdfc",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "1a876c39-0ae3-4ff8-b469-aeb31b3ecdfc",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "1a876c39-0ae3-4ff8-b469-aeb31b3ecdfc",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "1a876c39-0ae3-4ff8-b469-aeb31b3ecdfc",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "on_load",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "1a876c39-0ae3-4ff8-b469-aeb31b3ecdfc",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_region_dd_2",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "p_region"
+            } ],
+            "isMultiSelect" : true,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "region"
+            },
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "region"
+            },
+            "labelText" : "Region",
+            "layoutSize" : 16.66,
+            "shouldRenderHidden" : false,
+            "allowClearForSingleSelect" : false
+          },
+          "control_142" : {
+            "type" : "ComponentTemplate",
+            "controlId" : "f67a8136-df5a-46c9-8346-79ed31da0655",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "selectedTemplateId" : "4d770325-7781-4e9a-9d89-d3c453ffcb4a",
+            "selectedTemplateName" : "vc_oh",
+            "internalTemplateIds" : [ "4d770325-7781-4e9a-9d89-d3c453ffcb4a" ],
+            "templateInputMappings" : {
+              "4d770325-7781-4e9a-9d89-d3c453ffcb4a" : [ ]
+            },
+            "templateInputMappingsNames" : {
+              "4d770325-7781-4e9a-9d89-d3c453ffcb4a" : "vc_oh"
+            }
+          },
+          "control_117" : {
+            "type" : "label",
+            "controlId" : "d7f7d894-2526-4b2b-bc26-da2a0b0cd987",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "",
+            "layoutSize" : 83.33,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_116" : {
+            "type" : "Custom",
+            "controlId" : "44e4add9-7e8d-4c4b-86f6-f161ec48d8f6",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "44e4add9-7e8d-4c4b-86f6-f161ec48d8f6",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "44e4add9-7e8d-4c4b-86f6-f161ec48d8f6",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "44e4add9-7e8d-4c4b-86f6-f161ec48d8f6",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_prospera_rep_hitting_plan",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_total_reps",
+              "boundToField" : "total_positions_with_quota"
+            }, {
+              "name" : "v_pro_reps_hit",
+              "boundToField" : "positions_over_100_percent"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #4498D7; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; width: 100%;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Prospera Reps Hitting Plan</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #4498d7; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">{{v_pro_reps_hit}} <span style=\"font-size: 18px; color: #64748b;\">/ {{v_total_reps}}</span></div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\">Prospera Attainment &ge; 100%</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "KPI1"
+          },
+          "control_118" : {
+            "type" : "Custom",
+            "controlId" : "5eebefe0-fbbf-4725-b7b0-2d3323050e6d",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "5eebefe0-fbbf-4725-b7b0-2d3323050e6d",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "5eebefe0-fbbf-4725-b7b0-2d3323050e6d",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "5eebefe0-fbbf-4725-b7b0-2d3323050e6d",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_prospera_avg_quota_attainment",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_pro_att_val",
+              "boundToField" : "average_quarterly_attainment"
+            } ],
+            "controlData" : "<div style=\"flex: 1; width: 100%; min-height: 120px; box-sizing: border-box; background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #4498D7; border-radius: 0px; box-shadow: 0 4px 6px rgba(0,0,0,0.04); padding: 20px; display: flex; align-items: center; gap: 15px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;\">\n<div style=\"width: 44px; height: 44px; border-radius: 50%; background: conic-gradient(#4498D7 {{v_pro_att_val}}%, #E2E8F0 0); display: flex; align-items: center; justify-content: center; flex-shrink: 0;\">\n<div style=\"width: 34px; height: 34px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center;\">&nbsp;</div>\n</div>\n<div style=\"display: flex; flex-direction: column; flex: 1;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;\">Prospera Attainment</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #275d7c; line-height: 1;\">{{v_pro_att_val}}%</div>\n<div style=\"font-size: 10px; font-weight: 800; color: #64748b; margin-top: 6px;\">Units vs. Goal</div>\n</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_120" : {
+            "type" : "Custom",
+            "controlId" : "45d63083-6899-4d65-bbe3-3e81707c06d2",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "45d63083-6899-4d65-bbe3-3e81707c06d2",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "45d63083-6899-4d65-bbe3-3e81707c06d2",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "45d63083-6899-4d65-bbe3-3e81707c06d2",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_renasight_rep_hitting_plan",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_ren_reps_hit",
+              "boundToField" : "positions_over_100_percent"
+            }, {
+              "name" : "v_total_reps",
+              "boundToField" : "total_positions_with_quota"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #A4C955; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; width: 100%;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Renasight Reps Hitting Plan</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #a4c955; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">{{v_ren_reps_hit}} <span style=\"font-size: 18px; color: #64748b;\">/ {{v_total_reps}}</span></div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\">Renasight Attainment &ge; 100%</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "KPI4"
+          },
+          "control_119" : {
+            "type" : "Custom",
+            "controlId" : "f4954c8a-cbca-4dc5-aeb5-f67cf47683ad",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f4954c8a-cbca-4dc5-aeb5-f67cf47683ad",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f4954c8a-cbca-4dc5-aeb5-f67cf47683ad",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f4954c8a-cbca-4dc5-aeb5-f67cf47683ad",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_renasight_avg_quota_attainment",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_ren_att_val",
+              "boundToField" : "average_quarterly_attainment"
+            } ],
+            "controlData" : "<div style=\"flex: 1; width: 100%; min-height: 120px; box-sizing: border-box; background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #A4C955; border-radius: 0px; box-shadow: 0 4px 6px rgba(0,0,0,0.04); padding: 20px; display: flex; align-items: center; gap: 15px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;\">\n<div style=\"width: 44px; height: 44px; border-radius: 50%; background: conic-gradient(#A4C955 {{v_ren_att_val}}%, #E2E8F0 0); display: flex; align-items: center; justify-content: center; flex-shrink: 0;\">\n<div style=\"width: 34px; height: 34px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center;\">&nbsp;</div>\n</div>\n<div style=\"display: flex; flex-direction: column; flex: 1;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;\">Renasight Attainment</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #275d7c; line-height: 1;\">{{v_ren_att_val}}%</div>\n<div style=\"font-size: 10px; font-weight: 800; color: #64748b; margin-top: 6px;\">Units vs. Goal</div>\n</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_159" : {
+            "type" : "Custom",
+            "controlId" : "7c2d5cab-6145-40b9-84af-fbfa5f129b33",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "7c2d5cab-6145-40b9-84af-fbfa5f129b33",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "7c2d5cab-6145-40b9-84af-fbfa5f129b33",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "7c2d5cab-6145-40b9-84af-fbfa5f129b33",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_oh_donut_default",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_prospera_val",
+              "boundToField" : "prospera_val"
+            }, {
+              "name" : "v_renasight_val",
+              "boundToField" : "renasight_val"
+            }, {
+              "name" : "v_others_val",
+              "boundToField" : "others_val"
+            }, {
+              "name" : "v_total_val",
+              "boundToField" : "total_val"
+            }, {
+              "name" : "v_prospera_pct",
+              "boundToField" : "prospera_pct"
+            }, {
+              "name" : "v_renasight_pct",
+              "boundToField" : "renasight_pct"
+            }, {
+              "name" : "v_others_pct",
+              "boundToField" : "others_pct"
+            } ],
+            "controlData" : "<div style=\"width: 100%; height: 100%; min-height: 460px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n<div style=\"position: relative; padding: 16px 24px; padding-left: 28px; border-bottom: 1px solid #f1f5f9; overflow: hidden; flex-shrink: 0;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Earnings</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Prospera, Renasight &amp; Others Earnings Breakdown</p>\n</div>\n<div style=\"padding: 24px; display: flex; align-items: center; justify-content: center; gap: 40px; flex-grow: 1;\">\n<div style=\"position: relative; width: 256px; height: 256px; border-radius: 50%; background: conic-gradient(#4498d7 0% {{v_prospera_pct}}%, #a4c955 {{v_prospera_pct}}% calc({{v_prospera_pct}}% + {{v_renasight_pct}}%), #94a3b8 calc({{v_prospera_pct}}% + {{v_renasight_pct}}%) 100%); flex-shrink: 0;\">\n<div style=\"position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 180px; height: 180px; background: #ffffff; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;\">\n<div style=\"font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 4px;\">Total Payout</div>\n<div style=\"font-size: 22px; font-weight: 800; color: #334155;\">${{v_total_val}}</div>\n</div>\n</div>\n<div style=\"display: flex; flex-direction: column; gap: 24px; min-width: 200px;\">\n<div style=\"display: flex; align-items: center; justify-content: space-between; gap: 16px;\">\n<div style=\"display: flex; align-items: center; gap: 10px;\">\n<div style=\"width: 14px; height: 14px; background: #4498d7; border-radius: 2px; flex-shrink: 0;\">&nbsp;</div>\n<div style=\"font-size: 14px; font-weight: 600; color: #475569; white-space: nowrap;\">Prospera ({{v_prospera_pct}}%)</div>\n</div>\n<div style=\"font-size: 15px; font-weight: 800; color: #1e293b;\">${{v_prospera_val}}</div>\n</div>\n<div style=\"display: flex; align-items: center; justify-content: space-between; gap: 16px;\">\n<div style=\"display: flex; align-items: center; gap: 10px;\">\n<div style=\"width: 14px; height: 14px; background: #a4c955; border-radius: 2px; flex-shrink: 0;\">&nbsp;</div>\n<div style=\"font-size: 14px; font-weight: 600; color: #475569; white-space: nowrap;\">Renasight ({{v_renasight_pct}}%)</div>\n</div>\n<div style=\"font-size: 15px; font-weight: 800; color: #1e293b;\">${{v_renasight_val}}</div>\n</div>\n<div style=\"display: flex; align-items: center; justify-content: space-between; gap: 16px;\">\n<div style=\"display: flex; align-items: center; gap: 10px;\">\n<div style=\"width: 14px; height: 14px; background: #94a3b8; border-radius: 2px; flex-shrink: 0;\">&nbsp;</div>\n<div style=\"font-size: 14px; font-weight: 600; color: #475569; white-space: nowrap;\">Others ({{v_others_pct}}%)</div>\n</div>\n<div style=\"font-size: 15px; font-weight: 800; color: #1e293b;\">${{v_others_val}}</div>\n</div>\n</div>\n</div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "sjgd"
+          },
+          "control_168" : {
+            "type" : "Custom",
+            "controlId" : "8da80f5b-2247-4f9d-90e7-8b65ee7a8e7c",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "8da80f5b-2247-4f9d-90e7-8b65ee7a8e7c",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "8da80f5b-2247-4f9d-90e7-8b65ee7a8e7c",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "8da80f5b-2247-4f9d-90e7-8b65ee7a8e7c",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "8da80f5b-2247-4f9d-90e7-8b65ee7a8e7c",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_oh_butterfly",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_mix_1_name",
+              "boundToField" : "mix_1_name"
+            }, {
+              "name" : "v_mix_1_payout",
+              "boundToField" : "mix_1_payout"
+            }, {
+              "name" : "v_mix_1_pct",
+              "boundToField" : "mix_1_pct"
+            }, {
+              "name" : "v_mix_1_prospera_pct",
+              "boundToField" : "mix_1_prospera_pct"
+            }, {
+              "name" : "v_mix_1_renasight_pct",
+              "boundToField" : "mix_1_renasight_pct"
+            }, {
+              "name" : "v_mix_1_others_pct",
+              "boundToField" : "mix_1_others_pct"
+            }, {
+              "name" : "v_mix_2_name",
+              "boundToField" : "mix_2_name"
+            }, {
+              "name" : "v_mix_2_payout",
+              "boundToField" : "mix_2_payout"
+            }, {
+              "name" : "v_mix_2_pct",
+              "boundToField" : "mix_2_pct"
+            }, {
+              "name" : "v_mix_2_prospera_pct",
+              "boundToField" : "mix_2_prospera_pct"
+            }, {
+              "name" : "v_mix_2_renasight_pct",
+              "boundToField" : "mix_2_renasight_pct"
+            }, {
+              "name" : "v_mix_2_others_pct",
+              "boundToField" : "mix_2_others_pct"
+            }, {
+              "name" : "v_mix_3_name",
+              "boundToField" : "mix_3_name"
+            }, {
+              "name" : "v_mix_3_payout",
+              "boundToField" : "mix_3_payout"
+            }, {
+              "name" : "v_mix_3_pct",
+              "boundToField" : "mix_3_pct"
+            }, {
+              "name" : "v_mix_3_prospera_pct",
+              "boundToField" : "mix_3_prospera_pct"
+            }, {
+              "name" : "v_mix_3_renasight_pct",
+              "boundToField" : "mix_3_renasight_pct"
+            }, {
+              "name" : "v_mix_3_others_pct",
+              "boundToField" : "mix_3_others_pct"
+            }, {
+              "name" : "v_mix_4_name",
+              "boundToField" : "mix_4_name"
+            }, {
+              "name" : "v_mix_4_payout",
+              "boundToField" : "mix_4_payout"
+            }, {
+              "name" : "v_mix_4_pct",
+              "boundToField" : "mix_4_pct"
+            }, {
+              "name" : "v_mix_4_prospera_pct",
+              "boundToField" : "mix_4_prospera_pct"
+            }, {
+              "name" : "v_mix_4_renasight_pct",
+              "boundToField" : "mix_4_renasight_pct"
+            }, {
+              "name" : "v_mix_4_others_pct",
+              "boundToField" : "mix_4_others_pct"
+            }, {
+              "name" : "v_mix_5_name",
+              "boundToField" : "mix_5_name"
+            }, {
+              "name" : "v_mix_5_payout",
+              "boundToField" : "mix_5_payout"
+            }, {
+              "name" : "v_mix_5_pct",
+              "boundToField" : "mix_5_pct"
+            }, {
+              "name" : "v_mix_5_prospera_pct",
+              "boundToField" : "mix_5_prospera_pct"
+            }, {
+              "name" : "v_mix_5_renasight_pct",
+              "boundToField" : "mix_5_renasight_pct"
+            }, {
+              "name" : "v_mix_5_others_pct",
+              "boundToField" : "mix_5_others_pct"
+            }, {
+              "name" : "v_mix_6_name",
+              "boundToField" : "mix_6_name"
+            }, {
+              "name" : "v_mix_6_payout",
+              "boundToField" : "mix_6_payout"
+            }, {
+              "name" : "v_mix_6_pct",
+              "boundToField" : "mix_6_pct"
+            }, {
+              "name" : "v_mix_6_prospera_pct",
+              "boundToField" : "mix_6_prospera_pct"
+            }, {
+              "name" : "v_mix_6_renasight_pct",
+              "boundToField" : "mix_6_renasight_pct"
+            }, {
+              "name" : "v_mix_6_others_pct",
+              "boundToField" : "mix_6_others_pct"
+            }, {
+              "name" : "v_mix_7_name",
+              "boundToField" : "mix_7_name"
+            }, {
+              "name" : "v_mix_7_payout",
+              "boundToField" : "mix_7_payout"
+            }, {
+              "name" : "v_mix_7_pct",
+              "boundToField" : "mix_7_pct"
+            }, {
+              "name" : "v_mix_7_prospera_pct",
+              "boundToField" : "mix_7_prospera_pct"
+            }, {
+              "name" : "v_mix_7_renasight_pct",
+              "boundToField" : "mix_7_renasight_pct"
+            }, {
+              "name" : "v_mix_7_others_pct",
+              "boundToField" : "mix_7_others_pct"
+            }, {
+              "name" : "v_mix_8_name",
+              "boundToField" : "mix_8_name"
+            }, {
+              "name" : "v_mix_8_payout",
+              "boundToField" : "mix_8_payout"
+            }, {
+              "name" : "v_mix_8_pct",
+              "boundToField" : "mix_8_pct"
+            }, {
+              "name" : "v_mix_8_prospera_pct",
+              "boundToField" : "mix_8_prospera_pct"
+            }, {
+              "name" : "v_mix_8_renasight_pct",
+              "boundToField" : "mix_8_renasight_pct"
+            }, {
+              "name" : "v_mix_8_others_pct",
+              "boundToField" : "mix_8_others_pct"
+            }, {
+              "name" : "v_mix_9_name",
+              "boundToField" : "mix_9_name"
+            }, {
+              "name" : "v_mix_9_payout",
+              "boundToField" : "mix_9_payout"
+            }, {
+              "name" : "v_mix_9_pct",
+              "boundToField" : "mix_9_pct"
+            }, {
+              "name" : "v_mix_9_prospera_pct",
+              "boundToField" : "mix_9_prospera_pct"
+            }, {
+              "name" : "v_mix_9_renasight_pct",
+              "boundToField" : "mix_9_renasight_pct"
+            }, {
+              "name" : "v_mix_9_others_pct",
+              "boundToField" : "mix_9_others_pct"
+            }, {
+              "name" : "v_mix_10_name",
+              "boundToField" : "mix_10_name"
+            }, {
+              "name" : "v_mix_10_payout",
+              "boundToField" : "mix_10_payout"
+            }, {
+              "name" : "v_mix_10_pct",
+              "boundToField" : "mix_10_pct"
+            }, {
+              "name" : "v_mix_10_prospera_pct",
+              "boundToField" : "mix_10_prospera_pct"
+            }, {
+              "name" : "v_mix_10_renasight_pct",
+              "boundToField" : "mix_10_renasight_pct"
+            }, {
+              "name" : "v_mix_10_others_pct",
+              "boundToField" : "mix_10_others_pct"
+            } ],
+            "controlData" : "<div style=\"width: 100%; height: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n<div style=\"position: relative; padding: 16px 24px; padding-left: 28px; border-bottom: 1px solid #f1f5f9; flex-shrink: 0; overflow: hidden;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Top Performers Mix</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Prospera vs Renasight vs Others Payout Composition</p>\n<div style=\"position: absolute; top: 50%; right: 24px; transform: translateY(-50%); display: flex; gap: 20px;\">\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #4498d7;\">&nbsp;</div>\n<div style=\"font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Prospera</div>\n</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #a4c955;\">&nbsp;</div>\n<div style=\"font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Renasight</div>\n</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #94a3b8;\">&nbsp;</div>\n<div style=\"font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Others</div>\n</div>\n</div>\n</div>\n<div style=\"padding: 24px 28px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 14px;\">\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_1_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_1_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_1_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_1_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_1_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_1_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_2_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_2_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_2_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_2_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_2_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_2_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_3_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_3_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_3_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_3_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_3_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_3_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_4_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_4_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_4_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_4_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_4_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_4_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_5_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_5_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_5_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_5_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_5_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_5_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_6_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_6_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_6_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_6_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_6_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_6_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_7_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_7_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_7_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_7_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_7_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_7_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_8_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_8_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_8_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_8_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_8_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_8_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_9_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_9_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_9_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_9_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_9_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_9_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_10_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_10_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_10_prospera_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_10_renasight_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_10_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_10_payout}}</div>\n</div>\n</div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_166" : {
+            "type" : "Custom",
+            "controlId" : "6d3c02ab-ec31-4142-b8aa-88cf2231ea42",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "6d3c02ab-ec31-4142-b8aa-88cf2231ea42",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd2",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "6d3c02ab-ec31-4142-b8aa-88cf2231ea42",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "vc1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "6d3c02ab-ec31-4142-b8aa-88cf2231ea42",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between;\"><!-- Left Side: Title and Context -->\n<div style=\"display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Prospera</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Baseline vs. Actual (Units) <span style=\"color: #cbd5e1; margin: 0 4px;\">|</span> <span style=\"font-weight: 600; color: #3b82f6;\">Top 5 Regions by Actuals</span></p>\n</div>\n</div>\n<!-- Right Side: Expand Button with native data-xactly-event -->\n<div><button style=\"background-color: #f8fafc; border: 1px solid #e2e8f0; color: #3b82f6; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px;\" data-xactly-event=\"e_show_all_regions_r\"> View All Regions </button></div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "chart_head"
+          },
+          "control_162" : {
+            "type" : "Custom",
+            "controlId" : "bc660bb9-14b9-4203-9986-2e3af5811243",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "bc660bb9-14b9-4203-9986-2e3af5811243",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd2",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "bc660bb9-14b9-4203-9986-2e3af5811243",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "vc1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "bc660bb9-14b9-4203-9986-2e3af5811243",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between;\"><!-- Left Side: Title and Context -->\n<div style=\"display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Renasight</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Baseline vs. Actual (Units) <span style=\"color: #cbd5e1; margin: 0 4px;\">|</span> <span style=\"font-weight: 600; color: #3b82f6;\">Top 5 Regions by Actuals</span></p>\n</div>\n</div>\n<!-- Right Side: Expand Button with native data-xactly-event -->\n<div><button style=\"background-color: #f8fafc; border: 1px solid #e2e8f0; color: #3b82f6; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px;\" data-xactly-event=\"e_show_all_regions_p\"> View All Regions </button></div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "chart_head"
+          },
+          "control_202" : {
+            "type" : "composedChart",
+            "controlId" : "39429708-1dd0-4e3b-ab61-6212d6a4b746",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "39429708-1dd0-4e3b-ab61-6212d6a4b746",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "39429708-1dd0-4e3b-ab61-6212d6a4b746",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_show_all_regions_r",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "39429708-1dd0-4e3b-ab61-6212d6a4b746",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_oh_p1_baseline_act",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "title" : "",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "region",
+            "yAxisFields" : [ {
+              "id" : 2,
+              "dataKey" : "prospera_baseline",
+              "customLabel" : "Prospera Baseline",
+              "fill" : "#9ac4f4",
+              "selectedChart" : "bar"
+            }, {
+              "id" : 3,
+              "dataKey" : "prospera_actual",
+              "customLabel" : "Prospera Actual",
+              "fill" : "#5c94d1",
+              "selectedChart" : "bar"
+            } ],
+            "layoutSize" : 50,
+            "titleAlignment" : "center",
+            "subtitleAlignment" : "center",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : false
+          },
+          "control_203" : {
+            "type" : "modal",
+            "controlId" : "36e958b7-9985-494b-8b7b-9769320573f9",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "e_show_all_regions_r",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "36e958b7-9985-494b-8b7b-9769320573f9",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "variables" : [ ],
+            "modalSize" : "xxl",
+            "hasHeader" : true,
+            "hasFooter" : false,
+            "modalHeaderMessage" : "Prospera",
+            "pageSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "control_205" : {
+                      "type" : "composedChart",
+                      "controlId" : "90ed9060-7a8a-4fd2-a357-03f31369ea04",
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "$onModalOpen",
+                        "eventSelection" : "BIND_EVENT",
+                        "id" : "90ed9060-7a8a-4fd2-a357-03f31369ea04",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ "refresh" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "dd_region",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "90ed9060-7a8a-4fd2-a357-03f31369ea04",
+                        "handlers" : [ "assignCurrentVariable", "refresh" ],
+                        "handlerArgs" : [ { }, { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "get_all_child_master_participant_id_vc",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "90ed9060-7a8a-4fd2-a357-03f31369ea04",
+                        "handlers" : [ "refresh" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "datasource" : {
+                        "name" : "ntr_oh_chart_2",
+                        "type" : "view",
+                        "isReadOnly" : true,
+                        "schema" : "$framework",
+                        "seriesColors" : { }
+                      },
+                      "pagination" : {
+                        "currentPage" : 1,
+                        "totalItems" : null,
+                        "itemsPerPage" : 200
+                      },
+                      "columns" : [ ],
+                      "whereClauseVariable" : null,
+                      "title" : "",
+                      "subtitle" : "",
+                      "xAxis" : {
+                        "title" : {
+                          "text" : ""
+                        },
+                        "type" : ""
+                      },
+                      "yAxis" : {
+                        "title" : {
+                          "text" : ""
+                        }
+                      },
+                      "ref" : { },
+                      "xAxisField" : "region",
+                      "yAxisFields" : [ {
+                        "id" : 2,
+                        "dataKey" : "prospera_baseline",
+                        "customLabel" : "Prospera Baseline",
+                        "fill" : "#9ac4f4",
+                        "selectedChart" : "bar"
+                      }, {
+                        "id" : 3,
+                        "dataKey" : "prospera_actual",
+                        "customLabel" : "Prospera Actual",
+                        "fill" : "#5c94d1",
+                        "selectedChart" : "bar"
+                      } ],
+                      "layoutSize" : 100,
+                      "titleAlignment" : "center",
+                      "subtitleAlignment" : "center",
+                      "helpIconValue" : null,
+                      "helpIconPosition" : "alignLeft",
+                      "helpIconTooltipPosition" : "right",
+                      "shouldRenderHidden" : false
+                    }
+                  }
+                }
+              }
+            },
+            "footerSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "innerCanvasMappings" : {
+              "pageSchema" : "appElements",
+              "footerSchema" : "footerElements"
+            }
+          },
+          "control_206" : {
+            "type" : "modal",
+            "controlId" : "69320f3d-4cb4-4c5a-80e8-0b3f384863cc",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "e_show_all_regions_p",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "69320f3d-4cb4-4c5a-80e8-0b3f384863cc",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "variables" : [ ],
+            "modalSize" : "xxl",
+            "hasHeader" : true,
+            "hasFooter" : false,
+            "modalHeaderMessage" : "Renasight",
+            "pageSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "control_207" : {
+                      "type" : "composedChart",
+                      "controlId" : "dc9edc9f-d0fe-4ed9-9741-fcded3e14c34",
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "$onModalOpen",
+                        "eventSelection" : "BIND_EVENT",
+                        "id" : "dc9edc9f-d0fe-4ed9-9741-fcded3e14c34",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ "refresh" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "dd_region",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "dc9edc9f-d0fe-4ed9-9741-fcded3e14c34",
+                        "handlers" : [ "assignCurrentVariable", "refresh" ],
+                        "handlerArgs" : [ { }, { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "get_all_child_master_participant_id_vc",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "dc9edc9f-d0fe-4ed9-9741-fcded3e14c34",
+                        "handlers" : [ "refresh" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "datasource" : {
+                        "name" : "ntr_oh_chart_3",
+                        "type" : "view",
+                        "isReadOnly" : true,
+                        "schema" : "$framework",
+                        "seriesColors" : { }
+                      },
+                      "pagination" : {
+                        "currentPage" : 1,
+                        "totalItems" : null,
+                        "itemsPerPage" : 200
+                      },
+                      "columns" : [ ],
+                      "whereClauseVariable" : null,
+                      "title" : "",
+                      "subtitle" : "",
+                      "xAxis" : {
+                        "title" : {
+                          "text" : ""
+                        },
+                        "type" : ""
+                      },
+                      "yAxis" : {
+                        "title" : {
+                          "text" : ""
+                        }
+                      },
+                      "ref" : { },
+                      "xAxisField" : "region",
+                      "yAxisFields" : [ {
+                        "id" : 2,
+                        "dataKey" : "renasight_baseline",
+                        "customLabel" : "Renasight Baseline",
+                        "fill" : "#dfefa0",
+                        "selectedChart" : "bar"
+                      }, {
+                        "id" : 3,
+                        "dataKey" : "renasight_actual",
+                        "customLabel" : "Renasight Actual",
+                        "fill" : "#a3c865",
+                        "selectedChart" : "bar"
+                      } ],
+                      "layoutSize" : 100,
+                      "titleAlignment" : "center",
+                      "subtitleAlignment" : "center",
+                      "helpIconValue" : null,
+                      "helpIconPosition" : "alignLeft",
+                      "helpIconTooltipPosition" : "right",
+                      "shouldRenderHidden" : false
+                    }
+                  }
+                }
+              }
+            },
+            "footerSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "innerCanvasMappings" : {
+              "pageSchema" : "appElements",
+              "footerSchema" : "footerElements"
+            }
+          },
+          "control_127" : {
+            "type" : "composedChart",
+            "controlId" : "ff4d9b4b-26be-4683-8db7-d86189377090",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "ff4d9b4b-26be-4683-8db7-d86189377090",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_show_all_regions_p",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "ff4d9b4b-26be-4683-8db7-d86189377090",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "ff4d9b4b-26be-4683-8db7-d86189377090",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_oh_renasight_baseline_act",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "title" : "",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "region",
+            "yAxisFields" : [ {
+              "id" : 2,
+              "dataKey" : "renasight_baseline",
+              "customLabel" : "Renasight Baseline",
+              "fill" : "#dfefa0",
+              "selectedChart" : "bar"
+            }, {
+              "id" : 3,
+              "dataKey" : "renasight_actual",
+              "customLabel" : "Renasight Actual",
+              "fill" : "#a3c865",
+              "selectedChart" : "bar"
+            } ],
+            "layoutSize" : 50,
+            "titleAlignment" : "center",
+            "subtitleAlignment" : "center",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : false
+          },
+          "control_164" : {
+            "type" : "Custom",
+            "controlId" : "d91e68bd-a965-4ca2-a2e3-57b545e5b66d",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "d91e68bd-a965-4ca2-a2e3-57b545e5b66d",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd2",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "d91e68bd-a965-4ca2-a2e3-57b545e5b66d",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "vc1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "d91e68bd-a965-4ca2-a2e3-57b545e5b66d",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Product Rank Gap</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Difference in rank between Prospera rank and Renasight rank</p>\n</div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "chart_head"
+          },
+          "control_165" : {
+            "type" : "Custom",
+            "controlId" : "0e0f4f7f-9ed5-4ddf-9081-44d754bfe5de",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0e0f4f7f-9ed5-4ddf-9081-44d754bfe5de",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd2",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0e0f4f7f-9ed5-4ddf-9081-44d754bfe5de",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "vc1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0e0f4f7f-9ed5-4ddf-9081-44d754bfe5de",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Attainment Distribution:</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Breakdown of representatives by quota attainment tier</p>\n</div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "chart_head"
+          },
+          "control_169" : {
+            "type" : "composedChart",
+            "controlId" : "b665a96e-3309-4c0f-9d5e-3bc51eca820d",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "b665a96e-3309-4c0f-9d5e-3bc51eca820d",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_test_case",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "title" : "",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "ohs_name",
+            "yAxisFields" : [ {
+              "id" : 2,
+              "dataKey" : "prospera_gap",
+              "customLabel" : "Prospera",
+              "fill" : "#4498d7",
+              "selectedChart" : "bar"
+            }, {
+              "id" : 3,
+              "dataKey" : "renasight_gap",
+              "customLabel" : "Renasight",
+              "fill" : "#a4c955",
+              "selectedChart" : "bar"
+            } ],
+            "layoutSize" : 50,
+            "titleAlignment" : "left",
+            "subtitleAlignment" : "left",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : false
+          },
+          "control_128" : {
+            "type" : "composedChart",
+            "controlId" : "81d5932c-1de5-4acf-b29b-57be5becbcbf",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "81d5932c-1de5-4acf-b29b-57be5becbcbf",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "81d5932c-1de5-4acf-b29b-57be5becbcbf",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "81d5932c-1de5-4acf-b29b-57be5becbcbf",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_oh_attainment",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "title" : "",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "bucket",
+            "yAxisFields" : [ {
+              "id" : 2,
+              "dataKey" : "prospera_reps",
+              "customLabel" : "Prospera Reps",
+              "fill" : "#4498d7",
+              "selectedChart" : "bar"
+            }, {
+              "id" : 3,
+              "dataKey" : "renasight_reps",
+              "customLabel" : "Renasight Reps",
+              "fill" : "#a4c955",
+              "selectedChart" : "bar"
+            } ],
+            "layoutSize" : 50,
+            "titleAlignment" : "center",
+            "subtitleAlignment" : "center",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : false
+          },
+          "control_171" : {
+            "type" : "ComponentTemplate",
+            "controlId" : "61e27e38-37bf-44ab-b82e-d9a44fa798fb",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "selectedTemplateId" : "f0c217f2-dd71-4072-80bf-0ef06e224af7",
+            "selectedTemplateName" : "OG_1",
+            "internalTemplateIds" : [ "f0c217f2-dd71-4072-80bf-0ef06e224af7" ],
+            "templateInputMappings" : {
+              "f0c217f2-dd71-4072-80bf-0ef06e224af7" : [ ]
+            },
+            "templateInputMappingsNames" : {
+              "f0c217f2-dd71-4072-80bf-0ef06e224af7" : "OG_1"
+            },
+            "selectedTemplateDescription" : null
+          },
+          "control_217" : {
+            "type" : "table",
+            "controlId" : "87f8f15b-8a9a-47d9-9313-23b6d20ce955",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "87f8f15b-8a9a-47d9-9313-23b6d20ce955",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "NTR_OH_bar",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ {
+              "field" : "ohs_name",
+              "name" : "ohs_name",
+              "headerName" : "OHS Name",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "final_rank",
+              "name" : "final_rank",
+              "headerName" : "Final Rank",
+              "dataType" : "integer",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "prospera_rank",
+              "name" : "prospera_rank",
+              "headerName" : "Prospera Rank",
+              "dataType" : "integer",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "renasight_rank",
+              "name" : "renasight_rank",
+              "headerName" : "Renasight Rank",
+              "dataType" : "integer",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "total_payout",
+              "name" : "total_payout",
+              "headerName" : "Total Payout",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            } ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "table" : "grid",
+            "title" : "",
+            "maxHeight" : 450,
+            "shouldRenderHidden" : false,
+            "staticAllCoumns" : false,
+            "rowAlternatingColorsEnabled" : true,
+            "showRowCount" : true
+          }
+        }
+      }
+    }
+  },
+  "title" : "Organ Health (OH)",
+  "versionName" : "1.0"
+}

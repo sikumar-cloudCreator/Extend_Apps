@@ -1,0 +1,16 @@
+{
+  "id": "ent33796409d9de2a526588ceda8014c",
+  "schemaName": "xactly",
+  "tableName": "xc_position",
+  "columns": [],
+  "overwrite": false,
+  "unlogged": false,
+  "archive": false,
+  "local": false,
+  "temporary": false,
+  "preserveRows": false,
+  "selectionSet": false,
+  "using": "Incent(TableName='Incent.XC_POSITION');",
+  "audited": false,
+  "effectiveDated": false
+}

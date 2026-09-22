@@ -1,0 +1,1148 @@
+{
+  "pageDefinitionId" : "8a89f1c4-928f-4025-a96f-28b426611e6f",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_21" : {
+            "type" : "label",
+            "controlId" : "fe4c15c0-2cb3-4c68-a791-16c8f3fb2806",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "<h2><span style=\"font-size: 18pt;\">Admin Console</span></h2>\n<hr />",
+            "layoutSize" : null,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "C",
+            "controlKey" : "control_21"
+          },
+          "control_138" : {
+            "type" : "ComponentTemplate",
+            "controlId" : "78864154-98f5-4613-ba8e-d8decc6fb752",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "selectedTemplateId" : "3a55905e-eef5-480d-a1df-4c667b25afca",
+            "selectedTemplateName" : "default_period",
+            "selectedTemplateDescription" : null,
+            "internalTemplateIds" : [ "3a55905e-eef5-480d-a1df-4c667b25afca" ],
+            "templateInputMappings" : {
+              "3a55905e-eef5-480d-a1df-4c667b25afca" : [ {
+                "componentId" : "1b72c83a-53e0-4a3f-98d9-19f5c1fc1875",
+                "mappedKey" : "controlData",
+                "templateInputName" : "Header",
+                "templateId" : "3a55905e-eef5-480d-a1df-4c667b25afca",
+                "currentPath" : "controlData",
+                "userInput" : "Set Default Period"
+              }, {
+                "componentId" : "1b72c83a-53e0-4a3f-98d9-19f5c1fc1875",
+                "mappedKey" : "controlData",
+                "templateInputName" : "Sub Header",
+                "templateId" : "3a55905e-eef5-480d-a1df-4c667b25afca",
+                "currentPath" : "controlData",
+                "userInput" : "Choose the active quarter for system-wide reporting."
+              } ]
+            },
+            "templateInputMappingsNames" : {
+              "3a55905e-eef5-480d-a1df-4c667b25afca" : "default_period"
+            }
+          },
+          "control_1" : {
+            "type" : "ComponentTemplate",
+            "controlId" : "6698a03b-cbe8-4cf1-93ab-57bc5e948a48",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "selectedTemplateId" : "8a3a090f-cef3-4466-80cd-8ff94d39b047",
+            "selectedTemplateName" : "table_edit",
+            "selectedTemplateDescription" : null,
+            "internalTemplateIds" : [ "8a3a090f-cef3-4466-80cd-8ff94d39b047" ],
+            "templateInputMappings" : {
+              "8a3a090f-cef3-4466-80cd-8ff94d39b047" : [ {
+                "componentId" : "5a9fb833-8d2b-4e0f-b1fe-96a4f67bd181",
+                "mappedKey" : "controlData",
+                "templateInputName" : "Header",
+                "templateId" : "8a3a090f-cef3-4466-80cd-8ff94d39b047",
+                "currentPath" : "controlData",
+                "userInput" : "Earning Group Mapping"
+              }, {
+                "componentId" : "5a9fb833-8d2b-4e0f-b1fe-96a4f67bd181",
+                "mappedKey" : "controlData",
+                "templateInputName" : "sub Header",
+                "templateId" : "8a3a090f-cef3-4466-80cd-8ff94d39b047",
+                "currentPath" : "controlData",
+                "userInput" : "Create, edit, upload, or export backend earning group mappings"
+              } ]
+            },
+            "templateInputMappingsNames" : {
+              "8a3a090f-cef3-4466-80cd-8ff94d39b047" : "table_edit"
+            },
+            "controlKey" : "control_1"
+          },
+          "control_139" : {
+            "type" : "ComponentTemplate",
+            "controlId" : "523ebd33-a390-4e6f-8df9-ef206d1a7d5a",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "selectedTemplateId" : "99f1016a-1cfa-4606-9f99-8e924a8861ca",
+            "selectedTemplateName" : "admin_roll_up",
+            "selectedTemplateDescription" : null,
+            "internalTemplateIds" : [ "99f1016a-1cfa-4606-9f99-8e924a8861ca" ],
+            "templateInputMappings" : {
+              "99f1016a-1cfa-4606-9f99-8e924a8861ca" : [ {
+                "componentId" : "6e0fbd74-7d30-4d80-b4e3-176d9763a83a",
+                "mappedKey" : "controlData",
+                "templateInputName" : "Header",
+                "templateId" : "99f1016a-1cfa-4606-9f99-8e924a8861ca",
+                "currentPath" : "controlData",
+                "userInput" : "Title Mapping Management"
+              }, {
+                "componentId" : "6e0fbd74-7d30-4d80-b4e3-176d9763a83a",
+                "mappedKey" : "controlData",
+                "templateInputName" : "sub Header",
+                "templateId" : "99f1016a-1cfa-4606-9f99-8e924a8861ca",
+                "currentPath" : "controlData",
+                "userInput" : "Manage title relationships and roll-up flags across the enterprise."
+              } ]
+            },
+            "templateInputMappingsNames" : {
+              "99f1016a-1cfa-4606-9f99-8e924a8861ca" : "admin_roll_up"
+            }
+          },
+          "control_154" : {
+            "type" : "Custom",
+            "controlId" : "20da4a22-6b65-4817-9666-0e8e0d2cd284",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"width: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #e2e8f0; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); overflow: hidden;\">\n<div style=\"position: relative; padding: 20px 24px; padding-left: 28px; display: flex; align-items: center; justify-content: space-between;\">\n<div style=\"display: flex; flex-direction: column;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #8b5cf6);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 19px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Territory Mapping</h2>\n<p style=\"margin: 4px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Map and edit territories</p>\n</div>\n<div style=\"display: flex; align-items: center; gap: 12px;\"><button style=\"padding: 8px 16px; font-size: 13px; font-weight: 600; color: #475569; background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); font-family: inherit;\" data-xactly-event=\"export_mappings_3\"> Export Mappings </button> <button style=\"padding: 8px 16px; font-size: 13px; font-weight: 600; color: #0f172a; background-color: #f1f5f9; border: 1px solid transparent; border-radius: 6px; cursor: pointer; font-family: inherit;\" data-xactly-event=\"upload_mapping_3\"> &uarr; Upload Mapping </button> <button style=\"padding: 8px 20px; font-size: 13px; font-weight: 600; color: #ffffff; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(59,130,246,0.3); font-family: inherit;\" data-xactly-event=\"c_mapping\"> + Add New Mapping </button></div>\n</div>\n</div>",
+            "layoutSize" : null,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_155" : {
+            "type" : "input",
+            "controlId" : "74276d51-c733-4658-8e4e-cd2f4a7d1e32",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "v_search",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "74276d51-c733-4658-8e4e-cd2f4a7d1e32",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "variables" : [ {
+              "name" : "v_search_territory"
+            } ],
+            "labelText" : "",
+            "labelValue" : "Search territories or Category",
+            "isMultiLine" : false,
+            "isDisabled" : false,
+            "layoutSize" : 25,
+            "useEnterBroadcast" : false,
+            "shouldRenderHidden" : false,
+            "allowClear" : false
+          },
+          "control_156" : {
+            "type" : "table",
+            "controlId" : "0c0777bc-90f8-49a8-b3cd-abcec0676a9b",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onTabOpen",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "0c0777bc-90f8-49a8-b3cd-abcec0676a9b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "export_mappings_3",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "0c0777bc-90f8-49a8-b3cd-abcec0676a9b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "exportAsCSV" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "trigger_table_edit_3",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "0c0777bc-90f8-49a8-b3cd-abcec0676a9b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "trigger_table_edit_refresh_3",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "0c0777bc-90f8-49a8-b3cd-abcec0676a9b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0c0777bc-90f8-49a8-b3cd-abcec0676a9b",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "v_search",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0c0777bc-90f8-49a8-b3cd-abcec0676a9b",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_territory_mapping",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ {
+              "field" : "category",
+              "name" : "category",
+              "headerName" : "Category",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "sub_category",
+              "name" : "sub_category",
+              "headerName" : "Sub-Category",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "territory",
+              "name" : "territory",
+              "headerName" : "Territory",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            } ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_id_3",
+              "boundToField" : "$id"
+            }, {
+              "name" : "v_territory_3",
+              "boundToField" : "territory"
+            }, {
+              "name" : "v_category_3",
+              "boundToField" : "category"
+            }, {
+              "name" : "v_sub_category_3",
+              "boundToField" : "sub_category"
+            } ],
+            "table" : "grid",
+            "title" : "",
+            "maxHeight" : null,
+            "shouldRenderHidden" : false,
+            "staticAllCoumns" : false,
+            "showRowCount" : true,
+            "rowAlternatingColorsEnabled" : true
+          },
+          "control_157" : {
+            "type" : "modal",
+            "controlId" : "3eb94bd6-2463-4fb1-a1c1-bae4f1ca84b8",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : true
+            },
+            "events" : [ {
+              "name" : "trigger_table_edit_3",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "3eb94bd6-2463-4fb1-a1c1-bae4f1ca84b8",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "toggle" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "c_mapping",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "3eb94bd6-2463-4fb1-a1c1-bae4f1ca84b8",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "variables" : [ ],
+            "modalSize" : "md",
+            "hasHeader" : true,
+            "hasFooter" : true,
+            "modalHeaderMessage" : "Update/Add",
+            "pageSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "control_158" : {
+                      "type" : "tabContainer",
+                      "controlId" : "76298d92-4685-4e7b-97ca-14759d370ba8",
+                      "accessRoles" : null,
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ ],
+                      "variables" : [ ],
+                      "tabType" : "primary",
+                      "pageSchema" : {
+                        "properties" : { },
+                        "controlSchema" : {
+                          "schema" : {
+                            "type" : "object",
+                            "properties" : {
+                              "control_159" : {
+                                "type" : "tab",
+                                "controlId" : "8c58c4d2-55ae-419b-a3bb-3e2a5d3664f9",
+                                "accessRoles" : null,
+                                "privileges" : null,
+                                "styles" : {
+                                  "useComponentShadow" : false,
+                                  "useGreyBackground" : false,
+                                  "useInnerGreyBackground" : false
+                                },
+                                "events" : [ ],
+                                "controlData" : "Update",
+                                "pageSchema" : {
+                                  "properties" : { },
+                                  "controlSchema" : {
+                                    "schema" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                        "control_160" : {
+                                          "type" : "variableConfigurator",
+                                          "controlId" : "cef13777-d7aa-468f-984e-fa5f0afbc037",
+                                          "accessRoles" : null,
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "cef13777-d7aa-468f-984e-fa5f0afbc037",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          }, {
+                                            "name" : "e_up",
+                                            "eventSelection" : "CREATE_EVENT",
+                                            "broadcastArgs" : {
+                                              "validationXsql" : ""
+                                            },
+                                            "id" : "cef13777-d7aa-468f-984e-fa5f0afbc037",
+                                            "handlers" : [ ],
+                                            "handlerArgs" : [ ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : null,
+                                            "schema" : null,
+                                            "fields" : null,
+                                            "type" : null,
+                                            "isReadOnly" : false,
+                                            "columns" : null,
+                                            "seriesColors" : { },
+                                            "customLabels" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ ],
+                                          "valueField" : {
+                                            "dataType" : null,
+                                            "name" : null
+                                          },
+                                          "usingMultiSelectVariableFormat" : false,
+                                          "title" : "Variable Configurator",
+                                          "staticValue" : "",
+                                          "useStaticValue" : true,
+                                          "staticDataType" : "STRING"
+                                        },
+                                        "control_161" : {
+                                          "type" : "dropdown",
+                                          "controlId" : "83ef4e2f-13fc-4b52-ba28-ae52ffbad589",
+                                          "accessRoles" : null,
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "83ef4e2f-13fc-4b52-ba28-ae52ffbad589",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : "ntr_db_dd",
+                                            "type" : "view",
+                                            "isReadOnly" : true,
+                                            "schema" : "$framework",
+                                            "seriesColors" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ {
+                                            "name" : "v_category_3"
+                                          } ],
+                                          "isMultiSelect" : false,
+                                          "shouldHideLabel" : false,
+                                          "displayField" : {
+                                            "dataType" : "string",
+                                            "name" : "category"
+                                          },
+                                          "valueField" : {
+                                            "dataType" : "string",
+                                            "name" : "category"
+                                          },
+                                          "labelText" : "Category",
+                                          "layoutSize" : null,
+                                          "shouldRenderHidden" : false,
+                                          "allowClearForSingleSelect" : false
+                                        },
+                                        "control_170" : {
+                                          "type" : "dropdown",
+                                          "controlId" : "d798fa08-4f8e-41d2-984e-72a738cef877",
+                                          "accessRoles" : null,
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "d798fa08-4f8e-41d2-984e-72a738cef877",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : "ntr_db_dd_sub_category",
+                                            "type" : "view",
+                                            "isReadOnly" : true,
+                                            "schema" : "$framework",
+                                            "seriesColors" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ {
+                                            "name" : "v_sub_category_3"
+                                          } ],
+                                          "isMultiSelect" : false,
+                                          "shouldHideLabel" : false,
+                                          "displayField" : {
+                                            "dataType" : "string",
+                                            "name" : "sub_category"
+                                          },
+                                          "valueField" : {
+                                            "dataType" : "string",
+                                            "name" : "sub_category"
+                                          },
+                                          "labelText" : "Sub-Category",
+                                          "layoutSize" : null,
+                                          "shouldRenderHidden" : false,
+                                          "allowClearForSingleSelect" : false
+                                        },
+                                        "control_162" : {
+                                          "type" : "input",
+                                          "controlId" : "59edf5f2-743a-40b1-ad48-8be778ea5f0c",
+                                          "accessRoles" : null,
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "broadcastArgs" : {
+                                              "validationXsql" : ""
+                                            },
+                                            "id" : "59edf5f2-743a-40b1-ad48-8be778ea5f0c",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "variables" : [ {
+                                            "name" : "v_territory_3"
+                                          } ],
+                                          "labelText" : "Territory",
+                                          "labelValue" : "",
+                                          "isMultiLine" : false,
+                                          "isDisabled" : false,
+                                          "layoutSize" : null,
+                                          "useEnterBroadcast" : false,
+                                          "shouldRenderHidden" : false,
+                                          "allowClear" : false
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "innerCanvasMappings" : {
+                                  "pageSchema" : "appElements"
+                                }
+                              },
+                              "control_163" : {
+                                "type" : "tab",
+                                "controlId" : "4a9f6f11-9d57-499d-9f3c-b838aa5153a1",
+                                "accessRoles" : null,
+                                "privileges" : null,
+                                "styles" : {
+                                  "useComponentShadow" : false,
+                                  "useGreyBackground" : false,
+                                  "useInnerGreyBackground" : false
+                                },
+                                "events" : [ ],
+                                "controlData" : "Add",
+                                "pageSchema" : {
+                                  "properties" : { },
+                                  "controlSchema" : {
+                                    "schema" : {
+                                      "type" : "object",
+                                      "properties" : {
+                                        "control_164" : {
+                                          "type" : "variableConfigurator",
+                                          "controlId" : "4faa8f30-a61d-40b3-b42f-cd0ae4a6464c",
+                                          "accessRoles" : null,
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "4faa8f30-a61d-40b3-b42f-cd0ae4a6464c",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          }, {
+                                            "name" : "e_add",
+                                            "eventSelection" : "CREATE_EVENT",
+                                            "broadcastArgs" : {
+                                              "validationXsql" : ""
+                                            },
+                                            "id" : "4faa8f30-a61d-40b3-b42f-cd0ae4a6464c",
+                                            "handlers" : [ ],
+                                            "handlerArgs" : [ ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : null,
+                                            "schema" : null,
+                                            "fields" : null,
+                                            "type" : null,
+                                            "isReadOnly" : false,
+                                            "columns" : null,
+                                            "seriesColors" : { },
+                                            "customLabels" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ ],
+                                          "valueField" : {
+                                            "dataType" : null,
+                                            "name" : null
+                                          },
+                                          "usingMultiSelectVariableFormat" : false,
+                                          "title" : "Variable Configurator",
+                                          "staticValue" : "",
+                                          "useStaticValue" : true,
+                                          "staticDataType" : "STRING"
+                                        },
+                                        "control_165" : {
+                                          "type" : "dropdown",
+                                          "controlId" : "3304c1f6-59d6-4372-a074-c19460a6af0a",
+                                          "accessRoles" : null,
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "3304c1f6-59d6-4372-a074-c19460a6af0a",
+                                            "broadcastArgs" : {
+                                              "validationXsql" : ""
+                                            },
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : "ntr_db_dd",
+                                            "type" : "view",
+                                            "isReadOnly" : true,
+                                            "schema" : "$framework",
+                                            "seriesColors" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ {
+                                            "name" : "v_category_3_add"
+                                          } ],
+                                          "isMultiSelect" : false,
+                                          "shouldHideLabel" : false,
+                                          "displayField" : {
+                                            "dataType" : "string",
+                                            "name" : "category"
+                                          },
+                                          "valueField" : {
+                                            "dataType" : "string",
+                                            "name" : "category"
+                                          },
+                                          "labelText" : "Category",
+                                          "layoutSize" : null,
+                                          "shouldRenderHidden" : false,
+                                          "allowClearForSingleSelect" : false
+                                        },
+                                        "control_171" : {
+                                          "type" : "dropdown",
+                                          "controlId" : "8e7ca622-0ce8-49c6-8751-c7265d1f4117",
+                                          "accessRoles" : null,
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ {
+                                            "name" : "$onTabOpen",
+                                            "eventSelection" : "BIND_EVENT",
+                                            "id" : "8e7ca622-0ce8-49c6-8751-c7265d1f4117",
+                                            "handlers" : [ "refresh" ],
+                                            "handlerArgs" : [ { } ],
+                                            "preHandlers" : [ ],
+                                            "preHandlerArgs" : [ ]
+                                          } ],
+                                          "datasource" : {
+                                            "name" : "ntr_db_dd_sub_category",
+                                            "type" : "view",
+                                            "isReadOnly" : true,
+                                            "schema" : "$framework",
+                                            "seriesColors" : { }
+                                          },
+                                          "pagination" : {
+                                            "currentPage" : 1,
+                                            "totalItems" : null,
+                                            "itemsPerPage" : 200
+                                          },
+                                          "columns" : [ ],
+                                          "whereClauseVariable" : null,
+                                          "variables" : [ {
+                                            "name" : "v_sub_category_3_add"
+                                          } ],
+                                          "isMultiSelect" : false,
+                                          "shouldHideLabel" : false,
+                                          "displayField" : {
+                                            "dataType" : "string",
+                                            "name" : "sub_category"
+                                          },
+                                          "valueField" : {
+                                            "dataType" : "string",
+                                            "name" : "sub_category"
+                                          },
+                                          "labelText" : "Sub-Category",
+                                          "layoutSize" : null,
+                                          "shouldRenderHidden" : false,
+                                          "allowClearForSingleSelect" : false
+                                        },
+                                        "control_166" : {
+                                          "type" : "input",
+                                          "controlId" : "9258b3ae-e577-4ef8-8629-307fe2826853",
+                                          "accessRoles" : null,
+                                          "privileges" : null,
+                                          "styles" : {
+                                            "useComponentShadow" : false,
+                                            "useGreyBackground" : false,
+                                            "useInnerGreyBackground" : false
+                                          },
+                                          "events" : [ ],
+                                          "variables" : [ {
+                                            "name" : "v_territory_3_add"
+                                          } ],
+                                          "labelText" : "Territory",
+                                          "labelValue" : "",
+                                          "isMultiLine" : false,
+                                          "isDisabled" : false,
+                                          "layoutSize" : null,
+                                          "useEnterBroadcast" : false,
+                                          "shouldRenderHidden" : false,
+                                          "allowClear" : false
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "innerCanvasMappings" : {
+                                  "pageSchema" : "appElements"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "innerCanvasMappings" : {
+                        "pageSchema" : "appElements"
+                      },
+                      "shouldRenderHidden" : false,
+                      "maxHeight" : null
+                    }
+                  }
+                }
+              }
+            },
+            "footerSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "control_179" : {
+                      "type" : "xSQLButton",
+                      "controlId" : "54dd0f8d-164e-4cdb-af12-e720d5bb5b09",
+                      "accessRoles" : null,
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "trigger_table_edit_3",
+                        "eventSelection" : "CREATE_EVENT",
+                        "id" : "54dd0f8d-164e-4cdb-af12-e720d5bb5b09",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "trigger_table_edit_refresh_3",
+                        "eventSelection" : "CREATE_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "54dd0f8d-164e-4cdb-af12-e720d5bb5b09",
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_up",
+                        "eventSelection" : "BIND_EVENT",
+                        "id" : "54dd0f8d-164e-4cdb-af12-e720d5bb5b09",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ "show" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_add",
+                        "eventSelection" : "BIND_EVENT",
+                        "id" : "54dd0f8d-164e-4cdb-af12-e720d5bb5b09",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ "hide" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "controlData" : "Delete",
+                      "xSQL" : "DELETE FROM $framework.NATERA_TERRITORY_MAPPING\nWHERE $id = :v_id_3;",
+                      "layoutSize" : null,
+                      "buttonColorType" : "danger",
+                      "shouldRenderHidden" : false,
+                      "icon" : "Delete"
+                    },
+                    "control_181" : {
+                      "type" : "xSQLButton",
+                      "controlId" : "6742cd0c-9dc2-4741-a37e-f50ce195a3c0",
+                      "accessRoles" : null,
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "trigger_table_edit_3",
+                        "eventSelection" : "CREATE_EVENT",
+                        "id" : "6742cd0c-9dc2-4741-a37e-f50ce195a3c0",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "trigger_table_edit_refresh_3",
+                        "eventSelection" : "CREATE_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "6742cd0c-9dc2-4741-a37e-f50ce195a3c0",
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_up",
+                        "eventSelection" : "BIND_EVENT",
+                        "id" : "6742cd0c-9dc2-4741-a37e-f50ce195a3c0",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ "show" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_add",
+                        "eventSelection" : "BIND_EVENT",
+                        "id" : "6742cd0c-9dc2-4741-a37e-f50ce195a3c0",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ "hide" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "controlData" : "Update",
+                      "xSQL" : "UPDATE $framework.NATERA_TERRITORY_MAPPING\nSET \n    territory = :v_territory_3,\n    category = :v_category_3,\n    sub_category = :v_sub_category_3\nWHERE $id = :v_id_3;",
+                      "layoutSize" : null,
+                      "buttonColorType" : "primary",
+                      "shouldRenderHidden" : false,
+                      "icon" : "Arrow Up"
+                    },
+                    "control_180" : {
+                      "type" : "xSQLButton",
+                      "controlId" : "55219b7e-6305-43b2-a158-805abccbe60e",
+                      "accessRoles" : null,
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "trigger_table_edit_3",
+                        "eventSelection" : "CREATE_EVENT",
+                        "id" : "55219b7e-6305-43b2-a158-805abccbe60e",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "trigger_table_edit_refresh_3",
+                        "eventSelection" : "CREATE_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "55219b7e-6305-43b2-a158-805abccbe60e",
+                        "handlers" : [ ],
+                        "handlerArgs" : [ ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_up",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "55219b7e-6305-43b2-a158-805abccbe60e",
+                        "handlers" : [ "hide" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "e_add",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "55219b7e-6305-43b2-a158-805abccbe60e",
+                        "handlers" : [ "show" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "$onModalOpen",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "55219b7e-6305-43b2-a158-805abccbe60e",
+                        "handlers" : [ "hide" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "controlData" : "Add",
+                      "xSQL" : "INSERT INTO $framework.NATERA_TERRITORY_MAPPING (\n    territory,\n    category,\n    sub_category\n) VALUES (\n    :v_territory_3_add,\n    :v_category_3_add,\n    :v_sub_category_3_add\n);",
+                      "layoutSize" : null,
+                      "buttonColorType" : "info",
+                      "shouldRenderHidden" : false,
+                      "icon" : "Plus"
+                    }
+                  }
+                }
+              }
+            },
+            "innerCanvasMappings" : {
+              "pageSchema" : "appElements",
+              "footerSchema" : "footerElements"
+            }
+          },
+          "control_162" : {
+            "type" : "label",
+            "controlId" : "792af47b-9038-4527-8897-78c7781968bc",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "",
+            "layoutSize" : 91.66,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_163" : {
+            "type" : "upload_csv",
+            "controlId" : "b71c1b53-e785-4738-a8de-c87d5a5914dc",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "upload_mapping_3",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "b71c1b53-e785-4738-a8de-c87d5a5914dc",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "show", "enable" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "NATERA_MAPPING_MAIN",
+              "type" : "table",
+              "isReadOnly" : false,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "layoutSize" : 8.33,
+            "label" : "+ Upload",
+            "shouldRenderHidden" : true
+          }
+        }
+      }
+    }
+  },
+  "title" : "Data Mapping",
+  "versionName" : "1.0"
+}

@@ -1,0 +1,56 @@
+{
+  "applicationId": "fada6bdb-3d2e-8f31-b63d-1020dd9b7921",
+  "applicationName": "Claim Request",
+  "landingPageId": "a1b2c3d4-e5f6-4789-a012-3456789abc01",
+  "sections": [
+    {
+      "name": "Home",
+      "icon": "Home",
+      "pageDefinitionId": "a1b2c3d4-e5f6-4789-a012-3456789abc01",
+      "description": "",
+      "sections": [],
+      "accessRoles": null,
+      "privileges": null
+    },
+    {
+      "name": "Submit Claim",
+      "icon": "Edit",
+      "pageDefinitionId": "a1b2c3d4-e5f6-4789-a012-3456789abc02",
+      "description": "",
+      "sections": [],
+      "accessRoles": null,
+      "privileges": null
+    },
+    {
+      "name": "My Claims",
+      "icon": "List",
+      "pageDefinitionId": "a1b2c3d4-e5f6-4789-a012-3456789abc03",
+      "description": "",
+      "sections": [],
+      "accessRoles": null,
+      "privileges": null
+    },
+    {
+      "name": "Manager Review",
+      "icon": "Users",
+      "pageDefinitionId": "a1b2c3d4-e5f6-4789-a012-3456789abc04",
+      "description": "",
+      "sections": [],
+      "accessRoles": null,
+      "privileges": null
+    },
+    {
+      "name": "Admin Processing",
+      "icon": "Upload",
+      "pageDefinitionId": "a1b2c3d4-e5f6-4789-a012-3456789abc05",
+      "description": "",
+      "sections": [],
+      "accessRoles": null,
+      "privileges": null
+    }
+  ],
+  "accessRoles": [],
+  "tagIds": [],
+  "applicationState": "DRAFT",
+  "applicationI18nFiles": []
+}

@@ -1,0 +1,8 @@
+{
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "incnt_stmt_personal_details_PaymentFreq_N",
+  "schemaName": "exincst",
+  "xsql": "select  pt.payment_frequency\n\n FROM xactly.xc_participant pt\n-- ── Logic to grab ONLY the absolute latest version ──────────\nINNER JOIN (\n    SELECT Max(version) AS max_version, employee_id,name\n    FROM xactly.xc_participant\n    WHERE name = :v_participant \n    GROUP BY employee_id\n) latest\n    ON  latest.employee_id = pt.employee_id\n    AND latest.max_version = pt.version\ninner JOIN (select * from xactly.xc_pos_part_assignment where participant_name=:v_participant order by version desc LIMIT 1) ppa\n    ON  ppa.participant_name = pt.name and \nppa.is_active=1\nINNER JOIN xactly.xc_position pos\n    ON  pos.position_id = ppa.position_id\nAND pos.is_active = 1 \nINNER JOIN xactly.xc_business_group bg\n    ON  bg.business_group_id = pos.business_group_id\nLEFT JOIN xactly.xc_pos_title_assignment pta\n    ON  pta.position_id = pos.position_id\nLEFT JOIN xactly.xc_title t\n    ON  t.title_id = pta.title_id\nLEFT JOIN xactly.xc_pos_hierarchy ph\n    ON  ph.to_pos_id = pos.position_id\nLEFT JOIN xactly.xc_pos_part_assignment ppa_mgr\n    ON  ppa_mgr.position_id = ph.from_pos_id\nLEFT JOIN xactly.xc_participant mgr_pt\n    ON  mgr_pt.participant_id = ppa_mgr.participant_id\n    AND mgr_pt.is_active = 1\nWHERE pt.name = :v_participant\n\n",
+  "properties": {}
+}

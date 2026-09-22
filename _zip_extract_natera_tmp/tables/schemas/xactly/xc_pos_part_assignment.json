@@ -1,0 +1,1 @@
+{"id":"ent1bef141858155c41f86294a2f4aae","schemaName":"xactly","tableName":"xc_pos_part_assignment","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_POS_PART_ASSIGNMENT');","audited":false,"effectiveDated":false}

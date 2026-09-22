@@ -1,0 +1,1 @@
+{"id":"ent52aa5127ad8b54d795e93d46c75dd","schemaName":"xactly","tableName":"xc_quota_assignment","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"QuotaAssignment(TableName='Incent.XC_QUOTA_ASSIGNMENT', ObjectType='QuotaAssignment');","audited":false,"effectiveDated":false}

@@ -1,0 +1,1 @@
+{"id":"ent8c99856d42412b3f168ac5d2a1f6e","schemaName":"xactly","tableName":"xc_plan_approval","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_PLAN_APPROVAL');","audited":false,"effectiveDated":false}

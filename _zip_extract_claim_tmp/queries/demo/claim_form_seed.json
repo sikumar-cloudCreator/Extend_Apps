@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_form_seed",
+  "schemaName": "demo",
+  "xsql": "SELECT ''    AS empty_text,\n       'All' AS all_text,\n       0.00  AS zero_amount\nFROM   dual",
+  "properties": {}
+}

@@ -1,0 +1,1 @@
+{"id":"ent46c346c883a0d10e44fb479e1f9d0","schemaName":"xactly","tableName":"xc_participant","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_PARTICIPANT', ObjectType='Person');","audited":false,"effectiveDated":false}

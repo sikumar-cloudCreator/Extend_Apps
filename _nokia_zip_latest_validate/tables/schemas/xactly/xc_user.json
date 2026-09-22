@@ -1,0 +1,1 @@
+{"id":"ent368d8b494a59920985054eb15eb4b","schemaName":"xactly","tableName":"xc_user","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_USER');","audited":false,"effectiveDated":false}

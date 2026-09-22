@@ -1,0 +1,36 @@
+{
+  "applicationId": "626b7b41-9fa6-4075-b79f-c20b661c998b",
+  "applicationName": "Incentive Statement - Nokia Git",
+  "themeConfig": "{\"themeColor\":\"blue\"}",
+  "landingPageId": "385bde73-4607-47da-8b64-a0b148cfcfb5",
+  "icon": "LogoIconOnlySimplycompComponent",
+  "sections": [
+    {
+      "name": "New Admin Incentive Statement",
+      "icon": "Address Book",
+      "pageDefinitionId": "385bde73-4607-47da-8b64-a0b148cfcfb5",
+      "description": "",
+      "sections": [],
+      "accessRoles": null,
+      "privileges": null
+    },
+    {
+      "name": "Admin Console",
+      "icon": "File Upload",
+      "pageDefinitionId": "b34f49b2-fd77-494b-8f6c-35387ff8058a",
+      "description": "",
+      "sections": [],
+      "accessRoles": [
+        "Administrator",
+        "Xactly",
+        "SIP Administrator",
+        "SPM Administrator"
+      ],
+      "privileges": null
+    }
+  ],
+  "accessRoles": [],
+  "tagIds": [],
+  "applicationState": "PUBLISHED",
+  "applicationI18nFiles": []
+}

@@ -1,0 +1,1 @@
+{"id":"ent76f6c99854e50cdcac7a0d9be2c65","schemaName":"xactly","tableName":"xc_position","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_POSITION');","audited":false,"effectiveDated":false}

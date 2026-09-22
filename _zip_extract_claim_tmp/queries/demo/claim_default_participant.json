@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_default_participant",
+  "schemaName": "demo",
+  "xsql": "SELECT Nvl(MIN(pa.name), '') AS rep_name\nFROM   xactly.xc_participant pa\nINNER JOIN xactly.xc_pos_part_assignment ppa\n    ON ppa.participant_id = pa.participant_id\nINNER JOIN xactly.xc_position pos\n    ON  pos.position_id     = ppa.position_id\n    AND pos.incent_st_date IS NOT NULL\nWHERE  pa.is_master = 1",
+  "properties": {}
+}

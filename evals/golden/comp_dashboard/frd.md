@@ -23,7 +23,7 @@ IC and manager compensation dashboard: quota in force for the selected quarter, 
 8. Team performance matrix — visible only for Manager/Leader
 
 ## Data rules
-- Customer-defined schema; fully qualify all objects
+- Customer-defined or team schema: default **`$framework`**; fully qualify all objects
 - Quota = version in force for selected period; cumulative grain-aware
 - No ShowQuotaAttainment for employee-facing attainment/payout
 - Commission ≠ payment; show both

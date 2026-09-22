@@ -1,0 +1,107 @@
+{
+  "application": "app/Application.json",
+  "queries": [
+    "queries/demo/claim_manager_seed.json",
+    "queries/demo/claim_form_seed.json",
+    "queries/demo/claim_representative_list.json",
+    "queries/demo/claim_default_participant.json",
+    "queries/demo/claim_default_period.json",
+    "queries/demo/claim_period_list.json",
+    "queries/demo/claim_month_start_date.json",
+    "queries/demo/claim_master_participant_id.json",
+    "queries/demo/claim_master_position_id.json",
+    "queries/demo/claim_employee_id.json",
+    "queries/demo/claim_manager_name.json",
+    "queries/demo/claim_role_label.json",
+    "queries/demo/claim_refresh_date.json",
+    "queries/demo/claim_gate_manager_show.json",
+    "queries/demo/claim_gate_manager_hide.json",
+    "queries/demo/claim_gate_admin_show.json",
+    "queries/demo/claim_gate_admin_hide.json",
+    "queries/demo/claim_status_list.json",
+    "queries/demo/claim_status_seed.json",
+    "queries/demo/claim_reason_code_list.json",
+    "queries/demo/claim_default_reason.json",
+    "queries/demo/claim_employee_list.json",
+    "queries/demo/claim_home_kpi.json",
+    "queries/demo/claim_manager_queue_kpi.json",
+    "queries/demo/claim_recent_activity.json",
+    "queries/demo/claim_credit_lookup.json",
+    "queries/demo/claim_duplicate_check.json",
+    "queries/demo/claim_my_recent.json",
+    "queries/demo/claim_my_kpi.json",
+    "queries/demo/claim_my_grid.json",
+    "queries/demo/claim_audit_grid.json",
+    "queries/demo/claim_manager_kpi.json",
+    "queries/demo/claim_manager_grid.json",
+    "queries/demo/claim_selected_detail.json",
+    "queries/demo/claim_admin_kpi.json",
+    "queries/demo/claim_admin_grid.json",
+    "queries/demo/claim_upload_log.json"
+  ],
+  "workflows": [
+    "workflows/w_approve_claim.json",
+    "workflows/w_reject_claim.json",
+    "workflows/w_submit_claim.json",
+    "workflows/w_upload_claims_to_incent.json",
+    "workflows/w_withdraw_claim.json"
+  ],
+  "pageDefinitions": [
+    "app/a1b2c3d4-e5f6-4789-a012-3456789abc01.json",
+    "app/a1b2c3d4-e5f6-4789-a012-3456789abc02.json",
+    "app/a1b2c3d4-e5f6-4789-a012-3456789abc03.json",
+    "app/a1b2c3d4-e5f6-4789-a012-3456789abc04.json",
+    "app/a1b2c3d4-e5f6-4789-a012-3456789abc05.json"
+  ],
+  "policySets": [
+    "policy_sets/Xactly_Admin_Reporting.json",
+    "policy_sets/Xactly_AppUser.json",
+    "policy_sets/Xactly_IncentBizGroupAdminOrExec_Reporting.json",
+    "policy_sets/Xactly_IncentSalesManager_Reporting.json",
+    "policy_sets/Xactly_IncentSalesRep_Reporting.json",
+    "policy_sets/Xactly_ReportingBuilder.json",
+    "policy_sets/Xactly_ReportingUser.json"
+  ],
+  "tables": {
+    "schemas": [
+      "tables/schemas/claim/claim_status.json",
+      "tables/schemas/claim/claim_reason_code.json",
+      "tables/schemas/claim/claim_admin.json",
+      "tables/schemas/claim/claim_request.json",
+      "tables/schemas/claim/claim_audit.json",
+      "tables/schemas/xactly/xc_credit.json",
+      "tables/schemas/xactly/xc_participant.json",
+      "tables/schemas/xactly/xc_period.json",
+      "tables/schemas/xactly/xc_period_type.json",
+      "tables/schemas/xactly/xc_pos_hierarchy.json",
+      "tables/schemas/xactly/xc_pos_hierarchy_type.json",
+      "tables/schemas/xactly/xc_pos_part_assignment.json",
+      "tables/schemas/xactly/xc_position.json"
+    ],
+    "data": [
+      {
+        "name": "claim.claim_status",
+        "path": "tables/data/claim/claim_status.csv"
+      },
+      {
+        "name": "claim.claim_reason_code",
+        "path": "tables/data/claim/claim_reason_code.csv"
+      },
+      {
+        "name": "claim.claim_admin",
+        "path": "tables/data/claim/claim_admin.csv"
+      },
+      {
+        "name": "claim.claim_request",
+        "path": "tables/data/claim/claim_request.csv"
+      },
+      {
+        "name": "claim.claim_audit",
+        "path": "tables/data/claim/claim_audit.csv"
+      }
+    ]
+  },
+  "compositeComponents": [],
+  "applicationTags": [],
+  "agents": null
+}

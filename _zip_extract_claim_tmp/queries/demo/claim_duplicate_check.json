@@ -1,0 +1,20 @@
+{
+  "variables": [
+    {
+      "name": "v_order_code",
+      "value": "",
+      "dataType": "String"
+    },
+    {
+      "name": "v_item_code",
+      "value": "",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_duplicate_check",
+  "schemaName": "demo",
+  "xsql": "SELECT Nvl(COUNT(1), 0)                                          AS dup_count,\n       CASE WHEN COUNT(1) > 0 THEN 'block' ELSE 'none' END        AS dup_display,\n       Nvl(MAX(c.status), '')                                     AS dup_status,\n       Nvl(MAX(c.claim_id), '')                                   AS dup_claim_id\nFROM   claim.claim_request c\nWHERE  c.order_code = :v_order_code\n  AND  c.item_code  = :v_item_code",
+  "properties": {}
+}

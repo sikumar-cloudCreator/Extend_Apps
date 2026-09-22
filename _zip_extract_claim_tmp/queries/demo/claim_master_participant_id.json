@@ -1,0 +1,20 @@
+{
+  "variables": [
+    {
+      "name": "v_period",
+      "value": "JAN-2026",
+      "dataType": "String"
+    },
+    {
+      "name": "v_participant",
+      "value": "",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_master_participant_id",
+  "schemaName": "demo",
+  "xsql": "SELECT Nvl(MAX(master_pa.participant_id), 0) AS master_participant_id\nFROM   xactly.xc_participant pa\nINNER JOIN xactly.xc_period p\n    ON  pa.effective_start_date < p.end_date\n    AND pa.effective_end_date   > p.start_date\nINNER JOIN xactly.xc_participant master_pa\n    ON  pa.employee_id      = master_pa.employee_id\n    AND master_pa.is_master = 1\nWHERE  p.name  = :v_period\n  AND  pa.name = :v_participant",
+  "properties": {}
+}

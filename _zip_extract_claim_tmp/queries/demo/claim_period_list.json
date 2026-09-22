@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_period_list",
+  "schemaName": "demo",
+  "xsql": "SELECT p.name AS period_name\nFROM   xactly.xc_period p\nINNER JOIN xactly.xc_period_type pt\n    ON  pt.period_type_id = p.period_type_id_fk\n    AND pt.name           = 'MONTHLY'\nWHERE  p.is_active = 1\n  AND  p.name NOT IN ('SOT', 'EOT')\nORDER BY p.start_date DESC",
+  "properties": {}
+}

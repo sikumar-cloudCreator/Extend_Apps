@@ -1,0 +1,28 @@
+{
+  "applicationId" : "c276bc02-5ea4-4694-9b5a-c77a49a5794a",
+  "applicationName" : "Incentive Statement - Nokia",
+  "themeConfig" : "{\"themeColor\":\"blue\"}",
+  "landingPageId" : "85cd9bfd-6a0c-4973-8c06-7fa2f9d73a46",
+  "icon" : "LogoIconOnlySimplycompComponent",
+  "sections" : [ {
+    "name" : "New Admin Incentive Statement",
+    "icon" : "Address Book",
+    "pageDefinitionId" : "85cd9bfd-6a0c-4973-8c06-7fa2f9d73a46",
+    "description" : "",
+    "sections" : [ ],
+    "accessRoles" : null,
+    "privileges" : null
+  }, {
+    "name" : "Admin Console",
+    "icon" : "File Upload",
+    "pageDefinitionId" : "d76fb0c9-1c13-4009-82de-e4cd53da23b6",
+    "description" : "",
+    "sections" : [ ],
+    "accessRoles" : [ "Administrator", "Xactly", "SIP Administrator", "SPM Administrator" ],
+    "privileges" : null
+  } ],
+  "accessRoles" : [ ],
+  "tagIds" : [ ],
+  "applicationState" : "PUBLISHED",
+  "applicationI18nFiles" : [ ]
+}

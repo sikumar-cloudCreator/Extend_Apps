@@ -1,0 +1,41 @@
+{
+  "Rules": [],
+  "Methods": [],
+  "XFlow": {
+    "Name": "w_upload_claims_to_incent",
+    "Version": 1,
+    "Description": "Mark Approved claims as Uploaded. Blank :v_claim_id uploads every approved claim; a value uploads just that one.",
+    "START_NODE": {
+      "Node_Name": "Start",
+      "Destination": "n_update",
+      "Destination_Type": "EXECUTION_NODE"
+    },
+    "STOP_NODE": {
+      "Node_Name": "Stop",
+      "Source": "n_audit",
+      "Source_Type": "EXECUTION_NODE"
+    },
+    "EXECUTION_NODE": [
+      {
+        "Node_Name": "n_update",
+        "Description": "Skip anything already flagged Y",
+        "Attributes": "{\"optionType\":\"Execution\"}",
+        "Method": {
+          "Command": "UPDATE claim.claim_request\nSET status = 'Uploaded',\n    uploaded_flag = 'Y'\nWHERE status = 'Approved'\n  AND Nvl(uploaded_flag, 'N') <> 'Y'\n  AND ( Nvl(:v_claim_id, '') = '' OR claim_id = :v_claim_id )"
+        },
+        "Destination": "n_audit",
+        "Destination_Type": "EXECUTION_NODE"
+      },
+      {
+        "Node_Name": "n_audit",
+        "Description": "One UPLOAD row per claim, guarded against re-running",
+        "Attributes": "{\"optionType\":\"Execution\"}",
+        "Method": {
+          "Command": "INSERT INTO claim.claim_audit (\n  audit_id, claim_id, action_name, from_status, to_status,\n  action_by, action_date, comments\n)\nSELECT\n  Concat('AUD-', Concat(c.claim_id, Concat('-', FormatDateTime(Now(), 'yyyyMMddHHmmss')))),\n  c.claim_id,\n  'UPLOAD',\n  'Approved',\n  'Uploaded',\n  Nvl(:v_participant, ''),\n  CurDate(),\n  'Marked for Incent upload'\nFROM   claim.claim_request c\nWHERE  c.status        = 'Uploaded'\n  AND  c.uploaded_flag = 'Y'\n  AND  ( Nvl(:v_claim_id, '') = '' OR c.claim_id = :v_claim_id )\n  AND  NOT EXISTS ( SELECT 1\n                    FROM   claim.claim_audit a\n                    WHERE  a.claim_id    = c.claim_id\n                      AND  a.action_name = 'UPLOAD' )"
+        },
+        "Destination": "Stop",
+        "Destination_Type": "STOP_NODE"
+      }
+    ]
+  }
+}

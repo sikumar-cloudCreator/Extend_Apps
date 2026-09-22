@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"ntr_db_get_qtr_start_date","schemaName":"$framework","xsql":"select start_date from xactly.xc_period per where per.period_id = :v_period_id","properties":{}}

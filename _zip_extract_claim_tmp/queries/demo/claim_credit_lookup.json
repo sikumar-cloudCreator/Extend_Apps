@@ -1,0 +1,25 @@
+{
+  "variables": [
+    {
+      "name": "v_master_participant_id",
+      "value": "0",
+      "dataType": "String"
+    },
+    {
+      "name": "v_period",
+      "value": "JAN-2026",
+      "dataType": "String"
+    },
+    {
+      "name": "v_order_code",
+      "value": "",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_credit_lookup",
+  "schemaName": "demo",
+  "xsql": "SELECT c.order_code                                            AS order_code,\n       c.item_code                                             AS item_code,\n       Nvl(c.customer_name, '')                                AS customer_name,\n       Nvl(c.product_name, '')                                 AS product_name,\n       Nvl(c.credit_type_name, '')                             AS credit_type,\n       c.period_name                                           AS period_name,\n       FormatNumber(Nvl(c.amount, 0), '$#,###0.00')            AS credit_amount,\n       Nvl(c.amount, 0)                                        AS credit_amount_raw\nFROM   xactly.xc_credit c\nWHERE  c.participant_id = :v_master_participant_id\n  AND  c.is_active      = 1\n  AND  c.period_name    = :v_period\n  AND  ( Nvl(:v_order_code, '') = ''\n         OR c.order_code LIKE Concat('%', Concat(:v_order_code, '%')) )\nORDER BY c.order_code, c.item_code",
+  "properties": {}
+}

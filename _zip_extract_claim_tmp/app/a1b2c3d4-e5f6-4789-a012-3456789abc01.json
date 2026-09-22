@@ -1,0 +1,1605 @@
+{
+  "pageDefinitionId": "a1b2c3d4-e5f6-4789-a012-3456789abc01",
+  "title": "Home",
+  "versionName": "v2.0",
+  "pageSchema": {
+    "properties": {},
+    "controlSchema": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "control_1": {
+            "type": "PageLoader",
+            "controlId": "95831733-cf6d-4803-a709-5d11d3b39b18",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "layoutSize": null,
+            "title": "Loading...",
+            "loaderSize": "FULL",
+            "loaderOpacity": "75",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "95831733-cf6d-4803-a709-5d11d3b39b18",
+                "handlers": [
+                  "showLoader"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "95831733-cf6d-4803-a709-5d11d3b39b18",
+                "handlers": [
+                  "hideLoader"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "data_ready",
+                "eventSelection": "BIND_EVENT",
+                "id": "95831733-cf6d-4803-a709-5d11d3b39b18",
+                "handlers": [
+                  "hideLoader"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ]
+          },
+          "control_2": {
+            "type": "variableConfigurator",
+            "controlId": "edde506d-52e1-4166-a322-6062545711cb",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_default_period",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "edde506d-52e1-4166-a322-6062545711cb",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "default_period",
+                "eventSelection": "CREATE_EVENT",
+                "id": "edde506d-52e1-4166-a322-6062545711cb",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_default_period",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_period"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "period_name"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_default_period",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_3": {
+            "type": "variableConfigurator",
+            "controlId": "78d5be72-2c13-4c37-b452-a87f259fa63e",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_manager_seed",
+            "events": [
+              {
+                "name": "default_period",
+                "eventSelection": "BIND_EVENT",
+                "id": "78d5be72-2c13-4c37-b452-a87f259fa63e",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "manager_seeded",
+                "eventSelection": "CREATE_EVENT",
+                "id": "78d5be72-2c13-4c37-b452-a87f259fa63e",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_manager_seed",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_manager"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "manager_name"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_manager_seed",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_4": {
+            "type": "variableConfigurator",
+            "controlId": "2dc44adf-9a46-4644-aa5a-4a094c1311d0",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_default_participant",
+            "events": [
+              {
+                "name": "manager_seeded",
+                "eventSelection": "BIND_EVENT",
+                "id": "2dc44adf-9a46-4644-aa5a-4a094c1311d0",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "default_participant",
+                "eventSelection": "CREATE_EVENT",
+                "id": "2dc44adf-9a46-4644-aa5a-4a094c1311d0",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_default_participant",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_participant"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "rep_name"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_default_participant",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_5": {
+            "type": "variableConfigurator",
+            "controlId": "12c4d0e3-0e63-4984-a54f-1ae9e3f1dcd9",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_master_participant",
+            "events": [
+              {
+                "name": "default_participant",
+                "eventSelection": "BIND_EVENT",
+                "id": "12c4d0e3-0e63-4984-a54f-1ae9e3f1dcd9",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "rep_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "12c4d0e3-0e63-4984-a54f-1ae9e3f1dcd9",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "period_select",
+                "eventSelection": "BIND_EVENT",
+                "id": "12c4d0e3-0e63-4984-a54f-1ae9e3f1dcd9",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_participant_id",
+                "eventSelection": "CREATE_EVENT",
+                "id": "12c4d0e3-0e63-4984-a54f-1ae9e3f1dcd9",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_master_participant_id",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_master_participant_id"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "master_participant_id"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_master_participant",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_6": {
+            "type": "variableConfigurator",
+            "controlId": "2fde0215-809b-4699-8d2e-a29c0d125266",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_master_position",
+            "events": [
+              {
+                "name": "master_participant_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "2fde0215-809b-4699-8d2e-a29c0d125266",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "master_position_id",
+                "eventSelection": "CREATE_EVENT",
+                "id": "2fde0215-809b-4699-8d2e-a29c0d125266",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_master_position_id",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_master_position_id"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "master_position_id"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_master_position",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_7": {
+            "type": "variableConfigurator",
+            "controlId": "24f12708-35c9-4025-819e-d066be3e721d",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_employee_id",
+            "events": [
+              {
+                "name": "master_position_id",
+                "eventSelection": "BIND_EVENT",
+                "id": "24f12708-35c9-4025-819e-d066be3e721d",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "employee_ready",
+                "eventSelection": "CREATE_EVENT",
+                "id": "24f12708-35c9-4025-819e-d066be3e721d",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_employee_id",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_employee_id"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "employee_id"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_employee_id",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_8": {
+            "type": "variableConfigurator",
+            "controlId": "e487bbf9-ff38-4c34-a669-c9f1a8daf635",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_month_start",
+            "events": [
+              {
+                "name": "employee_ready",
+                "eventSelection": "BIND_EVENT",
+                "id": "e487bbf9-ff38-4c34-a669-c9f1a8daf635",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "month_start",
+                "eventSelection": "CREATE_EVENT",
+                "id": "e487bbf9-ff38-4c34-a669-c9f1a8daf635",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_month_start_date",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_month_start_date"
+              }
+            ],
+            "valueField": {
+              "dataType": "date",
+              "name": "month_start_date"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_month_start",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_9": {
+            "type": "variableConfigurator",
+            "controlId": "7a34beab-8712-43e4-9fa5-ab944f5e3080",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_manager_name",
+            "events": [
+              {
+                "name": "month_start",
+                "eventSelection": "BIND_EVENT",
+                "id": "7a34beab-8712-43e4-9fa5-ab944f5e3080",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "manager_name_ready",
+                "eventSelection": "CREATE_EVENT",
+                "id": "7a34beab-8712-43e4-9fa5-ab944f5e3080",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_manager_name",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_manager_name"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "manager_name"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_manager_name",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_10": {
+            "type": "variableConfigurator",
+            "controlId": "4850577d-1d18-4fd3-9bcb-8339c77845d1",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_role",
+            "events": [
+              {
+                "name": "manager_name_ready",
+                "eventSelection": "BIND_EVENT",
+                "id": "4850577d-1d18-4fd3-9bcb-8339c77845d1",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "role_ready",
+                "eventSelection": "CREATE_EVENT",
+                "id": "4850577d-1d18-4fd3-9bcb-8339c77845d1",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_role_label",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_role"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "role_name"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_role",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_11": {
+            "type": "variableConfigurator",
+            "controlId": "9c73c5c0-aafa-484b-b9a0-0b8b0dc2ee25",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_gate_mgr_show",
+            "events": [
+              {
+                "name": "manager_name_ready",
+                "eventSelection": "BIND_EVENT",
+                "id": "9c73c5c0-aafa-484b-b9a0-0b8b0dc2ee25",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "mgr_show",
+                "eventSelection": "CREATE_EVENT",
+                "id": "9c73c5c0-aafa-484b-b9a0-0b8b0dc2ee25",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": "SELECT g.is_valid FROM demo.claim_gate_manager_show g WHERE g.is_valid = 1"
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_gate_manager_show",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_review_scope"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "scope_label"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_gate_mgr_show",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_12": {
+            "type": "variableConfigurator",
+            "controlId": "277c76e1-1ab6-43a2-a347-0cd5ab38210c",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_gate_mgr_hide",
+            "events": [
+              {
+                "name": "manager_name_ready",
+                "eventSelection": "BIND_EVENT",
+                "id": "277c76e1-1ab6-43a2-a347-0cd5ab38210c",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "mgr_hide",
+                "eventSelection": "CREATE_EVENT",
+                "id": "277c76e1-1ab6-43a2-a347-0cd5ab38210c",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": "SELECT g.is_valid FROM demo.claim_gate_manager_hide g WHERE g.is_valid = 1"
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_gate_manager_hide",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_review_scope_note"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "scope_label"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_gate_mgr_hide",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_13": {
+            "type": "variableConfigurator",
+            "controlId": "bc38bf7c-3807-4205-a603-ccdde8b2ef50",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "vc_refresh_date",
+            "events": [
+              {
+                "name": "role_ready",
+                "eventSelection": "BIND_EVENT",
+                "id": "bc38bf7c-3807-4205-a603-ccdde8b2ef50",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "data_ready",
+                "eventSelection": "CREATE_EVENT",
+                "id": "bc38bf7c-3807-4205-a603-ccdde8b2ef50",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_refresh_date",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_refresh_date"
+              }
+            ],
+            "valueField": {
+              "dataType": "string",
+              "name": "refresh_date"
+            },
+            "usingMultiSelectVariableFormat": false,
+            "title": "vc_refresh_date",
+            "staticValue": "",
+            "useStaticValue": false,
+            "staticDataType": "STRING"
+          },
+          "control_14": {
+            "type": "label",
+            "controlId": "c5790bcb-4c34-427b-9012-e3a0de1fc11a",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "hdr",
+            "events": [],
+            "controlData": "<div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;padding:4px 2px 12px;border-bottom:1px solid #e2e8f0;margin-bottom:6px;\"><div style=\"font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#0070ba;\">Claim Request</div><h1 style=\"margin:6px 0 0;font-size:20px;font-weight:700;color:#003087;letter-spacing:-0.3px;\">Commission claim workspace</h1><div style=\"margin-top:5px;font-size:12px;color:#8a97a8;\">Rep {{v_participant}} &middot; Role {{v_role}} &middot; Period {{v_period}} &middot; Manager {{v_manager_name}} &middot; Refreshed {{v_refresh_date}}</div></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_15": {
+            "type": "dropdown",
+            "controlId": "8c6f9a68-eb60-4b60-8024-33d310f724da",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Representative",
+            "events": [
+              {
+                "name": "manager_seeded",
+                "eventSelection": "BIND_EVENT",
+                "id": "8c6f9a68-eb60-4b60-8024-33d310f724da",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "default_participant",
+                "eventSelection": "BIND_EVENT",
+                "id": "8c6f9a68-eb60-4b60-8024-33d310f724da",
+                "handlers": [
+                  "assignCurrentVariable",
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {},
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "rep_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "8c6f9a68-eb60-4b60-8024-33d310f724da",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_representative_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_participant"
+              }
+            ],
+            "isMultiSelect": false,
+            "shouldHideLabel": false,
+            "displayField": {
+              "dataType": "string",
+              "name": "rep_name"
+            },
+            "valueField": {
+              "dataType": "string",
+              "name": "rep_name"
+            },
+            "labelText": "Representative",
+            "layoutSize": 25.0,
+            "shouldRenderHidden": false,
+            "allowClearForSingleSelect": true
+          },
+          "control_16": {
+            "type": "dropdown",
+            "controlId": "49900303-4e55-490c-8564-45c882a58ac0",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": true,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "Period",
+            "events": [
+              {
+                "name": "$onPageLoad",
+                "eventSelection": "BIND_EVENT",
+                "id": "49900303-4e55-490c-8564-45c882a58ac0",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "default_period",
+                "eventSelection": "BIND_EVENT",
+                "id": "49900303-4e55-490c-8564-45c882a58ac0",
+                "handlers": [
+                  "assignCurrentVariable",
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {},
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "period_select",
+                "eventSelection": "CREATE_EVENT",
+                "id": "49900303-4e55-490c-8564-45c882a58ac0",
+                "handlers": [],
+                "handlerArgs": [],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_period_list",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_period"
+              }
+            ],
+            "isMultiSelect": false,
+            "shouldHideLabel": false,
+            "displayField": {
+              "dataType": "string",
+              "name": "period_name"
+            },
+            "valueField": {
+              "dataType": "string",
+              "name": "period_name"
+            },
+            "labelText": "Period",
+            "layoutSize": 25.0,
+            "shouldRenderHidden": false,
+            "allowClearForSingleSelect": true
+          },
+          "control_17": {
+            "type": "Custom",
+            "controlId": "6e45ba9b-c2fb-4c2f-9b6b-ddcd49935f69",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "kpi_home",
+            "events": [
+              {
+                "name": "data_ready",
+                "eventSelection": "BIND_EVENT",
+                "id": "6e45ba9b-c2fb-4c2f-9b6b-ddcd49935f69",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false,
+            "controlData": "<div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;display:flex;gap:12px;flex-wrap:wrap;\"><div style=\"flex:1 1 190px;\"><div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:16px 18px;border-top:3px solid #0070ba;\"><div style=\"font-size:10px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:#64748b;\">Open with manager</div><div style=\"margin-top:8px;font-size:26px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;letter-spacing:-0.5px;\">{{v_hk_submitted_count}}</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;\">Value {{v_hk_open_value}}</div></div></div><div style=\"flex:1 1 190px;\"><div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:16px 18px;border-top:3px solid #16a34a;\"><div style=\"font-size:10px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:#64748b;\">Approved</div><div style=\"margin-top:8px;font-size:26px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;letter-spacing:-0.5px;\">{{v_hk_approved_count}}</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;\">Value {{v_hk_approved_value}}</div></div></div><div style=\"flex:1 1 190px;\"><div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:16px 18px;border-top:3px solid #dc2626;\"><div style=\"font-size:10px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:#64748b;\">Rejected</div><div style=\"margin-top:8px;font-size:26px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;letter-spacing:-0.5px;\">{{v_hk_rejected_count}}</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;\">Returned for rework</div></div></div><div style=\"flex:1 1 190px;\"><div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:16px 18px;border-top:3px solid #7c3aed;\"><div style=\"font-size:10px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:#64748b;\">Uploaded to Incent</div><div style=\"margin-top:8px;font-size:26px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;letter-spacing:-0.5px;\">{{v_hk_uploaded_count}}</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;\">{{v_hk_total_count}} claims all time, {{v_hk_total_value}}</div></div></div></div>",
+            "datasource": {
+              "name": "claim_home_kpi",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_hk_draft_count",
+                "boundToField": "draft_count"
+              },
+              {
+                "name": "v_hk_submitted_count",
+                "boundToField": "submitted_count"
+              },
+              {
+                "name": "v_hk_approved_count",
+                "boundToField": "approved_count"
+              },
+              {
+                "name": "v_hk_rejected_count",
+                "boundToField": "rejected_count"
+              },
+              {
+                "name": "v_hk_uploaded_count",
+                "boundToField": "uploaded_count"
+              },
+              {
+                "name": "v_hk_total_count",
+                "boundToField": "total_count"
+              },
+              {
+                "name": "v_hk_total_value",
+                "boundToField": "total_value"
+              },
+              {
+                "name": "v_hk_approved_value",
+                "boundToField": "approved_value"
+              },
+              {
+                "name": "v_hk_open_value",
+                "boundToField": "open_value"
+              }
+            ]
+          },
+          "control_18": {
+            "type": "Custom",
+            "controlId": "5ffa9d7b-9b65-4df5-a333-57bc1ee7ad40",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "kpi_manager",
+            "events": [
+              {
+                "name": "mgr_show",
+                "eventSelection": "BIND_EVENT",
+                "id": "5ffa9d7b-9b65-4df5-a333-57bc1ee7ad40",
+                "handlers": [
+                  "show",
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {},
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "mgr_hide",
+                "eventSelection": "BIND_EVENT",
+                "id": "5ffa9d7b-9b65-4df5-a333-57bc1ee7ad40",
+                "handlers": [
+                  "hide"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": true,
+            "controlData": "<div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;display:flex;gap:12px;flex-wrap:wrap;\"><div style=\"flex:1 1 190px;\"><div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:16px 18px;border-top:3px solid #ea580c;\"><div style=\"font-size:10px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:#64748b;\">Awaiting your review</div><div style=\"margin-top:8px;font-size:26px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;letter-spacing:-0.5px;\">{{v_mq_awaiting_count}}</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;\">Value {{v_mq_awaiting_value}}</div></div></div><div style=\"flex:1 1 190px;\"><div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:16px 18px;border-top:3px solid #16a34a;\"><div style=\"font-size:10px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:#64748b;\">Team approved</div><div style=\"margin-top:8px;font-size:26px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;letter-spacing:-0.5px;\">{{v_mq_approved_count}}</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;\">This team, all periods</div></div></div><div style=\"flex:1 1 190px;\"><div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:16px 18px;border-top:3px solid #dc2626;\"><div style=\"font-size:10px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:#64748b;\">Team rejected</div><div style=\"margin-top:8px;font-size:26px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;letter-spacing:-0.5px;\">{{v_mq_rejected_count}}</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;\">{{v_review_scope}}</div></div></div></div>",
+            "datasource": {
+              "name": "claim_manager_queue_kpi",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 200
+            },
+            "columns": [],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_mq_awaiting_count",
+                "boundToField": "awaiting_count"
+              },
+              {
+                "name": "v_mq_approved_count",
+                "boundToField": "approved_count"
+              },
+              {
+                "name": "v_mq_rejected_count",
+                "boundToField": "rejected_count"
+              },
+              {
+                "name": "v_mq_awaiting_value",
+                "boundToField": "awaiting_value"
+              }
+            ]
+          },
+          "control_19": {
+            "type": "label",
+            "controlId": "b93a61e7-0d37-417b-8397-8004fba5e020",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "no_team",
+            "events": [
+              {
+                "name": "mgr_hide",
+                "eventSelection": "BIND_EVENT",
+                "id": "b93a61e7-0d37-417b-8397-8004fba5e020",
+                "handlers": [
+                  "show",
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {},
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              },
+              {
+                "name": "mgr_show",
+                "eventSelection": "BIND_EVENT",
+                "id": "b93a61e7-0d37-417b-8397-8004fba5e020",
+                "handlers": [
+                  "hide"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "controlData": "<div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px 16px;box-sizing:border-box;\"><div style=\"font-size:12.5px;font-weight:700;color:#1e40af;\">You have no review queue</div><div style=\"margin-top:4px;font-size:12px;color:#1e40af;line-height:1.5;\">{{v_review_scope_note}}.</div></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": true
+          },
+          "control_20": {
+            "type": "label",
+            "controlId": "806ddd77-5bde-45a7-996a-f1252331c843",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "sec_steps",
+            "events": [],
+            "controlData": "<div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:18px 0 6px;\"><h2 style=\"margin:0;font-size:14px;font-weight:700;color:#003087;letter-spacing:-0.2px;\">How a claim moves</h2></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_21": {
+            "type": "label",
+            "controlId": "fea328ea-2d55-4b97-bac3-0ad28f245239",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "steps",
+            "events": [],
+            "controlData": "<div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;display:flex;gap:12px;flex-wrap:wrap;\"><div style=\"flex:1 1 180px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:14px 16px;\"><div style=\"font-size:10px;font-weight:700;color:#0070ba;\">STEP 1</div><div style=\"margin-top:5px;font-size:13px;font-weight:700;color:#003087;\">Submit</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;line-height:1.5;\">Find the credit line, state what is wrong and how much you are claiming.</div></div><div style=\"flex:1 1 180px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:14px 16px;\"><div style=\"font-size:10px;font-weight:700;color:#0070ba;\">STEP 2</div><div style=\"margin-top:5px;font-size:13px;font-weight:700;color:#003087;\">Manager review</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;line-height:1.5;\">Your manager approves or rejects with a reason. Both are recorded.</div></div><div style=\"flex:1 1 180px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:14px 16px;\"><div style=\"font-size:10px;font-weight:700;color:#0070ba;\">STEP 3</div><div style=\"margin-top:5px;font-size:13px;font-weight:700;color:#003087;\">Admin upload</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;line-height:1.5;\">Comp ops marks approved claims for the next Incent load.</div></div><div style=\"flex:1 1 180px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 4px 14px rgba(0,112,186,0.08);box-sizing:border-box;padding:14px 16px;\"><div style=\"font-size:10px;font-weight:700;color:#0070ba;\">STEP 4</div><div style=\"margin-top:5px;font-size:13px;font-weight:700;color:#003087;\">Track</div><div style=\"margin-top:4px;font-size:11.5px;color:#64748b;line-height:1.5;\">Every transition is appended to the audit trail below and never overwritten.</div></div></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_22": {
+            "type": "label",
+            "controlId": "5d776c67-443e-4b3f-abd0-627cfec878a3",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "sec_activity",
+            "events": [],
+            "controlData": "<div style=\"font-family:Poppins,'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:18px 0 6px;\"><h2 style=\"margin:0;font-size:14px;font-weight:700;color:#003087;letter-spacing:-0.2px;\">Recent activity on your claims</h2><span style=\"font-size:11.5px;color:#64748b;font-weight:400;\">newest first, appended by the workflows</span></div>",
+            "layoutSize": 100,
+            "intl": false,
+            "helpIconPosition": "alignLeft",
+            "helpIconTooltipPosiiton": "right",
+            "helpIconValue": null,
+            "shouldRenderHidden": false
+          },
+          "control_23": {
+            "type": "table",
+            "controlId": "70866758-e49a-446f-9538-59e1e8093288",
+            "privileges": null,
+            "styles": {
+              "useComponentShadow": false,
+              "useGreyBackground": false,
+              "useInnerGreyBackground": false
+            },
+            "internalName": "tbl_activity",
+            "events": [
+              {
+                "name": "data_ready",
+                "eventSelection": "BIND_EVENT",
+                "id": "70866758-e49a-446f-9538-59e1e8093288",
+                "handlers": [
+                  "refresh"
+                ],
+                "handlerArgs": [
+                  {}
+                ],
+                "preHandlers": [],
+                "preHandlerArgs": [],
+                "broadcastArgs": {
+                  "validationXsql": ""
+                }
+              }
+            ],
+            "datasource": {
+              "name": "claim_recent_activity",
+              "type": "view",
+              "isReadOnly": true,
+              "schema": "demo",
+              "seriesColors": {}
+            },
+            "pagination": {
+              "currentPage": 1,
+              "totalItems": null,
+              "itemsPerPage": 10
+            },
+            "columns": [
+              {
+                "field": "claim_id",
+                "name": "claim_id",
+                "headerName": "Claim ID",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": true,
+                "readOnly": true,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "action_name",
+                "name": "action_name",
+                "headerName": "Action",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": true,
+                "readOnly": true,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "prev_status",
+                "name": "prev_status",
+                "headerName": "From",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": true,
+                "readOnly": true,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "new_status",
+                "name": "new_status",
+                "headerName": "To",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": true,
+                "readOnly": true,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "action_by",
+                "name": "action_by",
+                "headerName": "By",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": true,
+                "readOnly": true,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "action_date",
+                "name": "action_date",
+                "headerName": "When",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": true,
+                "readOnly": true,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              },
+              {
+                "field": "comments",
+                "name": "comments",
+                "headerName": "Comments",
+                "dataType": "string",
+                "editable": false,
+                "isPrimaryKey": false,
+                "formattingStyle": "default",
+                "sortable": true,
+                "readOnly": true,
+                "pinned": false,
+                "currencyFormat": "en-US",
+                "groupBy": false
+              }
+            ],
+            "whereClauseVariable": null,
+            "variables": [
+              {
+                "name": "v_ha_claim_id",
+                "boundToField": "claim_id"
+              },
+              {
+                "name": "v_ha_action_name",
+                "boundToField": "action_name"
+              },
+              {
+                "name": "v_ha_prev_status",
+                "boundToField": "prev_status"
+              },
+              {
+                "name": "v_ha_new_status",
+                "boundToField": "new_status"
+              },
+              {
+                "name": "v_ha_action_by",
+                "boundToField": "action_by"
+              },
+              {
+                "name": "v_ha_action_date",
+                "boundToField": "action_date"
+              },
+              {
+                "name": "v_ha_comments",
+                "boundToField": "comments"
+              }
+            ],
+            "table": "grid",
+            "title": "",
+            "maxHeight": 320,
+            "shouldRenderHidden": false,
+            "staticAllCoumns": false,
+            "layoutSize": 100
+          }
+        }
+      }
+    }
+  }
+}

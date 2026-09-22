@@ -1,0 +1,86 @@
+{
+  "pageDefinitionId" : "f0c217f2-dd71-4072-80bf-0ef06e224af7",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_1" : {
+            "type" : "Custom",
+            "controlId" : "35e32a4e-2e1a-4dff-bcd9-ccaa39e04948",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "35e32a4e-2e1a-4dff-bcd9-ccaa39e04948",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd2",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "35e32a4e-2e1a-4dff-bcd9-ccaa39e04948",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "vc1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "35e32a4e-2e1a-4dff-bcd9-ccaa39e04948",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Comprehensive Rep Performance</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Detailed breakdown of earnings and rankings by representative.</p>\n</div>\n</div>",
+            "layoutSize" : 33.33,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "chart_head"
+          }
+        }
+      }
+    }
+  },
+  "title" : "OG_1",
+  "versionName" : "1.0"
+}

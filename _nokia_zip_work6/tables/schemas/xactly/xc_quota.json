@@ -1,0 +1,1 @@
+{"id":"ent177daeca7a8f8e468f1d116114b34","schemaName":"xactly","tableName":"xc_quota","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_QUOTA');","audited":false,"effectiveDated":false}

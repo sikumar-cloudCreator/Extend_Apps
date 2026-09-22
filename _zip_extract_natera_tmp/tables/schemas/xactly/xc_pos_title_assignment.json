@@ -1,0 +1,1 @@
+{"id":"enta322d0e5405c514fe17d9d0f6f702","schemaName":"xactly","tableName":"xc_pos_title_assignment","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_POS_TITLE_ASSIGNMENT');","audited":false,"effectiveDated":false}

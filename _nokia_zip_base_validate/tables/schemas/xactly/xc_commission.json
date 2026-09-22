@@ -1,0 +1,1 @@
+{"id":"ent502ab0d01f8dbfe2cc3e2c5ec77a6","schemaName":"xactly","tableName":"xc_commission","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_COMMISSION');","audited":false,"effectiveDated":false}

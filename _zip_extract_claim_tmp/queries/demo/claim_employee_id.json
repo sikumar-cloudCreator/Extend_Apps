@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_master_participant_id",
+      "value": "0",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_employee_id",
+  "schemaName": "demo",
+  "xsql": "SELECT Nvl(MAX(pa.employee_id), '') AS employee_id\nFROM   xactly.xc_participant pa\nWHERE  pa.participant_id = :v_master_participant_id",
+  "properties": {}
+}

@@ -1,0 +1,1 @@
+{"variables":[{"name":"v_period","value":"MAR-2025","dataType":"String"}],"savedInEditor":true,"isValid":true,"name":"incnt_stmt_qtr_name_dynamic","schemaName":"exincst","xsql":"select name as qtr_name from xactly.xc_period per where period_id in \n(select p.parent_period_id from xactly.xc_period p  \n\t\t\twhere p.name = :v_period)","properties":{}}

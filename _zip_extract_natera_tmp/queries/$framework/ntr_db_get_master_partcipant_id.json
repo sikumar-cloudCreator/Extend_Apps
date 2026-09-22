@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"ntr_db_get_master_partcipant_id","schemaName":"$framework","xsql":"select participant_id from xactly.xc_participant where employee_id in (select employee_id from xactly.xc_participant where name = :v_participant_name) and is_master = 1\n\n","properties":{}}

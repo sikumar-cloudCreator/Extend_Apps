@@ -1,0 +1,1 @@
+{"id":"entdac2837f2fdb87833ae45e7eeb543","schemaName":"xactly","tableName":"xc_payment","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_PAYMENT');","audited":false,"effectiveDated":false}

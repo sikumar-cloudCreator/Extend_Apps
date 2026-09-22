@@ -1,0 +1,1060 @@
+{
+  "policySet": {
+    "version": 7,
+    "name": "Xactly_ReportingBuilder",
+    "visibleToTenant": true,
+    "description": "Administrative access to Forecasting tables"
+  },
+  "policySetItems": [
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$default.dual",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_analytics_user_view",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_analytics_user_view",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_analytics_user_view",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_async_job_status",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_async_job_status",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_async_job_status",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_entity_permissions",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_entity_permissions",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_entity_permissions",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_entity_permissions__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_entity_permissions__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_entity_permissions__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_event",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_event",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_event",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecast_metric",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecast_metric",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecast_metric",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecast_metric__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecast_metric__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecast_metric__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecastsummary",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecastsummary",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_forecastsummary",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_frontendsettings",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_frontendsettings",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_frontendsettings",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_org_date_formats",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_org_date_formats",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_org_date_formats",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_organization",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_organization",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_organization",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_organization__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_organization__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_organization__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_orgsettings",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_orgsettings",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_orgsettings",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_orgsettings__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_orgsettings__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_orgsettings__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_scenario",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_scenario",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_scenario",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template_section",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template_section",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template_section",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template_section__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template_section__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_template_section__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_group",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_group",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_group",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_state",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_state",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_state",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_state__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_state__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_state__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_view",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_view",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_user_view",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_userrole",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_userrole",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.api_userrole",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit_detail",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit_detail",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.audit_detail",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.connections",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.connections",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.connections",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.crm_object_mapping",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.crm_object_mapping",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.crm_object_mapping",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.currency_master",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.currency_master",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.currency_master",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.dashboard",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.dashboard",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.dashboard",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.dashboard__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.dashboard__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.dashboard__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.execution_log",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.execution_log",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.execution_log",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.field",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.field",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.field",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_default_section",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_default_section",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_default_section",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_section",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_section",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_section",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_sectiongroup",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_sectiongroup",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.layouts360_sectiongroup",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.object",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.object",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.object",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.organization",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.organization",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.organization",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.picklist_category",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.picklist_category",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.picklist_category",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.picklist_item",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.picklist_item",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.picklist_item",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.report_config",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.report_config",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.report_config",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.report_config__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.report_config__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.report_config__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.rule_chain_master",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.rule_config",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.rule_config",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.rule_config",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.section",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.section",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.section",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.section__audited",
+      "resourceType": "TABLE",
+      "operation": "CREATE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.section__audited",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$forecasting.section__audited",
+      "resourceType": "TABLE",
+      "operation": "WRITE"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$framework.dual",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "variables": [
+    {
+      "name": "v_month_start_date",
+      "value": "2026-01-01",
+      "dataType": "String"
+    },
+    {
+      "name": "v_master_position_id",
+      "value": "0",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_manager_name",
+  "schemaName": "demo",
+  "xsql": "SELECT Nvl(MAX(ppa.participant_name), 'No Manager') AS manager_name\nFROM   xactly.xc_pos_hierarchy ph\nINNER JOIN xactly.xc_pos_hierarchy_type pht\n    ON ph.pos_hierarchy_type_id = pht.pos_hierarchy_type_id\nINNER JOIN xactly.xc_position pos\n    ON pos.master_position_id = ph.from_pos_id\nINNER JOIN xactly.xc_pos_part_assignment ppa\n    ON ppa.position_id = pos.position_id\nWHERE  :v_month_start_date BETWEEN pht.effective_start_date AND pht.effective_end_date\n  AND  :v_month_start_date BETWEEN pos.effective_start_date AND pos.effective_end_date\n  AND  ph.to_pos_id = :v_master_position_id",
+  "properties": {}
+}

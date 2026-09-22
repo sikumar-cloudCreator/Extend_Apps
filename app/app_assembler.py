@@ -29,7 +29,7 @@ import page_designer as pdz
 
 MODEL = "claude-opus-4-8"
 ARCH_PROMPT = os.path.join(os.path.dirname(HERE), "prompts", "40_architect.md")
-DEFAULT_SCHEMA = os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
+DEFAULT_SCHEMA = os.environ.get("EXTEND_DEFAULT_SCHEMA", "$framework")
 
 
 # ---- deterministic bundle files (no API key) -------------------------------------------------

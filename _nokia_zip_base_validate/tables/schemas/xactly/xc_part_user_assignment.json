@@ -1,0 +1,1 @@
+{"id":"ent88cab4ac82712a2cba5bc31f9bd44","schemaName":"xactly","tableName":"xc_part_user_assignment","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_PART_USER_ASSIGNMENT');","audited":false,"effectiveDated":false}

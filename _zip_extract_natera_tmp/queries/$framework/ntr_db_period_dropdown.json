@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"ntr_db_period_dropdown","schemaName":"$framework","xsql":"SELECT \n    per.name, \n    per.period_id \nFROM xactly.xc_period per \nWHERE LookupPeriodTypeById(period_type_id_fk) = 'QUARTERLY'\nORDER BY per.start_date DESC;","properties":{}}

@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_master_position_id",
+      "value": "0",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_gate_manager_hide",
+  "schemaName": "demo",
+  "xsql": "SELECT CASE WHEN COUNT(1) > 0 THEN 0 ELSE 1 END AS is_valid,\n       'No direct reports in the position hierarchy for this period'\n           AS scope_label\nFROM   xactly.xc_pos_hierarchy ph\nWHERE  ph.from_pos_id  = :v_master_position_id\n  AND  ph.to_pos_id   <> :v_master_position_id\n  AND  ph.is_active    = 1",
+  "properties": {}
+}

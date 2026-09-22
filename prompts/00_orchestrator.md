@@ -90,7 +90,7 @@ Bounded retries per artifact (default 3); if still failing, return it marked `ne
   `knowledge/runtime_data_defects.md` (D1–D5),
   `knowledge/extend_xsql_cookbook.md`, `knowledge/canvas_to_extend_playbook.md` (§6 gold patterns),
   `knowledge/import_blockers.md` (I1–I5 + S8/S9).
-- **Schemas:** one customer-defined schema per app; fully qualify every object; never put app data in `$framework`.
+- **Schemas:** standard app schema is **`$framework`** (`EXTEND_DEFAULT_SCHEMA`); fully qualify `$framework.*` for app objects and `xactly.*` for Incent facts.
 - **Variables:** page-scoped VC only (no global `set`); seed every `:param` on `$onPageLoad` before first refresh.
 - **Comp tiles:** no `ShowQuotaAttainment` for employee-facing attainment/payout/MBO.
 - **Delivery:** `app_assembler.write_bundle` then `pack_bundle` ONLY. For compensation/seller-style pages also run

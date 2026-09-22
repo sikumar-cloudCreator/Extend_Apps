@@ -221,7 +221,7 @@ def write_xsql(spec: dict) -> dict:
     Returns real xSQL for a known pattern (lint-gated) or a grounded scaffold for 'custom'/unknown.
     """
     name = spec.get("view_name") or "v_new_view"
-    schema = spec.get("schema") or os.environ.get("EXTEND_DEFAULT_SCHEMA", "demo")
+    schema = spec.get("schema") or os.environ.get("EXTEND_DEFAULT_SCHEMA", "$framework")
     pattern = spec.get("pattern") or "custom"
 
     # 0) Reuse an existing real view before authoring anything new (unless caller forces fresh).

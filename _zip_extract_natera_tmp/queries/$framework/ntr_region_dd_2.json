@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"ntr_region_dd_2","schemaName":"$framework","xsql":"SELECT Region \nFROM (\n    SELECT 'ALL' AS Region, 0 AS Sort_Order \n    UNION \n    SELECT DISTINCT Region, 1 AS Sort_Order \n    FROM EXT_NATERA_OH_PERF\n    WHERE Region IS NOT NULL\n)\nORDER BY Sort_Order, Region","properties":{}}

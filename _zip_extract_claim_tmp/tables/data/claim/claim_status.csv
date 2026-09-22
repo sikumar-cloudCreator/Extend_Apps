@@ -1,0 +1,8 @@
+status_code,status_label,sort_order,is_filter_only,is_active
+All,All statuses,0,Y,Y
+Draft,Draft,1,N,Y
+Submitted,Submitted,2,N,Y
+Approved,Approved,3,N,Y
+Rejected,Rejected,4,N,Y
+Withdrawn,Withdrawn,5,N,Y
+Uploaded,Uploaded to Incent,6,N,Y

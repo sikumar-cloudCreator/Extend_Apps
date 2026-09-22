@@ -1,0 +1,1 @@
+{"variables":[{"name":"v_year_name","value":"PY-2025","dataType":"String"}],"savedInEditor":true,"isValid":true,"name":"incnt_stmt_year_period_id","schemaName":"$exincst","xsql":"select period_id from xactly.xc_period where name=:v_year_name","properties":{}}

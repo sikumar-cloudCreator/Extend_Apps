@@ -1,0 +1,73 @@
+{
+  "policySet": {
+    "version": 7,
+    "name": "Xactly_AppUser",
+    "visibleToTenant": true,
+    "description": "Access to all Framework resources required for end users to use Apps"
+  },
+  "policySetItems": [
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$framework.$APPLICATION",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$framework.$APPLICATION_ROLES",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$framework.$APPLICATION_TAG_RELATIONSHIP",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$framework.$PAGE_DEFINITION",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$framework.$QUERIES",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$framework.$QUERIES_VARIABLES",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$framework.$application_i18n_files",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "$metadata.$variable",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "FUNCTION",
+      "operation": "EXECUTE"
+    }
+  ]
+}

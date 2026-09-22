@@ -1,0 +1,1 @@
+{"id":"ent5f4ed3e46853f9cd1bad1ea77fc2e","schemaName":"xactly","tableName":"xc_earning_group","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_EARNING_GROUP');","audited":false,"effectiveDated":false}

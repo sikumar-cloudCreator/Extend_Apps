@@ -1,0 +1,35 @@
+{
+  "variables": [
+    {
+      "name": "v_master_position_id",
+      "value": "0",
+      "dataType": "String"
+    },
+    {
+      "name": "v_period",
+      "value": "JAN-2026",
+      "dataType": "String"
+    },
+    {
+      "name": "v_status",
+      "value": "All",
+      "dataType": "String"
+    },
+    {
+      "name": "v_employee_name",
+      "value": "All",
+      "dataType": "String"
+    },
+    {
+      "name": "v_claim_search",
+      "value": "",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_manager_grid",
+  "schemaName": "demo",
+  "xsql": "SELECT c.claim_id                                              AS claim_id,\n       Nvl(c.participant_name, '')                             AS participant_name,\n       c.employee_id                                           AS employee_id,\n       c.period_name                                           AS period_name,\n       c.order_code                                            AS order_code,\n       c.item_code                                             AS item_code,\n       Nvl(c.customer_name, '')                                AS customer_name,\n       FormatNumber(Nvl(c.credited_amount, 0), '$#,###0.00')   AS credited_amount,\n       FormatNumber(Nvl(c.claim_amount, 0), '$#,###0.00')      AS claim_amount,\n       FormatNumber(Nvl(c.claim_amount, 0) - Nvl(c.credited_amount, 0), '$#,###0.00') AS delta_amount,\n       Nvl(c.reason_code, '')                                  AS reason_code,\n       Nvl(c.reason_notes, '')                                 AS reason_notes,\n       c.status                                                AS status,\n       Nvl(FormatDateTime(c.submitted_date, 'dd MMM yyyy'), '') AS submitted_date,\n       Nvl(FormatDateTime(c.reviewed_date,  'dd MMM yyyy'), '') AS reviewed_date,\n       Nvl(c.comments, '')                                     AS comments\nFROM   claim.claim_request c\nWHERE  c.employee_id IN ( SELECT pa.employee_id\n                          FROM   xactly.xc_pos_hierarchy ph\n                          INNER JOIN xactly.xc_position pos\n                              ON pos.master_position_id = ph.to_pos_id\n                          INNER JOIN xactly.xc_pos_part_assignment ppa\n                              ON ppa.position_id = pos.position_id\n                          INNER JOIN xactly.xc_participant pa\n                              ON  pa.participant_id = ppa.participant_id\n                              AND pa.is_master      = 1\n                          WHERE  ph.from_pos_id = :v_master_position_id\n                            AND  ph.is_active   = 1 )\n  AND  ( Nvl(:v_period, '')        = '' OR Nvl(:v_period, '')        = 'All' OR c.period_name      = :v_period )\n  AND  ( Nvl(:v_status, '')        = '' OR Nvl(:v_status, '')        = 'All' OR c.status           = :v_status )\n  AND  ( Nvl(:v_employee_name, '') = '' OR Nvl(:v_employee_name, '') = 'All' OR c.participant_name = :v_employee_name )\n  AND  ( Nvl(:v_claim_search, '')  = ''\n         OR c.claim_id      LIKE Concat('%', Concat(:v_claim_search, '%'))\n         OR c.order_code    LIKE Concat('%', Concat(:v_claim_search, '%'))\n         OR c.customer_name LIKE Concat('%', Concat(:v_claim_search, '%')) )\nORDER BY c.submitted_date, c.claim_id",
+  "properties": {}
+}

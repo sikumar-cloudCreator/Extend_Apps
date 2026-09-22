@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_employee_id",
+      "value": "E1001",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_recent_activity",
+  "schemaName": "demo",
+  "xsql": "SELECT a.claim_id                                             AS claim_id,\n       a.action_name                                          AS action_name,\n       Nvl(a.from_status, '')                                 AS prev_status,\n       a.to_status                                            AS new_status,\n       Nvl(a.action_by, '')                                   AS action_by,\n       Nvl(FormatDateTime(a.action_date, 'dd MMM yyyy'), '')   AS action_date,\n       Nvl(a.comments, '')                                    AS comments\nFROM   claim.claim_audit a\nINNER JOIN claim.claim_request c\n    ON c.claim_id = a.claim_id\nWHERE  c.employee_id = :v_employee_id\nORDER BY a.action_date DESC, a.audit_id DESC",
+  "properties": {}
+}

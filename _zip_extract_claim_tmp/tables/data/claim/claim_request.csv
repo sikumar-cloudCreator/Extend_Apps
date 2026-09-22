@@ -1,0 +1,9 @@
+claim_id,employee_id,participant_name,manager_name,period_name,order_code,item_code,customer_name,credited_amount,claim_amount,reason_code,reason_notes,status,comments,submitted_date,reviewed_date,reviewed_by,uploaded_flag
+CLM-ORD-1001-ITEM-A1,E1001,Alex Rivera,Jordan Lee,JAN-2026,ORD-1001,ITEM-A1,Acme Corp,0.00,1250.00,MISSING_CREDIT,"Credit missing for closed deal, Q4 spillover",Submitted,,2026-01-28,,,N
+CLM-ORD-1002-ITEM-B2,E1002,Sam Patel,Jordan Lee,JAN-2026,ORD-1002,ITEM-B2,Globex Inc,640.50,890.50,INCORRECT_AMOUNT,Incent amount lower than booked order,Submitted,,2026-01-29,,,N
+CLM-ORD-1003-ITEM-C3,E1003,Taylor Kim,Morgan Blake,FEB-2026,ORD-1003,ITEM-C3,Initech LLC,0.00,2100.00,WRONG_PAYEE,Credit posted to wrong participant,Approved,Validated against order booking,2026-02-05,2026-02-08,Morgan Blake,N
+CLM-ORD-1004-ITEM-D4,E1001,Alex Rivera,Jordan Lee,FEB-2026,ORD-1004,ITEM-D4,Umbrella Co,0.00,450.75,SPLIT_CREDIT,Split credit request for partner assist,Rejected,Insufficient documentation provided,2026-02-10,2026-02-12,Jordan Lee,N
+CLM-ORD-1005-ITEM-E5,E1002,Sam Patel,Jordan Lee,FEB-2026,ORD-1005,ITEM-E5,Soylent Corp,1500.00,1875.25,INCORRECT_AMOUNT,Rate applied at 4% instead of 5%,Approved,Confirmed with plan admin,2026-02-14,2026-02-16,Jordan Lee,Y
+CLM-ORD-1006-ITEM-F6,E1003,Taylor Kim,Morgan Blake,MAR-2026,ORD-1006,ITEM-F6,Hooli Inc,0.00,3200.00,MISSING_CREDIT,Renewal booked but never credited,Submitted,,2026-03-03,,,N
+CLM-ORD-1007-ITEM-G7,E1004,Riley Chen,Morgan Blake,MAR-2026,ORD-1007,ITEM-G7,Vandelay Ltd,0.00,725.00,TIMING,"Credited in APR, order closed in MAR",Draft,,,,,N
+CLM-ORD-1008-ITEM-H8,E1004,Riley Chen,Morgan Blake,MAR-2026,ORD-1008,ITEM-H8,Stark Industries,0.00,5400.00,OTHER,Manual adjustment agreed with sales ops,Withdrawn,Raised in error,2026-03-11,2026-03-12,Riley Chen,N

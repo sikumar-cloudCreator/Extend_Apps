@@ -1,0 +1,1 @@
+{"id":"ent1e576838f632d297c443d380a372d","schemaName":"xactly","tableName":"xc_order_stage_asgnmt","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_ORDER_STAGE_ASGNMT');","audited":false,"effectiveDated":false}

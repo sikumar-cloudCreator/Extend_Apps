@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_master_position_id",
+      "value": "0",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_employee_list",
+  "schemaName": "demo",
+  "xsql": "SELECT 'All' AS employee_name,\n       0     AS sort_order\nFROM   dual\nUNION ALL\nSELECT DISTINCT pa.name AS employee_name,\n       1                AS sort_order\nFROM   xactly.xc_pos_hierarchy ph\nINNER JOIN xactly.xc_position pos\n    ON pos.master_position_id = ph.to_pos_id\nINNER JOIN xactly.xc_pos_part_assignment ppa\n    ON ppa.position_id = pos.position_id\nINNER JOIN xactly.xc_participant pa\n    ON  pa.participant_id = ppa.participant_id\n    AND pa.is_master      = 1\nWHERE  ph.from_pos_id = :v_master_position_id\n  AND  ph.is_active   = 1\nORDER BY sort_order, employee_name",
+  "properties": {}
+}

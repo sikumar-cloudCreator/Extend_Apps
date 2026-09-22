@@ -60,7 +60,7 @@ pages. Do not fan-out two VCs off the same upstream event.
 3. Role gating is wiring, not copy (R11).
 4. Measure selector must refresh trend + header subtitle (R13).
 5. No placeholder copy (R15).
-6. Customer-defined schema; fully qualify `schema.object` (official BP).
+6. App schema **`$framework`** (team standard); fully qualify `$framework.object` / `xactly.object`.
 7. Comp tiles: **no `ShowQuotaAttainment`** — views use quota_assignment + credit spine (Q18 / period R1–R5 / D1–D4).
 8. Customs with data bind **Datasource directly** (C2).
 9. Deliver via `app_assembler.write_bundle` + `pack_bundle` only.

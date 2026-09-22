@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_status_seed",
+  "schemaName": "demo",
+  "xsql": "SELECT 'All' AS status_code\nFROM   dual",
+  "properties": {}
+}

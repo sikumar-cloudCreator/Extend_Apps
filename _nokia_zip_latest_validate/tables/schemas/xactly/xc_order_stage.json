@@ -1,0 +1,1 @@
+{"id":"entd1ef2c6ae7d17abe5334856be2380","schemaName":"xactly","tableName":"xc_order_stage","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_ORDER_STAGE', ObjectType='OrderItem');","audited":false,"effectiveDated":false}

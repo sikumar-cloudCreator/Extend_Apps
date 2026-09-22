@@ -1,0 +1,1 @@
+{"id":"ent3733332e9252aa084d9bb49c63407","schemaName":"xactly","tableName":"xc_title","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_TITLE');","audited":false,"effectiveDated":false}

@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_manager_seed",
+  "schemaName": "demo",
+  "xsql": "SELECT 'All' AS manager_name\nFROM   dual",
+  "properties": {}
+}

@@ -1,0 +1,2263 @@
+{
+  "pageDefinitionId" : "59f89628-320a-4f26-b6e0-9d8bffaeaa0e",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_215" : {
+            "type" : "PageLoader",
+            "controlId" : "14684a6c-8a67-4715-804f-0ae4320fb7ff",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "title" : "Page Loader",
+            "loaderSize" : "PAGE",
+            "loaderOpacity" : "100",
+            "events" : [ {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "14684a6c-8a67-4715-804f-0ae4320fb7ff",
+              "handlers" : [ "hideLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "14684a6c-8a67-4715-804f-0ae4320fb7ff",
+              "handlers" : [ "showLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "14684a6c-8a67-4715-804f-0ae4320fb7ff",
+              "handlers" : [ "showLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ]
+          },
+          "control_178" : {
+            "type" : "variableConfigurator",
+            "controlId" : "b65a470e-acfc-43f4-bca2-61985806bcea",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "b65a470e-acfc-43f4-bca2-61985806bcea",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "b65a470e-acfc-43f4-bca2-61985806bcea",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_set_default_period_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_period_id"
+            } ],
+            "valueField" : {
+              "dataType" : "long",
+              "name" : "value_field"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Default Period value",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_179" : {
+            "type" : "variableConfigurator",
+            "controlId" : "fff9dee4-70f1-496e-97a3-c2c055565dd9",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "fff9dee4-70f1-496e-97a3-c2c055565dd9",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_monthly_period_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "fff9dee4-70f1-496e-97a3-c2c055565dd9",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "fff9dee4-70f1-496e-97a3-c2c055565dd9",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_monthly_period_ids",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_month_period_ids"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "period_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get Monthly Period Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_180" : {
+            "type" : "variableConfigurator",
+            "controlId" : "57fbef63-1429-4944-8f23-330e5240374b",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "57fbef63-1429-4944-8f23-330e5240374b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_qtr_start_date_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "57fbef63-1429-4944-8f23-330e5240374b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "57fbef63-1429-4944-8f23-330e5240374b",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_qtr_start_date",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_qtr_start_date"
+            } ],
+            "valueField" : {
+              "dataType" : "date",
+              "name" : "start_date"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Qtr Start Date",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_181" : {
+            "type" : "variableConfigurator",
+            "controlId" : "2492b196-5a75-4b9f-90bb-8cf4c616c4fc",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_qtr_start_date_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "2492b196-5a75-4b9f-90bb-8cf4c616c4fc",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "2492b196-5a75-4b9f-90bb-8cf4c616c4fc",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_master_position_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_master_position_id"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "master_position_id"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Master Position Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_182" : {
+            "type" : "variableConfigurator",
+            "controlId" : "48b49bba-f237-4c6b-8cac-d0f9efc94804",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "48b49bba-f237-4c6b-8cac-d0f9efc94804",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "48b49bba-f237-4c6b-8cac-d0f9efc94804",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_all_child_master_partcipant_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_child_master_participant_id"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "participant_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get all child Master Participant Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_183" : {
+            "type" : "variableConfigurator",
+            "controlId" : "80e1ea85-2c4d-4468-849e-12062a47d050",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "80e1ea85-2c4d-4468-849e-12062a47d050",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "80e1ea85-2c4d-4468-849e-12062a47d050",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_all_child_master_position_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_child_master_position_id"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "position_master_position_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get all child Master Position Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING",
+            "internalName" : "Child Master Position VC"
+          },
+          "control_141" : {
+            "type" : "label",
+            "controlId" : "c257f9b1-5ba6-4ef8-aaed-bd23763f12bf",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "<h2><span style=\"font-size: 18pt;\">Oncology&nbsp;</span></h2><hr>",
+            "layoutSize" : null,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_144" : {
+            "type" : "dropdown",
+            "controlId" : "84dd75ee-7865-409c-9ebf-8b449688a28a",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "84dd75ee-7865-409c-9ebf-8b449688a28a",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "84dd75ee-7865-409c-9ebf-8b449688a28a",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "84dd75ee-7865-409c-9ebf-8b449688a28a",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "on_load",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "84dd75ee-7865-409c-9ebf-8b449688a28a",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_region_onc",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "p_region"
+            } ],
+            "isMultiSelect" : true,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "region"
+            },
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "region"
+            },
+            "labelText" : "Region",
+            "layoutSize" : 16.66,
+            "shouldRenderHidden" : false,
+            "allowClearForSingleSelect" : false
+          },
+          "control_209" : {
+            "type" : "dropdown",
+            "controlId" : "5061830b-4af4-49a4-adb2-27720637f82d",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "5061830b-4af4-49a4-adb2-27720637f82d",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "5061830b-4af4-49a4-adb2-27720637f82d",
+              "handlers" : [ "assignCurrentVariable" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "select_period",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "5061830b-4af4-49a4-adb2-27720637f82d",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_period_dropdown",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_period_id"
+            }, {
+              "name" : "v_period_name"
+            } ],
+            "isMultiSelect" : false,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "period_id"
+            },
+            "labelText" : "Select Period",
+            "layoutSize" : 16.66,
+            "shouldRenderHidden" : false,
+            "allowClearForSingleSelect" : false,
+            "alignItem" : "bottom-left"
+          },
+          "control_214" : {
+            "type" : "label",
+            "controlId" : "f0435960-0997-4fed-b39f-6a485d4885d3",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "",
+            "layoutSize" : null,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_146" : {
+            "type" : "variableConfigurator",
+            "controlId" : "3b1afa8e-6de4-4762-b6af-71d0ab3383c9",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "3b1afa8e-6de4-4762-b6af-71d0ab3383c9",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "on_load",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "3b1afa8e-6de4-4762-b6af-71d0ab3383c9",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "p_region"
+            } ],
+            "valueField" : {
+              "dataType" : null,
+              "name" : null
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Variable Configurator",
+            "staticValue" : "ALL",
+            "useStaticValue" : true,
+            "staticDataType" : "STRING"
+          },
+          "control_210" : {
+            "type" : "Custom",
+            "controlId" : "a5f07b02-9dbb-4992-a7a7-c0667d4c996d",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "a5f07b02-9dbb-4992-a7a7-c0667d4c996d",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "a5f07b02-9dbb-4992-a7a7-c0667d4c996d",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_onc_total_payout",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_variance_pct",
+              "boundToField" : "onc_payout_percentage_of_budget"
+            }, {
+              "name" : "v_total_payment",
+              "boundToField" : "onc_total_payout"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #384959; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; width: 100%;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Total Projected Payout</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #384959; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">{{v_total_payment}}</div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\"><span style=\"color: {{v_variance_pct &gt;= 0 ? '#10b981' : '#ef4444'}};\">{{v_variance_pct}}%</span> vs Budget</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "try1"
+          },
+          "control_211" : {
+            "type" : "Custom",
+            "controlId" : "3514e210-f700-4ccb-8d81-3075a3b1be83",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "3514e210-f700-4ccb-8d81-3075a3b1be83",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "3514e210-f700-4ccb-8d81-3075a3b1be83",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_onc_approved_budger",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_approved_budget",
+              "boundToField" : "total_qtr_personal_target"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #94a3b8; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; width: 100%;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Approved Budget</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #94a3b8; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">{{v_approved_budget}}</div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\">Target Budget Allocation</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "try1"
+          },
+          "control_212" : {
+            "type" : "Custom",
+            "controlId" : "1631d6d9-598c-41b3-9950-923352217ba5",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "1631d6d9-598c-41b3-9950-923352217ba5",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "1631d6d9-598c-41b3-9950-923352217ba5",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_onc_inpatient_payout",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_initial_payout",
+              "boundToField" : "initial_patients_payout"
+            }, {
+              "name" : "v_initial_pct",
+              "boundToField" : "initial_patients_percentage_of_onc"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #4498D7; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; width: 100%;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Inpatient Payout</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #4498d7; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">{{v_initial_payout}}</div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\">{{v_initial_pct}} of Total</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "try1",
+            "staticAllColumns" : false
+          },
+          "control_213" : {
+            "type" : "Custom",
+            "controlId" : "bace112d-8583-440e-a50e-89012a0877ed",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "bace112d-8583-440e-a50e-89012a0877ed",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "bace112d-8583-440e-a50e-89012a0877ed",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_onc_followon_payout",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_followon_payout",
+              "boundToField" : "initial_patients_payout"
+            }, {
+              "name" : "v_followon_pct",
+              "boundToField" : "initial_patients_percentage_of_onc"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #A4C955; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; width: 100%;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Follow-On Payout</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #a4c955; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">{{v_followon_payout}}</div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\">{{v_followon_pct}} of Total</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "try1"
+          },
+          "control_218" : {
+            "type" : "Custom",
+            "controlId" : "f95df016-6560-4dbf-9925-04b562bcab5b",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f95df016-6560-4dbf-9925-04b562bcab5b",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f95df016-6560-4dbf-9925-04b562bcab5b",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_top_performer",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_top_performer_1_rank",
+              "boundToField" : "top_performer_1_rank"
+            }, {
+              "name" : "v_top_performer_1_name",
+              "boundToField" : "top_performer_1_name"
+            }, {
+              "name" : "v_top_performer_1_payout",
+              "boundToField" : "top_performer_1_payout"
+            }, {
+              "name" : "v_top_performer_1_pct",
+              "boundToField" : "top_performer_1_pct"
+            }, {
+              "name" : "v_top_performer_2_rank",
+              "boundToField" : "top_performer_2_rank"
+            }, {
+              "name" : "v_top_performer_2_name",
+              "boundToField" : "top_performer_2_name"
+            }, {
+              "name" : "v_top_performer_2_payout",
+              "boundToField" : "top_performer_2_payout"
+            }, {
+              "name" : "v_top_performer_2_pct",
+              "boundToField" : "top_performer_2_pct"
+            }, {
+              "name" : "v_top_performer_3_rank",
+              "boundToField" : "top_performer_3_rank"
+            }, {
+              "name" : "v_top_performer_3_name",
+              "boundToField" : "top_performer_3_name"
+            }, {
+              "name" : "v_top_performer_3_payout",
+              "boundToField" : "top_performer_3_payout"
+            }, {
+              "name" : "v_top_performer_3_pct",
+              "boundToField" : "top_performer_3_pct"
+            }, {
+              "name" : "v_top_performer_4_rank",
+              "boundToField" : "top_performer_4_rank"
+            }, {
+              "name" : "v_top_performer_4_name",
+              "boundToField" : "top_performer_4_name"
+            }, {
+              "name" : "v_top_performer_4_payout",
+              "boundToField" : "top_performer_4_payout"
+            }, {
+              "name" : "v_top_performer_4_pct",
+              "boundToField" : "top_performer_4_pct"
+            }, {
+              "name" : "v_top_performer_5_rank",
+              "boundToField" : "top_performer_5_rank"
+            }, {
+              "name" : "v_top_performer_5_name",
+              "boundToField" : "top_performer_5_name"
+            }, {
+              "name" : "v_top_performer_5_payout",
+              "boundToField" : "top_performer_5_payout"
+            }, {
+              "name" : "v_top_performer_5_pct",
+              "boundToField" : "top_performer_5_pct"
+            }, {
+              "name" : "v_top_performer_6_rank",
+              "boundToField" : "top_performer_6_rank"
+            }, {
+              "name" : "v_top_performer_6_name",
+              "boundToField" : "top_performer_6_name"
+            }, {
+              "name" : "v_top_performer_6_payout",
+              "boundToField" : "top_performer_6_payout"
+            }, {
+              "name" : "v_top_performer_6_pct",
+              "boundToField" : "top_performer_6_pct"
+            }, {
+              "name" : "v_top_performer_7_rank",
+              "boundToField" : "top_performer_7_rank"
+            }, {
+              "name" : "v_top_performer_7_name",
+              "boundToField" : "top_performer_7_name"
+            }, {
+              "name" : "v_top_performer_7_payout",
+              "boundToField" : "top_performer_7_payout"
+            }, {
+              "name" : "v_top_performer_7_pct",
+              "boundToField" : "top_performer_7_pct"
+            }, {
+              "name" : "v_top_performer_8_rank",
+              "boundToField" : "top_performer_8_rank"
+            }, {
+              "name" : "v_top_performer_8_name",
+              "boundToField" : "top_performer_8_name"
+            }, {
+              "name" : "v_top_performer_8_payout",
+              "boundToField" : "top_performer_8_payout"
+            }, {
+              "name" : "v_top_performer_8_pct",
+              "boundToField" : "top_performer_8_pct"
+            }, {
+              "name" : "v_top_performer_9_rank",
+              "boundToField" : "top_performer_9_rank"
+            }, {
+              "name" : "v_top_performer_9_name",
+              "boundToField" : "top_performer_9_name"
+            }, {
+              "name" : "v_top_performer_9_payout",
+              "boundToField" : "top_performer_9_payout"
+            }, {
+              "name" : "v_top_performer_9_pct",
+              "boundToField" : "top_performer_9_pct"
+            }, {
+              "name" : "v_top_performer_10_rank",
+              "boundToField" : "top_performer_10_rank"
+            }, {
+              "name" : "v_top_performer_10_name",
+              "boundToField" : "top_performer_10_name"
+            }, {
+              "name" : "v_top_performer_10_payout",
+              "boundToField" : "top_performer_10_payout"
+            }, {
+              "name" : "v_top_performer_10_pct",
+              "boundToField" : "top_performer_10_pct"
+            } ],
+            "controlData" : "<div style=\"width: 100%; height: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n<div style=\"position: relative; padding: 16px 24px; padding-left: 28px; border-bottom: 1px solid #f1f5f9; overflow: hidden; flex-shrink: 0;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Top Final Rank</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Top 10 performers by Final Rank</p>\n</div>\n<div style=\"padding: 24px 28px; display: flex; flex-direction: column; gap: 14px; flex-grow: 1; justify-content: center;\">\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_1_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_1_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_1_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_1_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_2_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_2_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_2_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_2_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_3_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_3_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_3_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_3_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_4_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_4_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_4_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_4_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_5_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_5_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_5_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_5_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_6_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_6_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_6_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_6_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_7_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_7_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_7_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_7_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_8_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_8_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_8_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_8_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_9_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_9_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_9_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_9_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 35px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #94a3b8; text-align: left;\">#{{v_top_performer_10_rank}}</div>\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_performer_10_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; overflow: hidden;\">\n<div style=\"width: {{v_top_performer_10_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 0px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_top_performer_10_payout}}</div>\n</div>\n</div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "controlKey" : "control_155"
+          },
+          "control_156" : {
+            "type" : "Custom",
+            "controlId" : "9c6a0e3c-5145-442d-a3c1-5372bde642d7",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "9c6a0e3c-5145-442d-a3c1-5372bde642d7",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "9c6a0e3c-5145-442d-a3c1-5372bde642d7",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_top_mix",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_mix_1_name",
+              "boundToField" : "mix_1_name"
+            }, {
+              "name" : "v_mix_1_payout",
+              "boundToField" : "mix_1_payout"
+            }, {
+              "name" : "v_mix_1_pct",
+              "boundToField" : "mix_1_pct"
+            }, {
+              "name" : "v_mix_1_vol_pct",
+              "boundToField" : "mix_1_vol_pct"
+            }, {
+              "name" : "v_mix_1_pts_pct",
+              "boundToField" : "mix_1_pts_pct"
+            }, {
+              "name" : "v_mix_1_others_pct",
+              "boundToField" : "mix_1_others_pct"
+            }, {
+              "name" : "v_mix_2_name",
+              "boundToField" : "mix_2_name"
+            }, {
+              "name" : "v_mix_2_payout",
+              "boundToField" : "mix_2_payout"
+            }, {
+              "name" : "v_mix_2_pct",
+              "boundToField" : "mix_2_pct"
+            }, {
+              "name" : "v_mix_2_vol_pct",
+              "boundToField" : "mix_2_vol_pct"
+            }, {
+              "name" : "v_mix_2_pts_pct",
+              "boundToField" : "mix_2_pts_pct"
+            }, {
+              "name" : "v_mix_2_others_pct",
+              "boundToField" : "mix_2_others_pct"
+            }, {
+              "name" : "v_mix_3_name",
+              "boundToField" : "mix_3_name"
+            }, {
+              "name" : "v_mix_3_payout",
+              "boundToField" : "mix_3_payout"
+            }, {
+              "name" : "v_mix_3_pct",
+              "boundToField" : "mix_3_pct"
+            }, {
+              "name" : "v_mix_3_vol_pct",
+              "boundToField" : "mix_3_vol_pct"
+            }, {
+              "name" : "v_mix_3_pts_pct",
+              "boundToField" : "mix_3_pts_pct"
+            }, {
+              "name" : "v_mix_3_others_pct",
+              "boundToField" : "mix_3_others_pct"
+            }, {
+              "name" : "v_mix_4_name",
+              "boundToField" : "mix_4_name"
+            }, {
+              "name" : "v_mix_4_payout",
+              "boundToField" : "mix_4_payout"
+            }, {
+              "name" : "v_mix_4_pct",
+              "boundToField" : "mix_4_pct"
+            }, {
+              "name" : "v_mix_4_vol_pct",
+              "boundToField" : "mix_4_vol_pct"
+            }, {
+              "name" : "v_mix_4_pts_pct",
+              "boundToField" : "mix_4_pts_pct"
+            }, {
+              "name" : "v_mix_4_others_pct",
+              "boundToField" : "mix_4_others_pct"
+            }, {
+              "name" : "v_mix_5_name",
+              "boundToField" : "mix_5_name"
+            }, {
+              "name" : "v_mix_5_payout",
+              "boundToField" : "mix_5_payout"
+            }, {
+              "name" : "v_mix_5_pct",
+              "boundToField" : "mix_5_pct"
+            }, {
+              "name" : "v_mix_5_vol_pct",
+              "boundToField" : "mix_5_vol_pct"
+            }, {
+              "name" : "v_mix_5_pts_pct",
+              "boundToField" : "mix_5_pts_pct"
+            }, {
+              "name" : "v_mix_5_others_pct",
+              "boundToField" : "mix_5_others_pct"
+            }, {
+              "name" : "v_mix_6_name",
+              "boundToField" : "mix_6_name"
+            }, {
+              "name" : "v_mix_6_payout",
+              "boundToField" : "mix_6_payout"
+            }, {
+              "name" : "v_mix_6_pct",
+              "boundToField" : "mix_6_pct"
+            }, {
+              "name" : "v_mix_6_vol_pct",
+              "boundToField" : "mix_6_vol_pct"
+            }, {
+              "name" : "v_mix_6_pts_pct",
+              "boundToField" : "mix_6_pts_pct"
+            }, {
+              "name" : "v_mix_6_others_pct",
+              "boundToField" : "mix_6_others_pct"
+            }, {
+              "name" : "v_mix_7_name",
+              "boundToField" : "mix_7_name"
+            }, {
+              "name" : "v_mix_7_payout",
+              "boundToField" : "mix_7_payout"
+            }, {
+              "name" : "v_mix_7_pct",
+              "boundToField" : "mix_7_pct"
+            }, {
+              "name" : "v_mix_7_vol_pct",
+              "boundToField" : "mix_7_vol_pct"
+            }, {
+              "name" : "v_mix_7_pts_pct",
+              "boundToField" : "mix_7_pts_pct"
+            }, {
+              "name" : "v_mix_7_others_pct",
+              "boundToField" : "mix_7_others_pct"
+            }, {
+              "name" : "v_mix_8_name",
+              "boundToField" : "mix_8_name"
+            }, {
+              "name" : "v_mix_8_payout",
+              "boundToField" : "mix_8_payout"
+            }, {
+              "name" : "v_mix_8_pct",
+              "boundToField" : "mix_8_pct"
+            }, {
+              "name" : "v_mix_8_vol_pct",
+              "boundToField" : "mix_8_vol_pct"
+            }, {
+              "name" : "v_mix_8_pts_pct",
+              "boundToField" : "mix_8_pts_pct"
+            }, {
+              "name" : "v_mix_8_others_pct",
+              "boundToField" : "mix_8_others_pct"
+            }, {
+              "name" : "v_mix_9_name",
+              "boundToField" : "mix_9_name"
+            }, {
+              "name" : "v_mix_9_payout",
+              "boundToField" : "mix_9_payout"
+            }, {
+              "name" : "v_mix_9_pct",
+              "boundToField" : "mix_9_pct"
+            }, {
+              "name" : "v_mix_9_vol_pct",
+              "boundToField" : "mix_9_vol_pct"
+            }, {
+              "name" : "v_mix_9_pts_pct",
+              "boundToField" : "mix_9_pts_pct"
+            }, {
+              "name" : "v_mix_9_others_pct",
+              "boundToField" : "mix_9_others_pct"
+            }, {
+              "name" : "v_mix_10_name",
+              "boundToField" : "mix_10_name"
+            }, {
+              "name" : "v_mix_10_payout",
+              "boundToField" : "mix_10_payout"
+            }, {
+              "name" : "v_mix_10_pct",
+              "boundToField" : "mix_10_pct"
+            }, {
+              "name" : "v_mix_10_vol_pct",
+              "boundToField" : "mix_10_vol_pct"
+            }, {
+              "name" : "v_mix_10_pts_pct",
+              "boundToField" : "mix_10_pts_pct"
+            }, {
+              "name" : "v_mix_10_others_pct",
+              "boundToField" : "mix_10_others_pct"
+            } ],
+            "controlData" : "<div style=\"width: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n<div style=\"position: relative; padding: 16px 24px; padding-left: 28px; border-bottom: 1px solid #f1f5f9; overflow: hidden;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Total Projected Payout Mix</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Top 10 performers by Payout Composition</p>\n<div style=\"position: absolute; top: 50%; right: 24px; transform: translateY(-50%); display: flex; gap: 20px;\">\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #4498d7;\">&nbsp;</div>\n<div style=\"font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Inpatient</div>\n</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #a4c955;\">&nbsp;</div>\n<div style=\"font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Follow-On</div>\n</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #94a3b8;\">&nbsp;</div>\n<div style=\"font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Others</div>\n</div>\n</div>\n</div>\n<div style=\"padding: 24px; padding-left: 28px; display: flex; flex-direction: column; gap: 14px;\">\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_1_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_1_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_1_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_1_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_1_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_1_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_2_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_2_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_2_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_2_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_2_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_2_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_3_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_3_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_3_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_3_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_3_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_3_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_4_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_4_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_4_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_4_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_4_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_4_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_5_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_5_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_5_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_5_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_5_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_5_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_6_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_6_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_6_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_6_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_6_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_6_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_7_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_7_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_7_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_7_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_7_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_7_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_8_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_8_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_8_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_8_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_8_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_8_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_9_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_9_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_9_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_9_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_9_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_9_payout}}</div>\n</div>\n<div style=\"display: flex; align-items: center; width: 100%;\">\n<div style=\"width: 140px; flex-shrink: 0; text-align: left; padding-right: 12px; font-size: 12px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_mix_10_name}}</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 18px; border-radius: 0px; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_10_pct}}%; height: 100%; display: flex; overflow: hidden;\">\n<div style=\"width: {{v_mix_10_vol_pct}}%; background: #4498d7; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_10_pts_pct}}%; background: #a4c955; height: 100%;\">&nbsp;</div>\n<div style=\"width: {{v_mix_10_others_pct}}%; background: #94a3b8; height: 100%;\">&nbsp;</div>\n</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: left; padding-left: 12px; font-size: 12px; font-weight: 800; color: #1e293b; white-space: nowrap;\">${{v_mix_10_payout}}</div>\n</div>\n</div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_154" : {
+            "type" : "Custom",
+            "controlId" : "48051e36-07a3-4448-a143-874e1563170e",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "48051e36-07a3-4448-a143-874e1563170e",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd2",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "48051e36-07a3-4448-a143-874e1563170e",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "vc1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "48051e36-07a3-4448-a143-874e1563170e",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Regional Earnings Comparison</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Initial vs. Follow-On</p>\n</div>\n</div>",
+            "layoutSize" : 100,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : true,
+            "internalName" : "chart_head"
+          },
+          "control_219" : {
+            "type" : "Custom",
+            "controlId" : "14fca992-a371-40a4-9cb6-6a2a199f8219",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between;\"><!-- Left Side: Title and Context -->\n<div style=\"display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Regional Earnings Comparison</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\"><span style=\"color: #cbd5e1; margin: 0 4px;\"><span style=\"color: #64748b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;\">Initial vs. Follow-On </span>|</span> <span style=\"font-weight: 600; color: #3b82f6;\">Top 15 Regions by Actuals</span></p>\n</div>\n</div>\n<!-- Right Side: Expand Button with native data-xactly-event -->\n<div><button style=\"background-color: #f8fafc; border: 1px solid #e2e8f0; color: #3b82f6; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px;\" data-xactly-event=\"e_show_all_regions_r\"> View All Regions </button></div>\n</div>",
+            "layoutSize" : null,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_148" : {
+            "type" : "chart",
+            "controlId" : "f7168c9b-6298-4202-8324-73497f01204e",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f7168c9b-6298-4202-8324-73497f01204e",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f7168c9b-6298-4202-8324-73497f01204e",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_show_all_regions_r",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f7168c9b-6298-4202-8324-73497f01204e",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_onc_region",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : {
+                "initial_payout" : "#4498d7",
+                "follow_on_payout" : "#a4c955"
+              },
+              "customLabels" : {
+                "initial_payout" : "Initial Projected Payout",
+                "follow_on_payout" : "Follow On Projected Payout"
+              }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "chartType" : "stackedColumn",
+            "title" : "",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "region",
+            "yAxisFields" : [ "initial_payout", "follow_on_payout" ],
+            "layoutSize" : 100,
+            "titleAlignment" : "center",
+            "subtitleAlignment" : "center",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : false
+          },
+          "control_221" : {
+            "type" : "modal",
+            "controlId" : "ace72f4f-a4fa-47e8-bd0f-3c2985419eb6",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "e_show_all_regions_r",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "ace72f4f-a4fa-47e8-bd0f-3c2985419eb6",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "variables" : [ ],
+            "modalSize" : "xxl",
+            "hasHeader" : true,
+            "hasFooter" : false,
+            "modalHeaderMessage" : "Regional Earnings Comparison",
+            "pageSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "control_220" : {
+                      "type" : "chart",
+                      "controlId" : "cbaefcb9-3f99-4b24-a40c-84585161549e",
+                      "privileges" : null,
+                      "styles" : {
+                        "useComponentShadow" : false,
+                        "useGreyBackground" : false,
+                        "useInnerGreyBackground" : false
+                      },
+                      "events" : [ {
+                        "name" : "dd_region",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "cbaefcb9-3f99-4b24-a40c-84585161549e",
+                        "handlers" : [ "assignCurrentVariable", "refresh" ],
+                        "handlerArgs" : [ { }, { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "get_all_child_master_participant_id_vc",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "cbaefcb9-3f99-4b24-a40c-84585161549e",
+                        "handlers" : [ "refresh" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      }, {
+                        "name" : "$onModalOpen",
+                        "eventSelection" : "BIND_EVENT",
+                        "broadcastArgs" : {
+                          "validationXsql" : ""
+                        },
+                        "id" : "cbaefcb9-3f99-4b24-a40c-84585161549e",
+                        "handlers" : [ "refresh" ],
+                        "handlerArgs" : [ { } ],
+                        "preHandlers" : [ ],
+                        "preHandlerArgs" : [ ]
+                      } ],
+                      "datasource" : {
+                        "name" : "ntr_onc_region_deep",
+                        "type" : "view",
+                        "isReadOnly" : true,
+                        "schema" : "$framework",
+                        "seriesColors" : {
+                          "initial_payout" : "#4498d7",
+                          "follow_on_payout" : "#a4c955"
+                        },
+                        "customLabels" : {
+                          "initial_payout" : "Initial Payout",
+                          "follow_on_payout" : "Follow On Payout"
+                        }
+                      },
+                      "pagination" : {
+                        "currentPage" : 1,
+                        "totalItems" : null,
+                        "itemsPerPage" : 200
+                      },
+                      "columns" : [ ],
+                      "whereClauseVariable" : null,
+                      "chartType" : "stackedColumn",
+                      "title" : "",
+                      "subtitle" : "",
+                      "xAxis" : {
+                        "title" : {
+                          "text" : ""
+                        },
+                        "type" : ""
+                      },
+                      "yAxis" : {
+                        "title" : {
+                          "text" : ""
+                        }
+                      },
+                      "ref" : { },
+                      "xAxisField" : "region",
+                      "yAxisFields" : [ "initial_payout", "follow_on_payout" ],
+                      "layoutSize" : 100,
+                      "titleAlignment" : "center",
+                      "subtitleAlignment" : "center",
+                      "helpIconValue" : null,
+                      "helpIconPosition" : "alignLeft",
+                      "helpIconTooltipPosition" : "right",
+                      "shouldRenderHidden" : false
+                    }
+                  }
+                }
+              }
+            },
+            "footerSchema" : {
+              "properties" : { },
+              "controlSchema" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "innerCanvasMappings" : {
+              "pageSchema" : "appElements",
+              "footerSchema" : "footerElements"
+            }
+          },
+          "control_149" : {
+            "type" : "chart",
+            "controlId" : "3ee02d2e-7d68-424a-9656-24cb632c401e",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "3ee02d2e-7d68-424a-9656-24cb632c401e",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "3ee02d2e-7d68-424a-9656-24cb632c401e",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_onc_top10",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : {
+                "projected_followon_payout" : "#a4c955"
+              },
+              "customLabels" : {
+                "projected_followon_payout" : "projected_followon_payout"
+              }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "chartType" : "column",
+            "title" : "",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "cos_name",
+            "yAxisFields" : [ "projected_followon_payout" ],
+            "layoutSize" : 50,
+            "titleAlignment" : "center",
+            "subtitleAlignment" : "left",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : true
+          },
+          "control_159" : {
+            "type" : "ComponentTemplate",
+            "controlId" : "d5c9c4e9-88c2-4b8b-9184-26fc4f216d78",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "selectedTemplateId" : "6d58127c-b941-4cb2-b96e-b5ee936cbc80",
+            "selectedTemplateName" : "section_header_2",
+            "internalTemplateIds" : [ "6d58127c-b941-4cb2-b96e-b5ee936cbc80" ],
+            "templateInputMappings" : {
+              "6d58127c-b941-4cb2-b96e-b5ee936cbc80" : [ ]
+            },
+            "templateInputMappingsNames" : {
+              "6d58127c-b941-4cb2-b96e-b5ee936cbc80" : "section_header_2"
+            }
+          },
+          "control_157" : {
+            "type" : "Custom",
+            "controlId" : "ff0f2db6-2281-48e6-ba47-d3a4c2cdecf8",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "ff0f2db6-2281-48e6-ba47-d3a4c2cdecf8",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd2",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "ff0f2db6-2281-48e6-ba47-d3a4c2cdecf8",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "vc1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "ff0f2db6-2281-48e6-ba47-d3a4c2cdecf8",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Bottom 10 Performers</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Identifying reps who may require additional coaching and support</p>\n</div>\n</div>",
+            "layoutSize" : 50,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "chart_head"
+          },
+          "control_150" : {
+            "type" : "chart",
+            "controlId" : "47e30de8-c0f9-4ddd-971c-798b77af0729",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "47e30de8-c0f9-4ddd-971c-798b77af0729",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "47e30de8-c0f9-4ddd-971c-798b77af0729",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_onc_gap",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : {
+                "initial_gap" : "#4498d7",
+                "followon_gap" : "#a4c955"
+              },
+              "customLabels" : {
+                "initial_gap" : "Initial Gap",
+                "followon_gap" : "Follow on Gap"
+              }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "chartType" : "stackedColumn",
+            "title" : "",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "cos_name",
+            "yAxisFields" : [ "initial_gap", "followon_gap" ],
+            "layoutSize" : 50,
+            "titleAlignment" : "center",
+            "subtitleAlignment" : "left",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : false
+          },
+          "control_151" : {
+            "type" : "chart",
+            "controlId" : "290ef39d-e327-44b8-a716-610bc412b130",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "290ef39d-e327-44b8-a716-610bc412b130",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "290ef39d-e327-44b8-a716-610bc412b130",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_onc_bottom_10",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : {
+                "projected_total_payout" : "#66B6DE"
+              },
+              "customLabels" : {
+                "projected_total_payout" : "Projected Total Payout"
+              }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "chartType" : "column",
+            "title" : "",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "cos_name",
+            "yAxisFields" : [ "projected_total_payout" ],
+            "layoutSize" : 50,
+            "titleAlignment" : "center",
+            "subtitleAlignment" : "left",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : false
+          },
+          "control_152" : {
+            "type" : "chart",
+            "controlId" : "29c3f8f5-f886-4fb7-aee2-9a5fd4b333c8",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "29c3f8f5-f886-4fb7-aee2-9a5fd4b333c8",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "29c3f8f5-f886-4fb7-aee2-9a5fd4b333c8",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_onc_chart_2",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : {
+                "projected_initial_payout" : "#4498d7",
+                "projected_followon_payout" : "#a4c955"
+              },
+              "customLabels" : {
+                "projected_initial_payout" : "Projected Initial Payout",
+                "projected_followon_payout" : "Projected Follow on Payout"
+              }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "chartType" : "stackedColumn",
+            "title" : "Top 10 Earners Payout Mix",
+            "subtitle" : "",
+            "xAxis" : {
+              "title" : {
+                "text" : ""
+              },
+              "type" : ""
+            },
+            "yAxis" : {
+              "title" : {
+                "text" : ""
+              }
+            },
+            "ref" : { },
+            "xAxisField" : "cos_name",
+            "yAxisFields" : [ "projected_initial_payout", "projected_followon_payout" ],
+            "layoutSize" : 50,
+            "titleAlignment" : "center",
+            "subtitleAlignment" : "left",
+            "helpIconValue" : null,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosition" : "right",
+            "shouldRenderHidden" : true
+          },
+          "control_174" : {
+            "type" : "Custom",
+            "controlId" : "feff3bf8-3aea-4fc2-9429-fc6b2ec04250",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "feff3bf8-3aea-4fc2-9429-fc6b2ec04250",
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd2",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "feff3bf8-3aea-4fc2-9429-fc6b2ec04250",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "vc1",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "feff3bf8-3aea-4fc2-9429-fc6b2ec04250",
+              "handlers" : [ "hide" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; position: relative; overflow: hidden; display: flex; align-items: center;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<div style=\"padding-left: 12px;\">\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Comprehensive Rep Performance</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Detailed breakdown of earnings and rankings by representative.</p>\n</div>\n</div>",
+            "layoutSize" : 33.33,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "chart_head"
+          },
+          "control_176" : {
+            "type" : "table",
+            "controlId" : "ed0d3fd4-102d-45fa-aa3b-8da6036e8157",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "ed0d3fd4-102d-45fa-aa3b-8da6036e8157",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "ed0d3fd4-102d-45fa-aa3b-8da6036e8157",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_onc_grid",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ {
+              "field" : "cos_name",
+              "name" : "cos_name",
+              "headerName" : "COS Name",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "final_rank",
+              "name" : "final_rank",
+              "headerName" : "Final Rank",
+              "dataType" : "integer",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "initial_patients_rank",
+              "name" : "initial_patients_rank",
+              "headerName" : "Initial Patients Rank",
+              "dataType" : "integer",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "follow_on_rank",
+              "name" : "follow_on_rank",
+              "headerName" : "Follow On Rank",
+              "dataType" : "integer",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            }, {
+              "field" : "total_payout",
+              "name" : "total_payout",
+              "headerName" : "Total Payout",
+              "dataType" : "string",
+              "editable" : false,
+              "isPrimaryKey" : false,
+              "formattingStyle" : "default",
+              "sortable" : true,
+              "readOnly" : false,
+              "pinned" : false,
+              "currencyFormat" : "en-US",
+              "groupBy" : false
+            } ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "table" : "grid",
+            "title" : "",
+            "maxHeight" : 450,
+            "shouldRenderHidden" : false,
+            "staticAllCoumns" : false,
+            "rowAlternatingColorsEnabled" : true,
+            "showRowCount" : true
+          }
+        }
+      }
+    }
+  },
+  "title" : "Oncology (ONC)",
+  "versionName" : "1.0"
+}

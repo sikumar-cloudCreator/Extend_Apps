@@ -1,0 +1,1 @@
+{"id":"entc435471428acbb29409dd254f73fb","schemaName":"xactly","tableName":"xc_period_type","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_PERIOD_TYPE');","audited":false,"effectiveDated":false}

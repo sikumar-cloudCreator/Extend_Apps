@@ -65,7 +65,7 @@ view, not N literal-filtered views**. A breakdown column and its total must come
 Cookbook: `knowledge/extend_xsql_cookbook.md` (Rule 12 ceiling; Rule 13 runtime D1–D5).
 Period: `knowledge/period_correctness_rules.md`. Runtime: `knowledge/runtime_data_defects.md`.
 Non-negotiables:
-- **Fully qualify every object** (`xactly.xc_commission`, `appschema.view`). Unqualified Incent names fail after Oct 2026. App objects in a **customer-defined schema** — never `$framework` for custom data.
+- **Fully qualify every object** (`xactly.xc_commission`, `$framework.my_view`). Unqualified Incent names fail after Oct 2026. App objects default to **`$framework`** (team standard).
 - **No `ShowQuotaAttainment()` for employee-facing attainment / payout / MBO** (official BP Q18). Quota from `xactly.xc_quota_assignment` + period R1/R2; credits from a deduped spine (D1); attainment = credits/quota in SELECT (cookbook Pattern A).
 - Prefer `ShowFunctions()` for non-compensation lookups when correct; any table function you do use must be the **sole FROM** (never in a JOIN — 504).
 - **Measure card** = Pattern A, parameterized by `:v_measure`, both sides aggregated to one row.

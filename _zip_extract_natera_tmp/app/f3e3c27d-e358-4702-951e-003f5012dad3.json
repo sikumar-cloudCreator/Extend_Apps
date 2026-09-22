@@ -1,0 +1,2002 @@
+{
+  "pageDefinitionId" : "f3e3c27d-e358-4702-951e-003f5012dad3",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_129" : {
+            "type" : "variableConfigurator",
+            "controlId" : "edf13e06-098f-408f-9aea-65428ace07a8",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_qtr_start_date_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "edf13e06-098f-408f-9aea-65428ace07a8",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_participant_name_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "edf13e06-098f-408f-9aea-65428ace07a8",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_default_participant_name",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_participant_name"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Participant Name",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : null
+          },
+          "control_130" : {
+            "type" : "variableConfigurator",
+            "controlId" : "4ca9d6e6-4cb8-4549-9ef2-2e1b6ea28e4f",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_participant_name_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "4ca9d6e6-4cb8-4549-9ef2-2e1b6ea28e4f",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_master_participant_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "4ca9d6e6-4cb8-4549-9ef2-2e1b6ea28e4f",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_master_partcipant_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_master_participant_id"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "participant_id"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Master Participant Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : null
+          },
+          "control_127" : {
+            "type" : "variableConfigurator",
+            "controlId" : "0e9ebfc1-b3a8-4e82-887c-198f79c5f8ff",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "0e9ebfc1-b3a8-4e82-887c-198f79c5f8ff",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "on_load",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0e9ebfc1-b3a8-4e82-887c-198f79c5f8ff",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "p_ta"
+            }, {
+              "name" : "p_region"
+            } ],
+            "valueField" : {
+              "dataType" : null,
+              "name" : null
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Variable Configurator",
+            "staticValue" : "ALL",
+            "useStaticValue" : true,
+            "staticDataType" : "STRING"
+          },
+          "control_137" : {
+            "type" : "PageLoader",
+            "controlId" : "32644268-92a8-44ab-87bf-f85a6e26904b",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "layoutSize" : null,
+            "title" : "Page Loader",
+            "loaderSize" : "PAGE",
+            "loaderOpacity" : "100",
+            "events" : [ {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "32644268-92a8-44ab-87bf-f85a6e26904b",
+              "handlers" : [ "hideLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "32644268-92a8-44ab-87bf-f85a6e26904b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "showLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "32644268-92a8-44ab-87bf-f85a6e26904b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "showLoader" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ]
+          },
+          "control_152" : {
+            "type" : "variableConfigurator",
+            "controlId" : "c545ce4d-80ad-4cfe-9367-ca0e840ae74a",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "c545ce4d-80ad-4cfe-9367-ca0e840ae74a",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "c545ce4d-80ad-4cfe-9367-ca0e840ae74a",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_set_default_period_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_period_id"
+            } ],
+            "valueField" : {
+              "dataType" : "long",
+              "name" : "value_field"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Default Period value",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_10" : {
+            "type" : "variableConfigurator",
+            "controlId" : "f9703831-595b-49a0-92f5-985517ae5370",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "f9703831-595b-49a0-92f5-985517ae5370",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_monthly_period_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "f9703831-595b-49a0-92f5-985517ae5370",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "f9703831-595b-49a0-92f5-985517ae5370",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_monthly_period_ids",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_month_period_ids"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "period_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get Monthly Period Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : null
+          },
+          "control_128" : {
+            "type" : "variableConfigurator",
+            "controlId" : "952d74fe-fd86-4aab-ba89-aa89fa4cc48b",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "select_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "952d74fe-fd86-4aab-ba89-aa89fa4cc48b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_qtr_start_date_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "952d74fe-fd86-4aab-ba89-aa89fa4cc48b",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "952d74fe-fd86-4aab-ba89-aa89fa4cc48b",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_qtr_start_date",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_qtr_start_date"
+            } ],
+            "valueField" : {
+              "dataType" : "date",
+              "name" : "start_date"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Qtr Start Date",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : null
+          },
+          "control_131" : {
+            "type" : "variableConfigurator",
+            "controlId" : "11615b73-9cad-4c62-805c-d842a6023961",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_qtr_start_date_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "11615b73-9cad-4c62-805c-d842a6023961",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "11615b73-9cad-4c62-805c-d842a6023961",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_master_position_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_master_position_id"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "master_position_id"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Get Master Position Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : null
+          },
+          "control_136" : {
+            "type" : "variableConfigurator",
+            "controlId" : "887034c0-1e10-40fa-920e-b61aa852d5a5",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "887034c0-1e10-40fa-920e-b61aa852d5a5",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "887034c0-1e10-40fa-920e-b61aa852d5a5",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_all_child_master_partcipant_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_child_master_participant_id"
+            } ],
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "participant_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get all child Master Participant Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : null
+          },
+          "control_132" : {
+            "type" : "variableConfigurator",
+            "controlId" : "c452be4a-dba3-4b05-8163-4d0f7308a173",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "c452be4a-dba3-4b05-8163-4d0f7308a173",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "c452be4a-dba3-4b05-8163-4d0f7308a173",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_get_all_child_master_position_id",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_child_master_position_id"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "position_master_position_id"
+            },
+            "usingMultiSelectVariableFormat" : true,
+            "title" : "Get all child Master Position Id",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : null
+          },
+          "control_116" : {
+            "type" : "label",
+            "controlId" : "a6be2848-4f46-4f3f-b935-d0c2a8b55891",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "<h2><span style=\"font-size: 18pt;\">Executive Summary</span></h2>\n<hr />",
+            "layoutSize" : 100,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_154" : {
+            "type" : "dropdown",
+            "controlId" : "0bd4e5ea-4780-41fc-a5a4-930f24e7b5d5",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "0bd4e5ea-4780-41fc-a5a4-930f24e7b5d5",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_set_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0bd4e5ea-4780-41fc-a5a4-930f24e7b5d5",
+              "handlers" : [ "assignCurrentVariable" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "select_period",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0bd4e5ea-4780-41fc-a5a4-930f24e7b5d5",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_period_dropdown",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_period_id"
+            }, {
+              "name" : "v_period_name"
+            } ],
+            "isMultiSelect" : false,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "valueField" : {
+              "dataType" : "decimal",
+              "name" : "period_id"
+            },
+            "labelText" : "Select Period",
+            "layoutSize" : 16.66,
+            "shouldRenderHidden" : false,
+            "allowClearForSingleSelect" : false,
+            "alignItem" : "bottom-left"
+          },
+          "control_155" : {
+            "type" : "label",
+            "controlId" : "65924f99-18bd-4b92-9b93-5f1d12b38329",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "controlData" : "",
+            "layoutSize" : null,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_2" : {
+            "type" : "dropdown",
+            "controlId" : "6ec7ddea-13b0-4429-a0aa-17772e1ced3a",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "6ec7ddea-13b0-4429-a0aa-17772e1ced3a",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_division",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "6ec7ddea-13b0-4429-a0aa-17772e1ced3a",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "on_load",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "6ec7ddea-13b0-4429-a0aa-17772e1ced3a",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_division_dd",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "p_ta"
+            } ],
+            "isMultiSelect" : true,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "ta_name"
+            },
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "ta_value"
+            },
+            "labelText" : "Division (Therapeutic Area)",
+            "layoutSize" : 100,
+            "shouldRenderHidden" : true,
+            "allowClearForSingleSelect" : false
+          },
+          "control_114" : {
+            "type" : "dropdown",
+            "controlId" : "1a6481d8-09dd-4d3d-9525-72bfbd8650a2",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "1a6481d8-09dd-4d3d-9525-72bfbd8650a2",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "1a6481d8-09dd-4d3d-9525-72bfbd8650a2",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "1a6481d8-09dd-4d3d-9525-72bfbd8650a2",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "on_load",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "1a6481d8-09dd-4d3d-9525-72bfbd8650a2",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_region_dd",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "p_region"
+            } ],
+            "isMultiSelect" : true,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "region_name"
+            },
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "region_value"
+            },
+            "labelText" : "Region",
+            "layoutSize" : 100,
+            "shouldRenderHidden" : true,
+            "allowClearForSingleSelect" : false
+          },
+          "control_5" : {
+            "type" : "Custom",
+            "controlId" : "0aa490af-210c-403c-91db-0952b13e598b",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0aa490af-210c-403c-91db-0952b13e598b",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "0aa490af-210c-403c-91db-0952b13e598b",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_participant_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "0aa490af-210c-403c-91db-0952b13e598b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_total_payout",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_exec_total_payout",
+              "boundToField" : "total_payment"
+            }, {
+              "name" : "v_percent_approve",
+              "boundToField" : "percent_approve"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #384959; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; flex: 1;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Global Projected Payout</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #384959; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">${{v_exec_total_payout}}</div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\"><span style=\"color: {{v_exec_variance_pct &gt;= 0 ? '#10b981' : '#ef4444'}};\">${{v_percent_approve}}</span> of Global Budget</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "testst"
+          },
+          "control_133" : {
+            "type" : "Custom",
+            "controlId" : "78b70d05-c7e8-406b-a49e-7b1b048d44e5",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "78b70d05-c7e8-406b-a49e-7b1b048d44e5",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "78b70d05-c7e8-406b-a49e-7b1b048d44e5",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "78b70d05-c7e8-406b-a49e-7b1b048d44e5",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_approved_budger",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_total_qtr_personal_target",
+              "boundToField" : "total_qtr_personal_target"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #94a3b8; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; flex: 1;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Global Approved Budget</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #94a3b8; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">${{v_total_qtr_personal_target}}</div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\">Total Enterprise Allocation</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "testst"
+          },
+          "control_134" : {
+            "type" : "Custom",
+            "controlId" : "560b065a-5c45-4670-9ea7-c6a1d733d8ee",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "560b065a-5c45-4670-9ea7-c6a1d733d8ee",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_active_rep_headcount",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_active_rep_count",
+              "boundToField" : "count"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #4498D7; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; flex: 1;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Active Rep Headcount</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #4498d7; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">{{v_active_rep_count}}</div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\">Total Commissionable Reps</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "testst"
+          },
+          "control_135" : {
+            "type" : "Custom",
+            "controlId" : "cad64d5e-dd95-471e-a9ee-92393c8b75d2",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "cad64d5e-dd95-471e-a9ee-92393c8b75d2",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_unique_regions",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_unique_region_count",
+              "boundToField" : "count"
+            } ],
+            "controlData" : "<div style=\"background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #A4C955; border-radius: 0px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; min-height: 120px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; flex: 1;\">\n<div style=\"display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;\">\n<div style=\"font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;\">Total Unique Regions</div>\n</div>\n<div style=\"font-size: 28px; font-weight: 800; color: #a4c955; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums;\">{{v_unique_region_count}}</div>\n<div style=\"font-size: 12px; font-weight: 800; color: #64748b; margin-top: auto;\">Across All Divisions</div>\n</div>",
+            "layoutSize" : 25,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false,
+            "internalName" : "testst"
+          },
+          "control_13" : {
+            "type" : "Custom",
+            "controlId" : "34271110-c066-4995-a7e2-a9019ec08d66",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "34271110-c066-4995-a7e2-a9019ec08d66",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "34271110-c066-4995-a7e2-a9019ec08d66",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "34271110-c066-4995-a7e2-a9019ec08d66",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_es_donut_chart",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_total_payout_val",
+              "boundToField" : "v_total_payout_val"
+            }, {
+              "name" : "v_onc_mix_pct",
+              "boundToField" : "v_onc_mix_pct"
+            }, {
+              "name" : "v_wh_mix_pct",
+              "boundToField" : "v_wh_mix_pct"
+            }, {
+              "name" : "v_oh_mix_pct",
+              "boundToField" : "v_oh_mix_pct"
+            }, {
+              "name" : "v_onc_payout_val",
+              "boundToField" : "v_onc_payout_val"
+            }, {
+              "name" : "v_wh_payout_val",
+              "boundToField" : "v_wh_payout_val"
+            }, {
+              "name" : "v_oh_payout_val",
+              "boundToField" : "v_oh_payout_val"
+            } ],
+            "controlData" : "<div style=\"width: 100%; height: 100%; min-height: 460px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n<div style=\"position: relative; padding: 16px 24px; padding-left: 28px; border-bottom: 1px solid #f1f5f9; overflow: hidden; flex-shrink: 0;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Global Payout Mix</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Proportion of Total Payout Pool by Division</p>\n</div>\n<div style=\"padding: 24px; display: flex; align-items: center; justify-content: center; gap: 40px; flex-grow: 1;\">\n<div style=\"position: relative; width: 256px; height: 256px; border-radius: 50%; background: conic-gradient(#A4C955 0% {{v_onc_mix_pct}}%, #4498D7 {{v_onc_mix_pct}}% calc({{v_onc_mix_pct}}% + {{v_wh_mix_pct}}%), #384959 calc({{v_onc_mix_pct}}% + {{v_wh_mix_pct}}%) 100%); flex-shrink: 0;\">\n<div style=\"position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 180px; height: 180px; background: #ffffff; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;\">\n<div style=\"font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 4px;\">Total Payout</div>\n<div style=\"font-size: 22px; font-weight: 800; color: #334155;\">${{v_total_payout_val}}</div>\n</div>\n</div>\n<div style=\"display: flex; flex-direction: column; gap: 24px; min-width: 200px;\">\n<div style=\"display: flex; align-items: center; justify-content: space-between; gap: 16px;\">\n<div style=\"display: flex; align-items: center; gap: 10px;\">\n<div style=\"width: 14px; height: 14px; background: #A4C955; border-radius: 2px; flex-shrink: 0;\">&nbsp;</div>\n<div style=\"font-size: 14px; font-weight: 600; color: #475569; white-space: nowrap;\">Oncology ({{v_onc_mix_pct}}%)</div>\n</div>\n<div style=\"font-size: 15px; font-weight: 800; color: #1e293b;\">${{v_onc_payout_val}}</div>\n</div>\n<div style=\"display: flex; align-items: center; justify-content: space-between; gap: 16px;\">\n<div style=\"display: flex; align-items: center; gap: 10px;\">\n<div style=\"width: 14px; height: 14px; background: #4498D7; border-radius: 2px; flex-shrink: 0;\">&nbsp;</div>\n<div style=\"font-size: 14px; font-weight: 600; color: #475569; white-space: nowrap;\">Women's Health ({{v_wh_mix_pct}}%)</div>\n</div>\n<div style=\"font-size: 15px; font-weight: 800; color: #1e293b;\">${{v_wh_payout_val}}</div>\n</div>\n<div style=\"display: flex; align-items: center; justify-content: space-between; gap: 16px;\">\n<div style=\"display: flex; align-items: center; gap: 10px;\">\n<div style=\"width: 14px; height: 14px; background: #384959; border-radius: 2px; flex-shrink: 0;\">&nbsp;</div>\n<div style=\"font-size: 14px; font-weight: 600; color: #475569; white-space: nowrap;\">Organ Health ({{v_oh_mix_pct}}%)</div>\n</div>\n<div style=\"font-size: 15px; font-weight: 800; color: #1e293b;\">${{v_oh_payout_val}}</div>\n</div>\n</div>\n</div>\n</div>",
+            "layoutSize" : 41.66,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_11" : {
+            "type" : "Custom",
+            "controlId" : "dde339e0-9cb0-4bd2-a0a8-f96eeeb82d37",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "dde339e0-9cb0-4bd2-a0a8-f96eeeb82d37",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "dde339e0-9cb0-4bd2-a0a8-f96eeeb82d37",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "dde339e0-9cb0-4bd2-a0a8-f96eeeb82d37",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "dde339e0-9cb0-4bd2-a0a8-f96eeeb82d37",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_es_payout_breakdown",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_oh_prospera_pct",
+              "boundToField" : "oh_prospera_pct"
+            }, {
+              "name" : "v_oh_renasight_pct",
+              "boundToField" : "oh_renasight_pct"
+            }, {
+              "name" : "v_oh_others_pct",
+              "boundToField" : "oh_others_pct"
+            }, {
+              "name" : "v_onc_initial_pct",
+              "boundToField" : "onc_initial_pct"
+            }, {
+              "name" : "v_onc_followon_pct",
+              "boundToField" : "onc_followon_pct"
+            }, {
+              "name" : "v_onc_others_pct",
+              "boundToField" : "onc_others_pct"
+            }, {
+              "name" : "v_wh_vol_pct",
+              "boundToField" : "wh_vol_pct"
+            }, {
+              "name" : "v_wh_pts_pct",
+              "boundToField" : "wh_pts_pct"
+            }, {
+              "name" : "v_wh_others_pct",
+              "boundToField" : "wh_others_pct"
+            } ],
+            "controlData" : "<div style=\"width: 100%; height: 100%; min-height: 460px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n<div style=\"position: relative; padding: 16px 24px; padding-left: 28px; border-bottom: 1px solid #f1f5f9; flex-shrink: 0; overflow: hidden;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Strategic Payout Breakdown</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">100% payout mix by targeted behaviors</p>\n</div>\n<div style=\"padding: 24px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-evenly; gap: 24px;\">\n<div style=\"display: flex; flex-direction: column; gap: 8px;\">\n<div style=\"font-size: 14px; font-weight: bold; color: #1e293b;\">Organ Health</div>\n<div style=\"display: flex; height: 28px; width: 100%; border-radius: 4px; overflow: hidden;\">\n<div style=\"width: {{v_oh_prospera_pct}}%; background: #4498d7;\">&nbsp;</div>\n<div style=\"width: {{v_oh_renasight_pct}}%; background: #a4c955;\">&nbsp;</div>\n<div style=\"width: {{v_oh_others_pct}}%; background: #94a3b8;\">&nbsp;</div>\n</div>\n<div style=\"display: flex; justify-content: space-between; font-size: 12px; color: #64748b; font-weight: 600;\">\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #4498d7; border-radius: 2px;\">&nbsp;</div>\nProspera Payout ({{v_oh_prospera_pct}}%)</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #a4c955; border-radius: 2px;\">&nbsp;</div>\nRenasight Payout ({{v_oh_renasight_pct}}%)</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #94a3b8; border-radius: 2px;\">&nbsp;</div>\nOthers ({{v_oh_others_pct}}%)</div>\n</div>\n</div>\n<div style=\"display: flex; flex-direction: column; gap: 8px;\">\n<div style=\"font-size: 14px; font-weight: bold; color: #1e293b;\">Oncology</div>\n<div style=\"display: flex; height: 28px; width: 100%; border-radius: 4px; overflow: hidden;\">\n<div style=\"width: {{v_onc_initial_pct}}%; background: #4498d7;\">&nbsp;</div>\n<div style=\"width: {{v_onc_followon_pct}}%; background: #a4c955;\">&nbsp;</div>\n<div style=\"width: {{v_onc_others_pct}}%; background: #94a3b8;\">&nbsp;</div>\n</div>\n<div style=\"display: flex; justify-content: space-between; font-size: 12px; color: #64748b; font-weight: 600;\">\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #4498d7; border-radius: 2px;\">&nbsp;</div>\nInitial Patients ({{v_onc_initial_pct}}%)</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #a4c955; border-radius: 2px;\">&nbsp;</div>\nFollow-On Patients ({{v_onc_followon_pct}}%)</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #94a3b8; border-radius: 2px;\">&nbsp;</div>\nOthers ({{v_onc_others_pct}}%)</div>\n</div>\n</div>\n<div style=\"display: flex; flex-direction: column; gap: 8px;\">\n<div style=\"font-size: 14px; font-weight: bold; color: #1e293b;\">Women's Health</div>\n<div style=\"display: flex; height: 28px; width: 100%; border-radius: 4px; overflow: hidden;\">\n<div style=\"width: {{v_wh_vol_pct}}%; background: #4498d7;\">&nbsp;</div>\n<div style=\"width: {{v_wh_pts_pct}}%; background: #a4c955;\">&nbsp;</div>\n<div style=\"width: {{v_wh_others_pct}}%; background: #94a3b8;\">&nbsp;</div>\n</div>\n<div style=\"display: flex; justify-content: space-between; font-size: 12px; color: #64748b; font-weight: 600;\">\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #4498d7; border-radius: 2px;\">&nbsp;</div>\nVolume Retention ({{v_wh_vol_pct}}%)</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #a4c955; border-radius: 2px;\">&nbsp;</div>\nPoints Goal ({{v_wh_pts_pct}}%)</div>\n<div style=\"display: flex; align-items: center; gap: 6px;\">\n<div style=\"width: 10px; height: 10px; background: #94a3b8; border-radius: 2px;\">&nbsp;</div>\nOthers ({{v_wh_others_pct}}%)</div>\n</div>\n</div>\n</div>\n</div>",
+            "layoutSize" : 58.33,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_110" : {
+            "type" : "Custom",
+            "controlId" : "22884d1f-eaef-4e9d-8056-f3becfb97eb0",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "22884d1f-eaef-4e9d-8056-f3becfb97eb0",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "22884d1f-eaef-4e9d-8056-f3becfb97eb0",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "22884d1f-eaef-4e9d-8056-f3becfb97eb0",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "22884d1f-eaef-4e9d-8056-f3becfb97eb0",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_es_payout_Global",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_top_1_name",
+              "boundToField" : "top_1_name"
+            }, {
+              "name" : "v_top_1_div",
+              "boundToField" : "top_1_div"
+            }, {
+              "name" : "v_top_1_val",
+              "boundToField" : "top_1_val"
+            }, {
+              "name" : "v_top_1_pct",
+              "boundToField" : "top_1_pct"
+            }, {
+              "name" : "v_top_2_name",
+              "boundToField" : "top_2_name"
+            }, {
+              "name" : "v_top_2_div",
+              "boundToField" : "top_2_div"
+            }, {
+              "name" : "v_top_2_val",
+              "boundToField" : "top_2_val"
+            }, {
+              "name" : "v_top_2_pct",
+              "boundToField" : "top_2_pct"
+            }, {
+              "name" : "v_top_3_name",
+              "boundToField" : "top_3_name"
+            }, {
+              "name" : "v_top_3_div",
+              "boundToField" : "top_3_div"
+            }, {
+              "name" : "v_top_3_val",
+              "boundToField" : "top_3_val"
+            }, {
+              "name" : "v_top_3_pct",
+              "boundToField" : "top_3_pct"
+            }, {
+              "name" : "v_top_4_name",
+              "boundToField" : "top_4_name"
+            }, {
+              "name" : "v_top_4_div",
+              "boundToField" : "top_4_div"
+            }, {
+              "name" : "v_top_4_val",
+              "boundToField" : "top_4_val"
+            }, {
+              "name" : "v_top_4_pct",
+              "boundToField" : "top_4_pct"
+            }, {
+              "name" : "v_top_5_name",
+              "boundToField" : "top_5_name"
+            }, {
+              "name" : "v_top_5_div",
+              "boundToField" : "top_5_div"
+            }, {
+              "name" : "v_top_5_val",
+              "boundToField" : "top_5_val"
+            }, {
+              "name" : "v_top_5_pct",
+              "boundToField" : "top_5_pct"
+            }, {
+              "name" : "v_top_6_name",
+              "boundToField" : "top_6_name"
+            }, {
+              "name" : "v_top_6_div",
+              "boundToField" : "top_6_div"
+            }, {
+              "name" : "v_top_6_val",
+              "boundToField" : "top_6_val"
+            }, {
+              "name" : "v_top_6_pct",
+              "boundToField" : "top_6_pct"
+            }, {
+              "name" : "v_top_7_name",
+              "boundToField" : "top_7_name"
+            }, {
+              "name" : "v_top_7_div",
+              "boundToField" : "top_7_div"
+            }, {
+              "name" : "v_top_7_val",
+              "boundToField" : "top_7_val"
+            }, {
+              "name" : "v_top_7_pct",
+              "boundToField" : "top_7_pct"
+            }, {
+              "name" : "v_top_8_name",
+              "boundToField" : "top_8_name"
+            }, {
+              "name" : "v_top_8_div",
+              "boundToField" : "top_8_div"
+            }, {
+              "name" : "v_top_8_val",
+              "boundToField" : "top_8_val"
+            }, {
+              "name" : "v_top_8_pct",
+              "boundToField" : "top_8_pct"
+            }, {
+              "name" : "v_top_9_name",
+              "boundToField" : "top_9_name"
+            }, {
+              "name" : "v_top_9_div",
+              "boundToField" : "top_9_div"
+            }, {
+              "name" : "v_top_9_val",
+              "boundToField" : "top_9_val"
+            }, {
+              "name" : "v_top_9_pct",
+              "boundToField" : "top_9_pct"
+            }, {
+              "name" : "v_top_10_name",
+              "boundToField" : "top_10_name"
+            }, {
+              "name" : "v_top_10_div",
+              "boundToField" : "top_10_div"
+            }, {
+              "name" : "v_top_10_val",
+              "boundToField" : "top_10_val"
+            }, {
+              "name" : "v_top_10_pct",
+              "boundToField" : "top_10_pct"
+            } ],
+            "controlData" : "<div style=\"width: 100%; height: 580px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n<div style=\"position: relative; padding: 16px 24px; padding-left: 28px; border-bottom: 1px solid #f1f5f9; overflow: hidden; flex-shrink: 0;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Top 10 Global Performers</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Highest projected earners across all divisions</p>\n</div>\n<div style=\"padding: 24px; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; overflow: hidden;\"><!-- Standardized Row Template -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#1</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_1_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_1_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_1_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_1_val}}</div>\n</div>\n<!-- Row 2 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#2</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_2_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_2_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_2_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_2_val}}</div>\n</div>\n<!-- Row 3 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#3</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_3_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_3_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_3_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_3_val}}</div>\n</div>\n<!-- Row 4 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#4</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_4_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_4_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_4_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_4_val}}</div>\n</div>\n<!-- Row 5 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#5</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_5_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_5_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_5_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_5_val}}</div>\n</div>\n<!-- Row 6 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#6</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_6_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_6_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_6_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_6_val}}</div>\n</div>\n<!-- Row 7 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#7</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_7_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_7_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_7_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_7_val}}</div>\n</div>\n<!-- Row 8 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#8</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_8_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_8_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_8_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_8_val}}</div>\n</div>\n<!-- Row 9 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\">#9</div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_9_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_9_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_9_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_9_val}}</div>\n</div>\n<!-- Row 10 -->\n<div style=\"display: flex; align-items: center; width: 100%; gap: 12px;\">\n<div style=\"width: 24px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: #94a3b8; text-align: left;\"><span style=\"font-size: 8pt;\">#10</span></div>\n<div style=\"width: 150px; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;\">\n<div style=\"font-size: 13px; font-weight: bold; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_10_name}}</div>\n<div style=\"font-size: 11px; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">{{v_top_10_div}}</div>\n</div>\n<div style=\"flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 2px; overflow: hidden;\">\n<div style=\"width: {{v_top_10_pct}}%; background: linear-gradient(to right, #4498d7, #a4c955); height: 100%; border-radius: 2px;\">&nbsp;</div>\n</div>\n<div style=\"width: 80px; flex-shrink: 0; text-align: right; font-size: 13px; font-weight: 800; color: #1e293b;\">${{v_top_10_val}}</div>\n</div>\n</div>\n</div>",
+            "layoutSize" : 58.33,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_115" : {
+            "type" : "Custom",
+            "controlId" : "9ed9bde9-2082-40d0-b3f2-dd9b611a5b2c",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "dd_division",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "9ed9bde9-2082-40d0-b3f2-dd9b611a5b2c",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "dd_region",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "9ed9bde9-2082-40d0-b3f2-dd9b611a5b2c",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "9ed9bde9-2082-40d0-b3f2-dd9b611a5b2c",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "9ed9bde9-2082-40d0-b3f2-dd9b611a5b2c",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_es_Efficiency",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_oh_avg_val",
+              "boundToField" : "oh_avg_val"
+            }, {
+              "name" : "v_oh_p1_val",
+              "boundToField" : "oh_p1_val"
+            }, {
+              "name" : "v_oh_p2_val",
+              "boundToField" : "oh_p2_val"
+            }, {
+              "name" : "v_oh_p3_val",
+              "boundToField" : "oh_p3_val"
+            }, {
+              "name" : "v_onc_avg_val",
+              "boundToField" : "onc_avg_val"
+            }, {
+              "name" : "v_onc_p1_val",
+              "boundToField" : "onc_p1_val"
+            }, {
+              "name" : "v_onc_p2_val",
+              "boundToField" : "onc_p2_val"
+            }, {
+              "name" : "v_onc_p3_val",
+              "boundToField" : "onc_p3_val"
+            }, {
+              "name" : "v_wh_avg_val",
+              "boundToField" : "wh_avg_val"
+            }, {
+              "name" : "v_wh_p1_val",
+              "boundToField" : "wh_p1_val"
+            }, {
+              "name" : "v_wh_p2_val",
+              "boundToField" : "wh_p2_val"
+            }, {
+              "name" : "v_wh_p3_val",
+              "boundToField" : "wh_p3_val"
+            }, {
+              "name" : "v_oh_h_pct",
+              "boundToField" : "oh_h_pct"
+            }, {
+              "name" : "v_onc_h_pct",
+              "boundToField" : "onc_h_pct"
+            }, {
+              "name" : "v_wh_h_pct",
+              "boundToField" : "wh_h_pct"
+            }, {
+              "name" : "v_oh_s1_pct",
+              "boundToField" : "oh_s1_pct"
+            }, {
+              "name" : "v_oh_s2_pct",
+              "boundToField" : "oh_s2_pct"
+            }, {
+              "name" : "v_oh_s3_pct",
+              "boundToField" : "oh_s3_pct"
+            }, {
+              "name" : "v_onc_s1_pct",
+              "boundToField" : "onc_s1_pct"
+            }, {
+              "name" : "v_onc_s2_pct",
+              "boundToField" : "onc_s2_pct"
+            }, {
+              "name" : "v_onc_s3_pct",
+              "boundToField" : "onc_s3_pct"
+            }, {
+              "name" : "v_wh_s1_pct",
+              "boundToField" : "wh_s1_pct"
+            }, {
+              "name" : "v_wh_s2_pct",
+              "boundToField" : "wh_s2_pct"
+            }, {
+              "name" : "v_wh_s3_pct",
+              "boundToField" : "wh_s3_pct"
+            } ],
+            "controlData" : "<div style=\"width: 100%; height: 580px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n<div style=\"position: relative; padding: 16px 24px; padding-left: 28px; border-bottom: 1px solid #f1f5f9; overflow: hidden; flex-shrink: 0;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #6366f1);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">Sales Force Payout Efficiency</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">Average payout per rep with behavior breakdown</p>\n</div>\n<div style=\"padding: 40px 24px 20px 24px; display: flex; align-items: flex-end; justify-content: space-around; flex-grow: 1; gap: 20px;\"><!-- Organ Health Bar -->\n<div style=\"display: flex; flex-direction: column; align-items: center; gap: 12px; width: 28%; height: 100%; justify-content: flex-end;\">\n<div style=\"font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 4px;\">${{v_oh_avg_val}}</div>\n<div style=\"width: 100%; height: {{v_oh_h_pct}}%; display: flex; flex-direction: column; justify-content: flex-end; border-radius: 4px 4px 0 0; overflow: hidden; background: transparent;\">\n<div style=\"height: {{v_oh_s3_pct}}%; background: #94a3b8; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Others: ${{v_oh_p3_val}}\">${{v_oh_p3_val}}</div>\n<div style=\"height: {{v_oh_s2_pct}}%; background: #a4c955; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Renasight: ${{v_oh_p2_val}}\">${{v_oh_p2_val}}</div>\n<div style=\"height: {{v_oh_s1_pct}}%; background: #4498d7; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Prospera: ${{v_oh_p1_val}}\">${{v_oh_p1_val}}</div>\n</div>\n<div style=\"font-size: 12px; font-weight: bold; color: #64748b; text-align: center;\">Organ Health</div>\n</div>\n<!-- Oncology Bar -->\n<div style=\"display: flex; flex-direction: column; align-items: center; gap: 12px; width: 28%; height: 100%; justify-content: flex-end;\">\n<div style=\"font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 4px;\">${{v_onc_avg_val}}</div>\n<div style=\"width: 100%; height: {{v_onc_h_pct}}%; display: flex; flex-direction: column; justify-content: flex-end; border-radius: 4px 4px 0 0; overflow: hidden; background: transparent;\">\n<div style=\"height: {{v_onc_s3_pct}}%; background: #94a3b8; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Others: ${{v_onc_p3_val}}\">${{v_onc_p3_val}}</div>\n<div style=\"height: {{v_onc_s2_pct}}%; background: #a4c955; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Follow-On: ${{v_onc_p2_val}}\">${{v_onc_p2_val}}</div>\n<div style=\"height: {{v_onc_s1_pct}}%; background: #4498d7; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Initial: ${{v_onc_p1_val}}\">${{v_onc_p1_val}}</div>\n</div>\n<div style=\"font-size: 12px; font-weight: bold; color: #64748b; text-align: center;\">Oncology</div>\n</div>\n<!-- Women's Health Bar -->\n<div style=\"display: flex; flex-direction: column; align-items: center; gap: 12px; width: 28%; height: 100%; justify-content: flex-end;\">\n<div style=\"font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 4px;\">${{v_wh_avg_val}}</div>\n<div style=\"width: 100%; height: {{v_wh_h_pct}}%; display: flex; flex-direction: column; justify-content: flex-end; border-radius: 4px 4px 0 0; overflow: hidden; background: transparent;\">\n<div style=\"height: {{v_wh_s3_pct}}%; background: #94a3b8; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Others: ${{v_wh_p3_val}}\">${{v_wh_p3_val}}</div>\n<div style=\"height: {{v_wh_s2_pct}}%; background: #a4c955; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Points: ${{v_wh_p2_val}}\">${{v_wh_p2_val}}</div>\n<div style=\"height: {{v_wh_s1_pct}}%; background: #4498d7; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 10px; font-weight: bold; text-align: center; padding: 4px;\" title=\"Volume: ${{v_wh_p1_val}}\">${{v_wh_p1_val}}</div>\n</div>\n<div style=\"font-size: 12px; font-weight: bold; color: #64748b; text-align: center;\">Women's Health</div>\n</div>\n</div>\n<!-- Legend -->\n<div style=\"padding: 16px 24px; border-top: 1px solid #f1f5f9; display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; flex-shrink: 0;\">\n<div style=\"display: flex; align-items: center; gap: 8px;\">\n<div style=\"width: 10px; height: 10px; background: #4498d7; border-radius: 2px;\">&nbsp;</div>\n<span style=\"font-size: 11px; font-weight: 600; color: #64748b;\">Primary Behavior (Prospera / Initial / Volume)</span></div>\n<div style=\"display: flex; align-items: center; gap: 8px;\">\n<div style=\"width: 10px; height: 10px; background: #a4c955; border-radius: 2px;\">&nbsp;</div>\n<span style=\"font-size: 11px; font-weight: 600; color: #64748b;\">Secondary Behavior (Renasight / Follow-On / Points)</span></div>\n<div style=\"display: flex; align-items: center; gap: 8px;\">\n<div style=\"width: 10px; height: 10px; background: #94a3b8; border-radius: 2px;\">&nbsp;</div>\n<span style=\"font-size: 11px; font-weight: 600; color: #64748b;\">Others</span></div>\n</div>\n</div>",
+            "layoutSize" : 41.66,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_120" : {
+            "type" : "Custom",
+            "controlId" : "267d2e96-439b-4ad5-ab8a-77dadd2c7036",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "267d2e96-439b-4ad5-ab8a-77dadd2c7036",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "267d2e96-439b-4ad5-ab8a-77dadd2c7036",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_es_top_perf",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_top_1_name",
+              "boundToField" : "top_1_name"
+            }, {
+              "name" : "v_top_1_div",
+              "boundToField" : "top_1_div"
+            }, {
+              "name" : "v_top_1_val",
+              "boundToField" : "top_1_val"
+            }, {
+              "name" : "v_top_2_name",
+              "boundToField" : "top_2_name"
+            }, {
+              "name" : "v_top_2_div",
+              "boundToField" : "top_2_div"
+            }, {
+              "name" : "v_top_2_val",
+              "boundToField" : "top_2_val"
+            }, {
+              "name" : "v_top_3_name",
+              "boundToField" : "top_3_name"
+            }, {
+              "name" : "v_top_3_div",
+              "boundToField" : "top_3_div"
+            }, {
+              "name" : "v_top_3_val",
+              "boundToField" : "top_3_val"
+            }, {
+              "name" : "v_top_4_name",
+              "boundToField" : "top_4_name"
+            }, {
+              "name" : "v_top_4_div",
+              "boundToField" : "top_4_div"
+            }, {
+              "name" : "v_top_4_val",
+              "boundToField" : "top_4_val"
+            }, {
+              "name" : "v_top_5_name",
+              "boundToField" : "top_5_name"
+            }, {
+              "name" : "v_top_5_div",
+              "boundToField" : "top_5_div"
+            }, {
+              "name" : "v_top_5_val",
+              "boundToField" : "top_5_val"
+            } ],
+            "controlData" : "<div style=\"width: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; background-color: #ffffff; display: flex; flex-direction: column; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 24px;\">\n<div style=\"position: relative; padding: 12px 20px; padding-left: 24px; border-bottom: 1px solid #f1f5f9; overflow: hidden;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #4498d7;\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 16px; font-weight: bold; color: #0f172a;\">President's Club</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 11px; color: #64748b; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px;\">Top 5 Overall Performers ACROSS ALL DIVISIONS</p>\n</div>\n<table style=\"width: 100%; border-collapse: collapse; text-align: left;\">\n<thead>\n<tr style=\"background: #f8fafc; border-bottom: 1px solid #f1f5f9;\">\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Rank</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Representative</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Division</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase; text-align: right;\">Total Payout</th>\n</tr>\n</thead>\n<tbody style=\"font-size: 13px; color: #1e293b;\">\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 800; color: #4498d7;\">#1</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_top_1_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_top_1_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_top_1_val}}</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 800; color: #4498d7;\">#2</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_top_2_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_top_2_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_top_2_val}}</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 800; color: #4498d7;\">#3</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_top_3_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_top_3_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_top_3_val}}</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 800; color: #4498d7;\">#4</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_top_4_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_top_4_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_top_4_val}}</td>\n</tr>\n<tr>\n<td style=\"padding: 12px 20px; font-weight: 800; color: #4498d7;\">#5</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_top_5_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_top_5_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_top_5_val}}</td>\n</tr>\n</tbody>\n</table>\n</div>",
+            "layoutSize" : 33.33,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_123" : {
+            "type" : "Custom",
+            "controlId" : "e1959c58-37dd-47e9-89b7-262514eec82b",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "e1959c58-37dd-47e9-89b7-262514eec82b",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "e1959c58-37dd-47e9-89b7-262514eec82b",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_es_bottom_perf",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_bot_5_rank",
+              "boundToField" : "bot_5_rank"
+            }, {
+              "name" : "v_bot_5_name",
+              "boundToField" : "bot_5_name"
+            }, {
+              "name" : "v_bot_5_div",
+              "boundToField" : "bot_5_div"
+            }, {
+              "name" : "v_bot_5_val",
+              "boundToField" : "bot_5_val"
+            }, {
+              "name" : "v_bot_4_rank",
+              "boundToField" : "bot_4_rank"
+            }, {
+              "name" : "v_bot_4_name",
+              "boundToField" : "bot_4_name"
+            }, {
+              "name" : "v_bot_4_div",
+              "boundToField" : "bot_4_div"
+            }, {
+              "name" : "v_bot_4_val",
+              "boundToField" : "bot_4_val"
+            }, {
+              "name" : "v_bot_3_rank",
+              "boundToField" : "bot_3_rank"
+            }, {
+              "name" : "v_bot_3_name",
+              "boundToField" : "bot_3_name"
+            }, {
+              "name" : "v_bot_3_div",
+              "boundToField" : "bot_3_div"
+            }, {
+              "name" : "v_bot_3_val",
+              "boundToField" : "bot_3_val"
+            }, {
+              "name" : "v_bot_2_rank",
+              "boundToField" : "bot_2_rank"
+            }, {
+              "name" : "v_bot_2_name",
+              "boundToField" : "bot_2_name"
+            }, {
+              "name" : "v_bot_2_div",
+              "boundToField" : "bot_2_div"
+            }, {
+              "name" : "v_bot_2_val",
+              "boundToField" : "bot_2_val"
+            }, {
+              "name" : "v_bot_1_rank",
+              "boundToField" : "bot_1_rank"
+            }, {
+              "name" : "v_bot_1_name",
+              "boundToField" : "bot_1_name"
+            }, {
+              "name" : "v_bot_1_div",
+              "boundToField" : "bot_1_div"
+            }, {
+              "name" : "v_bot_1_val",
+              "boundToField" : "bot_1_val"
+            } ],
+            "controlData" : "<div style=\"width: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; background-color: #ffffff; display: flex; flex-direction: column; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 24px;\">\n<div style=\"position: relative; padding: 12px 20px; padding-left: 24px; border-bottom: 1px solid #f1f5f9; overflow: hidden;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #ef4444;\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 16px; font-weight: bold; color: #0f172a;\">Performance Watchlist</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 11px; color: #64748b; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px;\">Bottom 5 Overall Performers&nbsp;<span style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;\">ACROSS ALL DIVISIONS</span></p>\n</div>\n<table style=\"width: 100%; border-collapse: collapse; text-align: left;\">\n<thead>\n<tr style=\"background: #fff5f5; border-bottom: 1px solid #f1f5f9;\">\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #991b1b; text-transform: uppercase;\">Rank</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #991b1b; text-transform: uppercase;\">Representative</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #991b1b; text-transform: uppercase;\">Division</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #991b1b; text-transform: uppercase; text-align: right;\">Total Payout</th>\n</tr>\n</thead>\n<tbody style=\"font-size: 13px; color: #1e293b;\">\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 800; color: #ef4444;\">#{{v_bot_5_rank}}</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_bot_5_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_bot_5_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_bot_5_val}}</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 800; color: #ef4444;\">#{{v_bot_4_rank}}</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_bot_4_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_bot_4_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_bot_4_val}}</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 800; color: #ef4444;\">#{{v_bot_3_rank}}</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_bot_3_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_bot_3_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_bot_3_val}}</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 800; color: #ef4444;\">#{{v_bot_2_rank}}</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_bot_2_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_bot_2_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_bot_2_val}}</td>\n</tr>\n<tr>\n<td style=\"padding: 12px 20px; font-weight: 800; color: #ef4444;\">#{{v_bot_1_rank}}</td>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_bot_1_name}}</td>\n<td style=\"padding: 12px 20px; color: #64748b;\">{{v_bot_1_div}}</td>\n<td style=\"padding: 12px 20px; text-align: right; font-weight: bold;\">${{v_bot_1_val}}</td>\n</tr>\n</tbody>\n</table>\n</div>",
+            "layoutSize" : 33.33,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_124" : {
+            "type" : "Custom",
+            "controlId" : "e0bf86d2-8b31-4f7e-a507-6c41dd1383f2",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "get_all_child_master_position_id_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "e0bf86d2-8b31-4f7e-a507-6c41dd1383f2",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_exe_grid",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_gap_1_name",
+              "boundToField" : "gap_1_name"
+            }, {
+              "name" : "v_gap_1_r1",
+              "boundToField" : "gap_1_r1"
+            }, {
+              "name" : "v_gap_1_r2",
+              "boundToField" : "gap_1_r2"
+            }, {
+              "name" : "v_gap_1_diff",
+              "boundToField" : "gap_1_diff"
+            }, {
+              "name" : "v_gap_2_name",
+              "boundToField" : "gap_2_name"
+            }, {
+              "name" : "v_gap_2_r1",
+              "boundToField" : "gap_2_r1"
+            }, {
+              "name" : "v_gap_2_r2",
+              "boundToField" : "gap_2_r2"
+            }, {
+              "name" : "v_gap_2_diff",
+              "boundToField" : "gap_2_diff"
+            }, {
+              "name" : "v_gap_3_name",
+              "boundToField" : "gap_3_name"
+            }, {
+              "name" : "v_gap_3_r1",
+              "boundToField" : "gap_3_r1"
+            }, {
+              "name" : "v_gap_3_r2",
+              "boundToField" : "gap_3_r2"
+            }, {
+              "name" : "v_gap_3_diff",
+              "boundToField" : "gap_3_diff"
+            }, {
+              "name" : "v_gap_4_name",
+              "boundToField" : "gap_4_name"
+            }, {
+              "name" : "v_gap_4_r1",
+              "boundToField" : "gap_4_r1"
+            }, {
+              "name" : "v_gap_4_r2",
+              "boundToField" : "gap_4_r2"
+            }, {
+              "name" : "v_gap_4_diff",
+              "boundToField" : "gap_4_diff"
+            }, {
+              "name" : "v_gap_5_name",
+              "boundToField" : "gap_5_name"
+            }, {
+              "name" : "v_gap_5_r1",
+              "boundToField" : "gap_5_r1"
+            }, {
+              "name" : "v_gap_5_r2",
+              "boundToField" : "gap_5_r2"
+            }, {
+              "name" : "v_gap_5_diff",
+              "boundToField" : "gap_5_diff"
+            } ],
+            "controlData" : "<div style=\"width: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #f1f5f9; background-color: #ffffff; display: flex; flex-direction: column; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 24px;\">\n<div style=\"position: relative; padding: 12px 20px; padding-left: 24px; border-bottom: 1px solid #f1f5f9; overflow: hidden;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #a4c955;\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 16px; font-weight: bold; color: #0f172a;\">Strategy Alignment Outliers</h2>\n<p style=\"margin: 2px 0 0 0; font-size: 11px; color: #64748b; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px;\">Largest Rank Disparity Between Behaviors</p>\n</div>\n<table style=\"width: 100%; border-collapse: collapse; text-align: left;\">\n<thead>\n<tr style=\"background: #f8fafc; border-bottom: 1px solid #f1f5f9;\">\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase;\">Representative</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase; text-align: center;\">Primary Rank</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase; text-align: center;\">Secondary Rank</th>\n<th style=\"padding: 10px 20px; font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase; text-align: right;\">Rank Gap</th>\n</tr>\n</thead>\n<tbody style=\"font-size: 13px; color: #1e293b;\">\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_gap_1_name}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #4498d7; font-weight: bold;\">#{{v_gap_1_r1}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #a4c955; font-weight: bold;\">#{{v_gap_1_r2}}</td>\n<td style=\"padding: 12px 20px; text-align: right; color: #ef4444; font-weight: 800;\">{{v_gap_1_diff}} Pos</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_gap_2_name}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #4498d7; font-weight: bold;\">#{{v_gap_2_r1}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #a4c955; font-weight: bold;\">#{{v_gap_2_r2}}</td>\n<td style=\"padding: 12px 20px; text-align: right; color: #ef4444; font-weight: 800;\">{{v_gap_2_diff}} Pos</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_gap_3_name}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #4498d7; font-weight: bold;\">#{{v_gap_3_r1}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #a4c955; font-weight: bold;\">#{{v_gap_3_r2}}</td>\n<td style=\"padding: 12px 20px; text-align: right; color: #ef4444; font-weight: 800;\">{{v_gap_3_diff}} Pos</td>\n</tr>\n<tr style=\"border-bottom: 1px solid #f1f5f9;\">\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_gap_4_name}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #4498d7; font-weight: bold;\">#{{v_gap_4_r1}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #a4c955; font-weight: bold;\">#{{v_gap_4_r2}}</td>\n<td style=\"padding: 12px 20px; text-align: right; color: #ef4444; font-weight: 800;\">{{v_gap_4_diff}} Pos</td>\n</tr>\n<tr>\n<td style=\"padding: 12px 20px; font-weight: 600;\">{{v_gap_5_name}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #4498d7; font-weight: bold;\">#{{v_gap_5_r1}}</td>\n<td style=\"padding: 12px 20px; text-align: center; color: #a4c955; font-weight: bold;\">#{{v_gap_5_r2}}</td>\n<td style=\"padding: 12px 20px; text-align: right; color: #ef4444; font-weight: 800;\">{{v_gap_5_diff}} Pos</td>\n</tr>\n</tbody>\n</table>\n</div>",
+            "layoutSize" : 33.33,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          }
+        }
+      }
+    }
+  },
+  "title" : "Executive Summary",
+  "versionName" : "1.0"
+}

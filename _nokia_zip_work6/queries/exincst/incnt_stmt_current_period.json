@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"incnt_stmt_current_period","schemaName":"exincst","xsql":"select period_id as current_period_id from xactly.xc_period per where name = :v_period","properties":{}}

@@ -1,0 +1,1 @@
+{"id":"ent7b9b9efbee29e544737ab3c9ec024","schemaName":"xactly","tableName":"xc_co_item_asgnmt","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_CO_ITEM_ASGNMT');","audited":false,"effectiveDated":false}

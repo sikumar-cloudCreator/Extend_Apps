@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"ntr_db_category_mapping","schemaName":"$framework","xsql":"SELECT * FROM $framework.NATERA_TITLE_CATEGORY_MAPPING \nWHERE :v_search_roll_up_1 IS NULL \n   OR :v_search_roll_up_1 = ''\n   OR lower(title) LIKE lower('%' || :v_search_roll_up_1 || '%')\n   OR lower(category) LIKE lower('%' || :v_search_roll_up_1 || '%');","properties":{}}

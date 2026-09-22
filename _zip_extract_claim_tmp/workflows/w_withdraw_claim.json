@@ -1,0 +1,41 @@
+{
+  "Rules": [],
+  "Methods": [],
+  "XFlow": {
+    "Name": "w_withdraw_claim",
+    "Version": 1,
+    "Description": "Let the claimant withdraw their own Submitted claim",
+    "START_NODE": {
+      "Node_Name": "Start",
+      "Destination": "n_update",
+      "Destination_Type": "EXECUTION_NODE"
+    },
+    "STOP_NODE": {
+      "Node_Name": "Stop",
+      "Source": "n_audit",
+      "Source_Type": "EXECUTION_NODE"
+    },
+    "EXECUTION_NODE": [
+      {
+        "Node_Name": "n_update",
+        "Description": "Scoped to :v_employee_id so nobody can withdraw another person's claim",
+        "Attributes": "{\"optionType\":\"Execution\"}",
+        "Method": {
+          "Command": "UPDATE claim.claim_request\nSET status = 'Withdrawn',\n    reviewed_date = CurDate(),\n    reviewed_by = Nvl(:v_participant, ''),\n    comments = Nvl(:v_comments, comments)\nWHERE claim_id = :v_claim_id\n  AND status   = 'Submitted'\n  AND employee_id = :v_employee_id"
+        },
+        "Destination": "n_audit",
+        "Destination_Type": "EXECUTION_NODE"
+      },
+      {
+        "Node_Name": "n_audit",
+        "Description": "Append the WITHDRAW transition",
+        "Attributes": "{\"optionType\":\"Execution\"}",
+        "Method": {
+          "Command": "INSERT INTO claim.claim_audit (\n  audit_id, claim_id, action_name, from_status, to_status,\n  action_by, action_date, comments\n)\nSELECT\n  Concat('AUD-', Concat(:v_claim_id, Concat('-', FormatDateTime(Now(), 'yyyyMMddHHmmss')))),\n  :v_claim_id,\n  'WITHDRAW',\n  'Submitted',\n  'Withdrawn',\n  :v_participant,\n  CurDate(),\n  Nvl(:v_comments, '')\nFROM   claim.claim_request c\nWHERE  c.claim_id = :v_claim_id\n  AND  c.status   = 'Withdrawn'"
+        },
+        "Destination": "Stop",
+        "Destination_Type": "STOP_NODE"
+      }
+    ]
+  }
+}

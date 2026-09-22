@@ -1,0 +1,1 @@
+{"variables":[{"name":"v_period","value":"SEP-2026","dataType":"String"}],"savedInEditor":true,"isValid":true,"name":"incnt_stmt_actual_payment_upload_date_format","schemaName":"demo","xsql":"select FormatDateTime(start_date,'YYYYMM') as formatted_date from xactly.xc_period where name =:v_period","properties":{}}

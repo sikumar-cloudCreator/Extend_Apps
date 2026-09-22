@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_employee_id",
+      "value": "E1001",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_my_recent",
+  "schemaName": "demo",
+  "xsql": "SELECT c.claim_id                                              AS claim_id,\n       c.period_name                                           AS period_name,\n       c.order_code                                            AS order_code,\n       c.item_code                                             AS item_code,\n       FormatNumber(Nvl(c.claim_amount, 0), '$#,###0.00')      AS claim_amount,\n       c.status                                                AS status,\n       Nvl(FormatDateTime(c.submitted_date, 'dd MMM yyyy'), '') AS submitted_date\nFROM   claim.claim_request c\nWHERE  c.employee_id = :v_employee_id\nORDER BY c.submitted_date DESC, c.claim_id DESC",
+  "properties": {}
+}

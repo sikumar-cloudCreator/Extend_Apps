@@ -1,0 +1,16 @@
+{
+  "id": "entfcd1554b16d804269ac90b9700107",
+  "schemaName": "xactly",
+  "tableName": "xc_period_type",
+  "columns": [],
+  "overwrite": false,
+  "unlogged": false,
+  "archive": false,
+  "local": false,
+  "temporary": false,
+  "preserveRows": false,
+  "selectionSet": false,
+  "using": "Incent(TableName='Incent.XC_PERIOD_TYPE');",
+  "audited": false,
+  "effectiveDated": false
+}

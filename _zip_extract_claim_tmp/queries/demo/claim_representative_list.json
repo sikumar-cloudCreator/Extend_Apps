@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_manager",
+      "value": "All",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_representative_list",
+  "schemaName": "demo",
+  "xsql": "SELECT DISTINCT pa.name AS rep_name\nFROM   xactly.xc_participant pa\nINNER JOIN xactly.xc_pos_part_assignment ppa\n    ON ppa.participant_id = pa.participant_id\nINNER JOIN xactly.xc_position pos\n    ON pos.position_id = ppa.position_id\nWHERE  pa.is_master = 1\n  AND  ( Nvl(:v_manager, '') = 'All'\n         OR Nvl(:v_manager, '') = ''\n         OR pos.master_position_id IN\n            ( SELECT ph.to_pos_id\n              FROM   xactly.xc_pos_hierarchy ph\n              INNER JOIN xactly.xc_position mgr_pos\n                  ON mgr_pos.master_position_id = ph.from_pos_id\n              INNER JOIN xactly.xc_pos_part_assignment mgr_ppa\n                  ON mgr_ppa.position_id = mgr_pos.position_id\n              INNER JOIN xactly.xc_participant mgr_pa\n                  ON  mgr_pa.participant_id = mgr_ppa.participant_id\n                  AND mgr_pa.is_master      = 1\n              WHERE  mgr_pa.name = :v_manager ) )\nORDER BY pa.name",
+  "properties": {}
+}

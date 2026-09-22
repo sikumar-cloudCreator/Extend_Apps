@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_status_list",
+  "schemaName": "demo",
+  "xsql": "SELECT s.status_code  AS status_code,\n       s.status_label AS status_label\nFROM   claim.claim_status s\nWHERE  s.is_active = 'Y'\nORDER BY s.sort_order",
+  "properties": {}
+}

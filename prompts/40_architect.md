@@ -30,8 +30,8 @@ Return **one** fenced ```json object with this shape:
 ```
 
 ## Rules
-- **One customer-defined schema per app** (lowercase, starts with a letter). Put all new tables/queries there —
-  never `$framework` for app data. See `knowledge/xactly_extend_best_practices.md` (S1–S6).
+- **Standard app schema is `$framework`.** Put new tables/queries there unless grounding/FRD names another.
+  Fully qualify `$framework.*` / `xactly.*`. See `knowledge/xactly_extend_best_practices.md` (S1–S6).
 - If the FRD is a seller / IC / manager **compensation dashboard**, set implicit `app_class: comp_dashboard` in
   the spec prose and require the gold spine (see `knowledge/gold_comp_dashboard_shape.md`): matrix Custom,
   payout-by-quarter, supplemental cards, measure pills, credit tabs, team gate pair, `data_ready` loader.

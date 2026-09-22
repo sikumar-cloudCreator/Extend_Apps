@@ -9,7 +9,7 @@ Use this every time you generate an app after the seller gold baseline (2026-09-
 4. Ground on real schema + catalog — never invent columns.
 
 ## Generate (mandatory path)
-1. Architect → build-spec with **customer schema name** + helper views listed.
+1. Architect → build-spec with schema **`$framework`** (unless FRD overrides) + helper views listed.
 2. xSQL → helpers first, leaves second; no `ShowQuotaAttainment` for pay/attainment/MBO.
 3. Page designer → control list matching gold **kinds** for that app class.
 4. `validate_extend_page` + xSQL lint + `check_gold_shape` (comp) + `check_page_render`.

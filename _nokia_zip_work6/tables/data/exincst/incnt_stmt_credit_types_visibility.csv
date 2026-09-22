@@ -1,0 +1,310 @@
+name,credit_type,is_include
+,Order Intake 2 - Payment,true
+,Order Intake 2 - Payment Negative,true
+,Order Intake 2 - Prior Paid,true
+,Order Intake 2 - Score,true
+,Order Intake 2 - Target,true
+,Order Intake 2 - Weighting,true
+,Order Intake 2 Max Rate,true
+,Order Intake 2 Max Target,true
+,Order Intake 2 YTD,true
+,Order Intake 3,true
+,Order Intake 3 - Capped Amount,true
+,Order Intake 3 - Incentive Target,true
+,Order Intake 3 - Payment,true
+,Order Intake 3 - Payment Negative,true
+,Order Intake 3 - Prior Paid,true
+,Order Intake 3 - Score,true
+,Order Intake 3 - Target,true
+,Order Intake 3 - Weighting,true
+,Order Intake 3 Max Rate,true
+,Order Intake 3 Max Target,true
+,Order Intake 3 YTD,true
+,Order Intake 4,true
+,Order Intake 4 - Capped Amount,true
+,Order Intake 4 - Incentive Target,true
+,Order Intake 4 - Payment,true
+,Order Intake 4 - Payment Negative,true
+,Order Intake 4 - Prior Paid,true
+,Order Intake 4 - Score,true
+,Order Intake 4 - Target,true
+,Order Intake 4 - Weighting,true
+,Order Intake 4 Max Rate,true
+,Order Intake 4 Max Target,true
+,Order Intake 4 YTD,true
+,Order Intake YTD,true
+,Revenue 2,true
+,Revenue 2 - Capped Amount,true
+,Revenue 2 - Incentive Target,true
+,Revenue 2 - Payment,true
+,Revenue 2 - Payment Negative,true
+,Revenue 2 - Prior Paid,true
+,Revenue 2 - Score,true
+,Revenue 2 - Target,true
+,Revenue 2 - Weighting,true
+,Revenue 2 Max Rate,true
+,Revenue 2 Max Target,true
+,Revenue 2 YTD,true
+,Non-Recoverable Draw,true
+,Normalised DSO,true
+,Normalised DSO - Incentive Target,true
+,Normalised DSO - Inverted Quota Indicator,true
+,Normalised DSO - Max,true
+,Normalised DSO - Min,true
+,Normalised DSO - Payment Negative,true
+,Normalised DSO - Score,true
+,Normalised DSO - Target,true
+,Normalised DSO - Weighting,true
+,Normalised DSO Order Count,true
+,Normalised DSO Rate,true
+,Normalised DSO YTD,true
+,Normalised PARD,true
+,Normalised PARD - Incentive Target,true
+,Normalised PARD - Inverted Quota Indicator,true
+,Normalised PARD - Max,true
+,Normalised PARD - Min,true
+,Normalised PARD - Payment Negative,true
+,Normalised PARD - Score,true
+,Normalised PARD - Target,true
+,Normalised PARD - Weighting,true
+,Proration_rate,true
+,Operating Profit,true
+,Operating Profit - Incentive Target,true
+,Operating Profit - Payment,true
+,Operating Profit - Payment Negative,true
+,Operating Profit - Prior Paid,true
+,Operating Profit - Score,true
+,Operating Profit - Target,true
+,Operating Profit - Weighting,true
+,Operating Profit YTD,true
+,Order Intake,true
+,Order Intake - Capped Amount,true
+,Margin Contribution,true
+,Margin Contribution - Incentive Target,true
+,Margin Contribution - Payment,true
+,Margin Contribution - Payment Negative,true
+,Margin Contribution - Prior Paid,true
+,Margin Contribution - Score,true
+,Margin Contribution - Target,true
+,Margin Contribution - Weighting,true
+,Margin Contribution YTD,true
+,Margin Quality - Target,true
+,Revenue YTD,true
+,NI Growth Booster,true
+,Negative Balance,true
+,Revenue,true
+,Revenue - Capped Amount,true
+,Revenue - Incentive Target,true
+,Revenue - Payment,true
+,Revenue - Payment Negative,true
+,Revenue - Prior Paid,true
+,Revenue - Score,true
+,Revenue - Target,true
+,Revenue - Weighting,true
+,100% of PITA,true
+,Cap. Adj. Sales Margin,true
+,Cap. Adj. Sales Margin - Incentive Target,true
+,Cap. Adj. Sales Margin - Margin Quality Rate,true
+,Cap. Adj. Sales Margin - Margin Quality Score,true
+,Cap. Adj. Sales Margin - Payment,true
+,Cap. Adj. Sales Margin - Payment Negative,true
+,Cap. Adj. Sales Margin - Prior Paid,true
+,Cap. Adj. Sales Margin - Score,true
+,Cap. Adj. Sales Margin - Target,true
+,Cap. Adj. Sales Margin - Weighting,true
+,Cap. Adj. Sales Margin YTD,true
+,Cap. Adj. Sales Margin w/ Quality,true
+,Cap. Adj. Sales Margin w/ Quality - Incentive Target,true
+,Cap. Adj. Sales Margin w/ Quality - Payment,true
+,Cap. Adj. Sales Margin w/ Quality - Payment Negative,true
+,Cap. Adj. Sales Margin w/ Quality - Prior Paid,true
+,Cap. Adj. Sales Margin w/ Quality - Score,true
+,Cap. Adj. Sales Margin w/ Quality - Target,true
+,Cap. Adj. Sales Margin w/ Quality - Weighting,true
+,Cap. Adj. Sales Margin w/ Quality YTD,true
+,Cash Collection,true
+,Cash Collection - Incentive Target,true
+,Cash Collection - Payment,true
+,Cash Collection - Payment Negative,true
+,Cash Collection - Prior Paid,true
+,Cash Collection - Score,true
+,Cash Collection - Target,true
+,Cash Collection - Weighting,true
+,Cash Collection YTD,true
+,Diversity,true
+,Diversity - Incentive Target,true
+,Diversity - Score,true
+,Diversity - Target,true
+,Diversity - Weighting,true
+,Diversity YTD,true
+,ESG,true
+,ESG - Incentive Target,true
+,ESG - Payment,true
+,ESG - Payment Negative,true
+,ESG - Prior Paid,true
+,ESG - Score,true
+,ESG - Target,true
+,ESG - Weighting,true
+,ESG YTD,true
+,Holiday Pay,true
+,MBO YTD,true
+,OPEX FPO,true
+,OPEX FPO - Incentive Target,true
+,OPEX FPO - Max,true
+,OPEX FPO - Min,true
+,OPEX FPO - Payment,true
+,OPEX FPO - Payment Negative,true
+,OPEX FPO - Prior Paid,true
+,OPEX FPO - Score,true
+,OPEX FPO - Target,true
+,OPEX FPO - Weighting,true
+,OPEX FPO YTD,true
+,Order Intake - Incentive Target,true
+,Order Intake - Payment,true
+,Order Intake - Payment Negative,true
+,Order Intake - Prior Paid,true
+,Order Intake - Score,true
+,Order Intake - Target,true
+,Order Intake - Weighting,true
+,Order Intake 2,true
+,Order Intake 2 - Capped Amount,true
+,Order Intake 2 - Incentive Target,true
+,Normalised PARD Order Count,true
+,Normalised PARD Rate,true
+,Normalised PARD YTD,true
+,OCS,true
+,OCS - Target,true
+,KPI Prorated Score,true
+,KPI Proration,true
+,Key Design Wins,true
+,Key Design Wins - Incentive Target,true
+,Key Design Wins - Payment,true
+,Key Design Wins - Payment Negative,true
+,Key Design Wins - Prior Paid,true
+,Key Design Wins - Score,true
+,Key Design Wins - Target,true
+,Key Design Wins - Weighting,true
+,Key Design Wins YTD,true
+,Financial KPI Max Rate,true
+,Financial KPI Max Target,true
+,Active Days - Incentive Target,true
+,Guarantee,true
+,Sales Margin,true
+,Sales Margin - Capped Amount,true
+,Sales Margin - Incentive Target,true
+,Sales Margin - Margin Quality Rate,true
+,Sales Margin - Margin Quality Score,true
+,Sales Margin - Payment,true
+,Sales Margin - Payment Negative,true
+,Sales Margin - Prior Paid,true
+,Sales Margin - Score,true
+,Sales Margin - Target,true
+,Sales Margin - Weighting,true
+,Sales Margin YTD,true
+,Sales Margin no EO,true
+,Sales Margin no EO - Capped Amount,true
+,Sales Margin no EO - Incentive Target,true
+,Sales Margin no EO - Margin Quality Rate,true
+,Sales Margin no EO - Margin Quality Score,true
+,Sales Margin no EO - Payment,true
+,Sales Margin no EO - Payment Negative,true
+,Sales Margin no EO - Prior Paid,true
+,Sales Margin no EO - Score,true
+,Sales Margin no EO - Target,true
+,Sales Margin no EO - Weighting,true
+,Sales Margin no EO YTD,true
+,Sales Margin w/ Quality,true
+,Sales Margin w/ Quality - Incentive Target,true
+,Sales Margin w/ Quality - Payment,true
+,Sales Margin w/ Quality - Payment Negative,true
+,Sales Margin w/ Quality - Prior Paid,true
+,Sales Margin w/ Quality - Score,true
+,Sales Margin w/ Quality - Target,true
+,Sales Margin w/ Quality - Weighting,true
+,Sales Margin w/ Quality YTD,true
+,Recoverable Draw,true
+,Pipeline (NSW) - Payment,true
+,Pipeline (TECH) - Payment,true
+,Pipeline NSW,true
+,Pipeline NSW - Incentive Target,true
+,Pipeline NSW - Payment Negative,true
+,Pipeline NSW - Prior Paid,true
+,Pipeline NSW - Score,true
+,Pipeline NSW - Target,true
+,Pipeline NSW - Weighting,true
+,Pipeline NSW YTD,true
+,Pipeline Tech,true
+,Pipeline Tech - Incentive Target,true
+,Pipeline Tech - Payment Negative,true
+,Pipeline Tech - Prior Paid,true
+,Pipeline Tech - Score,true
+,Pipeline Tech - Target,true
+,Pipeline Tech - Weighting,true
+,Pipeline Tech YTD,true
+,PARD,true
+,PARD - Incentive Target,true
+,PARD - Inverted Quota Indicator,true
+,PARD - Payment Negative,true
+,PARD - Score,true
+,PARD - Target,true
+,PARD - Weighting,true
+,PARD Order Count,true
+,PARD Rate,true
+,PARD YTD,true
+,SSF,true
+,SSF - Incentive Target,true
+,SSF - Score,true
+,SSF - Target,true
+,SSF - Weighting,true
+,SSF YTD,true
+,Organic Cash Collection,true
+,Organic Cash Collection - Incentive Target,true
+,Organic Cash Collection - Payment,true
+,Organic Cash Collection - Payment Negative,true
+,Organic Cash Collection - Prior Paid,true
+,Organic Cash Collection - Score,true
+,Organic Cash Collection - Target,true
+,Organic Cash Collection - Weighting,true
+,Organic Cash Collection YTD,true
+,Overdues,true
+,Overdues - Incentive Target,true
+,Overdues - Payment,true
+,Overdues - Payment Negative,true
+,Overdues - Prior Paid,true
+,Overdues - Score,true
+,Overdues - Target,true
+,Overdues - Weighting,true
+,Overdues YTD,true
+,Deal Target,true
+,Deal Target - Incentive Target,true
+,Deal Target - Payment,true
+,Deal Target - Payment Negative,true
+,Deal Target - Prior Paid,true
+,Deal Target - Score,true
+,Deal Target - Target,true
+,Deal Target - Weighting,true
+,Deal Target YTD,true
+,Payment Adjustment,true
+,Payment Hold,true
+,MBO,true
+,MBO - Incentive Target,true
+,MBO - Score,true
+,MBO - Target,true
+,MBO - Weighting,true
+,CNS Deal Award - SaaS,true
+,CNS SPIFF - CCS,true
+,CNS SPIFF - NaC,true
+,CNS SPIFF - Security,true
+,CNS Special Incentive,true
+,MBOs,
+,MBOs - Capped Amount,
+,MBOs - Incentive Target,
+,MBOs - Payment,
+,MBOs - Payment Negative,
+,MBOs - Prior Paid,
+,MBOs - Score,
+,MBOs - Target,
+,MBOs - Weighting,
+,MBOs YTD,
+,NI Q1 Fast Start,
+,NI SPIFF - Infinera,

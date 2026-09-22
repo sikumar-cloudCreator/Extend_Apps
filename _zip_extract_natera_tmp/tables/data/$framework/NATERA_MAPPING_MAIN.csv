@@ -1,0 +1,37 @@
+name,category,sub_category,identifier
+,ONC,Follow On Patients,Above Goal Follow On Points
+,ONC,Initial Patients,Above Goal Initial Patients Points
+,ONC,Follow On Patients,Follow On Points
+,ONC,Initial Patients,Initial Patients Points
+,WH,Volume Retention,Above Goal Volume Retention
+,WH,Volume Retention,Volume Retention
+,OH,Prospera,Prospera Above Goal
+,OH,Prospera,Above Goal Prospera
+,OH,Renasight,Above Goal Renasight
+,OH,Prospera,Prospera
+,OH,Renasight,Renasight
+,OH,Others,Above Goal Prospera and Renasight
+,OH,Others,Prospera and Renasight
+,OH,Renasight,Renasight Above Goal
+,ONC,Others,Guarantee Extended
+,WH,Others,Guarantee Extended
+,OH,Others,Guarantee Extended
+,ONC,Others,MBO
+,WH,Others,MBO
+,ONC,Others,Bonus
+,WH,Others,Bonus
+,OH,Others,Bonus
+,ONC,Others,Commission Adjustment
+,WH,Others,Commission Adjustment
+,OH,Others,Commission Adjustment
+,WH,Others,Growth Commission
+,ONC,Others,Growth Commission
+,WH,Points Goal,Goal
+,OH,Others,Goal
+,WH,Points Goal,Above Goal
+,ONC,Others,Above Goal Empower
+,ONC,Others,Access Milestone
+,WH,Others,Access Milestone
+,ONC,Others,Patient Retention
+,WH,Others,CHS Team Performance
+,ONC,Others,CHS Team Performance

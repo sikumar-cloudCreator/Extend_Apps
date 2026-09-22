@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"incnt_stmt_plan_doc_status","schemaName":"demo","xsql":"select 1 as type, status from xactly.xc_plan_approval where person_id=:v_master_participant_id\nunion \nselect 2 as type, 'Data Not Found' as status from Empty() order by type limit 1","properties":{}}

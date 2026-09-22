@@ -1,0 +1,20 @@
+{
+  "variables": [
+    {
+      "name": "v_participant",
+      "value": "Xun Cao (61236471)",
+      "dataType": "String"
+    },
+    {
+      "name": "v_period",
+      "value": "DEC-2025",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "incnt_stmt_job_family_N",
+  "schemaName": "exincst",
+  "xsql": "select job_family  from xactly.xc_participant  where participant_id=:v_master_participant_id",
+  "properties": {}
+}

@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_default_period",
+  "schemaName": "demo",
+  "xsql": "SELECT Nvl(MAX(p.name), '') AS period_name\nFROM   xactly.xc_period p\nINNER JOIN xactly.xc_period_type pt\n    ON  p.period_type_id_fk = pt.period_type_id\n    AND pt.name             = 'MONTHLY'\nWHERE  p.end_date < CurDate()\n  AND  p.name NOT IN ('SOT', 'EOT')\n  AND  p.start_date = ( SELECT MAX(p2.start_date)\n                        FROM   xactly.xc_period p2\n                        INNER JOIN xactly.xc_period_type pt2\n                            ON  p2.period_type_id_fk = pt2.period_type_id\n                            AND pt2.name             = 'MONTHLY'\n                        WHERE  p2.end_date < CurDate()\n                          AND  p2.name NOT IN ('SOT', 'EOT') )",
+  "properties": {}
+}

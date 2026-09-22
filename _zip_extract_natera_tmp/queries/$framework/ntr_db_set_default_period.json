@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"ntr_db_set_default_period","schemaName":"$framework","xsql":"select value_field from NATERA_DEFAULT_VALUE where column_type = 'Period_name';","properties":{}}

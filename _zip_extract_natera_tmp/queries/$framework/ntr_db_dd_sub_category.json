@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"ntr_db_dd_sub_category","schemaName":"$framework","xsql":"SELECT DISTINCT sub_category \nFROM NATERA_MAPPING_MAIN \nORDER BY sub_category;","properties":{}}

@@ -1,0 +1,9 @@
+{
+  "variables": [],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_reason_code_list",
+  "schemaName": "demo",
+  "xsql": "SELECT r.reason_code  AS reason_code,\n       r.reason_label AS reason_label\nFROM   claim.claim_reason_code r\nWHERE  r.is_active = 'Y'\nORDER BY r.sort_order",
+  "properties": {}
+}

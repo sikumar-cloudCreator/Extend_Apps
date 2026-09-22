@@ -1,0 +1,817 @@
+name,title,earning_group,category,sub_category
+,RD-OS_ONC,Initial Patients Points,ONC,Initial Patients
+,RD-OS_ONC,MBO,ONC,Others
+,RD-OS_ONC,Patient Retention,ONC,Others
+,RD_ONC_LPG,Above Goal Empower,ONC,Others
+,RD_ONC_LPG,Above Goal Follow On Points,ONC,Follow On Patients
+,RD_ONC_LPG,Above Goal Initial Patients Points,ONC,Initial Patients
+,RD_ONC_LPG,Access Milestone,ONC,Others
+,RD_ONC_LPG,Bonus,ONC,Others
+,RD_ONC_LPG,CHS Team Performance,ONC,Others
+,RD_ONC_LPG,Commission Adjustment,ONC,Others
+,RD_ONC_LPG,Follow On Points,ONC,Follow On Patients
+,RD_ONC_LPG,Growth Commission,ONC,Others
+,RD_ONC_LPG,Guarantee Extended,ONC,Others
+,RD_ONC_LPG,Initial Patients Points,ONC,Initial Patients
+,RD_ONC_LPG,MBO,ONC,Others
+,RD_ONC_LPG,Patient Retention,ONC,Others
+,SR-COS,Above Goal Empower,ONC,Others
+,SR-COS,Above Goal Follow On Points,ONC,Follow On Patients
+,SR-COS,Above Goal Initial Patients Points,ONC,Initial Patients
+,SR-COS,Access Milestone,ONC,Others
+,SR-COS,Bonus,ONC,Others
+,SR-COS,CHS Team Performance,ONC,Others
+,SR-COS,Commission Adjustment,ONC,Others
+,SR-COS,Follow On Points,ONC,Follow On Patients
+,SR-COS,Growth Commission,ONC,Others
+,SR-COS,Guarantee Extended,ONC,Others
+,SR-COS,Initial Patients Points,ONC,Initial Patients
+,SR-COS,MBO,ONC,Others
+,SR-COS,Patient Retention,ONC,Others
+,"Sr Director, Strategic Accounts",Above Goal Empower,ONC,Others
+,"Sr Director, Strategic Accounts",Above Goal Follow On Points,ONC,Follow On Patients
+,"Sr Director, Strategic Accounts",Above Goal Initial Patients Points,ONC,Initial Patients
+,"Sr Director, Strategic Accounts",Access Milestone,ONC,Others
+,"Sr Director, Strategic Accounts",Bonus,ONC,Others
+,"Sr Director, Strategic Accounts",CHS Team Performance,ONC,Others
+,"Sr Director, Strategic Accounts",Commission Adjustment,ONC,Others
+,"Sr Director, Strategic Accounts",Follow On Points,ONC,Follow On Patients
+,"Sr Director, Strategic Accounts",Growth Commission,ONC,Others
+,"Sr Director, Strategic Accounts",Guarantee Extended,ONC,Others
+,"Sr Director, Strategic Accounts",Initial Patients Points,ONC,Initial Patients
+,"Sr Director, Strategic Accounts",MBO,ONC,Others
+,"Sr Director, Strategic Accounts",Patient Retention,ONC,Others
+,VP-Oncology,Above Goal Empower,ONC,Others
+,VP-Oncology,Above Goal Follow On Points,ONC,Follow On Patients
+,VP-Oncology,Above Goal Initial Patients Points,ONC,Initial Patients
+,VP-Oncology,Access Milestone,ONC,Others
+,VP-Oncology,Bonus,ONC,Others
+,VP-Oncology,CHS Team Performance,ONC,Others
+,VP-Oncology,Commission Adjustment,ONC,Others
+,VP-Oncology,Follow On Points,ONC,Follow On Patients
+,VP-Oncology,Growth Commission,ONC,Others
+,VP-Oncology,Guarantee Extended,ONC,Others
+,VP-Oncology,Initial Patients Points,ONC,Initial Patients
+,VP-Oncology,MBO,ONC,Others
+,VP-Oncology,Patient Retention,ONC,Others
+,AD-SAM,Above Goal,WH,Points Goal
+,AD-SAM,Above Goal Volume Retention,WH,Volume Retention
+,AD-SAM,Access Milestone,WH,Others
+,AD-SAM,Bonus,WH,Others
+,AD-SAM,CHS Team Performance,WH,Others
+,AD-SAM,Commission Adjustment,WH,Others
+,AD-SAM,Goal,WH,Points Goal
+,AD-SAM,Growth Commission,WH,Others
+,IVF,Guarantee Extended,WH,Others
+,IVF,MBO,WH,Others
+,IVF,Volume Retention,WH,Volume Retention
+,IVF-SAM,Above Goal,WH,Points Goal
+,IVF-SAM,Above Goal Volume Retention,WH,Volume Retention
+,IVF-SAM,Access Milestone,WH,Others
+,IVF-SAM,Bonus,WH,Others
+,IVF-SAM,CHS Team Performance,WH,Others
+,IVF-SAM,Commission Adjustment,WH,Others
+,IVF-SAM,Goal,WH,Points Goal
+,IVF-SAM,Growth Commission,WH,Others
+,IVF-SAM,Guarantee Extended,WH,Others
+,IVF-SAM,MBO,WH,Others
+,IVF-SAM,Volume Retention,WH,Volume Retention
+,IVF-SR,Above Goal,WH,Points Goal
+,IVF-SR,Above Goal Volume Retention,WH,Volume Retention
+,IVF-SR,Access Milestone,WH,Others
+,IVF-SR,Bonus,WH,Others
+,IVF-SR,CHS Team Performance,WH,Others
+,IVF-SR,Commission Adjustment,WH,Others
+,IVF-SR,Goal,WH,Points Goal
+,IVF-SR,Growth Commission,WH,Others
+,IVF-SR,Guarantee Extended,WH,Others
+,IVF-SR,MBO,WH,Others
+,IVF-SR,Volume Retention,WH,Volume Retention
+,NAM,Above Goal,WH,Points Goal
+,NAM,Above Goal Volume Retention,WH,Volume Retention
+,NAM,Access Milestone,WH,Others
+,NAM,Bonus,WH,Others
+,NAM,CHS Team Performance,WH,Others
+,NAM,Commission Adjustment,WH,Others
+,NAM,Goal,WH,Points Goal
+,NAM,Growth Commission,WH,Others
+,"Sr Director, WH Strategic",Growth Commission,WH,Others
+,"Sr Director, WH Strategic",Guarantee Extended,WH,Others
+,"Sr Director, WH Strategic",MBO,WH,Others
+,"Sr Director, WH Strategic",Volume Retention,WH,Volume Retention
+,VP-WH,Above Goal,WH,Points Goal
+,VP-WH,Above Goal Volume Retention,WH,Volume Retention
+,VP-WH,Access Milestone,WH,Others
+,VP-WH,Bonus,WH,Others
+,VP-WH,CHS Team Performance,WH,Others
+,VP-WH,Commission Adjustment,WH,Others
+,VP-WH,Goal,WH,Points Goal
+,VP-WH,Growth Commission,WH,Others
+,VP-WH,Guarantee Extended,WH,Others
+,VP-WH,MBO,WH,Others
+,VP-WH,Volume Retention,WH,Volume Retention
+,NAM,Guarantee Extended,WH,Others
+,NAM,MBO,WH,Others
+,NAM,Volume Retention,WH,Volume Retention
+,RD-HOSP,Above Goal,WH,Points Goal
+,RD-HOSP,Above Goal Volume Retention,WH,Volume Retention
+,RD-HOSP,Access Milestone,WH,Others
+,RD-HOSP,Bonus,WH,Others
+,RD-HOSP,CHS Team Performance,WH,Others
+,RD-HOSP,Commission Adjustment,WH,Others
+,RD-HOSP,Goal,WH,Points Goal
+,RD-HOSP,Growth Commission,WH,Others
+,RD-HOSP,Guarantee Extended,WH,Others
+,RD-HOSP,MBO,WH,Others
+,RD-HOSP,Volume Retention,WH,Volume Retention
+,RD-IVF,Above Goal,WH,Points Goal
+,RD-IVF,Above Goal Volume Retention,WH,Volume Retention
+,RD-IVF,Access Milestone,WH,Others
+,RD-IVF,Bonus,WH,Others
+,RD-IVF,CHS Team Performance,WH,Others
+,RD-IVF,Commission Adjustment,WH,Others
+,RD-IVF,Goal,WH,Points Goal
+,RD-IVF,Growth Commission,WH,Others
+,RD-IVF,Guarantee Extended,WH,Others
+,RD-IVF,MBO,WH,Others
+,RD-IVF,Volume Retention,WH,Volume Retention
+,RD-SR-HOSP,Above Goal,WH,Points Goal
+,RD-SR-HOSP,Above Goal Volume Retention,WH,Volume Retention
+,RD-SR-HOSP,Access Milestone,WH,Others
+,RD-SR-HOSP,Bonus,WH,Others
+,RD-SR-HOSP,CHS Team Performance,WH,Others
+,RD-SR-HOSP,Commission Adjustment,WH,Others
+,RD-SR-HOSP,Goal,WH,Points Goal
+,RD-SR-HOSP,Growth Commission,WH,Others
+,RD-SR-HOSP,Guarantee Extended,WH,Others
+,RD-SR-HOSP,MBO,WH,Others
+,RD-SR-HOSP,Volume Retention,WH,Volume Retention
+,RD-WH,Above Goal,WH,Points Goal
+,RD-WH,Above Goal Volume Retention,WH,Volume Retention
+,RD-WH,Access Milestone,WH,Others
+,RD-WH,Bonus,WH,Others
+,RD-WH,CHS Team Performance,WH,Others
+,RD-WH,Commission Adjustment,WH,Others
+,RD-WH,Goal,WH,Points Goal
+,RD-WH,Growth Commission,WH,Others
+,RD-WH,Guarantee Extended,WH,Others
+,RD-WH,MBO,WH,Others
+,RD-WH,Volume Retention,WH,Volume Retention
+,RD-WH-SR,Above Goal,WH,Points Goal
+,RD-WH-SR,Above Goal Volume Retention,WH,Volume Retention
+,RD-WH-SR,Access Milestone,WH,Others
+,RD-WH-SR,Bonus,WH,Others
+,RD-WH-SR,CHS Team Performance,WH,Others
+,RD-WH-SR,Commission Adjustment,WH,Others
+,RD-WH-SR,Goal,WH,Points Goal
+,RD-WH-SR,Growth Commission,WH,Others
+,RD-WH-SR,Guarantee Extended,WH,Others
+,RD-WH-SR,MBO,WH,Others
+,RD-WH-SR,Volume Retention,WH,Volume Retention
+,"Sr Director, WH Strategic",Above Goal,WH,Points Goal
+,"Sr Director, WH Strategic",Above Goal Volume Retention,WH,Volume Retention
+,"Sr Director, WH Strategic",Access Milestone,WH,Others
+,"Sr Director, WH Strategic",Bonus,WH,Others
+,"Sr Director, WH Strategic",CHS Team Performance,WH,Others
+,"Sr Director, WH Strategic",Commission Adjustment,WH,Others
+,"Sr Director, WH Strategic",Goal,WH,Points Goal
+,AD_IVF,Commission Adjustment,WH,Others
+,AD_IVF,Goal,WH,Points Goal
+,AD_IVF,Growth Commission,WH,Others
+,AD_IVF,Guarantee Extended,WH,Others
+,AD_IVF,MBO,WH,Others
+,AD_IVF,Volume Retention,WH,Volume Retention
+,ASR,Above Goal,WH,Points Goal
+,ASR,Above Goal Volume Retention,WH,Volume Retention
+,ASR,Access Milestone,WH,Others
+,ASR,Bonus,WH,Others
+,ASR,CHS Team Performance,WH,Others
+,ASR,Commission Adjustment,WH,Others
+,ASR,Goal,WH,Points Goal
+,ASR,Growth Commission,WH,Others
+,AD-SAM,Guarantee Extended,WH,Others
+,AD-SAM,MBO,WH,Others
+,AD-SAM,Volume Retention,WH,Volume Retention
+,AD-WH,Above Goal,WH,Points Goal
+,AD-WH,Above Goal Volume Retention,WH,Volume Retention
+,AD-WH,Access Milestone,WH,Others
+,AD-WH,Bonus,WH,Others
+,AD-WH,CHS Team Performance,WH,Others
+,AD-WH,Commission Adjustment,WH,Others
+,AD-WH,Goal,WH,Points Goal
+,AD-WH,Growth Commission,WH,Others
+,AD-WH,Guarantee Extended,WH,Others
+,AD-WH,MBO,WH,Others
+,AD-WH,Volume Retention,WH,Volume Retention
+,AD_IVF,Above Goal,WH,Points Goal
+,AD_IVF,Above Goal Volume Retention,WH,Volume Retention
+,AD_IVF,Access Milestone,WH,Others
+,AD_IVF,Bonus,WH,Others
+,AD_IVF,CHS Team Performance,WH,Others
+,ASR,Guarantee Extended,WH,Others
+,ASR,MBO,WH,Others
+,ASR,Volume Retention,WH,Volume Retention
+,ASR-FLOAT,Above Goal,WH,Points Goal
+,ASR-FLOAT,Above Goal Volume Retention,WH,Volume Retention
+,ASR-FLOAT,Access Milestone,WH,Others
+,ASR-FLOAT,Bonus,WH,Others
+,ASR-FLOAT,CHS Team Performance,WH,Others
+,ASR-FLOAT,Commission Adjustment,WH,Others
+,ASR-FLOAT,Goal,WH,Points Goal
+,ASR-FLOAT,Growth Commission,WH,Others
+,ASR-FLOAT,Guarantee Extended,WH,Others
+,ASR-FLOAT,MBO,WH,Others
+,ASR-FLOAT,Volume Retention,WH,Volume Retention
+,ASR-SR,Above Goal,WH,Points Goal
+,ASR-SR,Above Goal Volume Retention,WH,Volume Retention
+,ASR-SR,Access Milestone,WH,Others
+,ASR-SR,Bonus,WH,Others
+,ASR-SR,CHS Team Performance,WH,Others
+,ASR-SR,Commission Adjustment,WH,Others
+,ASR-SR,Goal,WH,Points Goal
+,ASR-SR,Growth Commission,WH,Others
+,ASR-SR,Guarantee Extended,WH,Others
+,ASR-SR,MBO,WH,Others
+,ASR-SR,Volume Retention,WH,Volume Retention
+,CFS,Above Goal,WH,Points Goal
+,CFS,Above Goal Volume Retention,WH,Volume Retention
+,CFS,Access Milestone,WH,Others
+,CFS,Bonus,WH,Others
+,CFS,CHS Team Performance,WH,Others
+,CFS,Commission Adjustment,WH,Others
+,CFS,Goal,WH,Points Goal
+,CFS,Growth Commission,WH,Others
+,CFS,Guarantee Extended,WH,Others
+,CFS,MBO,WH,Others
+,CFS,Volume Retention,WH,Volume Retention
+,CFS-Exec,Above Goal,WH,Points Goal
+,CFS-Exec,Above Goal Volume Retention,WH,Volume Retention
+,CFS-Exec,Access Milestone,WH,Others
+,CFS-Exec,Bonus,WH,Others
+,CFS-Exec,CHS Team Performance,WH,Others
+,CFS-Exec,Commission Adjustment,WH,Others
+,CFS-Exec,Goal,WH,Points Goal
+,CFS-Exec,Growth Commission,WH,Others
+,CFS-Exec,Guarantee Extended,WH,Others
+,CFS-Exec,MBO,WH,Others
+,CFS-Exec,Volume Retention,WH,Volume Retention
+,CFS-SR,Above Goal,WH,Points Goal
+,CFS-SR,Above Goal Volume Retention,WH,Volume Retention
+,CFS-SR,Access Milestone,WH,Others
+,CFS-SR,Bonus,WH,Others
+,CFS-SR,CHS Team Performance,WH,Others
+,CFS-SR,Commission Adjustment,WH,Others
+,CFS-SR,Goal,WH,Points Goal
+,CFS-SR,Growth Commission,WH,Others
+,CFS-SR,Guarantee Extended,WH,Others
+,CFS-SR,MBO,WH,Others
+,CFS-SR,Volume Retention,WH,Volume Retention
+,CGS,Above Goal,WH,Points Goal
+,CGS,Above Goal Volume Retention,WH,Volume Retention
+,CGS,Access Milestone,WH,Others
+,CGS,Bonus,WH,Others
+,CGS,CHS Team Performance,WH,Others
+,CGS,Commission Adjustment,WH,Others
+,CGS,Goal,WH,Points Goal
+,CGS,Growth Commission,WH,Others
+,CGS,Guarantee Extended,WH,Others
+,CGS,MBO,WH,Others
+,CGS,Volume Retention,WH,Volume Retention
+,DM_WH,Above Goal,WH,Points Goal
+,DM_WH,Above Goal Volume Retention,WH,Volume Retention
+,DM_WH,Access Milestone,WH,Others
+,DM_WH,Bonus,WH,Others
+,DM_WH,CHS Team Performance,WH,Others
+,DM_WH,Commission Adjustment,WH,Others
+,DM_WH,Goal,WH,Points Goal
+,DM_WH,Growth Commission,WH,Others
+,DM_WH,Guarantee Extended,WH,Others
+,DM_WH,MBO,WH,Others
+,DM_WH,Volume Retention,WH,Volume Retention
+,H-SAM,Above Goal,WH,Points Goal
+,H-SAM,Above Goal Volume Retention,WH,Volume Retention
+,H-SAM,Access Milestone,WH,Others
+,H-SAM,Bonus,WH,Others
+,H-SAM,CHS Team Performance,WH,Others
+,H-SAM,Commission Adjustment,WH,Others
+,H-SAM,Goal,WH,Points Goal
+,H-SAM,Growth Commission,WH,Others
+,H-SAM,Guarantee Extended,WH,Others
+,H-SAM,MBO,WH,Others
+,H-SAM,Volume Retention,WH,Volume Retention
+,IVF,Above Goal,WH,Points Goal
+,IVF,Above Goal Volume Retention,WH,Volume Retention
+,IVF,Access Milestone,WH,Others
+,IVF,Bonus,WH,Others
+,IVF,CHS Team Performance,WH,Others
+,IVF,Commission Adjustment,WH,Others
+,IVF,Goal,WH,Points Goal
+,IVF,Growth Commission,WH,Others
+,RD-OS,Bonus,ONC,Others
+,RD-OS,CHS Team Performance,ONC,Others
+,RD-OS,Commission Adjustment,ONC,Others
+,RD-OS,Follow On Points,ONC,Follow On Patients
+,RD-OS,Growth Commission,ONC,Others
+,RD-OS,Guarantee Extended,ONC,Others
+,RD-OS,Initial Patients Points,ONC,Initial Patients
+,RD-OS,MBO,ONC,Others
+,RD-OS,Patient Retention,ONC,Others
+,RD-OS-SR,Above Goal Empower,ONC,Others
+,RD-OS-SR,Above Goal Follow On Points,ONC,Follow On Patients
+,RD-OS-SR,Above Goal Initial Patients Points,ONC,Initial Patients
+,RD-OS-SR,Access Milestone,ONC,Others
+,RD-OS-SR,Bonus,ONC,Others
+,RD-OS-SR,CHS Team Performance,ONC,Others
+,RD-OS-SR,Commission Adjustment,ONC,Others
+,RD-OS-SR,Follow On Points,ONC,Follow On Patients
+,RD-OS-SR,Growth Commission,ONC,Others
+,RD-OS-SR,Guarantee Extended,ONC,Others
+,RD-OS-SR,Initial Patients Points,ONC,Initial Patients
+,RD-OS-SR,MBO,ONC,Others
+,RD-OS-SR,Patient Retention,ONC,Others
+,RD-OS_ONC,Above Goal Empower,ONC,Others
+,RD-OS_ONC,Above Goal Follow On Points,ONC,Follow On Patients
+,RD-OS_ONC,Above Goal Initial Patients Points,ONC,Initial Patients
+,RD-OS_ONC,Access Milestone,ONC,Others
+,RD-OS_ONC,Bonus,ONC,Others
+,RD-OS_ONC,CHS Team Performance,ONC,Others
+,RD-OS_ONC,Commission Adjustment,ONC,Others
+,RD-OS_ONC,Follow On Points,ONC,Follow On Patients
+,RD-OS_ONC,Growth Commission,ONC,Others
+,RD-OS_ONC,Guarantee Extended,ONC,Others
+,AD-OS_ONC_SPECIALTY,Above Goal Empower,ONC,Others
+,AD-OS_ONC_SPECIALTY,Above Goal Follow On Points,ONC,Follow On Patients
+,AD-OS_ONC_SPECIALTY,Above Goal Initial Patients Points,ONC,Initial Patients
+,AD-OS_ONC_SPECIALTY,Access Milestone,ONC,Others
+,AD-OS_ONC_SPECIALTY,Bonus,ONC,Others
+,AD-OS_ONC_SPECIALTY,CHS Team Performance,ONC,Others
+,AD-OS_ONC_SPECIALTY,Commission Adjustment,ONC,Others
+,AD-OS_ONC_SPECIALTY,Follow On Points,ONC,Follow On Patients
+,AD-OS_ONC_SPECIALTY,Growth Commission,ONC,Others
+,AD-OS_ONC_SPECIALTY,Guarantee Extended,ONC,Others
+,AD-OS_ONC_SPECIALTY,Initial Patients Points,ONC,Initial Patients
+,AD-OS_ONC_SPECIALTY,MBO,ONC,Others
+,AD-OS_ONC_SPECIALTY,Patient Retention,ONC,Others
+,COS,Above Goal Empower,ONC,Others
+,COS,Above Goal Follow On Points,ONC,Follow On Patients
+,COS,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS,Access Milestone,ONC,Others
+,COS,Bonus,ONC,Others
+,COS,CHS Team Performance,ONC,Others
+,COS,Commission Adjustment,ONC,Others
+,COS,Follow On Points,ONC,Follow On Patients
+,COS,Growth Commission,ONC,Others
+,COS,Guarantee Extended,ONC,Others
+,COS,Initial Patients Points,ONC,Initial Patients
+,COS,MBO,ONC,Others
+,COS,Patient Retention,ONC,Others
+,COS-Exec,Above Goal Empower,ONC,Others
+,COS-Exec,Above Goal Follow On Points,ONC,Follow On Patients
+,COS-Exec,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS-Exec,Access Milestone,ONC,Others
+,COS-Exec,Bonus,ONC,Others
+,COS-Exec,CHS Team Performance,ONC,Others
+,DM_Sig,Bonus,ONC,Others
+,DM_Sig,CHS Team Performance,ONC,Others
+,DM_Sig,Commission Adjustment,ONC,Others
+,DM_Sig,Follow On Points,ONC,Follow On Patients
+,DM_Sig,Growth Commission,ONC,Others
+,DM_Sig,Guarantee Extended,ONC,Others
+,DM_Sig,Initial Patients Points,ONC,Initial Patients
+,DM_Sig,MBO,ONC,Others
+,DM_Sig,Patient Retention,ONC,Others
+,"Dir, Oncology Channel Co",Above Goal Empower,ONC,Others
+,"Dir, Oncology Channel Co",Above Goal Follow On Points,ONC,Follow On Patients
+,"Dir, Oncology Channel Co",Above Goal Initial Patients Points,ONC,Initial Patients
+,"Dir, Oncology Channel Co",Access Milestone,ONC,Others
+,"Dir, Oncology Channel Co",Bonus,ONC,Others
+,"Dir, Oncology Channel Co",CHS Team Performance,ONC,Others
+,"Dir, Oncology Channel Co",Commission Adjustment,ONC,Others
+,"Dir, Oncology Channel Co",Follow On Points,ONC,Follow On Patients
+,"Dir, Oncology Channel Co",Growth Commission,ONC,Others
+,"Dir, Oncology Channel Co",Guarantee Extended,ONC,Others
+,"Dir, Oncology Channel Co",Initial Patients Points,ONC,Initial Patients
+,"Dir, Oncology Channel Co",MBO,ONC,Others
+,"Dir, Oncology Channel Co",Patient Retention,ONC,Others
+,Director of Oncology Collaborations,Above Goal Empower,ONC,Others
+,Director of Oncology Collaborations,Above Goal Follow On Points,ONC,Follow On Patients
+,Director of Oncology Collaborations,Above Goal Initial Patients Points,ONC,Initial Patients
+,Director of Oncology Collaborations,Access Milestone,ONC,Others
+,Director of Oncology Collaborations,Bonus,ONC,Others
+,Director of Oncology Collaborations,CHS Team Performance,ONC,Others
+,Director of Oncology Collaborations,Commission Adjustment,ONC,Others
+,Director of Oncology Collaborations,Follow On Points,ONC,Follow On Patients
+,Director of Oncology Collaborations,Growth Commission,ONC,Others
+,Director of Oncology Collaborations,Guarantee Extended,ONC,Others
+,Director of Oncology Collaborations,Initial Patients Points,ONC,Initial Patients
+,Director of Oncology Collaborations,MBO,ONC,Others
+,Director of Oncology Collaborations,Patient Retention,ONC,Others
+,Director of Strategic Acc,Above Goal Empower,ONC,Others
+,Director of Strategic Acc,Above Goal Follow On Points,ONC,Follow On Patients
+,Director of Strategic Acc,Above Goal Initial Patients Points,ONC,Initial Patients
+,Director of Strategic Acc,Access Milestone,ONC,Others
+,Director of Strategic Acc,Bonus,ONC,Others
+,Director of Strategic Acc,CHS Team Performance,ONC,Others
+,Director of Strategic Acc,Commission Adjustment,ONC,Others
+,Director of Strategic Acc,Follow On Points,ONC,Follow On Patients
+,Director of Strategic Acc,Growth Commission,ONC,Others
+,Director of Strategic Acc,Guarantee Extended,ONC,Others
+,Director of Strategic Acc,Initial Patients Points,ONC,Initial Patients
+,Director of Strategic Acc,MBO,ONC,Others
+,Director of Strategic Acc,Patient Retention,ONC,Others
+,Patient Retention Specialist,Above Goal Empower,ONC,Others
+,Patient Retention Specialist,Above Goal Follow On Points,ONC,Follow On Patients
+,Patient Retention Specialist,Above Goal Initial Patients Points,ONC,Initial Patients
+,Patient Retention Specialist,Access Milestone,ONC,Others
+,Patient Retention Specialist,Bonus,ONC,Others
+,Patient Retention Specialist,CHS Team Performance,ONC,Others
+,Patient Retention Specialist,Commission Adjustment,ONC,Others
+,Patient Retention Specialist,Follow On Points,ONC,Follow On Patients
+,Patient Retention Specialist,Growth Commission,ONC,Others
+,Patient Retention Specialist,Guarantee Extended,ONC,Others
+,Patient Retention Specialist,Initial Patients Points,ONC,Initial Patients
+,Patient Retention Specialist,MBO,ONC,Others
+,Patient Retention Specialist,Patient Retention,ONC,Others
+,RD-GU-OS,Above Goal Empower,ONC,Others
+,RD-GU-OS,Above Goal Follow On Points,ONC,Follow On Patients
+,RD-GU-OS,Above Goal Initial Patients Points,ONC,Initial Patients
+,RD-GU-OS,Access Milestone,ONC,Others
+,RD-GU-OS,Bonus,ONC,Others
+,RD-GU-OS,CHS Team Performance,ONC,Others
+,RD-GU-OS,Commission Adjustment,ONC,Others
+,RD-GU-OS,Follow On Points,ONC,Follow On Patients
+,RD-GU-OS,Growth Commission,ONC,Others
+,RD-GU-OS,Guarantee Extended,ONC,Others
+,RD-GU-OS,Initial Patients Points,ONC,Initial Patients
+,RD-GU-OS,MBO,ONC,Others
+,RD-GU-OS,Patient Retention,ONC,Others
+,RD-GYN-OS,Above Goal Empower,ONC,Others
+,RD-GYN-OS,Above Goal Follow On Points,ONC,Follow On Patients
+,RD-GYN-OS,Above Goal Initial Patients Points,ONC,Initial Patients
+,RD-GYN-OS,Access Milestone,ONC,Others
+,RD-GYN-OS,Bonus,ONC,Others
+,RD-GYN-OS,CHS Team Performance,ONC,Others
+,RD-GYN-OS,Commission Adjustment,ONC,Others
+,RD-GYN-OS,Follow On Points,ONC,Follow On Patients
+,RD-GYN-OS,Growth Commission,ONC,Others
+,RD-GYN-OS,Guarantee Extended,ONC,Others
+,RD-GYN-OS,Initial Patients Points,ONC,Initial Patients
+,RD-GYN-OS,MBO,ONC,Others
+,RD-GYN-OS,Patient Retention,ONC,Others
+,RD-OS,Above Goal Empower,ONC,Others
+,RD-OS,Above Goal Follow On Points,ONC,Follow On Patients
+,RD-OS,Above Goal Initial Patients Points,ONC,Initial Patients
+,RD-OS,Access Milestone,ONC,Others
+,COS-Exec,Commission Adjustment,ONC,Others
+,COS-Exec,Follow On Points,ONC,Follow On Patients
+,COS-Exec,Growth Commission,ONC,Others
+,COS-Exec,Guarantee Extended,ONC,Others
+,COS-Exec,Initial Patients Points,ONC,Initial Patients
+,COS-Exec,MBO,ONC,Others
+,COS-Exec,Patient Retention,ONC,Others
+,COS-GU,Above Goal Empower,ONC,Others
+,COS-GU,Above Goal Follow On Points,ONC,Follow On Patients
+,COS-GU,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS-GU,Access Milestone,ONC,Others
+,COS-GU,Bonus,ONC,Others
+,COS-GU,CHS Team Performance,ONC,Others
+,COS-GU,Commission Adjustment,ONC,Others
+,COS-GU,Follow On Points,ONC,Follow On Patients
+,COS-GU,Growth Commission,ONC,Others
+,COS-GU,Guarantee Extended,ONC,Others
+,COS-GU,Initial Patients Points,ONC,Initial Patients
+,COS-GU,MBO,ONC,Others
+,COS-GU,Patient Retention,ONC,Others
+,COS-GYN,Above Goal Empower,ONC,Others
+,COS-GYN,Above Goal Follow On Points,ONC,Follow On Patients
+,COS-GYN,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS-GYN,Access Milestone,ONC,Others
+,COS-GYN,Bonus,ONC,Others
+,COS-GYN,CHS Team Performance,ONC,Others
+,COS-GYN,Commission Adjustment,ONC,Others
+,COS-GYN,Follow On Points,ONC,Follow On Patients
+,COS-GYN,Growth Commission,ONC,Others
+,COS-GYN,Guarantee Extended,ONC,Others
+,COS-GYN,Initial Patients Points,ONC,Initial Patients
+,COS-GYN,MBO,ONC,Others
+,COS-GYN,Patient Retention,ONC,Others
+,COS-HEM,Above Goal Empower,ONC,Others
+,COS-HEM,Above Goal Follow On Points,ONC,Follow On Patients
+,COS-HEM,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS-HEM,Access Milestone,ONC,Others
+,COS-HEM,Bonus,ONC,Others
+,COS-HEM,CHS Team Performance,ONC,Others
+,COS-HEM,Commission Adjustment,ONC,Others
+,COS-HEM,Follow On Points,ONC,Follow On Patients
+,COS-HEM,Growth Commission,ONC,Others
+,COS-HEM,Guarantee Extended,ONC,Others
+,COS-HEM,Initial Patients Points,ONC,Initial Patients
+,COS-HEM,MBO,ONC,Others
+,COS-HEM,Patient Retention,ONC,Others
+,COS-ONC_GI,Above Goal Empower,ONC,Others
+,COS-ONC_GI,Above Goal Follow On Points,ONC,Follow On Patients
+,COS-ONC_GI,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS-ONC_GI,Access Milestone,ONC,Others
+,COS-ONC_GI,Bonus,ONC,Others
+,COS-ONC_GI,CHS Team Performance,ONC,Others
+,COS-ONC_GI,Commission Adjustment,ONC,Others
+,COS-ONC_GI,Follow On Points,ONC,Follow On Patients
+,COS-ONC_GI,Growth Commission,ONC,Others
+,COS-ONC_GI,Guarantee Extended,ONC,Others
+,COS-ONC_GI,Initial Patients Points,ONC,Initial Patients
+,COS-ONC_GI,MBO,ONC,Others
+,COS-ONC_GI,Patient Retention,ONC,Others
+,COS-Skin,Above Goal Empower,ONC,Others
+,COS-Skin,Above Goal Follow On Points,ONC,Follow On Patients
+,COS-Skin,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS-Skin,Access Milestone,ONC,Others
+,COS-Skin,Bonus,ONC,Others
+,COS-Skin,CHS Team Performance,ONC,Others
+,COS-Skin,Commission Adjustment,ONC,Others
+,COS-Skin,Follow On Points,ONC,Follow On Patients
+,COS-Skin,Growth Commission,ONC,Others
+,COS-Skin,Guarantee Extended,ONC,Others
+,COS-Skin,Initial Patients Points,ONC,Initial Patients
+,COS-Skin,MBO,ONC,Others
+,COS-Skin,Patient Retention,ONC,Others
+,COS_Lung,Above Goal Empower,ONC,Others
+,COS_Lung,Above Goal Follow On Points,ONC,Follow On Patients
+,COS_Lung,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS_Lung,Access Milestone,ONC,Others
+,COS_Lung,Bonus,ONC,Others
+,COS_Lung,CHS Team Performance,ONC,Others
+,COS_Lung,Commission Adjustment,ONC,Others
+,COS_Lung,Follow On Points,ONC,Follow On Patients
+,COS_Lung,Growth Commission,ONC,Others
+,COS_Lung,Guarantee Extended,ONC,Others
+,COS_Lung,Initial Patients Points,ONC,Initial Patients
+,COS_Lung,MBO,ONC,Others
+,COS_Lung,Patient Retention,ONC,Others
+,COS_ONC_Breast,Above Goal Empower,ONC,Others
+,COS_ONC_Breast,Above Goal Follow On Points,ONC,Follow On Patients
+,COS_ONC_Breast,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS_ONC_Breast,Access Milestone,ONC,Others
+,COS_ONC_Breast,Bonus,ONC,Others
+,COS_ONC_Breast,CHS Team Performance,ONC,Others
+,COS_ONC_Breast,Commission Adjustment,ONC,Others
+,COS_ONC_Breast,Follow On Points,ONC,Follow On Patients
+,COS_ONC_Breast,Growth Commission,ONC,Others
+,COS_ONC_Breast,Guarantee Extended,ONC,Others
+,COS_ONC_Breast,Initial Patients Points,ONC,Initial Patients
+,COS_ONC_Breast,MBO,ONC,Others
+,COS_ONC_Breast,Patient Retention,ONC,Others
+,COS_ONC_HN,Above Goal Empower,ONC,Others
+,COS_ONC_HN,Above Goal Follow On Points,ONC,Follow On Patients
+,COS_ONC_HN,Above Goal Initial Patients Points,ONC,Initial Patients
+,COS_ONC_HN,Access Milestone,ONC,Others
+,COS_ONC_HN,Bonus,ONC,Others
+,COS_ONC_HN,CHS Team Performance,ONC,Others
+,COS_ONC_HN,Commission Adjustment,ONC,Others
+,COS_ONC_HN,Follow On Points,ONC,Follow On Patients
+,COS_ONC_HN,Growth Commission,ONC,Others
+,COS_ONC_HN,Guarantee Extended,ONC,Others
+,COS_ONC_HN,Initial Patients Points,ONC,Initial Patients
+,COS_ONC_HN,MBO,ONC,Others
+,COS_ONC_HN,Patient Retention,ONC,Others
+,DM-ONC_GU,Above Goal Empower,ONC,Others
+,DM-ONC_GU,Above Goal Follow On Points,ONC,Follow On Patients
+,DM-ONC_GU,Above Goal Initial Patients Points,ONC,Initial Patients
+,DM-ONC_GU,Access Milestone,ONC,Others
+,DM-ONC_GU,Bonus,ONC,Others
+,DM-ONC_GU,CHS Team Performance,ONC,Others
+,DM-ONC_GU,Commission Adjustment,ONC,Others
+,DM-ONC_GU,Follow On Points,ONC,Follow On Patients
+,DM-ONC_GU,Growth Commission,ONC,Others
+,DM-ONC_GU,Guarantee Extended,ONC,Others
+,DM-ONC_GU,Initial Patients Points,ONC,Initial Patients
+,DM-ONC_GU,MBO,ONC,Others
+,DM-ONC_GU,Patient Retention,ONC,Others
+,DM_Sig,Above Goal Empower,ONC,Others
+,DM_Sig,Above Goal Follow On Points,ONC,Follow On Patients
+,DM_Sig,Above Goal Initial Patients Points,ONC,Initial Patients
+,DM_Sig,Access Milestone,ONC,Others
+,OHS-HL,Above Goal Prospera,OH,Prospera
+,OHS-HL,Above Goal Prospera and Renasight,OH,Others
+,OHS-HL,Above Goal Renasight,OH,Renasight
+,OHS-HL,Bonus,OH,Others
+,OHS-HL,Commission Adjustment,OH,Others
+,OHS-HL,Goal,OH,Others
+,OHS-HL,Guarantee Extended,OH,Others
+,OHS-HL,Prospera,OH,Prospera
+,OHS-HL,Prospera Above Goal,OH,Prospera
+,OHS-HL,Prospera and Renasight,OH,Others
+,OHS-HL,Renasight,OH,Renasight
+,OHS-HL,Renasight Above Goal,OH,Renasight
+,OHS_GN,Above Goal Prospera,OH,Prospera
+,OHS_GN,Above Goal Prospera and Renasight,OH,Others
+,OHS_GN,Above Goal Renasight,OH,Renasight
+,OHS_GN,Bonus,OH,Others
+,OHS_GN,Commission Adjustment,OH,Others
+,OHS_GN,Goal,OH,Others
+,OHS_GN,Guarantee Extended,OH,Others
+,OHS_GN,Prospera,OH,Prospera
+,OHS_GN,Prospera Above Goal,OH,Prospera
+,OHS_GN,Prospera and Renasight,OH,Others
+,OHS_GN,Renasight,OH,Renasight
+,OHS_GN,Renasight Above Goal,OH,Renasight
+,OHS_GN_SR,Above Goal Prospera,OH,Prospera
+,OHS_GN_SR,Above Goal Prospera and Renasight,OH,Others
+,OHS_GN_SR,Above Goal Renasight,OH,Renasight
+,OHS_GN_SR,Bonus,OH,Others
+,OHS_GN_SR,Commission Adjustment,OH,Others
+,OHS_GN_SR,Goal,OH,Others
+,OHS_GN_SR,Guarantee Extended,OH,Others
+,OHS_GN_SR,Prospera,OH,Prospera
+,OHS_GN_SR,Prospera Above Goal,OH,Prospera
+,OHS_GN_SR,Prospera and Renasight,OH,Others
+,OHS_GN_SR,Renasight,OH,Renasight
+,OHS_GN_SR,Renasight Above Goal,OH,Renasight
+,OHS_TX,Above Goal Prospera,OH,Prospera
+,OHS_TX,Above Goal Prospera and Renasight,OH,Others
+,OHS_TX,Above Goal Renasight,OH,Renasight
+,OHS_TX,Bonus,OH,Others
+,OHS_TX,Commission Adjustment,OH,Others
+,OHS_TX,Goal,OH,Others
+,OHS_TX,Guarantee Extended,OH,Others
+,OHS_TX,Prospera,OH,Prospera
+,OHS_TX,Prospera Above Goal,OH,Prospera
+,OHS_TX,Prospera and Renasight,OH,Others
+,OHS_TX,Renasight,OH,Renasight
+,OHS_TX,Renasight Above Goal,OH,Renasight
+,RD-OH,Above Goal Prospera,OH,Prospera
+,RD-OH,Above Goal Prospera and Renasight,OH,Others
+,RD-OH,Above Goal Renasight,OH,Renasight
+,RD-OH,Bonus,OH,Others
+,RD-OH,Commission Adjustment,OH,Others
+,RD-OH,Goal,OH,Others
+,RD-OH,Guarantee Extended,OH,Others
+,RD-OH,Prospera,OH,Prospera
+,RD-OH,Prospera Above Goal,OH,Prospera
+,RD-OH,Prospera and Renasight,OH,Others
+,RD-OH,Renasight,OH,Renasight
+,RD-OH,Renasight Above Goal,OH,Renasight
+,RD-OH_HL_East,Above Goal Prospera,OH,Prospera
+,RD-OH_HL_East,Above Goal Prospera and Renasight,OH,Others
+,RD-OH_HL_East,Above Goal Renasight,OH,Renasight
+,RD-OH_HL_East,Bonus,OH,Others
+,RD-OH_HL_East,Commission Adjustment,OH,Others
+,RD-OH_HL_East,Goal,OH,Others
+,RD-OH_HL_East,Guarantee Extended,OH,Others
+,RD-OH_HL_East,Prospera,OH,Prospera
+,RD-OH_HL_East,Prospera Above Goal,OH,Prospera
+,RD-OH_HL_East,Prospera and Renasight,OH,Others
+,RD-OH_HL_East,Renasight,OH,Renasight
+,RD-OH_HL_East,Renasight Above Goal,OH,Renasight
+,RD-OH_HL_West,Above Goal Prospera,OH,Prospera
+,RD-OH_HL_West,Above Goal Prospera and Renasight,OH,Others
+,RD-OH_HL_West,Above Goal Renasight,OH,Renasight
+,RD-OH_HL_West,Bonus,OH,Others
+,RD-OH_HL_West,Commission Adjustment,OH,Others
+,RD-OH_HL_West,Goal,OH,Others
+,RD-OH_HL_West,Guarantee Extended,OH,Others
+,RD-OH_HL_West,Prospera,OH,Prospera
+,RD-OH_HL_West,Prospera Above Goal,OH,Prospera
+,RD-OH_HL_West,Prospera and Renasight,OH,Others
+,RD-OH_HL_West,Renasight,OH,Renasight
+,RD-OH_HL_West,Renasight Above Goal,OH,Renasight
+,VP-OH,Above Goal Prospera,OH,Prospera
+,VP-OH,Above Goal Prospera and Renasight,OH,Others
+,VP-OH,Above Goal Renasight,OH,Renasight
+,VP-OH,Bonus,OH,Others
+,VP-OH,Commission Adjustment,OH,Others
+,VP-OH,Goal,OH,Others
+,VP-OH,Guarantee Extended,OH,Others
+,VP-OH,Prospera,OH,Prospera
+,VP-OH,Prospera Above Goal,OH,Prospera
+,VP-OH,Prospera and Renasight,OH,Others
+,VP-OH,Renasight,OH,Renasight
+,VP-OH,Renasight Above Goal,OH,Renasight
+,VP-OH-HL,Above Goal Prospera,OH,Prospera
+,VP-OH-HL,Above Goal Prospera and Renasight,OH,Others
+,VP-OH-HL,Above Goal Renasight,OH,Renasight
+,VP-OH-HL,Bonus,OH,Others
+,VP-OH-HL,Commission Adjustment,OH,Others
+,VP-OH-HL,Goal,OH,Others
+,VP-OH-HL,Guarantee Extended,OH,Others
+,VP-OH-HL,Prospera,OH,Prospera
+,VP-OH-HL,Prospera Above Goal,OH,Prospera
+,VP-OH-HL,Prospera and Renasight,OH,Others
+,VP-OH-HL,Renasight,OH,Renasight
+,VP-OH-HL,Renasight Above Goal,OH,Renasight
+,AACOS,Above Goal Empower,ONC,Others
+,AACOS,Above Goal Follow On Points,ONC,Follow On Patients
+,AACOS,Above Goal Initial Patients Points,ONC,Initial Patients
+,AACOS,Access Milestone,ONC,Others
+,AACOS,Bonus,ONC,Others
+,AACOS,CHS Team Performance,ONC,Others
+,AACOS,Commission Adjustment,ONC,Others
+,AACOS,Follow On Points,ONC,Follow On Patients
+,AACOS,Growth Commission,ONC,Others
+,AACOS,Guarantee Extended,ONC,Others
+,AACOS,Initial Patients Points,ONC,Initial Patients
+,AACOS,MBO,ONC,Others
+,AACOS,Patient Retention,ONC,Others
+,AACOS-Float,Above Goal Empower,ONC,Others
+,AACOS-Float,Above Goal Follow On Points,ONC,Follow On Patients
+,AACOS-Float,Above Goal Initial Patients Points,ONC,Initial Patients
+,AACOS-Float,Access Milestone,ONC,Others
+,AACOS-Float,Bonus,ONC,Others
+,AACOS-Float,CHS Team Performance,ONC,Others
+,AACOS-Float,Commission Adjustment,ONC,Others
+,AACOS-Float,Follow On Points,ONC,Follow On Patients
+,AACOS-Float,Growth Commission,ONC,Others
+,AACOS-Float,Guarantee Extended,ONC,Others
+,AACOS-Float,Initial Patients Points,ONC,Initial Patients
+,AACOS-Float,MBO,ONC,Others
+,AACOS-Float,Patient Retention,ONC,Others
+,AD-ONC_Breast_CGS,Above Goal Empower,ONC,Others
+,AD-ONC_Breast_CGS,Above Goal Follow On Points,ONC,Follow On Patients
+,AD-ONC_Breast_CGS,Above Goal Initial Patients Points,ONC,Initial Patients
+,AD-ONC_Breast_CGS,Access Milestone,ONC,Others
+,AD-ONC_Breast_CGS,Bonus,ONC,Others
+,AD-ONC_Breast_CGS,CHS Team Performance,ONC,Others
+,AD-ONC_Breast_CGS,Commission Adjustment,ONC,Others
+,AD-ONC_Breast_CGS,Follow On Points,ONC,Follow On Patients
+,AD-ONC_Breast_CGS,Growth Commission,ONC,Others
+,AD-ONC_Breast_CGS,Guarantee Extended,ONC,Others
+,AD-ONC_Breast_CGS,Initial Patients Points,ONC,Initial Patients
+,AD-ONC_Breast_CGS,MBO,ONC,Others
+,AD-ONC_Breast_CGS,Patient Retention,ONC,Others
+,AD-ONC_GI,Above Goal Empower,ONC,Others
+,AD-ONC_GI,Above Goal Follow On Points,ONC,Follow On Patients
+,AD-ONC_GI,Above Goal Initial Patients Points,ONC,Initial Patients
+,AD-ONC_GI,Access Milestone,ONC,Others
+,AD-ONC_GI,Bonus,ONC,Others
+,AD-ONC_GI,CHS Team Performance,ONC,Others
+,AD-ONC_GI,Commission Adjustment,ONC,Others
+,AD-ONC_GI,Follow On Points,ONC,Follow On Patients
+,AD-ONC_GI,Growth Commission,ONC,Others
+,AD-ONC_GI,Guarantee Extended,ONC,Others
+,AD-ONC_GI,Initial Patients Points,ONC,Initial Patients
+,AD-ONC_GI,MBO,ONC,Others
+,AD-ONC_GI,Patient Retention,ONC,Others
+,AD-ONC_HEM,Above Goal Empower,ONC,Others
+,AD-ONC_HEM,Above Goal Follow On Points,ONC,Follow On Patients
+,AD-ONC_HEM,Above Goal Initial Patients Points,ONC,Initial Patients
+,AD-ONC_HEM,Access Milestone,ONC,Others
+,AD-ONC_HEM,Bonus,ONC,Others
+,AD-ONC_HEM,CHS Team Performance,ONC,Others
+,AD-ONC_HEM,Commission Adjustment,ONC,Others
+,AD-ONC_HEM,Follow On Points,ONC,Follow On Patients
+,AD-ONC_HEM,Growth Commission,ONC,Others
+,AD-ONC_HEM,Guarantee Extended,ONC,Others
+,AD-ONC_HEM,Initial Patients Points,ONC,Initial Patients
+,AD-ONC_HEM,MBO,ONC,Others
+,AD-ONC_HEM,Patient Retention,ONC,Others
+,AD-ONC_HN,Above Goal Empower,ONC,Others
+,AD-ONC_HN,Above Goal Follow On Points,ONC,Follow On Patients
+,AD-ONC_HN,Above Goal Initial Patients Points,ONC,Initial Patients
+,AD-ONC_HN,Access Milestone,ONC,Others
+,AD-ONC_HN,Bonus,ONC,Others
+,AD-ONC_HN,CHS Team Performance,ONC,Others
+,AD-ONC_HN,Commission Adjustment,ONC,Others
+,AD-ONC_HN,Follow On Points,ONC,Follow On Patients
+,AD-ONC_HN,Growth Commission,ONC,Others
+,AD-ONC_HN,Guarantee Extended,ONC,Others
+,AD-ONC_HN,Initial Patients Points,ONC,Initial Patients
+,AD-ONC_HN,MBO,ONC,Others
+,AD-ONC_HN,Patient Retention,ONC,Others
+,AD-ONC_Lung,Above Goal Empower,ONC,Others
+,AD-ONC_Lung,Above Goal Follow On Points,ONC,Follow On Patients
+,AD-ONC_Lung,Above Goal Initial Patients Points,ONC,Initial Patients
+,AD-ONC_Lung,Access Milestone,ONC,Others
+,AD-ONC_Lung,Bonus,ONC,Others
+,AD-ONC_Lung,CHS Team Performance,ONC,Others
+,AD-ONC_Lung,Commission Adjustment,ONC,Others
+,AD-ONC_Lung,Follow On Points,ONC,Follow On Patients
+,AD-ONC_Lung,Growth Commission,ONC,Others
+,AD-ONC_Lung,Guarantee Extended,ONC,Others
+,AD-ONC_Lung,Initial Patients Points,ONC,Initial Patients
+,AD-ONC_Lung,MBO,ONC,Others
+,AD-ONC_Lung,Patient Retention,ONC,Others
+,AD-ONC_Skin,Above Goal Empower,ONC,Others
+,AD-ONC_Skin,Above Goal Follow On Points,ONC,Follow On Patients
+,AD-ONC_Skin,Above Goal Initial Patients Points,ONC,Initial Patients
+,AD-ONC_Skin,Access Milestone,ONC,Others
+,AD-ONC_Skin,Bonus,ONC,Others
+,AD-ONC_Skin,CHS Team Performance,ONC,Others
+,AD-ONC_Skin,Commission Adjustment,ONC,Others
+,AD-ONC_Skin,Follow On Points,ONC,Follow On Patients
+,AD-ONC_Skin,Growth Commission,ONC,Others
+,AD-ONC_Skin,Guarantee Extended,ONC,Others
+,AD-ONC_Skin,Initial Patients Points,ONC,Initial Patients
+,AD-ONC_Skin,MBO,ONC,Others
+,AD-ONC_Skin,Patient Retention,ONC,Others
+,AD-OS,Above Goal Empower,ONC,Others
+,AD-OS,Above Goal Follow On Points,ONC,Follow On Patients
+,AD-OS,Above Goal Initial Patients Points,ONC,Initial Patients
+,AD-OS,Access Milestone,ONC,Others
+,AD-OS,Bonus,ONC,Others
+,AD-OS,CHS Team Performance,ONC,Others
+,AD-OS,Commission Adjustment,ONC,Others
+,AD-OS,Follow On Points,ONC,Follow On Patients
+,AD-OS,Growth Commission,ONC,Others
+,AD-OS,Guarantee Extended,ONC,Others
+,AD-OS,Initial Patients Points,ONC,Initial Patients
+,AD-OS,MBO,ONC,Others
+,AD-OS,Patient Retention,ONC,Others

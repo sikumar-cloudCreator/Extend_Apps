@@ -45,8 +45,8 @@ SEED = [
      "Matches the Extend authoring workflow (paste xSQL into the query editor); import only the page JSON."),
 
     # --- Xactly official BPs, 2026-09-16 (knowledge/xactly_extend_best_practices.md) ---
-    ("all", "S1–S5 Customer-defined schema per app (lowercase, starts with a letter). Never put app tables/queries in $framework. Fully qualify every object (xactly.xc_*, appschema.*). Unqualified Incent names fail after Oct 2026.",
-     "Official schema BP — organization, no upgrade conflicts, Builder schema-scoped datasource lists."),
+    ("all", "S1 App schema default is $framework (EXTEND_DEFAULT_SCHEMA). Fully qualify every object: $framework.* for app tables/queries, xactly.* for Incent facts. Unqualified Incent names fail after Oct 2026.",
+     "Team standard 2026-09-16 — Builder schema drop-down and assembler default to $framework."),
     ("query", "Q18 Do NOT use ShowQuotaAttainment() for employee-facing attainment, payout, or MBO. Build from xactly.xc_quota_assignment + credits/commission with period_correctness R1–R5 (cookbook Pattern A).",
      "Official Xactly BP: known calculation discrepancies vs raw tables."),
     ("query", "Q10 Never JOIN xactly.xc_part_user_assignment to dedupe participants — it can bypass row-level security on xc_participant. Use DISTINCT on xc_participant; test via manager impersonation.",
@@ -184,6 +184,8 @@ RETIRED = [
      "grain-aware cumulation 2026-09-09 — PERIOD sums ordinals, YEAR prorates"),
     ("Attainment %, credited amount toward quota, and payout are ENGINE outputs",
      "official BP 2026-09-16 — do not use ShowQuotaAttainment for employee-facing comp; Pattern A from tables"),
+    ("S1–S5 Customer-defined schema per app",
+     "team standard 2026-09-16 — app schema default is $framework"),
 ]
 # Rules replaced in place (same opening, corrected body): retire only the version that still carries
 # the bad construct, identified by (prefix, offending substring).

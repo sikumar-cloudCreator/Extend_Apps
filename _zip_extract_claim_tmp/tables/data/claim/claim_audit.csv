@@ -1,0 +1,10 @@
+audit_id,claim_id,action_name,from_status,to_status,action_by,action_date,comments
+AUD-0001,CLM-ORD-1003-ITEM-C3,SUBMIT,Draft,Submitted,Taylor Kim,2026-02-05,
+AUD-0002,CLM-ORD-1003-ITEM-C3,APPROVE,Submitted,Approved,Morgan Blake,2026-02-08,Validated against order booking
+AUD-0003,CLM-ORD-1004-ITEM-D4,SUBMIT,Draft,Submitted,Alex Rivera,2026-02-10,
+AUD-0004,CLM-ORD-1004-ITEM-D4,REJECT,Submitted,Rejected,Jordan Lee,2026-02-12,Insufficient documentation provided
+AUD-0005,CLM-ORD-1005-ITEM-E5,SUBMIT,Draft,Submitted,Sam Patel,2026-02-14,
+AUD-0006,CLM-ORD-1005-ITEM-E5,APPROVE,Submitted,Approved,Jordan Lee,2026-02-16,Confirmed with plan admin
+AUD-0007,CLM-ORD-1005-ITEM-E5,UPLOAD,Approved,Uploaded,Comp Ops Admin,2026-02-20,Batch CLM-2026-02
+AUD-0008,CLM-ORD-1008-ITEM-H8,SUBMIT,Draft,Submitted,Riley Chen,2026-03-11,
+AUD-0009,CLM-ORD-1008-ITEM-H8,WITHDRAW,Submitted,Withdrawn,Riley Chen,2026-03-12,Raised in error

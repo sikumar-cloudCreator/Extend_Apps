@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_employee_id",
+      "value": "E1001",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_gate_admin_show",
+  "schemaName": "demo",
+  "xsql": "SELECT CASE WHEN COUNT(1) > 0 THEN 1 ELSE 0 END AS is_valid,\n       Concat('Admin access as ', Nvl(MAX(a.admin_name), '')) AS scope_label\nFROM   claim.claim_admin a\nWHERE  a.employee_id = :v_employee_id\n  AND  a.is_active   = 'Y'",
+  "properties": {}
+}

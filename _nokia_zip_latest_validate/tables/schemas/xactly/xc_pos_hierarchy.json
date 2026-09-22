@@ -1,0 +1,1 @@
+{"id":"ent23802a38c6c641df12d9c5f78448c","schemaName":"xactly","tableName":"xc_pos_hierarchy","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_POS_HIERARCHY');","audited":false,"effectiveDated":false}

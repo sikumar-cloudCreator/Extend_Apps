@@ -1,0 +1,647 @@
+{
+  "policySet": {
+    "version": 7,
+    "name": "Xactly_IncentSalesManager_Reporting",
+    "visibleToTenant": true,
+    "description": "Access to Incent tables with restrictions to view only the logged in user's and their reports data"
+  },
+  "policySetItems": [
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.DRAW_ASSIGNMENT_V",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.TITLE_POSITION_V",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.TOTAL_COMM_V",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.TOTAL_CREDIT_V",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.TOTAL_DRAW_V",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.TOTAL_ORDER_V",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.XC_OBJECT_CONFIG",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.XO_OBJECTIVE_RESULT",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.XO_OBJ_PLAN_ASGNMT",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.XO_PAYMENT",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.XO_PERIOD",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.XO_PLAN",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.bcf_totals_v",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.total_assn_quota_plan_v",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.total_assn_quota_v",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.total_payment_mat_v",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_attainment_measure",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_attainment_measure_criteria",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_bcf_totals",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_bonus",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_bonus_summary",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_business_group",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_business_pref",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_calendar",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_co_item_asgnmt",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_comm_held",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_comm_rel_part",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_comm_totals",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_commission",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_commission_summary",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_comp_order_item",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_comp_order_item_detail",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_credit",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_credit_summary",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_credit_totals",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_credit_type",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_currency_rate",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_customer",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_draw",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_draw_assignment",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_earning_code",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_earning_group",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_locale_languages",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_order_stage",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_order_stage_asgnmt",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_order_summary",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_order_type",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_part_user_assignment",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_participant",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "(participant_id in ToList(LookupCurrentUserParticipantIdHierarchy())) OR (participant_id in ToList(LookupCurrentParticipantIds())) OR (participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy()))"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_participant_hist",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "(participant_id in ToList(LookupCurrentUserParticipantIdHierarchy())) OR (participant_id in ToList(LookupCurrentParticipantIds())) OR (participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy()))"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_payment",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_payment_summary",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_period",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_period_type",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_plan",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_plan_assignment",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_planrules",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_hierarchy",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_hierarchy_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_hierarchy_type",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_hierarchy_type_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_part_assignment",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_part_assignment_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_rel_type",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_rel_type_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_relations",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_relations_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_title_assignment",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_pos_title_assignment_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_position",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_position_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_product",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_quota",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_quota_assignment",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_quota_assignment_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_quota_hist",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_quota_relationship",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 6,
+      "resourceName": "xactly.xc_quota_summary",
+      "resourceType": "TABLE",
+      "operation": "READ",
+      "predicates": "participant_id in ToList(LookupCurrentUserMasterParticipantIdHierarchy())"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_rule",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_rule_references",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_title",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_title_category",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_unit_type",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_user",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_user_pref",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_user_role",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "xactly.xc_version_reason_type",
+      "resourceType": "TABLE",
+      "operation": "READ"
+    }
+  ]
+}

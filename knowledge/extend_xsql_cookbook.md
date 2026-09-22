@@ -10,7 +10,8 @@ Also read: `dashboard_render_defects.md`, `period_correctness_rules.md`, `runtim
 
 ## Rule 0 — fully qualify; prefer functions; never invent compensation math
 
-1. **Every object is schema-qualified** — `xactly.xc_credit`, `dealclaims.approval_records`.
+1. **Every object is schema-qualified** — `xactly.xc_credit`, `$framework.my_view`.
+   App objects default to **`$framework`** (team standard / `EXTEND_DEFAULT_SCHEMA`).
    Unqualified Incent names (`FROM xc_commission`) are deprecated and fail after **October 2026**.
 2. Prefer platform **functions** (`ShowFunctions()`) over hand-rolled join graphs when the function is
    correct for the use case (portability + one place to fix bugs).
@@ -222,7 +223,7 @@ GROUP BY o.order_code, p.name, ct.name           -- de-dup the join fan-out at t
 ## Query OBJECT contract (what actually ships)
 A datasource is a query OBJECT, not a bare .sql file: `queries/<schema>/<name>.json`
 ```json
-{ "name": "<view>", "schemaName": "demo", "xsql": "<CREATE-less SELECT or view body>",
+{ "name": "<view>", "schemaName": "$framework", "xsql": "<CREATE-less SELECT or view body>",
   "variables": [ { "name": "v_quarter", "value": "All", "dataType": "String" },
                  { "name": "v_master_participant_id", "value": "0", "dataType": "Number" } ],
   "savedInEditor": true, "isValid": true, "properties": {} }
@@ -245,7 +246,7 @@ A datasource is a query OBJECT, not a bare .sql file: `queries/<schema>/<name>.j
 - ❌ `ShowQuotaAttainment(...)` for employee-facing attainment / payout / MBO → official BP Q18; use Pattern A.
 - ❌ `ShowQuotaAttainment(...)` inside a JOIN → 504; make it the sole FROM (only if used for a non-comp lookup).
 - ❌ Unqualified Incent tables (`FROM xc_commission`) → fail after Oct 2026; use `xactly.xc_commission`.
-- ❌ App tables/queries in `$framework` → use a customer-defined schema (BP S1).
+- ❌ App views without schema → default and qualify as `$framework.<name>` (team standard).
 - ❌ NULL params to a table function → full scan/timeout; always bind resolved ids.
 - ❌ `LookupCurrentUser*` → binds to the logged-in user, not the selected rep; use Pattern B/C for ALL users.
 

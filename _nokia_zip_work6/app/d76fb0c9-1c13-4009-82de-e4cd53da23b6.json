@@ -1,0 +1,177 @@
+{
+  "pageDefinitionId" : "d76fb0c9-1c13-4009-82de-e4cd53da23b6",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_94" : {
+            "type" : "dropdown",
+            "controlId" : "3d6b1f45-5d58-489b-8eaf-b07492cfe021",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "internalName" : "Period",
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "3d6b1f45-5d58-489b-8eaf-b07492cfe021",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_period",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "3d6b1f45-5d58-489b-8eaf-b07492cfe021",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "incnt_stmt_monthly_period_list_till_curr_month",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "exincst",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_period_select"
+            } ],
+            "isMultiSelect" : false,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "labelText" : "Period",
+            "layoutSize" : 25,
+            "shouldRenderHidden" : false,
+            "allowClearForSingleSelect" : false
+          },
+          "control_188" : {
+            "type" : "label",
+            "controlId" : "1358e84b-7656-4724-985f-e4aa8ee56f58",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "internalName" : "Text Component",
+            "events" : [ ],
+            "controlData" : "",
+            "layoutSize" : 75,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_282" : {
+            "type" : "variableConfigurator",
+            "controlId" : "ffc2fb30-e137-4a4d-bc1c-79dc1f3a34e1",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "internalName" : "Variable Configurator Component",
+            "events" : [ {
+              "name" : "e_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "ffc2fb30-e137-4a4d-bc1c-79dc1f3a34e1",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "incnt_stmt_actual_payment_upload_date_format",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "exincst",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_formatted_date"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "formatted_date"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Variable Configurator",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_281" : {
+            "type" : "workflowButton",
+            "controlId" : "04bec18f-9a2e-4b22-92cb-85cb80c73566",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "internalName" : "Upload Actual Payments",
+            "events" : [ {
+              "name" : "e_period",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "04bec18f-9a2e-4b22-92cb-85cb80c73566",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "show" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "controlData" : "Upload Actual Payments",
+            "xSQL" : "call StartXFlow(XFlowName='wf_actual_payments')",
+            "workflowName" : "wf_actual_payments",
+            "layoutSize" : 25,
+            "buttonColorType" : "primary",
+            "shouldRenderHidden" : true,
+            "shouldRunSync" : true,
+            "icon" : "File Upload",
+            "alignItem" : "bottom-left"
+          }
+        }
+      }
+    }
+  },
+  "title" : "Admin Console",
+  "versionName" : "1.0"
+}

@@ -1,0 +1,20 @@
+{
+  "variables": [
+    {
+      "name": "v_participant",
+      "value": "Ajay Arya (61235350)",
+      "dataType": "String"
+    },
+    {
+      "name": "v_period",
+      "value": "APR-2025",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "incnt_stmt_total_payment_Incentives_drilldown_N",
+  "schemaName": "exincst",
+  "xsql": "select FormatNumber(pay.amount,'#,##0.00') as payment_amount_ft, pay.period_name||pay.participant_name||pay.position_name||pay.order_item_id as key_column, pay.*, LookupUnitTypeNameById(pay.amount_unit_type_id) as currency_type\nfrom xactly.xc_payment pay\t\t\nwhere\n\tpay.period_name = :v_period   and\n\t\t pay.participant_name = :v_participant  and\n            \tpay.src_type in ('Incentive')\n\n\n\n",
+  "properties": {}
+}

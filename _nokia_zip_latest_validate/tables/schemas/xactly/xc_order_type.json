@@ -1,0 +1,1 @@
+{"id":"entccdceb2fea6c70486bcf2863e8c15","schemaName":"xactly","tableName":"xc_order_type","columns":[],"overwrite":false,"unlogged":false,"archive":false,"local":false,"temporary":false,"preserveRows":false,"selectionSet":false,"using":"Incent(TableName='Incent.XC_ORDER_TYPE');","audited":false,"effectiveDated":false}

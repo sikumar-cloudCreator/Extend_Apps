@@ -1,0 +1,25 @@
+{
+  "variables": [
+    {
+      "name": "v_employee_id",
+      "value": "E1001",
+      "dataType": "String"
+    },
+    {
+      "name": "v_period",
+      "value": "JAN-2026",
+      "dataType": "String"
+    },
+    {
+      "name": "v_status",
+      "value": "All",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_my_kpi",
+  "schemaName": "demo",
+  "xsql": "SELECT FormatNumber(Nvl(COUNT(CASE WHEN c.status = 'Draft'     THEN 1 END), 0), '#,##0') AS draft_count,\n       FormatNumber(Nvl(COUNT(CASE WHEN c.status = 'Submitted' THEN 1 END), 0), '#,##0') AS submitted_count,\n       FormatNumber(Nvl(COUNT(CASE WHEN c.status = 'Approved'  THEN 1 END), 0), '#,##0') AS approved_count,\n       FormatNumber(Nvl(COUNT(CASE WHEN c.status = 'Rejected'  THEN 1 END), 0), '#,##0') AS rejected_count,\n       FormatNumber(Nvl(SUM(c.claim_amount), 0), '$#,###0.00')                           AS filtered_value,\n       FormatNumber(Nvl(SUM(CASE WHEN c.status = 'Approved' THEN c.claim_amount END), 0), '$#,###0.00') AS approved_value\nFROM   claim.claim_request c\nWHERE  c.employee_id = :v_employee_id\n  AND  ( Nvl(:v_period, '') = '' OR Nvl(:v_period, '') = 'All' OR c.period_name = :v_period )\n  AND  ( Nvl(:v_status, '') = '' OR Nvl(:v_status, '') = 'All' OR c.status      = :v_status )",
+  "properties": {}
+}

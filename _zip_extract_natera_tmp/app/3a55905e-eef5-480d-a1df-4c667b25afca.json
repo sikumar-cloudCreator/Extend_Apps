@@ -1,0 +1,212 @@
+{
+  "pageDefinitionId" : "3a55905e-eef5-480d-a1df-4c667b25afca",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_153" : {
+            "type" : "Custom",
+            "controlId" : "1b72c83a-53e0-4a3f-98d9-19f5c1fc1875",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ ],
+            "controlData" : "<div style=\"width: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #e2e8f0; border-radius: 0px; background-color: #ffffff; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); overflow: hidden;\">\n<div style=\"position: relative; padding: 20px 24px; padding-left: 28px; display: flex; align-items: center; justify-content: space-between;\">\n<div style=\"display: flex; flex-direction: column;\">\n<div style=\"position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #8b5cf6);\">&nbsp;</div>\n<h2 style=\"margin: 0; font-size: 19px; font-weight: bold; color: #0f172a; letter-spacing: -0.01em;\">[[Header]]</h2>\n<p style=\"margin: 4px 0 0 0; font-size: 13px; color: #64748b; font-weight: 400; line-height: 1.4;\">[[Sub Header]]</p>\n</div>\n</div>\n</div>",
+            "layoutSize" : null,
+            "intl" : false,
+            "helpIconPosition" : "alignLeft",
+            "helpIconTooltipPosiiton" : "right",
+            "helpIconValue" : null,
+            "shouldRenderHidden" : false
+          },
+          "control_139" : {
+            "type" : "dropdown",
+            "controlId" : "8df39a81-b34f-4839-863e-04997518e72c",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "8df39a81-b34f-4839-863e-04997518e72c",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_default_period",
+              "eventSelection" : "CREATE_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "8df39a81-b34f-4839-863e-04997518e72c",
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_default_period_vc",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "8df39a81-b34f-4839-863e-04997518e72c",
+              "handlers" : [ "assignCurrentVariable", "refresh" ],
+              "handlerArgs" : [ { }, { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_period_dropdown",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_default_period"
+            } ],
+            "isMultiSelect" : false,
+            "shouldHideLabel" : false,
+            "displayField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "name"
+            },
+            "labelText" : "Select Default Period",
+            "layoutSize" : 16.66,
+            "shouldRenderHidden" : false,
+            "allowClearForSingleSelect" : false
+          },
+          "control_148" : {
+            "type" : "variableConfigurator",
+            "controlId" : "0eda6199-cd3d-4c09-a43c-5917c78c4197",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "0eda6199-cd3d-4c09-a43c-5917c78c4197",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "e_default_period_vc",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "0eda6199-cd3d-4c09-a43c-5917c78c4197",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : "ntr_db_set_default_period",
+              "type" : "view",
+              "isReadOnly" : true,
+              "schema" : "$framework",
+              "seriesColors" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "v_default_period"
+            } ],
+            "valueField" : {
+              "dataType" : "string",
+              "name" : "value_field"
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Variable Configurator",
+            "staticValue" : "",
+            "useStaticValue" : false,
+            "staticDataType" : "STRING"
+          },
+          "control_141" : {
+            "type" : "xSQLRunner",
+            "controlId" : "aa6db3ff-96d5-4b27-9937-c25809d3a3d7",
+            "accessRoles" : null,
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "e_default_period",
+              "eventSelection" : "BIND_EVENT",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "id" : "aa6db3ff-96d5-4b27-9937-c25809d3a3d7",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "xSQL" : "UPDATE $framework.NATERA_DEFAULT_VALUE \nSET value_field = :v_default_period\nWHERE column_type = 'Period_name';"
+          }
+        }
+      }
+    }
+  },
+  "title" : "default_period",
+  "versionName" : "1.0"
+}

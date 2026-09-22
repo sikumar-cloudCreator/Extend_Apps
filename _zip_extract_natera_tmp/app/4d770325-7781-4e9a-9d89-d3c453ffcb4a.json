@@ -1,0 +1,74 @@
+{
+  "pageDefinitionId" : "4d770325-7781-4e9a-9d89-d3c453ffcb4a",
+  "pageSchema" : {
+    "properties" : { },
+    "controlSchema" : {
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "control_1" : {
+            "type" : "variableConfigurator",
+            "controlId" : "bc44a168-ec3f-4af1-ad94-ba4df8a4828b",
+            "privileges" : null,
+            "styles" : {
+              "useComponentShadow" : false,
+              "useGreyBackground" : false,
+              "useInnerGreyBackground" : false
+            },
+            "events" : [ {
+              "name" : "$onPageLoad",
+              "eventSelection" : "BIND_EVENT",
+              "id" : "bc44a168-ec3f-4af1-ad94-ba4df8a4828b",
+              "handlers" : [ "refresh" ],
+              "handlerArgs" : [ { } ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            }, {
+              "name" : "on_load",
+              "eventSelection" : "CREATE_EVENT",
+              "id" : "bc44a168-ec3f-4af1-ad94-ba4df8a4828b",
+              "broadcastArgs" : {
+                "validationXsql" : ""
+              },
+              "handlers" : [ ],
+              "handlerArgs" : [ ],
+              "preHandlers" : [ ],
+              "preHandlerArgs" : [ ]
+            } ],
+            "datasource" : {
+              "name" : null,
+              "schema" : null,
+              "fields" : null,
+              "type" : null,
+              "isReadOnly" : false,
+              "columns" : null,
+              "seriesColors" : { },
+              "customLabels" : { }
+            },
+            "pagination" : {
+              "currentPage" : 1,
+              "totalItems" : null,
+              "itemsPerPage" : 200
+            },
+            "columns" : [ ],
+            "whereClauseVariable" : null,
+            "variables" : [ {
+              "name" : "p_region"
+            } ],
+            "valueField" : {
+              "dataType" : null,
+              "name" : null
+            },
+            "usingMultiSelectVariableFormat" : false,
+            "title" : "Variable Configurator",
+            "staticValue" : "ALL",
+            "useStaticValue" : true,
+            "staticDataType" : "STRING"
+          }
+        }
+      }
+    }
+  },
+  "title" : "vc_oh",
+  "versionName" : "1.0"
+}

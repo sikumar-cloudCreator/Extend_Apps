@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"inctn_stmt_session_id","schemaName":"demo","xsql":"SELECT UUID() as session_id from dual","properties":{}}

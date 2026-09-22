@@ -1,0 +1,7 @@
+reason_code,reason_label,sort_order,requires_notes,is_active
+MISSING_CREDIT,Missing credit,1,N,Y
+INCORRECT_AMOUNT,Incorrect credit amount,2,N,Y
+WRONG_PAYEE,Credited to wrong payee,3,N,Y
+SPLIT_CREDIT,Split / partner assist,4,Y,Y
+TIMING,Wrong period / timing,5,N,Y
+OTHER,Other,6,Y,Y

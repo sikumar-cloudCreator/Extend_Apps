@@ -1,0 +1,150 @@
+{
+  "policySet": {
+    "version": 7,
+    "name": "Xactly_Admin_Reporting",
+    "visibleToTenant": true,
+    "description": "Access to all resources"
+  },
+  "policySetItems": [
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "CATALOG",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "CREDENTIAL",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "CURSOR",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "DATASOURCE",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "EMAIL",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "FILE",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "FUNCTION",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "INCENT_COMMAND",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "INDEX",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "LINKED_TABLE",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "POLICY_ITEM",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "PREFERENCE",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "SCHEDULE",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "SCHEMA",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "SEQUENCE",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "SESSION",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "TABLE",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "VARIABLE",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "VIEW",
+      "operation": "*"
+    },
+    {
+      "itemType": "ALLOW",
+      "version": 7,
+      "resourceName": "*",
+      "resourceType": "WORKFLOW",
+      "operation": "*"
+    }
+  ]
+}

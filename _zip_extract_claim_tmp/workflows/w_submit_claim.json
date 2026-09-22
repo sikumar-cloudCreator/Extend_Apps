@@ -1,0 +1,41 @@
+{
+  "Rules": [],
+  "Methods": [],
+  "XFlow": {
+    "Name": "w_submit_claim",
+    "Version": 1,
+    "Description": "Insert a claim as Submitted, then write its SUBMIT audit row",
+    "START_NODE": {
+      "Node_Name": "Start",
+      "Destination": "n_insert",
+      "Destination_Type": "EXECUTION_NODE"
+    },
+    "STOP_NODE": {
+      "Node_Name": "Stop",
+      "Source": "n_audit",
+      "Source_Type": "EXECUTION_NODE"
+    },
+    "EXECUTION_NODE": [
+      {
+        "Node_Name": "n_insert",
+        "Description": "claim_id is derived from order_code + item_code, so without the NOT EXISTS guard a double click inserts a second row under the SAME id - and approve and upload both key on claim_id, so every duplicate would be approved and uploaded again.",
+        "Attributes": "{\"optionType\":\"Execution\"}",
+        "Method": {
+          "Command": "INSERT INTO claim.claim_request (\n  claim_id, employee_id, participant_name, manager_name, period_name,\n  order_code, item_code, customer_name, credited_amount, claim_amount,\n  reason_code, reason_notes, status, comments,\n  submitted_date, reviewed_date, reviewed_by, uploaded_flag\n)\nSELECT\n  Concat('CLM-', Concat(:v_order_code, Concat('-', :v_item_code))),\n  :v_employee_id,\n  :v_participant,\n  Nvl(:v_manager_name, ''),\n  :v_period,\n  :v_order_code,\n  :v_item_code,\n  Nvl(:v_customer_name, ''),\n  Nvl(:v_credited_amount, 0),\n  :v_claim_amount,\n  :v_reason_code,\n  Nvl(:v_reason_notes, ''),\n  'Submitted',\n  '',\n  CurDate(),\n  NULL,\n  '',\n  'N'\nFROM   dual\nWHERE  Nvl(:v_employee_id, '') <> ''\n  AND  Nvl(:v_order_code, '')  <> ''\n  AND  Nvl(:v_item_code, '')   <> ''\n  AND  Nvl(:v_period, '')      <> ''\n  AND  Nvl(:v_reason_code, '') <> ''\n  AND  Nvl(:v_claim_amount, 0)  > 0\n  AND  NOT EXISTS ( SELECT 1\n                    FROM   claim.claim_request e\n                    WHERE  e.order_code = :v_order_code\n                      AND  e.item_code  = :v_item_code )"
+        },
+        "Destination": "n_audit",
+        "Destination_Type": "EXECUTION_NODE"
+      },
+      {
+        "Node_Name": "n_audit",
+        "Description": "Append the SUBMIT transition",
+        "Attributes": "{\"optionType\":\"Execution\"}",
+        "Method": {
+          "Command": "INSERT INTO claim.claim_audit (\n  audit_id, claim_id, action_name, from_status, to_status,\n  action_by, action_date, comments\n)\nSELECT\n  Concat('AUD-', Concat(Concat('CLM-', Concat(:v_order_code, Concat('-', :v_item_code))), Concat('-', FormatDateTime(Now(), 'yyyyMMddHHmmss')))),\n  Concat('CLM-', Concat(:v_order_code, Concat('-', :v_item_code))),\n  'SUBMIT',\n  'Draft',\n  'Submitted',\n  :v_participant,\n  CurDate(),\n  Nvl(:v_reason_notes, '')\nFROM   claim.claim_request c\nWHERE  c.claim_id = Concat('CLM-', Concat(:v_order_code, Concat('-', :v_item_code)))\n  AND  c.status   = 'Submitted'"
+        },
+        "Destination": "Stop",
+        "Destination_Type": "STOP_NODE"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "variables": [
+    {
+      "name": "v_master_position_id",
+      "value": "0",
+      "dataType": "String"
+    }
+  ],
+  "savedInEditor": true,
+  "isValid": true,
+  "name": "claim_role_label",
+  "schemaName": "demo",
+  "xsql": "SELECT CASE WHEN COUNT(1) > 0 THEN 'Manager' ELSE 'Individual Contributor' END AS role_name\nFROM   xactly.xc_pos_hierarchy ph\nWHERE  ph.from_pos_id  = :v_master_position_id\n  AND  ph.to_pos_id   <> :v_master_position_id\n  AND  ph.is_active    = 1",
+  "properties": {}
+}

@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"incnt_stmt_month_start_date","schemaName":"$exincst","xsql":"select per.start_date as month_start_date from xactly.xc_period per where per.period_id = :v_current_period_id","properties":{}}

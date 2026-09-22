@@ -1,0 +1,1 @@
+{"savedInEditor":true,"isValid":true,"name":"ntr_region_wh","schemaName":"$framework","xsql":"SELECT Territory \nFROM (\n    SELECT 'ALL' AS Territory, 0 AS Sort_Order \n    UNION \n    SELECT DISTINCT Territory, 1 AS Sort_Order \n    FROM EXT_NATERA_WH_PERF\n    WHERE Territory IS NOT NULL\n)\nORDER BY Sort_Order, Territory","properties":{}}
